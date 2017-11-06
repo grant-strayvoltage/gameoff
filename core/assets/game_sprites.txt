@@ -1,0 +1,117 @@
+game_sprites.png
+size: 512, 512
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+block1_moveable
+  rotate: false
+  xy: 3, 3
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
+enemy1_F1
+  rotate: false
+  xy: 21, 3
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
+enemy2_F1
+  rotate: false
+  xy: 39, 3
+  size: 16, 32
+  orig: 16, 32
+  offset: 0, 0
+  index: -1
+platform_3v
+  rotate: false
+  xy: 57, 3
+  size: 16, 48
+  orig: 16, 48
+  offset: 0, 0
+  index: -1
+platform_3w
+  rotate: false
+  xy: 75, 3
+  size: 48, 16
+  orig: 48, 16
+  offset: 0, 0
+  index: -1
+platform_4v
+  rotate: false
+  xy: 125, 3
+  size: 16, 64
+  orig: 16, 64
+  offset: 0, 0
+  index: -1
+platform_4w
+  rotate: false
+  xy: 143, 3
+  size: 64, 16
+  orig: 64, 16
+  offset: 0, 0
+  index: -1
+platform_5v
+  rotate: false
+  xy: 209, 3
+  size: 16, 80
+  orig: 16, 80
+  offset: 0, 0
+  index: -1
+platform_5w
+  rotate: false
+  xy: 227, 3
+  size: 80, 16
+  orig: 80, 16
+  offset: 0, 0
+  index: -1
+player1_stand
+  rotate: false
+  xy: 309, 3
+  size: 16, 32
+  orig: 16, 32
+  offset: 0, 0
+  index: -1
+player2_stand
+  rotate: false
+  xy: 327, 3
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
+power_F1
+  rotate: false
+  xy: 345, 3
+  size: 8, 8
+  orig: 8, 8
+  offset: 0, 0
+  index: -1
+switch_off
+  rotate: false
+  xy: 355, 3
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
+switch_on
+  rotate: false
+  xy: 373, 3
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
+tramp_down
+  rotate: false
+  xy: 391, 3
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
+tramp_up
+  rotate: false
+  xy: 409, 3
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1

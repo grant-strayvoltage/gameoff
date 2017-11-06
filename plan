@@ -1,0 +1,73 @@
+- add player 1
+- jump, 1 square big, use just 2 square tall, 1 square wide
+- add player 1 object to map
+- get movement in place, jump - 3.25 square high
+- have objects you can jump up through as well
+- add platform object
+- add moveable blocks
+- add trampoline
+- add moveable trampoline
+- add switch to trigger moving platform
+- add moving solid blocks, like door - vertical and horizontal
+- add switch to trigger those too
+- add power idea
+- start with carrying it
+- add throw it
+- add only can move when in radius of power
+- add power radius around it when throw it
+- add player 2
+- 1 square tall, can only jump 1.25 squares high
+- get the idea of only moving when near power, throwing to each other, and picking up
+- should be able to throw it, and drop it, and pick it up
+- try for throw press button and throws in arc direction you facing
+  - up, left, or right
+- how long you hold button is how far, before releasing it
+- so quick tap for drop
+- up to 2 seconds for far throw - most you can throw is 16 squares
+  - in 4 0.5 second intervals - try that to start,
+  - otherwise maybe 8 - 0.25 intervals
+- add exit to next level, and level changing
+- next design a real level
+- later add some different enemies
+
+
+setting idea
+
+
+two horrible cyborg lab experiments - lab being shut down
+- ones like a head on a spider (short) - quicker, smaller jumps
+- ones like a torso on piston legs - big jumper - but slower moving
+- must save themselves
+- run on power
+- lots of other weird experiments in labs trying to stop them
+- they are the only ones to achieve/or fully sentient
+- no collectibles, just escape
+- lab level 5 (below) - bio-tech - very dark, lab setting, certain types of cyborg experiments
+- lab level 4 (below) - nano-tech - swarms, shapeshifting enemies, dissapearing matter
+- lab level 3 (below) - marine experiments - underwater
+- lab level 2 (below) - weapons - lots of lasers, beam weapons, and automated weapons
+- lab level 1        - gravity experiments - floating/flying, opposite gravity
+
+- with lasers have blocks that reflect and bend lasers and can move
+- maybe have lasers able to destroy some blocks, others reflect, and some absorb
+- standard moveable blocks, so can change shape of level
+- 
+
+- gravity, have gravity switch directions, etc. lots of puzzles there
+
+- switches to trigger things
+- two main kinds- toggles, and one way - once on, always on, and some of those can be timed- so on for 5 seconds until press again
+- can also have paired switches - so 3 way
+
+- moving platforms, blocks, etc.
+
+- moving enemies
+
+- bouncy/trampolines
+
+- blocks that disolve on touch - nano - also timed
+- walls that move/crush - timed and triggered
+
+
+
+
