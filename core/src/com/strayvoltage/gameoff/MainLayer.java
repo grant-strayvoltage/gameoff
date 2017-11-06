@@ -51,7 +51,7 @@ static BitmapFont m_font24 = null;
 static BitmapFont m_font32 = null;
 TextureAtlas m_sprites = null;
 
-GameSprite m_player1, m_player2;
+Player m_player1, m_player2;
 
 public MainLayer()
   {
@@ -152,6 +152,12 @@ public float getFloat(String key, MapObject mp)
     }
 
     tiledMap = new GameTileMap("level_" + stage + "-" + lv + ".tmx", m_camera);
+    m_player1.setMap(tiledMap, m_player2,4);
+    m_player2.setMap(tiledMap, m_player1,2);
+
+    m_player1.m_playerControlled = true;
+    m_player1.m_powered = true;
+
     //tiledMap.setupAnimations("level_small_tiles");
     //tiledMap.setupAnimations("level_big_tiles");
 
@@ -232,11 +238,11 @@ public float getFloat(String key, MapObject mp)
   public void update (float deltaTime) {
     stateTime += deltaTime;
     inputManager.handleInput();
-    if (inputManager.isJumpPressed())
-    {
-        if (stateTime > 2)
-          System.exit(0);
-    }
+    //if (inputManager.isJumpPressed())
+    //{
+     //   if (stateTime > 2)
+     //     System.exit(0);
+    //}
   }
 
   @Override

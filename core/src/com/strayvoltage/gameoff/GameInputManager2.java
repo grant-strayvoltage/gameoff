@@ -31,7 +31,9 @@ public class GameInputManager2 implements InputManager, ControllerListener {
   boolean razer = false;
   boolean razerDesktop = false;
   boolean xbox360 = true;
+  boolean xboxMac = false;
   boolean controllerConnected =false;
+  boolean m_isMac = false;
 
   int buttonA = 96;
   int buttonB = 97;
@@ -49,6 +51,14 @@ public class GameInputManager2 implements InputManager, ControllerListener {
   int xbox360ButtonMenu = 7;
   int xbox360triggerL = 4;
   int xbox360triggerR = 5;
+
+  int xboxMacButtonA = 11;
+  int xboxMacButtonB = 12;
+  int xboxMacButtonX = 13;
+  int xboxMacButtonY = 14;
+  int xboxMacButtonMenu = 4;
+  int xboxMactriggerL = 8;
+  int xboxMactriggerR = 9;
 
   float m_xMoveAxis = 0;
   float m_yMoveAxis = 0;
@@ -84,7 +94,12 @@ public class GameInputManager2 implements InputManager, ControllerListener {
 
   public GameInputManager2(Controller controllerIn, int playerNumber)
   {
-    m_optionsDialog = false;
+    this(controllerIn,playerNumber,false);
+  }
+
+  public GameInputManager2(Controller controllerIn, int playerNumber, boolean options)
+  {
+    m_optionsDialog = options;
     leftPressed = false;
     rightPressed = false;
     upPressed = false;
@@ -140,6 +155,12 @@ public class GameInputManager2 implements InputManager, ControllerListener {
     m_camera = (OrthographicCamera)v.getCamera();
   }
 
+  /*
+  public void setDpad(DPadPanel dpad)
+  {
+    m_dpad = dpad;
+  }*/
+
   public void clearTouches()
   {
     for (int i =0; i<4; i++)
@@ -166,9 +187,14 @@ public class GameInputManager2 implements InputManager, ControllerListener {
     testPressed = false;
     triggerPressed = false;
 
+    if (Gdx.input.isKeyPressed(Keys.T))
+    {
+       testPressed = true;
+    }
+
     if (ouyaControllerConnected) {
 
-      if (!xbox360)
+      if ((!xbox360) && (!razerDesktop) && (!xboxMac))
       {
         if (controller.getButton(Ouya.BUTTON_DPAD_LEFT))  {
           leftPressed = true;
@@ -183,7 +209,7 @@ public class GameInputManager2 implements InputManager, ControllerListener {
         }
       }
 
-      if ((!razer) && (!xbox360) && (!razerDesktop))
+      if ((!razer) && (!xbox360) && (!razerDesktop) && (!xboxMac))
       {
 
         Gdx.app.debug("GameInputManager2", "Ouya checking.");
@@ -201,7 +227,7 @@ public class GameInputManager2 implements InputManager, ControllerListener {
         }
       } else if (razer)
       {
-         Gdx.app.log("GameInputManager2", "razer checking");
+         //Gdx.app.log("GameInputManager2", "razer checking");
 
         if (controller.getButton(buttonA))
           jumpPressed = true;
@@ -254,7 +280,7 @@ public class GameInputManager2 implements InputManager, ControllerListener {
 
       } else if (xbox360)
       {
-         Gdx.app.log("GameInputManager2", "xbox360 checking");
+         //Gdx.app.log("GameInputManager2", "xbox360 checking");
         if (controller.getButton(xbox360ButtonA))
           jumpPressed = true;
 
@@ -270,10 +296,19 @@ public class GameInputManager2 implements InputManager, ControllerListener {
         if ((controller.getButton(xbox360triggerL)) || (controller.getButton(xbox360triggerR)))
           triggerPressed = true;
 
+        float v1 = 0;
+        float h1 = 0;
 
         //check left
-        float v1 = controller.getAxis(0); //up/down on left stick
-        float h1 = controller.getAxis(1); //left/right on left stick
+        if (m_isMac)
+        {
+          v1 = controller.getAxis(1); //up/down on left stick
+          h1 = controller.getAxis(0); //left/right on left stick
+        } else
+        {
+          v1 = controller.getAxis(0); //up/down on left stick
+          h1 = controller.getAxis(1); //left/right on left stick
+        }
 
         m_thrustAxis = -controller.getAxis(4);
         float thrust2 = controller.getAxis(4);
@@ -328,6 +363,100 @@ public class GameInputManager2 implements InputManager, ControllerListener {
           leftPressed = true;
           upPressed = true;
         }
+      } else if (xboxMac)
+      {
+         //Gdx.app.log("GameInputManager2", "xboxMac checking");
+        if (controller.getButton(xboxMacButtonA))
+          jumpPressed = true;
+
+        if (controller.getButton(xboxMacButtonB))
+          firePressed = true;
+
+        if (controller.getButton(xboxMacButtonX))
+          bridgePressed = true;
+
+        if (controller.getButton(xboxMacButtonMenu))
+          speedPressed = true;
+
+        if ((controller.getButton(xboxMactriggerL)) || (controller.getButton(xboxMactriggerR)))
+          triggerPressed = true;
+
+
+
+        //check left
+        float v1 = controller.getAxis(3); //up/down on left stick
+        float h1 = controller.getAxis(2); //left/right on left stick
+
+        m_thrustAxis = controller.getAxis(0);
+        float thrust2 = controller.getAxis(1);
+        if (thrust2 > m_thrustAxis)
+          m_thrustAxis = thrust2;
+
+        if (v1 < -0.4f)
+          upPressed = true;
+        else if (v1 > 0.4f)
+          downPressed = true;
+
+        m_yMoveAxis = v1;
+
+        if (h1 < -0.4f)
+          leftPressed = true;
+        else if (h1 > 0.4f)
+          rightPressed = true;
+
+        m_xMoveAxis = h1;
+
+        m_xShootAxis = controller.getAxis(4);
+        m_yShootAxis = -controller.getAxis(5);
+
+        PovDirection dirCode = controller.getPov(0);
+        if (dirCode == PovDirection.north)
+        {
+          upPressed = true;
+        } else if (dirCode == PovDirection.south)
+        {
+          downPressed = true;
+        } else if (dirCode == PovDirection.east)
+        {
+          rightPressed = true;
+        } else if (dirCode == PovDirection.west)
+        {
+          leftPressed = true;
+        } else if (dirCode == PovDirection.northEast)
+        {
+          rightPressed = true;
+          upPressed = true;
+        } else if (dirCode == PovDirection.southEast)
+        {
+          rightPressed = true;
+          downPressed = true;
+        } else if (dirCode == PovDirection.southWest)
+        {
+          leftPressed = true;
+          downPressed = true;
+        } else if (dirCode == PovDirection.northWest)
+        {
+          leftPressed = true;
+          upPressed = true;
+        }
+
+        if (controller.getButton(0))
+        {
+          upPressed = true;
+        }
+        if (controller.getButton(1))
+        {
+          downPressed = true;
+        }
+        if (controller.getButton(3))
+        {
+          rightPressed = true;
+        }
+        if (controller.getButton(2))
+        {
+          leftPressed = true;
+        }
+
       } else if (razerDesktop)
       {
         Gdx.app.debug("GameInputManager2", "razerDesktop checking");
@@ -351,8 +480,8 @@ public class GameInputManager2 implements InputManager, ControllerListener {
         float v1 = controller.getAxis(2); //up/down on left stick
         float h1 = controller.getAxis(3); //left/right on left stick
 
-        m_thrustAxis = -controller.getAxis(4);
-        float thrust2 = controller.getAxis(4);
+        m_thrustAxis = -controller.getAxis(6);
+        float thrust2 = controller.getAxis(6);
         if (thrust2 > m_thrustAxis)
           m_thrustAxis = thrust2;
 
@@ -597,7 +726,7 @@ public class GameInputManager2 implements InputManager, ControllerListener {
             }
           }
         }
-      } */
+    } */
 
     }
 
@@ -896,13 +1025,15 @@ public class GameInputManager2 implements InputManager, ControllerListener {
         return false;
     }
 
-        @Override
+    @Override
     public boolean xSliderMoved(Controller controller, int sliderCode, boolean value) {
+      m_controllerStatus = "xSliderMoved" + sliderCode + " : " + value;
         return false;
     }
 
     @Override
     public boolean ySliderMoved(Controller controller, int sliderCode, boolean value) {
+      m_controllerStatus = "ySliderMoved" + sliderCode + " : " + value;
         return false;
     }
 
@@ -940,6 +1071,11 @@ public class GameInputManager2 implements InputManager, ControllerListener {
         return;
       }
 
+      if (System.getProperty("os.name").contains("Mac"))
+        m_isMac = true;
+        
+      Gdx.app.log("GameInputManager2", System.getProperty("os.name"));
+
       Gdx.app.log("GameInputManager2", controllerL.getName());
       m_controllerName = controllerL.getName();
       if(controllerL.getName().equals(Ouya.ID))
@@ -969,7 +1105,7 @@ public class GameInputManager2 implements InputManager, ControllerListener {
         controllerConnected = true;
         if (m_optionsDialog)
           controller.addListener(this);
-      } else if (controllerL.getName().contains("XBOX 360"))
+      } else if ((controllerL.getName().contains("XBOX 360")) || (controllerL.getName().contains("USB")))
       {
         m_controllerStatus = "Controller Status: Connected XBOX 360";
         controller = controllerL;
@@ -980,7 +1116,7 @@ public class GameInputManager2 implements InputManager, ControllerListener {
         controllerConnected = true;
         if (m_optionsDialog)
           controller.addListener(this);     
-      } else if (controllerL.getName().contains("Xbox One"))
+      } else if (controllerL.getName().contains("Xbox One for Windows"))
       {
         m_controllerStatus = "Controller Status: Connected XBOX One";
         controller = controllerL;
@@ -990,7 +1126,20 @@ public class GameInputManager2 implements InputManager, ControllerListener {
         xbox360 = true;
         controllerConnected = true;
         if (m_optionsDialog)
-          controller.addListener(this);      
+          controller.addListener(this);
+
+      } else if (controllerL.getName().contains("Xbox One"))
+      {
+        m_controllerStatus = "Controller Status: Connected XBOX One MAC";
+        controller = controllerL;
+        ouyaControllerConnected = true;
+        m_touchDevice = false;
+        androidTV = false;
+        xboxMac = true;
+        xbox360 = false;
+        controllerConnected = true;
+        if (m_optionsDialog)
+          controller.addListener(this);
       } else if ((controllerL.getName().contains("NVIDIA")) || (controllerL.getName().contains("Nvidia")))
       {
         m_controllerStatus = "Controller Status: Connected Nvidia";
@@ -998,6 +1147,7 @@ public class GameInputManager2 implements InputManager, ControllerListener {
         ouyaControllerConnected = true;
         m_touchDevice = false;
         androidTV = true;
+        xbox360 = false;
         razer = true;
         if (m_optionsDialog)
           controller.addListener(this);   
@@ -1009,6 +1159,7 @@ public class GameInputManager2 implements InputManager, ControllerListener {
         ouyaControllerConnected = true;
         m_touchDevice = false;
         androidTV = true;
+        xbox360 = false;
         razer = true;
         controllerConnected = true;
         //keep looping to see if find exact fit.
@@ -1027,6 +1178,15 @@ public class GameInputManager2 implements InputManager, ControllerListener {
         if (m_optionsDialog)
           controller.addListener(this);
       }
+  }
+
+  public void enableListener() {
+    controller.addListener(this);
+  }
+
+  public void disableListener()
+  {
+
   }
 
   public void cleanUp()

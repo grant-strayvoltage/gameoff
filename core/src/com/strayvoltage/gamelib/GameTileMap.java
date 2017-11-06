@@ -25,6 +25,8 @@ public class GameTileMap implements GameDrawable {
   protected GameContainer m_parent = null;
   public boolean m_pause = false;
   protected int m_mapWidth, m_mapHeight, m_tilePixelWidth, m_tilePixelHeight;
+  TiledMapTileLayer m_platforms = null;
+  byte[] m_tileBitFlags = new byte[1024];
 
 	public  GameTileMap (String file, OrthographicCamera camera) {
     super();
@@ -36,6 +38,31 @@ public class GameTileMap implements GameDrawable {
     m_mapHeight = prop.get("height", Integer.class);
     m_tilePixelWidth = prop.get("tilewidth", Integer.class);
     m_tilePixelHeight = prop.get("tileheight", Integer.class);
+    m_platforms = (TiledMapTileLayer) m_tiledMap.getLayers().get("platforms");
+    if (m_platforms != null)
+    {
+      TiledMapTileSet ts = m_tiledMap.getTileSets().getTileSet(0);
+      for (int i = 0; i < 1024; i++)
+      {
+        TiledMapTile t = ts.getTile(i+1);
+        if (t != null)
+        {
+          Object ot = t.getProperties().get("flags");
+          if (ot != null)
+          {
+            Integer io = (Integer)ot;
+            m_tileBitFlags[i] = io.byteValue();
+            Gdx.app.log("GameTileMap","tile id = " + t.getId() + " set=" + m_tileBitFlags[i]);
+          } else
+          {
+            m_tileBitFlags[i] = 0;
+          }
+        } else
+        {
+          m_tileBitFlags[i] = 0;
+        }
+      }
+    }
   }
 
   private String getAnimatingTileName(TiledMapTile tile)
@@ -255,6 +282,18 @@ public class GameTileMap implements GameDrawable {
   public void dispose() {
     m_tiledMap.dispose();
     m_tiledMapRenderer.dispose();
+  }
+
+  public byte getCollisionBitsAt(float xx, float yy)
+  {
+    //assume collide only with layer named "platforms"
+    int tx = (int) (xx / m_tilePixelWidth);
+    int ty = (int) (yy / m_tilePixelHeight);
+
+    //Gdx.app.log("GameTileMap","getCollisionBitsAt " + xx + ", " + yy + " = " + tx + ", " + ty);
+    TiledMapTileLayer.Cell c = m_platforms.getCell(tx,ty);
+    if (c == null) return 0;
+    return m_tileBitFlags[c.getTile().getId()-1];
   }
 
 }

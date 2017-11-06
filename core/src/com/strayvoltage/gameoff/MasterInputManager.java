@@ -41,7 +41,7 @@ public class MasterInputManager {
     m_controllers[1] = null;
     int controllerNumber = 0;
     for (Controller controllerL : Controllers.getControllers()) {
-      Gdx.app.debug("MasterInputManager", controllerL.getName());
+      Gdx.app.log("MasterInputManager", controllerL.getName());
       if (controllerNumber < 2)
       {
         if(controllerL.getName().equals(Ouya.ID))
@@ -64,6 +64,10 @@ public class MasterInputManager {
         {
           m_controllers[controllerNumber] = new GameInputManager2(controllerL,controllerNumber);
           controllerNumber++; 
+        } else if ((controllerL.getName().contains("2-axis")))
+        {
+          m_controllers[controllerNumber] = new GameInputManager2(controllerL,controllerNumber);
+          controllerNumber++;           
         }
         //how to handle STEAM controller
         //other android TV controllers?
