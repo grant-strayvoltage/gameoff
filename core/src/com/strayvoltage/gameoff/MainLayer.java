@@ -50,6 +50,7 @@ static BitmapFont m_font16 = null;
 static BitmapFont m_font24 = null;
 static BitmapFont m_font32 = null;
 TextureAtlas m_sprites = null;
+public ArrayList<GameMapObject> m_gameMapObjects = new ArrayList<GameMapObject>();
 
 Player m_player1, m_player2;
 
@@ -138,11 +139,19 @@ public float getFloat(String key, MapObject mp)
 
     this.removeAll();
 
+    PowerUnit pu = new PowerUnit();
+    pu.init(null,m_sprites);
+    m_gameMapObjects.add(pu);
+
     m_player1 = new Player(m_sprites.findRegion("player1_stand"), inputManager);
     this.add(m_player1);
 
     m_player2 = new Player(m_sprites.findRegion("player2_stand"), inputManager);
     this.add(m_player2);
+
+    pu.pickUp(m_player1);
+
+    this.add(pu);
 
     //set music
     if (tiledMap != null)
@@ -152,8 +161,9 @@ public float getFloat(String key, MapObject mp)
     }
 
     tiledMap = new GameTileMap("level_" + stage + "-" + lv + ".tmx", m_camera);
-    m_player1.setMap(tiledMap, m_player2,4);
-    m_player2.setMap(tiledMap, m_player1,2);
+    m_player1.setMap(tiledMap, m_player2,4,pu);
+    m_player2.setMap(tiledMap, m_player1,2,pu);
+    pu.setMap(tiledMap);
 
     m_player1.m_playerControlled = true;
     m_player1.m_powered = true;
@@ -207,8 +217,10 @@ public float getFloat(String key, MapObject mp)
         {
           Object o = Class.forName("com.strayvoltage.gameoff." + t).newInstance();
           GameMapObject gmo = (GameMapObject)o;
+          gmo.setMap(tiledMap);
           gmo.init(p,m_sprites);
           this.add(gmo);
+          m_gameMapObjects.add(gmo);
           gmo.setPosition(px,py);
         } catch (InstantiationException e)
         {

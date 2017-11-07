@@ -284,6 +284,10 @@ public class GameTileMap implements GameDrawable {
     m_tiledMapRenderer.dispose();
   }
 
+  //collision bits so far
+  // 1 = solid just on top (not implemented)
+  // 2 = solid on top and bottom
+  // 4 = death
   public byte getCollisionBitsAt(float xx, float yy)
   {
     //assume collide only with layer named "platforms"

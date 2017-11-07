@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" tiledversion="1.0.3" orientation="orthogonal" renderorder="right-down" width="40" height="23" tilewidth="16" tileheight="16" nextobjectid="22">
+<map version="1.0" tiledversion="1.0.3" orientation="orthogonal" renderorder="right-down" width="40" height="23" tilewidth="16" tileheight="16" nextobjectid="26">
  <properties>
   <property name="Title" value="Test Level One"/>
  </properties>
@@ -9,34 +9,44 @@
    <properties>
     <property name="contactTrigger" type="bool" value="false"/>
     <property name="linkedSwitch" value="switch1"/>
+    <property name="moveHorizontal" type="bool" value="false"/>
     <property name="startDir" type="int" value="-1"/>
    </properties>
   </object>
   <object id="3" name="switch1" type="Switch" x="480" y="288" width="16" height="16"/>
-  <object id="4" name="P1" type="PlayerStart1" x="64" y="304" width="16" height="32"/>
-  <object id="5" name="P2" type="PlayerStart2" x="32" y="320" width="16" height="16"/>
-  <object id="12" name="block1" type="Block" x="144" y="256" width="16" height="16"/>
+  <object id="4" name="P1" type="PlayerStart1" x="80" y="304" width="16" height="32"/>
+  <object id="5" name="P2" type="PlayerStart2" x="48" y="320" width="16" height="16"/>
+  <object id="12" name="block1" type="Block" x="160" y="256" width="16" height="16"/>
   <object id="13" name="block2" type="Block" x="160" y="128" width="16" height="16"/>
   <object id="14" name="block3" type="Block" x="224" y="128" width="16" height="16"/>
   <object id="15" name="platform3" type="Platform" x="544" y="176" width="48" height="16">
    <properties>
     <property name="contactTrigger" type="bool" value="true"/>
     <property name="linkedSwitch" value=""/>
+    <property name="moveHorizontal" type="bool" value="false"/>
     <property name="startDir" type="int" value="-1"/>
    </properties>
   </object>
   <object id="16" name="exit" type="Exit" x="624" y="272" width="16" height="16"/>
-  <object id="18" name="platform2" type="Platform" x="240" y="336" width="48" height="16"/>
-  <object id="21" name="platform4" type="Platform" x="48" y="208" width="16" height="48">
+  <object id="18" name="platform2" type="Platform" x="240" y="336" width="48" height="16">
    <properties>
+    <property name="contactTrigger" type="bool" value="false"/>
+   </properties>
+  </object>
+  <object id="21" name="platform4" type="Platform" x="48" y="64" width="16" height="48">
+   <properties>
+    <property name="moveHorizontal" type="bool" value="false"/>
     <property name="shapeVertical" type="bool" value="true"/>
     <property name="startDir" type="int" value="-1"/>
    </properties>
   </object>
+  <object id="23" name="stop" type="PlatformStop" x="256" y="256" width="16" height="16"/>
+  <object id="24" name="stop" type="PlatformStop" x="368" y="208" width="16" height="16"/>
+  <object id="25" name="stop" type="PlatformStop" x="560" y="160" width="16" height="16"/>
  </objectgroup>
  <layer name="platforms" width="40" height="23">
   <data encoding="base64" compression="zlib">
-   eJztlUsKwCAMRIO9/52Li24EY36TROjArMT4zEcHEY3fpebUjQfJKYnr0S4OKieR6s73qTvfFIIvsoc0eyvmv6q+npxkSZLT7LdZwnri08aLYo/kk5xjnVU0n1U38lnWUXe6kS/q//DwrH4Wd+s/hLlzshis5mql8QthwwNS
+   eJztlMEKwDAIQ6X7/38uO+wyqK3RqIMFcirVp9YOERm/S62pGw+T8ySuR6s4rJ5Eqjvfo+58txh8kW/Icrdi/6vm6+lJlk56mvEfW1l3fLv7rDo8fEgedFfZfKi+yIecs2pi8UXJO99ovlW86+Vu749hLU8WA2ptVhZPYAMDUA==
   </data>
  </layer>
  <layer name="background" width="40" height="23">
