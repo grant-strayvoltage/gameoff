@@ -63,9 +63,12 @@ Objects to use in puzzle elements:
 
 # .plan
 
-* improve player movement - include interaction with objects such as platforms
-* add power unit concept and add physics for it being thrown
-* get basic platforms moving, with switches
-* get other enemies/objects that move physics as well - example push a moveable block onto a platform.
-* Once the above is in place, then the framework is there to add all sorts of game objects.
-* With the time limit we'll have to pick the Game Objects that seem most fun or unique for puzzles as we probably don't have time to implement them all.
+* improve basic physics engine - key thing is handling multiple object collisions (for example player pushing a block on a moving platform, things go crazy right now) - recommend converting tiles to boxes/objects to make more uniform.
+* add one way collisions (can jump up through)
+* add switch
+* add on contact triggers
+* improve player controls and throwing the power unit
+* add pass level/exit object and get level switching working
+* add death (hit death squares, crushed by platform, etc.)
+* add level restart (both after death, and with a button push - button push blows you both up)
+* add more objects and start building some levels to experiment and see what works well and is interesting
