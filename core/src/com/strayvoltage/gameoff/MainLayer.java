@@ -34,6 +34,7 @@ import com.badlogic.gdx.utils.Disposable;
 import com.badlogic.gdx.math.*;
 import com.badlogic.gdx.assets.AssetManager;
 import com.strayvoltage.gamelib.*;
+import com.badlogic.gdx.physics.box2d.*;
 
 public class MainLayer extends GameLayer  {
 
@@ -51,6 +52,7 @@ static BitmapFont m_font24 = null;
 static BitmapFont m_font32 = null;
 TextureAtlas m_sprites = null;
 public ArrayList<GameMapObject> m_gameMapObjects = new ArrayList<GameMapObject>();
+static public World world;
 
 Player m_player1, m_player2;
 
@@ -132,6 +134,49 @@ public float getFloat(String key, MapObject mp)
       return ff.intValue();
   }
 
+  private void setupTileMapBox2D()
+  {
+
+    TiledMapTileLayer pLayer = (TiledMapTileLayer) tiledMap.m_tiledMap.getLayers().get("platforms");
+
+    FixtureDef fixtureDef = new FixtureDef();
+    fixtureDef.density = 1.0f;
+    fixtureDef.restitution = 0.25f;
+    fixtureDef.filter.categoryBits = 1;
+    fixtureDef.friction = 0.5f;
+    float w = 0;
+    float boxY = 0;
+    float boxLeftX = 0;
+    
+    for (int ty = 0; ty < m_mapHeight; ty++)
+    {
+      BodyDef bodyDef = null;
+      for (int tx = 0; tx < m_mapWidth; tx++)
+      {
+        TiledMapTileLayer.Cell c = pLayer.getCell(tx,ty);
+        if (c != null)
+        {
+            float pw = c.getTile().getTextureRegion().getRegionWidth();
+            bodyDef = new BodyDef();
+            bodyDef.type = BodyDef.BodyType.StaticBody;
+            w = (pw/16);
+            boxLeftX = tx;
+            boxY = ty;
+            PolygonShape shape = new PolygonShape();
+            shape.setAsBox(w/2,(pw-1)/16/2);
+            fixtureDef.shape = shape;
+            bodyDef.position.set(boxLeftX + w/2,boxY + (pw-1)/16/2 + 2/16);
+            Body body = world.createBody(bodyDef);
+            body.createFixture(fixtureDef);
+            shape.dispose();
+            //bodyDef.dispose();
+            bodyDef = null;
+            w = 0;
+        }
+      }
+    }
+  }
+
   public void loadLevel(int stage, int lv)
   {
     m_stage = stage;
@@ -139,9 +184,23 @@ public float getFloat(String key, MapObject mp)
 
     this.removeAll();
 
+    if (world != null)
+    {
+      Array<Body> bodies = new Array<Body>();
+      world.getBodies(bodies);
+      for (Body b : bodies)
+      {
+        world.destroyBody(b);
+      }
+    }
+
+    if (world == null)
+      world = new World(new Vector2(0, -20), true);
+
     PowerUnit pu = new PowerUnit();
     pu.init(null,m_sprites);
     m_gameMapObjects.add(pu);
+    pu.addToWorld(world);
 
     m_player1 = new Player(m_sprites.findRegion("player1_stand"), inputManager);
     this.add(m_player1);
@@ -150,6 +209,9 @@ public float getFloat(String key, MapObject mp)
     this.add(m_player2);
 
     pu.pickUp(m_player1);
+
+    m_player1.addToWorld(world);
+    m_player2.addToWorld(world);
 
     this.add(pu);
 
@@ -161,9 +223,11 @@ public float getFloat(String key, MapObject mp)
     }
 
     tiledMap = new GameTileMap("level_" + stage + "-" + lv + ".tmx", m_camera);
-    m_player1.setMap(tiledMap, m_player2,4,pu);
-    m_player2.setMap(tiledMap, m_player1,2,pu);
+    m_player1.setMap(tiledMap, m_player2,23,pu);
+    m_player2.setMap(tiledMap, m_player1,8,pu);
     pu.setMap(tiledMap);
+
+
 
     m_player1.m_playerControlled = true;
     m_player1.m_powered = true;
@@ -191,6 +255,8 @@ public float getFloat(String key, MapObject mp)
     tw = (float) tiledMap.getTilePixelWidth();
     th = (float) tiledMap.getTilePixelHeight();
 
+    setupTileMapBox2D();
+
     stateTime = 0;
     
     //TiledMapTileLayer pLayer = (TiledMapTileLayer) tiledMap.m_tiledMap.getLayers().get("platforms");
@@ -206,10 +272,10 @@ public float getFloat(String key, MapObject mp)
       py = this.getFloat("y", obj);
       if (t.equals("PlayerStart1"))
       {
-        m_player1.setPosition(px,py);
+        m_player1.setBodyPosition(px,py);
       } else if (t.equals("PlayerStart2"))
       {
-        m_player2.setPosition(px,py);
+        m_player2.setBodyPosition(px,py);
       } else
       {
         Gdx.app.log("MainLayer","Add Map Object - type = " + t);
@@ -220,8 +286,9 @@ public float getFloat(String key, MapObject mp)
           gmo.setMap(tiledMap);
           gmo.init(p,m_sprites);
           this.add(gmo);
+          gmo.addToWorld(world);
           m_gameMapObjects.add(gmo);
-          gmo.setPosition(px,py);
+          gmo.setBodyPosition(px,py);
         } catch (InstantiationException e)
         {
           Gdx.app.log("MainLayer","InstantiationException = " + e.getMessage());
@@ -255,6 +322,7 @@ public float getFloat(String key, MapObject mp)
      //   if (stateTime > 2)
      //     System.exit(0);
     //}
+    world.step(1/60f, 6, 2);
   }
 
   @Override

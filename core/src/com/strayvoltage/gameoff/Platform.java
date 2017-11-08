@@ -28,10 +28,16 @@ public class Platform extends GameMapObject {
   float m_maxSpeed = 1f;
   int m_ticks = 0;
 
+ 
+
   public void init(MapProperties mp, TextureAtlas textures)
   {
+    m_gravityScale = 0;
     m_colBits = 3;
+    m_sizeScale = 0.9f;
     TextureRegion texture = null;
+    m_restitution = 0;
+    m_density = 500f;
     if (getBool("shapeVertical",mp) == false)
     {
         //Horizontal shaped platform
@@ -69,15 +75,14 @@ public class Platform extends GameMapObject {
 
   public void moveVertical()
   {
-    //Gdx.app.log("Platform", "moveVertical currDir= " + m_currDir + " : " + m_dy);
-    m_dy += (m_currDir * m_accel);
-    if (m_dy > m_maxSpeed) m_dy = m_maxSpeed;
-    if (m_dy < (-m_maxSpeed)) m_dy = - m_maxSpeed;
-
-    float y = this.getY() + m_dy;
+    float ly = m_body.getLinearVelocity().y;
+    if (Math.abs(ly) < 3) m_body.applyForceToCenter(0,m_currDir*8*m_density,true);
+    m_body.setLinearVelocity(m_body.getLinearVelocity().clamp(0,3));
+    
+    float y = this.getY();
 
     float yCheck = y;
-    if (m_dy > 0) yCheck += this.getHeight();
+    if (m_currDir > 0) yCheck += this.getHeight();
 
     //check if near tile and should slow down.
     if (isSolid(this.getX() + this.getWidth()/2, yCheck + (m_currDir * 20)))
@@ -86,16 +91,14 @@ public class Platform extends GameMapObject {
       m_currDir = -m_currDir;
     } else
     {
-      GameMapObject o = checkObjectCollisions(this.getX(),y + (m_currDir*20), 8);
+      GameMapObject o = checkObjectCollisions(this.getX(),y + (m_currDir*21), 8);
       if (o != null)
       {
         m_state += 1;
         m_currDir = -m_currDir;
       }
     }
-      
 
-    this.setPosition(this.getX(),y);
   }
 
   public void moveHorizontal()
@@ -105,20 +108,14 @@ public class Platform extends GameMapObject {
 
   public void slowVertical()
   {
-    //Gdx.app.log("Platform", "slowVertical currDir= " + m_currDir + " : " + m_dy);
-    m_dy += (m_currDir * m_accel);
-    float y = this.getY() + m_dy;
+    m_body.applyForceToCenter(0,m_currDir*8f*m_density,true);
 
-    if ((m_dy < 0.01f) && (m_dy > -0.01f))
+    if((m_body.getLinearVelocity().y < 0.25f) && (m_body.getLinearVelocity().y > -0.25f))
     {
-      m_dy = 0;
+      m_body.setLinearVelocity(0,0);
       m_state += 1;
-      m_ticks = 180;
-      y = (float)java.lang.Math.ceil(this.getY());
+      m_ticks = 160;
     }
-
-    this.setPosition(this.getX(),y);
-
   }
 
   public void slowHorizontal()
@@ -150,5 +147,7 @@ public class Platform extends GameMapObject {
         }
       }
     }
+  
+    setPositionToBody();
   }
 }

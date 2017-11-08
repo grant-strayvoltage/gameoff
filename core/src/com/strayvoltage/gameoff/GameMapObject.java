@@ -11,6 +11,8 @@ import com.badlogic.gdx.graphics.glutils.*;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.maps.MapProperties;
 import com.strayvoltage.gamelib.*;
+import com.badlogic.gdx.physics.box2d.*;
+import com.badlogic.gdx.physics.box2d.BodyDef.*;
 
 public abstract class GameMapObject extends GameSprite {
 
@@ -20,7 +22,15 @@ public abstract class GameMapObject extends GameSprite {
   boolean m_noDrag = false;
   float m_dragX = 0.1f;
   boolean m_onGround = true;
- float m_gravity = -0.2f;
+  float m_gravity = -0.2f;
+  Fixture m_fixture = null;
+  short m_categoryBits = 64;
+  short m_filterMask = 255;
+  float m_gravityScale = 1f;
+  float m_sizeScale = 1.0f;
+  boolean m_hasPhysics = true;
+  float m_restitution = 0.2f;
+  float m_density = 1f;
 
   public GameMapObject()
   {
@@ -107,118 +117,50 @@ public abstract class GameMapObject extends GameSprite {
     return false;
   }
 
-  public void handlePhysics()
+  public void setPositionToBody()
   {
-    //call this from update if you want this object to fall, have drag, etc. like moveable blocks
-    
-    //drag
-    if (m_noDrag == false)
+    float cx = m_body.getPosition().x*16;
+    float cy = m_body.getPosition().y*16;
+    this.setPosition(cx - this.getWidth()/2, cy - this.getHeight()/2);
+  }
+
+  public void addToWorld(World world)
+  {
+
+    BodyDef bodyDef = new BodyDef();
+    bodyDef.type = BodyType.DynamicBody;
+    bodyDef.fixedRotation = true;
+
+    m_body = world.createBody(bodyDef);
+    m_body.setUserData(this);
+
+    FixtureDef fixtureDef = new FixtureDef();
+
+    PolygonShape rect = null;
+    rect = new PolygonShape();
+    rect.setAsBox(this.getWidth()/32 * m_sizeScale, this.getHeight()/32 * m_sizeScale);
+    fixtureDef.shape = rect;
+
+    fixtureDef.density = m_density;
+    fixtureDef.friction = 0.1f;
+    fixtureDef.restitution = m_restitution;
+
+    fixtureDef.filter.categoryBits = m_categoryBits;
+    fixtureDef.filter.maskBits = m_filterMask;
+
+    m_fixture = m_body.createFixture(fixtureDef);
+    m_body.setGravityScale(m_gravityScale);
+    rect.dispose();
+
+    if (m_hasPhysics == false)
     {
-      if (m_dx > 0)
-      {
-        m_dx -= m_dragX;
-        if (m_dx < 0) m_dx = 0;
-      } else if (m_dx < 0)
-      {
-        m_dx += m_dragX;
-        if (m_dx > 0) m_dx = 0;
-      }
+      m_body.setActive(false);
     }
+  }
 
-    float x = this.getX() + m_dx;
-    byte b = 0;
-    if (m_dx < 0)
-    {
-      //going left
-      b = m_map.getCollisionBitsAt(x, this.getY());
-      b = (byte) (b | m_map.getCollisionBitsAt(x,this.getY() + this.getHeight() - 6));
-    } else if (m_dx > 0)
-    {
-      //going right
-      b = m_map.getCollisionBitsAt(x+this.getWidth(),this.getY());
-      b = (byte) (b | m_map.getCollisionBitsAt(x+this.getWidth(),this.getY() + this.getHeight() - 6));
-    }
-
-    if (b > 0)
-    {
-      x -= m_dx;
-      m_dx = 0;
-    }
-
-    if (m_dx != 0)
-    {
-      GameMapObject o = checkObjectCollisions(x,this.getY());
-      if (o != null)
-      {
-        if (m_dx > 0)
-        {
-          x = o.getX() - this.getWidth();
-          o.updatePush(m_dx);
-        }
-        else if (m_dx < 0)
-        {
-          x = o.getX() + o.getWidth();
-          o.updatePush(m_dx);
-        }
-        //m_dx= 0;
-      }
-    }
-
-    this.setPosition(x,this.getY());
-
-    float y = this.getY();
-    m_dy += m_gravity;
-    if (m_dy < -4) m_dy = -4;
-    y += m_dy;
-    if (m_dy < 0)
-    {
-      b = (byte) (m_map.getCollisionBitsAt(this.getX()+this.getWidth()/2,y));
-      if (b > 0)
-      {
-        int ty = (int) (y / 16f);
-        y = (ty + 1) * 16f;
-        m_onGround = true;
-        m_dy = 0;
-      } else{
-        m_onGround = false;
-      }
-
-      GameMapObject o = checkObjectCollisions(this.getX(),y);
-      if (o != null)
-      {
-        //o is the GameMapObject I'm colliding with below me
-        m_onGround = true;
-        m_dy = 0;
-        y = (float)java.lang.Math.ceil(o.getY() + o.getHeight());
-      }
-    } else if (m_dy > 0)
-    {
-      b = (byte) (m_map.getCollisionBitsAt(this.getX()+this.getWidth()/2,y+this.getHeight()));
-      if (b > 0)
-      {
-        int ty = (int) (y / 16f);
-        y = (ty) * 16f;
-        m_onGround = false;
-        m_dy = 0;
-      }
-
-      GameMapObject o = checkObjectCollisions(this.getX(),y);
-      if (o != null)
-      {
-        //o is the GameMapObject I'm colliding with above me
-        if (o.getY() > y)
-        {
-          m_dy = 0f;
-          m_onGround = false;
-          y = o.getY() - this.getHeight() - 1;
-        }
-      }
-    }
-
-    this.setPosition(this.getX(),y);
-
-    //reset for next update
-    m_noDrag = false;
+  public void setBodyPosition(float xx, float yy)
+  {
+    this.setPosition(xx,yy);
+    m_body.setTransform((xx + this.getWidth()/2)/16 , (yy + this.getHeight()/2)/16, this.getRotation()/180f * 3.14f);
   }
 }
-

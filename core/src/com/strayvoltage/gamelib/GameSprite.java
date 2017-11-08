@@ -9,6 +9,8 @@ import com.badlogic.gdx.math.*;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.glutils.*;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
+import com.badlogic.gdx.physics.box2d.*;
+import com.badlogic.gdx.physics.box2d.BodyDef.*;
 
 public class GameSprite extends Sprite implements GameDrawable {
 
@@ -24,6 +26,7 @@ public class GameSprite extends Sprite implements GameDrawable {
   public float m_damage = 1.0f;
   public boolean m_fx = false;
   public boolean m_fy = false;
+  public Body m_body = null;
 
   public GameSprite(Texture texture)
   {

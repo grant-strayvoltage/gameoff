@@ -21,6 +21,7 @@ public class Block extends GameMapObject {
 
   public void init(MapProperties mp, TextureAtlas textures)
   {
+    m_density = 1.5f;
     m_colBits = 3;
     TextureRegion texture = null;
     texture = textures.findRegion("block1_moveable");
@@ -69,6 +70,8 @@ public class Block extends GameMapObject {
           m_dx = m_pushDx;
       }
 
-      handlePhysics();
+      this.setPositionToBody();
+
+      //handlePhysics();
   }
 }

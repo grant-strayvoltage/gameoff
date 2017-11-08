@@ -11,6 +11,8 @@ import com.badlogic.gdx.graphics.glutils.*;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.strayvoltage.gamelib.*;
 import com.badlogic.gdx.math.Intersector;
+import com.badlogic.gdx.physics.box2d.*;
+import com.badlogic.gdx.physics.box2d.BodyDef.*;
 
 public class Player extends GameSprite {
 
@@ -31,6 +33,11 @@ public class Player extends GameSprite {
   boolean m_ownsPowerUnit = false;
   int m_firePressedTicks = 0;
   int m_throwDelayTicks = 60;
+  Fixture m_fixture = null;
+  int m_categoryBits = 0;
+  int m_tempTicks = 0;
+
+  float m_hForce = 50;
 
   public Player(TextureRegion texture, GameInputManager2 controller)
   {
@@ -44,6 +51,33 @@ public class Player extends GameSprite {
     m_otherPlayer = p;
     m_jumpDY = jumpDY;
     m_powerUnit = pu;
+  }
+
+  public void addToWorld(World world)
+  {
+    BodyDef bodyDef = new BodyDef();
+    bodyDef.type = BodyType.DynamicBody;
+    bodyDef.fixedRotation = true;
+
+    m_body = world.createBody(bodyDef);
+    m_body.setUserData(this);
+
+    FixtureDef fixtureDef = new FixtureDef();
+
+    PolygonShape rect = null;
+    rect = new PolygonShape();
+    rect.setAsBox(this.getWidth()/32, this.getHeight()/32);
+    fixtureDef.shape = rect;
+
+    fixtureDef.density = 1.0f; 
+    fixtureDef.friction = 0.5f;
+    fixtureDef.restitution = 0.2f;
+
+    fixtureDef.filter.categoryBits = 16;
+    fixtureDef.filter.maskBits = 255-16-128;
+
+    m_fixture = m_body.createFixture(fixtureDef);
+    rect.dispose();
   }
 
   public GameMapObject checkObjectCollisions(float xx, float yy)
@@ -95,25 +129,20 @@ public class Player extends GameSprite {
     {
       if (m_controller.isRightPressed())
       {
-        m_dx += 0.1f;
-        if (m_dx > 1) m_dx = 1;
+        m_body.applyForceToCenter(m_hForce,0,true);
         m_lastDx = 1;
       } else if (m_controller.isLeftPressed())
       {
-        m_dx -= 0.1f;
-        if (m_dx < -1) m_dx = -1;
+        m_body.applyForceToCenter(-m_hForce,0,true);
         m_lastDx = -1;
-      } else
+      }
+
+      Vector2 cv = m_body.getLinearVelocity();
+      if (Math.abs(cv.x) > 4)
       {
-        if (m_dx > 0)
-        {
-          m_dx -= 0.25f;
-          if (m_dx < 0) m_dx = 0;
-        } else if (m_dx < 0)
-        {
-          m_dx += 0.25f;
-          if (m_dx > 0) m_dx = 0;
-        }
+        if (cv.x > 0) cv.x = 5;
+        else cv.x = -5;
+        m_body.setLinearVelocity(cv);
       }
 
       if (m_controller.isFirePressed())
@@ -130,21 +159,6 @@ public class Player extends GameSprite {
           m_firePressedTicks = 0;
         }
       }
-
-    } else
-    {
-      //not powered, or player no longer controlled
-      // still apply horizontal drag
-      //refactor this (and above) to common function
-      if (m_dx > 0)
-      {
-        m_dx -= 0.25f;
-        if (m_dx < 0) m_dx = 0;
-      } else if (m_dx < 0)
-      {
-        m_dx += 0.25f;
-        if (m_dx > 0) m_dx = 0;
-      }
     }
 
     if (m_controlDelayTicks > 0)
@@ -159,59 +173,16 @@ public class Player extends GameSprite {
       }
     }
 
-    float x = this.getX() + m_dx;
-
-    byte b = 0;
-    if (m_dx < 0)
-    {
-      //going left
-      b = m_map.getCollisionBitsAt(x,this.getY());
-      b = (byte) (b | m_map.getCollisionBitsAt(x,this.getY() + this.getHeight() - 6));
-    } else if (m_dx > 0)
-    {
-      //going right
-      b = m_map.getCollisionBitsAt(x+this.getWidth(),this.getY());
-      b = (byte) (b | m_map.getCollisionBitsAt(x+this.getWidth(),this.getY() + this.getHeight() - 6));
-    }
-
-    if (b > 0)
-    {
-      x -= m_dx;
-      m_dx = 0;
-    }
-
-    if (m_dx != 0)
-    {
-      GameMapObject o = checkObjectCollisions(x,this.getY()+1);
-      if (o != null)
-      {
-        if (m_dx > 0)
-        {
-          x = o.getX() - this.getWidth();
-          o.updatePush(m_dx);
-        }
-        else if (m_dx < 0)
-        {
-          x = o.getX() + o.getWidth();
-          o.updatePush(m_dx);
-        }
-        //m_dx = 0;
-      }
-    }
-
-    this.setPosition(x,this.getY());
-
-
     //now do vertical
-
     if ((m_powered) && (m_playerControlled))
     {
       if (m_onGround)
       {
         if (m_controller.isJumpPressed())
         {
-          m_dy = m_jumpDY;
+          m_body.applyLinearImpulse(0, m_jumpDY, 0, 0, true);
           m_jumpTicks = 12;
+          m_tempTicks = 90;
           m_onGround = false;
         }
       } else
@@ -219,7 +190,7 @@ public class Player extends GameSprite {
         if (m_jumpTicks > 0) m_jumpTicks--;
         if ((m_jumpTicks > 0) && (m_controller.isJumpPressed()))
         {
-          if (m_dy < (m_jumpDY * 0.75f)) m_dy = m_jumpDY*0.75f;
+          //m_body.applyForceToCenter(0,-1,true);
         } else
         {
           m_jumpTicks = 0;
@@ -227,63 +198,11 @@ public class Player extends GameSprite {
       }
     }
 
-    float y = this.getY();
-    m_dy += m_gravity;
-    if (m_dy < -4) m_dy = -4;
-    y += m_dy;
-    if (m_dy < 0)
-    {
-      b = (byte) ((m_map.getCollisionBitsAt(this.getX()+2,y)) | (m_map.getCollisionBitsAt(this.getX()+14,y)));
-      if (b > 0)
-      {
-        int ty = (int) (y / 16f);
-        y = (ty + 1) * 16f;
-        m_onGround = true;
-        m_dy = 0;
-      } else{
-        m_onGround = false;
-      }
+    if (m_tempTicks > 0) m_tempTicks--;
+    else 
+     m_onGround = true; //testing, need to add sensor/test to see if on ground
 
-      GameMapObject o = checkObjectCollisions(this.getX(),y);
-      if (o != null)
-      {
-        //o is the GameMapObject I'm colliding with below me
-        float deltaY = y - o.getY();
-        if (deltaY > 5)
-        {
-          m_onGround = true;
-          m_dy = 0;
-          m_jumpTicks = 0;
-          y = (float)java.lang.Math.ceil(o.getY() + o.getHeight());
-        }
-      }
-    } else if (m_dy > 0)
-    {
-      b = (byte) ((m_map.getCollisionBitsAt(this.getX()+2,y+this.getHeight())) | (m_map.getCollisionBitsAt(this.getX()+14,y+this.getHeight())));
-      if (b > 0)
-      {
-        int ty = (int) (y / 16f);
-        y = (ty) * 16f;
-        m_onGround = false;
-        m_dy = 0;
-      }
-
-      GameMapObject o = checkObjectCollisions(this.getX(),y);
-      if (o != null)
-      {
-        //o is the GameMapObject I'm colliding with above me
-        if (o.getY() > y)
-        {
-          m_dy = 0f;
-          m_jumpTicks = 0;
-          m_onGround = false;
-          y = o.getY() - this.getHeight() - 1;
-        }
-      }
-
-    }
-
-    this.setPosition(this.getX(),y);
+    this.setPositionToBody();
 
     if (m_throwDelayTicks > 0) m_throwDelayTicks--;
     else
@@ -297,6 +216,13 @@ public class Player extends GameSprite {
       }
     }
 
+  }
+
+  public void setPositionToBody()
+  {
+    float cx = m_body.getPosition().x*16;
+    float cy = m_body.getPosition().y*16;
+    this.setPosition(cx - this.getWidth()/2, cy - this.getHeight()/2);
   }
 
   public void powerOn()
@@ -344,6 +270,12 @@ public class Player extends GameSprite {
   {
     m_playerControlled = true;
     m_controlDelayTicks = 30;
+  }
+
+  public void setBodyPosition(float xx, float yy)
+  {
+    this.setPosition(xx,yy);
+    m_body.setTransform((xx + this.getWidth()/2)/16 , (yy + this.getHeight()/2)/16, this.getRotation()/180f * 3.14f);
   }
 
   public void setActive(boolean b)

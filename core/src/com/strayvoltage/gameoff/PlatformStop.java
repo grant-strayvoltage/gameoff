@@ -15,6 +15,7 @@ public class PlatformStop extends GameMapObject {
     
   public void init(MapProperties mp, TextureAtlas textures)
   {
+    m_hasPhysics = false;
     m_colBits = 8;
     this.setSize(16,16);
   }

@@ -15,7 +15,7 @@
   </object>
   <object id="3" name="switch1" type="Switch" x="480" y="288" width="16" height="16"/>
   <object id="4" name="P1" type="PlayerStart1" x="80" y="304" width="16" height="32"/>
-  <object id="5" name="P2" type="PlayerStart2" x="48" y="320" width="16" height="16"/>
+  <object id="5" name="P2" type="PlayerStart2" x="192" y="256" width="16" height="16"/>
   <object id="12" name="block1" type="Block" x="160" y="256" width="16" height="16"/>
   <object id="13" name="block2" type="Block" x="160" y="128" width="16" height="16"/>
   <object id="14" name="block3" type="Block" x="224" y="128" width="16" height="16"/>

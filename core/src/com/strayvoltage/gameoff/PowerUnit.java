@@ -18,6 +18,8 @@ public class PowerUnit extends GameMapObject {
 
   public void init(MapProperties mp, TextureAtlas textures)
   {
+    m_categoryBits = 128;
+    m_filterMask = 255-16;
     m_colBits = 16;
     TextureRegion texture = null;
     texture = textures.findRegion("power_F1");
@@ -30,17 +32,20 @@ public class PowerUnit extends GameMapObject {
       m_owner = p;
       m_pickedUp = true;
       this.setVisible(false);
+      m_body.setActive(false);
       m_owner.setPowerUnit(this);
   }
 
   public void throwUnit(float dx, float dy)
   {
-      m_dx = dx;
-      m_dy = dy;
-      m_pickedUp = false;
-      this.setPosition(m_owner.getX() + 4, m_owner.getY() + m_owner.getHeight() - 8);
-      m_owner = null;
-      this.setVisible(true);
+    m_pickedUp = false;
+    this.setBodyPosition(m_owner.getX() + 4, m_owner.getY() + m_owner.getHeight() - 8);
+    m_body.setLinearVelocity(0,0);
+    m_body.setActive(true);
+    m_owner = null;
+    this.setVisible(true);
+    m_body.setLinearVelocity(dx*2,dy*2);
+    setPositionToBody();
   }
 
   public boolean canPickUp()
@@ -52,7 +57,7 @@ public class PowerUnit extends GameMapObject {
   {
       if (m_pickedUp == false)
       {
-        handlePhysics();
+        setPositionToBody();
       } else
       {
           this.setPosition(m_owner.getX() + 4, m_owner.getY() + m_owner.getHeight() - 8);
