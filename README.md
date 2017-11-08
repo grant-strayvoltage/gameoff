@@ -63,8 +63,8 @@ Objects to use in puzzle elements:
 
 # .plan
 
-* improve basic physics engine - key thing is handling multiple object collisions (for example player pushing a block on a moving platform, things go crazy right now) - recommend converting tiles to boxes/objects to make more uniform.
-* add one way collisions (can jump up through)
+* tune box2d settings and player movement, fix on ground detection for jumping
+* add one way collisions (can jump up through, power unit and most things can go up through)
 * add switch
 * add on contact triggers
 * improve player controls and throwing the power unit
