@@ -2,6 +2,8 @@
 
 Game for game off game jam.
 
+Trello: https://trello.com/b/zovNNphw
+
 # Concept
 
 Action, Puzzle Platformer either 1 player or ideally 2 player couch co-op.
@@ -21,6 +23,13 @@ Two tile layers: background, and platforms.
 One object layer: objects
 
 # Controls
+
+* Desktop Controls: 
+    (Singleplayer)
+    - Arrow keys to move left or right
+    - Enter to Jump
+    - Space to throw power unit 
+    - z to switch players
 
 In one player mode, a button press switches the player between which character they are controlling.
 In two player mode, both are active at all times - but only if near a dropped power unit, or carrying the power unit can you move.
@@ -63,8 +72,8 @@ Objects to use in puzzle elements:
 
 # .plan
 
-* tune box2d settings and player movement, fix on ground detection for jumping
-* add one way collisions (can jump up through, power unit and most things can go up through)
+* improve basic physics engine - key thing is handling multiple object collisions (for example player pushing a block on a moving platform, things go crazy right now) - recommend converting tiles to boxes/objects to make more uniform.
+* add one way collisions (can jump up through)
 * add switch
 * add on contact triggers
 * improve player controls and throwing the power unit
