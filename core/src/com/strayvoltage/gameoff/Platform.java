@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.g2d.*;
 import java.util.Iterator;
 import java.util.ArrayList;
 import com.badlogic.gdx.math.*;
+import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.glutils.*;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
@@ -32,8 +33,9 @@ public class Platform extends GameMapObject {
 
   public void init(MapProperties mp, TextureAtlas textures)
   {
+	
 	m_categoryBits = Box2dVars.PLATFORM;
-	m_filterMask = Box2dVars.POWER | Box2dVars.FLOOR | Box2dVars.PLAYER_NORMAL | Box2dVars.PLAYER_JUMPING | Box2dVars.BLOCK;
+	m_filterMask = Box2dVars.PLAYER_FOOT | Box2dVars.POWER | Box2dVars.FLOOR | Box2dVars.PLAYER_NORMAL | Box2dVars.PLAYER_JUMPING | Box2dVars.BLOCK;
     m_gravityScale = 0;
     m_colBits = 3;
     m_sizeScale = 0.9f;

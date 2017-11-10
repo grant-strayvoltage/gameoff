@@ -16,7 +16,7 @@ public class Block extends GameMapObject {
   public void init(MapProperties mp, TextureAtlas textures)
   {
 	m_categoryBits = Box2dVars.BLOCK;
-	m_filterMask = Box2dVars.PLATFORM | Box2dVars.PLAYER_NORMAL | Box2dVars.PLAYER_JUMPING | Box2dVars.PLATFORM_STOP| Box2dVars.FLOOR;
+	m_filterMask = Box2dVars.PLAYER_FOOT | Box2dVars.PLATFORM | Box2dVars.PLAYER_NORMAL | Box2dVars.PLAYER_JUMPING | Box2dVars.PLATFORM_STOP| Box2dVars.FLOOR;
     m_density = 1.5f;
     m_colBits = 3;
     TextureRegion texture = null;
@@ -29,4 +29,5 @@ public class Block extends GameMapObject {
   {
       this.setPositionToBody();
   }
+
 }
