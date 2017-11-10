@@ -15,7 +15,7 @@ import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.physics.box2d.BodyDef.*;
 import com.badlogic.gdx.utils.Array;
 
-public class Player extends GameSprite {
+public class Player extends GameSprite implements Box2dCollisionHandler{
 
   GameInputManager2 m_controller;
   float m_dx = 0;
@@ -83,6 +83,7 @@ public class Player extends GameSprite {
     fixtureDef.filter.maskBits = Box2dVars.FLOOR | Box2dVars.BLOCK | Box2dVars.PLATFORM;
 
     m_fixture = m_body.createFixture(fixtureDef);
+    m_fixture.setUserData(this);
     rect.dispose();
 
     fixtureDef = new FixtureDef();
@@ -94,10 +95,11 @@ public class Player extends GameSprite {
     fixtureDef.density = 0f; 
     fixtureDef.friction = 0f;
     fixtureDef.restitution = 0f;
-    fixtureDef.filter.categoryBits = Box2dVars.PLAYER_NORMAL;
+    fixtureDef.filter.categoryBits = Box2dVars.PLAYER_FOOT; //changed to foot so we can do separate collision testing. 
     fixtureDef.filter.maskBits = Box2dVars.FLOOR | Box2dVars.BLOCK | Box2dVars.PLATFORM;
 
-		playerSensorFixture = m_body.createFixture(fixtureDef);
+	playerSensorFixture = m_body.createFixture(fixtureDef);
+	playerSensorFixture.setUserData(this);
     playerSensorFixture.setSensor(true);		
 		circle.dispose();		
 		
@@ -386,6 +388,40 @@ public class Player extends GameSprite {
   {
     return true;
   }
+
+  
+  /////COLLISION HANDLING EXAMPLE -------------------------------
+  	//NOTE: in order to make any changes to the physics world or any physics related object
+    //		be sure to call Gdx.app.postRunnable() or you will stall the thread. 
+	@Override
+	public void handleBegin(Box2dCollision collision) {
+		//only check the collision of the player foot not the body. 
+		if(collision.self_type == Box2dVars.PLAYER_FOOT) {
+			//the collision target type is the type(categoryBits) of the thing we are colliding with. 
+			
+			Gdx.app.log("PlayerContactTest:","Target Collision Category="+collision.target_type);
+			
+			if(collision.target_type == Box2dVars.FLOOR) {
+				Gdx.app.log("PlayerContactTest:", "we touched a FLOOR!");
+			}
+			
+			//if the collision target is another gameMapObject we can access it from here
+			//i thought of removing this and just implementing it as Object and letting the programmer
+			//cast it themselves whenever they need to but this is simpler for now. 
+			if(collision.target!=null) {
+				//do stuff with the collision target
+				GameMapObject obj = collision.target;
+			}
+		}
+		
+		
+		
+	}
+	
+	@Override
+	public void handleEnd(Box2dCollision collision) {
+		
+	}
   
 }
 

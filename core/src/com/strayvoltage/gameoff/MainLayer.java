@@ -137,7 +137,7 @@ public float getFloat(String key, MapObject mp)
     //floor is now floor lol
     fixtureDef.filter.categoryBits = Box2dVars.FLOOR;
     //i think without a mask it m eans the floor can collide with everything. This way it cant. 
-    fixtureDef.filter.maskBits = Box2dVars.BLOCK | Box2dVars.PLAYER_NORMAL | Box2dVars.PLAYER_JUMPING | Box2dVars.POWER;
+    fixtureDef.filter.maskBits = Box2dVars.PLAYER_FOOT | Box2dVars.BLOCK | Box2dVars.PLAYER_NORMAL | Box2dVars.PLAYER_JUMPING | Box2dVars.POWER;
     fixtureDef.friction = 0.5f;
     float w = 0;
     float boxY = 0;
@@ -159,14 +159,14 @@ public float getFloat(String key, MapObject mp)
         	if(chainVectors.size == 0) {
         		//setup first vertex
         		startx = tx;
-        		chainVectors.add(new Vector2(0,0));
+        		chainVectors.add(new Vector2(0,Box2dVars.PIXELS_PER_METER*.05f));
         		chainVectors.add(new Vector2(0,tilesize));
         	}
         	chainVectors.add(new Vector2((chainVectors.peek().x+tilesize),tilesize));
         }
         if((c==null||tx+1 == m_mapWidth)&&chainVectors.size>0){
         	
-        	chainVectors.add(new Vector2((chainVectors.peek().x),0));
+        	chainVectors.add(new Vector2((chainVectors.peek().x),Box2dVars.PIXELS_PER_METER*.05f));
         	bodyDef = new BodyDef();
         	bodyDef.type = BodyType.StaticBody;
         	chain = new PolygonShape();
@@ -227,6 +227,7 @@ public float getFloat(String key, MapObject mp)
       {
         world.destroyBody(b);
       }
+      world.setContactListener(null);
     }
 
     if (world == null) {
@@ -339,6 +340,11 @@ public float getFloat(String key, MapObject mp)
         }
       }
     }
+    
+    //ADD COLLISIONADAPTER After all world objects are set.
+   	world.setContactListener(new Box2dCollisionAdapter());
+	
+	
 
     //TODO: we'll add particle effects when player dies and in other spots
     /*

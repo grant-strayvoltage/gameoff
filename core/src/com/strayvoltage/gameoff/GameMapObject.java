@@ -24,18 +24,20 @@ public abstract class GameMapObject extends GameSprite {
   boolean m_onGround = true;
   float m_gravity = -0.2f;
   Fixture m_fixture = null;
-  short m_categoryBits = 64;
+  short m_categoryBits = Box2dVars.OBJECT;
   short m_filterMask = 255;
   float m_gravityScale = 1f;
   float m_sizeScale = 1.0f;
   boolean m_hasPhysics = true;
   float m_restitution = 0.2f;
   float m_density = 1f;
+  BodyType m_btype;
 
   public GameMapObject()
   {
     super();
     m_colBits = 0;
+    m_btype = BodyType.DynamicBody;
   }
 
   public void setMap(GameTileMap map)
@@ -81,7 +83,7 @@ public abstract class GameMapObject extends GameSprite {
     MainLayer m = (MainLayer) getParent();
     for (GameMapObject o : m.m_gameMapObjects)
     {
-      //todo: might need to add players here?
+      //TODO: might need to add players here?
       if (o != this)
       {
         if ((o.colBits() & bits) > 0)
@@ -123,7 +125,7 @@ public abstract class GameMapObject extends GameSprite {
   {
 
     BodyDef bodyDef = new BodyDef();
-    bodyDef.type = BodyType.DynamicBody;
+    bodyDef.type = m_btype;
     bodyDef.fixedRotation = true;
 
     m_body = world.createBody(bodyDef);
@@ -144,6 +146,7 @@ public abstract class GameMapObject extends GameSprite {
     fixtureDef.filter.maskBits = m_filterMask;
 
     m_fixture = m_body.createFixture(fixtureDef);
+    m_fixture.setUserData(this);
     m_body.setGravityScale(m_gravityScale);
     rect.dispose();
 
