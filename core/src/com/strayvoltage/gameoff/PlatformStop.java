@@ -15,6 +15,8 @@ public class PlatformStop extends GameMapObject {
     
   public void init(MapProperties mp, TextureAtlas textures)
   {
+	 m_categoryBits = Box2dVars.PLATFORM_STOP;
+	m_filterMask = Box2dVars.PLATFORM;
     m_hasPhysics = false;
     m_colBits = 8;
     this.setSize(16,16);

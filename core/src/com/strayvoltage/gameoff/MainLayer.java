@@ -1,40 +1,31 @@
 package com.strayvoltage.gameoff;
 
-import com.badlogic.gdx.ApplicationAdapter;
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.*;
-import com.badlogic.gdx.graphics.g2d.*;
-import com.badlogic.gdx.Input;
-import com.badlogic.gdx.math.Intersector;
-import com.badlogic.gdx.math.Rectangle;
-//import com.badlogic.gdx.InputProcessor;
-import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.maps.tiled.*;
-import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
-import com.badlogic.gdx.Input.Keys;
-import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.controllers.Controller;
-import com.badlogic.gdx.controllers.PovDirection;
-import com.badlogic.gdx.controllers.mappings.Ouya;
-import com.badlogic.gdx.graphics.FPSLogger;
-import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
-import com.badlogic.gdx.audio.*;
-import com.badlogic.gdx.utils.viewport.*;
-import com.badlogic.gdx.math.Vector3;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
-import com.badlogic.gdx.maps.*;
-import java.util.Iterator;
 import java.util.ArrayList;
-import com.badlogic.gdx.utils.Array;
-import com.badlogic.gdx.graphics.g2d.ParticleEffectPool.*;
-import com.badlogic.gdx.graphics.g2d.*;
-import com.badlogic.gdx.utils.Disposable;
-import com.badlogic.gdx.math.*;
+import java.util.Arrays;
+
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
-import com.strayvoltage.gamelib.*;
-import com.badlogic.gdx.physics.box2d.*;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.maps.MapLayer;
+import com.badlogic.gdx.maps.MapObject;
+import com.badlogic.gdx.maps.MapObjects;
+import com.badlogic.gdx.maps.MapProperties;
+import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
+import com.badlogic.gdx.math.Matrix4;
+import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.Body;
+import com.badlogic.gdx.physics.box2d.BodyDef;
+import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
+import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
+import com.badlogic.gdx.physics.box2d.ChainShape;
+import com.badlogic.gdx.physics.box2d.FixtureDef;
+import com.badlogic.gdx.physics.box2d.PolygonShape;
+import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.utils.Array;
+import com.strayvoltage.gamelib.GameLayer;
+import com.strayvoltage.gamelib.GameMain;
+import com.strayvoltage.gamelib.GameTileMap;
 
 public class MainLayer extends GameLayer  {
 
@@ -53,6 +44,7 @@ static BitmapFont m_font32 = null;
 TextureAtlas m_sprites = null;
 public ArrayList<GameMapObject> m_gameMapObjects = new ArrayList<GameMapObject>();
 static public World world;
+static public Box2DDebugRenderer debug_renderer;
 
 Player m_player1, m_player2;
 
@@ -137,43 +129,86 @@ public float getFloat(String key, MapObject mp)
   private void setupTileMapBox2D()
   {
 
-    TiledMapTileLayer pLayer = (TiledMapTileLayer) tiledMap.m_tiledMap.getLayers().get("platforms");
+    TiledMapTileLayer p_Layer = (TiledMapTileLayer) tiledMap.m_tiledMap.getLayers().get("platforms");
 
     FixtureDef fixtureDef = new FixtureDef();
     fixtureDef.density = 1.0f;
     fixtureDef.restitution = 0.25f;
-    fixtureDef.filter.categoryBits = 1;
+    //floor is now floor lol
+    fixtureDef.filter.categoryBits = Box2dVars.FLOOR;
+    //i think without a mask it m eans the floor can collide with everything. This way it cant. 
+    fixtureDef.filter.maskBits = Box2dVars.BLOCK | Box2dVars.PLAYER_NORMAL | Box2dVars.PLAYER_JUMPING | Box2dVars.POWER;
     fixtureDef.friction = 0.5f;
     float w = 0;
     float boxY = 0;
     float boxLeftX = 0;
+    float tilesize = tiledMap.getTilePixelWidth();//assuming we dont ever use weird size tiles. 
+    Array<Vector2> chainVectors = new Array<Vector2>();
     
     for (int ty = 0; ty < m_mapHeight; ty++)
     {
       BodyDef bodyDef = null;
+      PolygonShape chain = null;
+      int startx = 0;
+      
       for (int tx = 0; tx < m_mapWidth; tx++)
       {
-        TiledMapTileLayer.Cell c = pLayer.getCell(tx,ty);
-        if (c != null)
-        {
-            float pw = c.getTile().getTextureRegion().getRegionWidth();
-            bodyDef = new BodyDef();
-            bodyDef.type = BodyDef.BodyType.StaticBody;
-            w = (pw/16);
-            boxLeftX = tx;
-            boxY = ty;
-            PolygonShape shape = new PolygonShape();
-            shape.setAsBox(w/2,(pw-1)/16/2);
-            fixtureDef.shape = shape;
-            bodyDef.position.set(boxLeftX + w/2,boxY + (pw-1)/16/2 + 2/16);
-            Body body = world.createBody(bodyDef);
-            body.createFixture(fixtureDef);
-            shape.dispose();
-            //bodyDef.dispose();
-            bodyDef = null;
-            w = 0;
+        TiledMapTileLayer.Cell c = p_Layer.getCell(tx,ty);
+        
+        if(c!=null) {
+        	if(chainVectors.size == 0) {
+        		//setup first vertex
+        		startx = tx;
+        		chainVectors.add(new Vector2(0,0));
+        		chainVectors.add(new Vector2(0,tilesize));
+        	}
+        	chainVectors.add(new Vector2((chainVectors.peek().x+tilesize),tilesize));
         }
+        if((c==null||tx+1 == m_mapWidth)&&chainVectors.size>0){
+        	
+        	chainVectors.add(new Vector2((chainVectors.peek().x),0));
+        	bodyDef = new BodyDef();
+        	bodyDef.type = BodyType.StaticBody;
+        	chain = new PolygonShape();
+        	Vector2[] VX = new Vector2[4];
+        	VX[0] = chainVectors.first().scl(1f/Box2dVars.PIXELS_PER_METER);
+        	VX[1] = chainVectors.get(1).scl(1f/Box2dVars.PIXELS_PER_METER);;
+        	VX[2] = chainVectors.get(chainVectors.size-2).scl(1f/Box2dVars.PIXELS_PER_METER);;
+        	VX[3] = chainVectors.peek().scl(1f/Box2dVars.PIXELS_PER_METER);;
+        	chain.set(VX);
+        	chainVectors.clear();
+        	fixtureDef.shape = chain;
+        	bodyDef.position.set((startx*tilesize)/Box2dVars.PIXELS_PER_METER, (ty*tilesize)/Box2dVars.PIXELS_PER_METER);
+        	world.createBody(bodyDef).createFixture(fixtureDef);
+        	chain.dispose();
+        	chain = null;
+        	bodyDef = null;
+        	startx = 0;
+        }
+        
+        
+//        if (c != null)
+//        {
+//            float pw = c.getTile().getTextureRegion().getRegionWidth();
+//            bodyDef = new BodyDef();
+//            bodyDef.type = BodyDef.BodyType.StaticBody;
+//            w = (pw/16);
+//            boxLeftX = tx;
+//            boxY = ty;
+//            PolygonShape shape = new PolygonShape();
+//            shape.setAsBox(w/2,(pw-1)/16/2);
+//            fixtureDef.shape = shape;
+//            bodyDef.position.set(boxLeftX + w/2,boxY + (pw-1)/16/2 + 2/16);
+//            Body body = world.createBody(bodyDef);
+//            body.createFixture(fixtureDef);
+//            shape.dispose();
+//            //bodyDef.dispose();
+//            bodyDef = null;
+//            w = 0;
+//            
+//        }
       }
+     
     }
   }
 
@@ -194,8 +229,11 @@ public float getFloat(String key, MapObject mp)
       }
     }
 
-    if (world == null)
-      world = new World(new Vector2(0, -20), true);
+    if (world == null) {
+    	world = new World(new Vector2(0, -20), true);
+    	debug_renderer = new Box2DDebugRenderer();
+    }
+      
 
     PowerUnit pu = new PowerUnit();
     pu.init(null,m_sprites);
@@ -323,6 +361,13 @@ public float getFloat(String key, MapObject mp)
      //     System.exit(0);
     //}
     world.step(1/60f, 6, 2);
+    
+    //RELOAD CURRENT LEVEL
+    if(inputManager.isTestPressed()) {
+    	MainLayer ml = new MainLayer();
+        ml.loadLevel(m_stage,m_level);
+        this.replaceActiveLayer(ml);
+    }
   }
 
   @Override
@@ -336,6 +381,9 @@ public float getFloat(String key, MapObject mp)
 
     if (tiledMap != null)
       tiledMap.draw();
+    
+    //DEBUG RENDER BOX2D
+    debug_renderer.render(world, m_defaultMatrix.cpy().scl(Box2dVars.PIXELS_PER_METER));
 
   }
 

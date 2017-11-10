@@ -73,8 +73,8 @@ public class Player extends GameSprite {
     fixtureDef.friction = 0.5f;
     fixtureDef.restitution = 0.2f;
 
-    fixtureDef.filter.categoryBits = 16;
-    fixtureDef.filter.maskBits = 255-16-128;
+    fixtureDef.filter.categoryBits = Box2dVars.PLAYER_NORMAL;
+    fixtureDef.filter.maskBits = Box2dVars.FLOOR | Box2dVars.BLOCK | Box2dVars.PLATFORM;
 
     m_fixture = m_body.createFixture(fixtureDef);
     rect.dispose();
