@@ -13,6 +13,7 @@ import com.strayvoltage.gamelib.*;
 import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.physics.box2d.BodyDef.*;
+import com.badlogic.gdx.utils.Array;
 
 public class Player extends GameSprite {
 
@@ -37,7 +38,9 @@ public class Player extends GameSprite {
   Fixture playerSensorFixture = null;
   int m_categoryBits = 0;
   int m_tempTicks = 0;
-
+  long lastGroundTime = 0;
+  float stillTime = 0;
+  World m_world = null;
   float m_hForce = 50;
 
   public Player(TextureRegion texture, GameInputManager2 controller)
@@ -56,6 +59,7 @@ public class Player extends GameSprite {
 
   public void addToWorld(World world)
   {
+    m_world = world;
     BodyDef bodyDef = new BodyDef();
     bodyDef.type = BodyType.DynamicBody;
     bodyDef.fixedRotation = true;
@@ -81,10 +85,19 @@ public class Player extends GameSprite {
     m_fixture = m_body.createFixture(fixtureDef);
     rect.dispose();
 
+    fixtureDef = new FixtureDef();
     CircleShape circle = new CircleShape();		
 		circle.setRadius((this.getWidth()-2)/(2*Box2dVars.PIXELS_PER_METER));
 		circle.setPosition(new Vector2(0, -this.getHeight()/(2*Box2dVars.PIXELS_PER_METER)));
-		playerSensorFixture = m_body.createFixture(circle,0);
+    fixtureDef.shape = circle;
+
+    fixtureDef.density = 0f; 
+    fixtureDef.friction = 0f;
+    fixtureDef.restitution = 0f;
+    fixtureDef.filter.categoryBits = Box2dVars.PLAYER_NORMAL;
+    fixtureDef.filter.maskBits = Box2dVars.FLOOR | Box2dVars.BLOCK | Box2dVars.PLATFORM;
+
+		playerSensorFixture = m_body.createFixture(fixtureDef);
     playerSensorFixture.setSensor(true);		
 		circle.dispose();		
 		
@@ -118,6 +131,42 @@ public class Player extends GameSprite {
     return (float)Math.sqrt(Math.pow((double)(xx- px), 2) + Math.pow((double)(yy-py), 2));
   }
 
+  private boolean isPlayerGrounded(float deltaTime) {
+
+		//groundedPlatform = null;
+		Array<Contact> contactList = m_world.getContactList();
+		for(int i = 0; i < contactList.size; i++) {
+			Contact contact = contactList.get(i);
+			if(contact.isTouching() && (contact.getFixtureA() == playerSensorFixture ||
+			   contact.getFixtureB() == playerSensorFixture)) {				
+				Vector2 pos = m_body.getPosition();
+				WorldManifold manifold = contact.getWorldManifold();
+				boolean below = true;
+				for(int j = 0; j < manifold.getNumberOfContactPoints(); j++) {
+					below = below && (manifold.getPoints()[j].y < (pos.y - this.getHeight()/(2*Box2dVars.PIXELS_PER_METER) - 0.1f));
+				}
+				
+				if(below) {
+          /*
+					if(contact.getFixtureA().getUserData() != null && contact.getFixtureA().getUserData().equals("p")) {
+						groundedPlatform = (MovingPlatform)contact.getFixtureA().getBody().getUserData();							
+					}
+					
+					if(contact.getFixtureB().getUserData() != null && contact.getFixtureB().getUserData().equals("p")) {
+						groundedPlatform = (MovingPlatform)contact.getFixtureB().getBody().getUserData();
+					}	
+          */						
+			
+					return true;			
+				}
+
+				return false;
+			}
+		}
+
+		return false;
+	}
+
   public void update(float deltaTime)
   {
     if (m_playerControlled)
@@ -138,16 +187,32 @@ public class Player extends GameSprite {
     if ((m_powered) && (m_playerControlled))
     {
       Vector2 cv = m_body.getLinearVelocity();
+      boolean notMoved = true;
+
+      m_onGround = isPlayerGrounded(Gdx.graphics.getDeltaTime());
+      if(m_onGround) {
+        lastGroundTime = System.nanoTime();
+      } else {
+        if(System.nanoTime() - lastGroundTime > 100000000) {
+          //m_onGround = true;
+        }
+      }
+
       if (m_controller.isRightPressed())
       {
         m_body.applyForceToCenter(m_hForce,0,true);
         m_lastDx = 1;
+        notMoved = false;
+        stillTime = 0;
       } else if (m_controller.isLeftPressed())
       {
         m_body.applyForceToCenter(-m_hForce,0,true);
         m_lastDx = -1;
-      } else {
-        m_body.setLinearVelocity(cv.x * 0.9f, cv.y);
+        notMoved = false;
+        stillTime = 0;
+      } else {		
+			    stillTime += Gdx.graphics.getDeltaTime();
+          m_body.setLinearVelocity(cv.x * 0.9f, cv.y);
       }
 
       
@@ -157,6 +222,26 @@ public class Player extends GameSprite {
         else cv.x = -4;
         m_body.setLinearVelocity(cv);
       }
+
+      if(!m_onGround) {			
+        m_fixture.setFriction(0f);
+        playerSensorFixture.setFriction(0f);			
+      } else {
+
+
+        if(notMoved && stillTime > 0.2) {
+          m_fixture.setFriction(100f);
+          playerSensorFixture.setFriction(100f);
+        }
+        else {
+          m_fixture.setFriction(0.2f);
+          playerSensorFixture.setFriction(0.2f);
+        }
+        
+        //if(groundedPlatform != null && groundedPlatform.dist == 0) {
+        //  player.applyLinearImpulse(0, -24, pos.x, pos.y);				
+        //}
+      }	
 
       if (m_controller.isFirePressed())
       {
@@ -193,10 +278,15 @@ public class Player extends GameSprite {
       {
         if (m_controller.isJumpPressed())
         {
-          m_body.applyLinearImpulse(0, m_jumpDY, 0, 0, true);
-          m_jumpTicks = 12;
-          m_tempTicks = 90;
-          m_onGround = false;
+          if (m_jumpTicks > 0)
+          {
+            m_jumpTicks--;
+          } else
+          {
+            m_body.applyLinearImpulse(0, m_jumpDY, 0, 0, true);
+            m_jumpTicks = 12;
+            m_onGround = false;
+          }
         }
       } else
       {
@@ -210,10 +300,6 @@ public class Player extends GameSprite {
         }
       }
     }
-
-    if (m_tempTicks > 0) m_tempTicks--;
-    else 
-     m_onGround = true; //testing, need to add sensor/test to see if on ground
 
     this.setPositionToBody();
 
