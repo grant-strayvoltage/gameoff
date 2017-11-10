@@ -34,6 +34,7 @@ public class Player extends GameSprite {
   int m_firePressedTicks = 0;
   int m_throwDelayTicks = 60;
   Fixture m_fixture = null;
+  Fixture playerSensorFixture = null;
   int m_categoryBits = 0;
   int m_tempTicks = 0;
 
@@ -58,6 +59,7 @@ public class Player extends GameSprite {
     BodyDef bodyDef = new BodyDef();
     bodyDef.type = BodyType.DynamicBody;
     bodyDef.fixedRotation = true;
+    bodyDef.bullet = true;
 
     m_body = world.createBody(bodyDef);
     m_body.setUserData(this);
@@ -66,7 +68,7 @@ public class Player extends GameSprite {
 
     PolygonShape rect = null;
     rect = new PolygonShape();
-    rect.setAsBox(this.getWidth()/32, this.getHeight()/32);
+    rect.setAsBox(this.getWidth()/(2*Box2dVars.PIXELS_PER_METER), this.getHeight()/(2*Box2dVars.PIXELS_PER_METER));
     fixtureDef.shape = rect;
 
     fixtureDef.density = 1.0f; 
@@ -78,6 +80,14 @@ public class Player extends GameSprite {
 
     m_fixture = m_body.createFixture(fixtureDef);
     rect.dispose();
+
+    CircleShape circle = new CircleShape();		
+		circle.setRadius((this.getWidth()-2)/(2*Box2dVars.PIXELS_PER_METER));
+		circle.setPosition(new Vector2(0, -this.getHeight()/(2*Box2dVars.PIXELS_PER_METER)));
+		playerSensorFixture = m_body.createFixture(circle,0);
+    playerSensorFixture.setSensor(true);		
+		circle.dispose();		
+		
   }
 
   public GameMapObject checkObjectCollisions(float xx, float yy)
@@ -127,6 +137,7 @@ public class Player extends GameSprite {
 
     if ((m_powered) && (m_playerControlled))
     {
+      Vector2 cv = m_body.getLinearVelocity();
       if (m_controller.isRightPressed())
       {
         m_body.applyForceToCenter(m_hForce,0,true);
@@ -135,13 +146,15 @@ public class Player extends GameSprite {
       {
         m_body.applyForceToCenter(-m_hForce,0,true);
         m_lastDx = -1;
+      } else {
+        m_body.setLinearVelocity(cv.x * 0.9f, cv.y);
       }
 
-      Vector2 cv = m_body.getLinearVelocity();
+      
       if (Math.abs(cv.x) > 4)
       {
-        if (cv.x > 0) cv.x = 5;
-        else cv.x = -5;
+        if (cv.x > 0) cv.x = 4;
+        else cv.x = -4;
         m_body.setLinearVelocity(cv);
       }
 
@@ -220,8 +233,8 @@ public class Player extends GameSprite {
 
   public void setPositionToBody()
   {
-    float cx = m_body.getPosition().x*16;
-    float cy = m_body.getPosition().y*16;
+    float cx = m_body.getPosition().x*Box2dVars.PIXELS_PER_METER;
+    float cy = m_body.getPosition().y*Box2dVars.PIXELS_PER_METER;
     this.setPosition(cx - this.getWidth()/2, cy - this.getHeight()/2);
   }
 
@@ -275,7 +288,7 @@ public class Player extends GameSprite {
   public void setBodyPosition(float xx, float yy)
   {
     this.setPosition(xx,yy);
-    m_body.setTransform((xx + this.getWidth()/2)/16 , (yy + this.getHeight()/2)/16, this.getRotation()/180f * 3.14f);
+    m_body.setTransform((xx + this.getWidth()/2)/Box2dVars.PIXELS_PER_METER , (yy + this.getHeight()/2)/Box2dVars.PIXELS_PER_METER, this.getRotation()/180f * 3.14f);
   }
 
   public void setActive(boolean b)

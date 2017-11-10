@@ -73,11 +73,6 @@ public abstract class GameMapObject extends GameSprite {
     return m_map.getCollisionBitsAt(xx,yy);
   }
 
-  public void updatePush(float dx)
-  {
-
-  }
-
   public GameMapObject checkObjectCollisions(float xx, float yy, int bits)
   {
     float oldx = this.getX();
@@ -119,8 +114,8 @@ public abstract class GameMapObject extends GameSprite {
 
   public void setPositionToBody()
   {
-    float cx = m_body.getPosition().x*16;
-    float cy = m_body.getPosition().y*16;
+    float cx = m_body.getPosition().x*Box2dVars.PIXELS_PER_METER;
+    float cy = m_body.getPosition().y*Box2dVars.PIXELS_PER_METER;
     this.setPosition(cx - this.getWidth()/2, cy - this.getHeight()/2);
   }
 
@@ -138,7 +133,7 @@ public abstract class GameMapObject extends GameSprite {
 
     PolygonShape rect = null;
     rect = new PolygonShape();
-    rect.setAsBox(this.getWidth()/32 * m_sizeScale, this.getHeight()/32 * m_sizeScale);
+    rect.setAsBox(this.getWidth()/(Box2dVars.PIXELS_PER_METER*2) * m_sizeScale, this.getHeight()/(Box2dVars.PIXELS_PER_METER*2) * m_sizeScale);
     fixtureDef.shape = rect;
 
     fixtureDef.density = m_density;
@@ -161,6 +156,6 @@ public abstract class GameMapObject extends GameSprite {
   public void setBodyPosition(float xx, float yy)
   {
     this.setPosition(xx,yy);
-    m_body.setTransform((xx + this.getWidth()/2)/16 , (yy + this.getHeight()/2)/16, this.getRotation()/180f * 3.14f);
+    m_body.setTransform((xx + this.getWidth()/2)/Box2dVars.PIXELS_PER_METER , (yy + this.getHeight()/2)/Box2dVars.PIXELS_PER_METER, this.getRotation()/180f * 3.14f);
   }
 }
