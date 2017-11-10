@@ -32,6 +32,8 @@ public class Platform extends GameMapObject {
 
   public void init(MapProperties mp, TextureAtlas textures)
   {
+	m_categoryBits = Box2dVars.PLATFORM;
+	m_filterMask = Box2dVars.POWER | Box2dVars.FLOOR | Box2dVars.PLAYER_NORMAL | Box2dVars.PLAYER_JUMPING | Box2dVars.BLOCK;
     m_gravityScale = 0;
     m_colBits = 3;
     m_sizeScale = 0.9f;

@@ -18,8 +18,8 @@ public class PowerUnit extends GameMapObject {
 
   public void init(MapProperties mp, TextureAtlas textures)
   {
-    m_categoryBits = 128;
-    m_filterMask = 255-16;
+    m_categoryBits = Box2dVars.POWER;
+    m_filterMask = Box2dVars.BLOCK | Box2dVars.FLOOR | Box2dVars.PLAYER_NORMAL | Box2dVars.PLAYER_JUMPING | Box2dVars.PLATFORM;
     m_colBits = 16;
     TextureRegion texture = null;
     texture = textures.findRegion("power_F1");
