@@ -15,7 +15,7 @@ Each level will be a single screen level with an exit. Once you exit, no back tr
 
 # Dimensions and Tools
 
-** Note will be switching to 32 pixel tiles - double resolution - artist would like a higher def look - should have some sort next week **
+** Note will be switching to 32 pixel tiles - double resolution - artist would like a higher def look - should have some initial art next week **
 
 Using 16 pixel square tiles, with a screen resolution of 640x360. Allows for 40 tiles wide, and 22.5 tall. Each map is 40x23 with the top row of tiles slightly clipped. This resolution then scales nicely to 720P or 1080P displays for a retro/pixel look.
 
