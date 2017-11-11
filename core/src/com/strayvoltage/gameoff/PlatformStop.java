@@ -19,7 +19,7 @@ public class PlatformStop extends GameMapObject {
 	m_filterMask = Box2dVars.PLATFORM;
     m_hasPhysics = false;
     m_colBits = 8;
-    this.setSize(16,16);
+    this.setSize(Box2dVars.PIXELS_PER_METER,Box2dVars.PIXELS_PER_METER);
   }
 
   @Override

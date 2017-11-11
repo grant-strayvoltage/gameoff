@@ -29,6 +29,8 @@ public abstract class GameMapObject extends GameSprite {
   float m_gravityScale = 1f;
   float m_sizeScale = 1.0f;
   boolean m_hasPhysics = true;
+  //
+  boolean m_isSensor = false;
   float m_restitution = 0.2f;
   float m_density = 1f;
   BodyType m_btype;
@@ -141,7 +143,7 @@ public abstract class GameMapObject extends GameSprite {
     fixtureDef.density = m_density;
     fixtureDef.friction = 0.1f;
     fixtureDef.restitution = m_restitution;
-
+    fixtureDef.isSensor = m_isSensor;
     fixtureDef.filter.categoryBits = m_categoryBits;
     fixtureDef.filter.maskBits = m_filterMask;
 

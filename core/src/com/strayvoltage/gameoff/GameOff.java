@@ -43,6 +43,7 @@ public class GameOff extends GameMain {
   public void loadGameDefaults()
   {
       this.setGlobal("Level", "1");
+      this.setGlobal("game_complete", "false");
   }
 
   public void resize(int width, int height) {
