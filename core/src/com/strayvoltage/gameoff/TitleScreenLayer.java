@@ -68,7 +68,7 @@ public class TitleScreenLayer extends GameLayer{
     m_inputManager.setViewport(GameMain.getSingleton().m_viewport);
 
     m_defaultMatrix = m_camera.combined.cpy();
-    m_defaultMatrix.setToOrtho2D(0, 0, 640, 360);
+    m_defaultMatrix.setToOrtho2D(0, 0, 1280, 720);
 
     if (m_assets.isLoaded("g_sprites.txt") == false)
     {
@@ -79,7 +79,7 @@ public class TitleScreenLayer extends GameLayer{
     m_gameTextures = m_assets.get("g_sprites.txt", TextureAtlas.class);
 
     m_pressPlay = new GameSprite(m_gameTextures.findRegion("pressplay"));
-    m_pressPlay.setPosition(320-m_pressPlay.getWidth()/2, 100);
+    m_pressPlay.setPosition(320-m_pressPlay.getWidth()/2, 200);
 
     GameAnimateable g = AnimateScaleTo.createPulseSequence(0.75f, 1.0f, 1.1f, -1);
     m_pressPlay.runAnimation(g);
@@ -90,7 +90,7 @@ public class TitleScreenLayer extends GameLayer{
     m_musicStarted = false;
 
 
-    this.setCameraPosition(320,180);
+    this.setCameraPosition(640,360);
   }
 
 

@@ -49,13 +49,13 @@ public class SplashScreen extends GameLayer {
 
     m_texture = new Texture("sv_logo.png");
     m_five = new GameSprite(m_texture);
-    m_five.setPosition(60,100);
+    m_five.setPosition(170,250);
     this.add(m_five);
     m_five.setOpacity(0);
 
     AnimateDelay d0 = new AnimateDelay(0.5f);
     AnimateFadeIn in1 = new AnimateFadeIn(0.75f);
-    AnimateDelay d1 = new AnimateDelay(3.0f);
+    AnimateDelay d1 = new AnimateDelay(1.5f);
     AnimateFadeOut out1 = new AnimateFadeOut(0.5f);
     AnimateDelay d2 = new AnimateDelay(0.5f);
 
@@ -65,7 +65,7 @@ public class SplashScreen extends GameLayer {
 
     m_five.runAnimation(seq1);
 
-    this.setCameraPosition(320,180);
+    this.setCameraPosition(640,360);
 
     m_assets.load("title.png", Texture.class);
     m_assets.load("g_sprites.txt", TextureAtlas.class);

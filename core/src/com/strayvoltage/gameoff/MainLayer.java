@@ -56,8 +56,8 @@ public MainLayer()
     gameState = 1;
 
     m_defaultMatrix = m_camera.combined.cpy();
-    m_defaultMatrix.setToOrtho2D(0, 0, 640, 360);
-    this.setCameraPosition(320,180);
+    m_defaultMatrix.setToOrtho2D(0, 0, 1280,720);
+    this.setCameraPosition(640,360);
 
     inputManager = MasterInputManager.getSharedInstance().getController(0);
     inputManager.setViewport(GameMain.getSingleton().m_viewport);

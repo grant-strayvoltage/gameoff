@@ -2,7 +2,7 @@ package com.strayvoltage.gameoff;
 
 public class Box2dVars {
 	
-	public static final float PIXELS_PER_METER = 16.0f;
+	public static final float PIXELS_PER_METER = 32.0f;
 	
 	//USE PowerOfTwo
 	public static final short BLOCK = 2;
