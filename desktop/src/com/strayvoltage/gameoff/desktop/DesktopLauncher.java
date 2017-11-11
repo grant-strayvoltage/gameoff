@@ -8,14 +8,14 @@ import com.strayvoltage.gameoff.GameOff;
 
 public class DesktopLauncher {
 	//set to false when we deploy
-	public static boolean AUTO_PACK = false;
+	public static boolean AUTO_PACK = true;
 	
 	public static void main (String[] arg) {
 		
 		//TEXTURE PACKING AT RUNTIME ------------------------------
 		if(AUTO_PACK) {
 			String input_dir = "../../input_assets";
-			String output_dir = "";
+			String output_dir = "image";
 			
 			Settings settings = new Settings();
 			settings.useIndexes = true;
@@ -23,7 +23,7 @@ public class DesktopLauncher {
 			settings.pot = true;
 			//huge atlases. this is a lot bigger than what im usually comfortable with lol
 			settings.maxWidth = 2048; 
-			settings.atlasExtension = "txt";
+			settings.atlasExtension = ".txt";
 			settings.maxHeight = 2048;
 			settings.stripWhitespaceX = true;
 			settings.stripWhitespaceY = true;
@@ -33,8 +33,11 @@ public class DesktopLauncher {
 			
 			//You can process several different input sub_dirs
 			
+			//TEST
+			TexturePacker.process(settings,input_dir+"/test", output_dir, "super_test");
+			
 			//GAMESPRITES -------------
-			TexturePacker.process(input_dir+"/game_sprites", output_dir, "game_sprites");
+			//TexturePacker.process(input_dir+"/game_sprites", output_dir, "game_sprites");
 		}
 		
 		
