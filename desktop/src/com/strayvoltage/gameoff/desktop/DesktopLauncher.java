@@ -15,7 +15,7 @@ public class DesktopLauncher {
 		//TEXTURE PACKING AT RUNTIME ------------------------------
 		if(AUTO_PACK) {
 			String input_dir = "../../input_assets";
-			String output_dir = "../assets";
+			String output_dir = "";
 			
 			Settings settings = new Settings();
 			settings.useIndexes = true;
@@ -23,6 +23,7 @@ public class DesktopLauncher {
 			settings.pot = true;
 			//huge atlases. this is a lot bigger than what im usually comfortable with lol
 			settings.maxWidth = 2048; 
+			settings.atlasExtension = "txt";
 			settings.maxHeight = 2048;
 			settings.stripWhitespaceX = true;
 			settings.stripWhitespaceY = true;
