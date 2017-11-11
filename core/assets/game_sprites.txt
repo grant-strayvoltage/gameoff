@@ -1,117 +1,117 @@
 game_sprites.png
-size: 512, 512
+size: 1024, 1024
 format: RGBA8888
 filter: Linear,Linear
 repeat: none
 block1_moveable
   rotate: false
   xy: 3, 3
-  size: 16, 16
-  orig: 16, 16
+  size: 32, 32
+  orig: 32, 32
   offset: 0, 0
   index: -1
 enemy1_F1
   rotate: false
-  xy: 21, 3
-  size: 16, 16
-  orig: 16, 16
+  xy: 37, 3
+  size: 32, 32
+  orig: 32, 32
   offset: 0, 0
   index: -1
 enemy2_F1
   rotate: false
-  xy: 39, 3
-  size: 16, 32
-  orig: 16, 32
+  xy: 71, 3
+  size: 32, 64
+  orig: 32, 64
   offset: 0, 0
   index: -1
 platform_3v
   rotate: false
-  xy: 57, 3
-  size: 16, 48
-  orig: 16, 48
+  xy: 105, 3
+  size: 32, 96
+  orig: 32, 96
   offset: 0, 0
   index: -1
 platform_3w
   rotate: false
-  xy: 75, 3
-  size: 48, 16
-  orig: 48, 16
+  xy: 139, 3
+  size: 96, 32
+  orig: 96, 32
   offset: 0, 0
   index: -1
 platform_4v
   rotate: false
-  xy: 125, 3
-  size: 16, 64
-  orig: 16, 64
+  xy: 237, 3
+  size: 32, 128
+  orig: 32, 128
   offset: 0, 0
   index: -1
 platform_4w
   rotate: false
-  xy: 143, 3
-  size: 64, 16
-  orig: 64, 16
+  xy: 271, 3
+  size: 128, 32
+  orig: 128, 32
   offset: 0, 0
   index: -1
 platform_5v
   rotate: false
-  xy: 209, 3
-  size: 16, 80
-  orig: 16, 80
+  xy: 401, 3
+  size: 32, 160
+  orig: 32, 160
   offset: 0, 0
   index: -1
 platform_5w
   rotate: false
-  xy: 227, 3
-  size: 80, 16
-  orig: 80, 16
+  xy: 435, 3
+  size: 160, 32
+  orig: 160, 32
   offset: 0, 0
   index: -1
 player1_stand
   rotate: false
-  xy: 309, 3
-  size: 16, 32
-  orig: 16, 32
+  xy: 597, 3
+  size: 32, 64
+  orig: 32, 64
   offset: 0, 0
   index: -1
 player2_stand
   rotate: false
-  xy: 327, 3
-  size: 16, 16
-  orig: 16, 16
+  xy: 631, 3
+  size: 32, 32
+  orig: 32, 32
   offset: 0, 0
   index: -1
 power_F1
   rotate: false
-  xy: 345, 3
-  size: 8, 8
-  orig: 8, 8
+  xy: 665, 3
+  size: 16, 16
+  orig: 16, 16
   offset: 0, 0
   index: -1
 switch_off
   rotate: false
-  xy: 355, 3
-  size: 16, 16
-  orig: 16, 16
+  xy: 683, 3
+  size: 32, 32
+  orig: 32, 32
   offset: 0, 0
   index: -1
 switch_on
   rotate: false
-  xy: 373, 3
-  size: 16, 16
-  orig: 16, 16
+  xy: 717, 3
+  size: 32, 32
+  orig: 32, 32
   offset: 0, 0
   index: -1
 tramp_down
   rotate: false
-  xy: 391, 3
-  size: 16, 16
-  orig: 16, 16
+  xy: 751, 3
+  size: 32, 32
+  orig: 32, 32
   offset: 0, 0
   index: -1
 tramp_up
   rotate: false
-  xy: 409, 3
-  size: 16, 16
-  orig: 16, 16
+  xy: 785, 3
+  size: 32, 32
+  orig: 32, 32
   offset: 0, 0
   index: -1

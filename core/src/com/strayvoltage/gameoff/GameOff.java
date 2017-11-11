@@ -12,13 +12,13 @@ public class GameOff extends GameMain {
   public void setupGame()
   {
 
-	m_camera = new OrthographicCamera(640,360);
+	m_camera = new OrthographicCamera(1280,720);
 	m_camera.update();
 
 	float w = Gdx.graphics.getWidth();
 	float h = Gdx.graphics.getHeight();
 
-	m_viewport = new FitViewport(640,360,m_camera);
+	m_viewport = new FitViewport(1280,720,m_camera);
 	m_viewport.update((int)w, (int)h, true);
 
     //this.addSound("splash", "logo2.wav");

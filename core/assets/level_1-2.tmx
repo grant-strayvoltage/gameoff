@@ -4,7 +4,6 @@
   <property name="Title" value="Test Level One"/>
  </properties>
  <tileset firstgid="1" source="tileset.tsx"/>
- <tileset firstgid="1025" source="tileset.tsx"/>
  <objectgroup name="objects">
   <object id="3" name="switch1" type="Switch" x="800" y="512" width="32" height="32"/>
   <object id="4" name="P1" type="PlayerStart1" x="192" y="480" width="32" height="64"/>
@@ -17,12 +16,12 @@
     <property name="contactTrigger" type="bool" value="false"/>
    </properties>
   </object>
-  <object id="24" name="stop" type="PlatformStop" x="608" y="416" width="32" height="32"/>
-  <object id="26" name="stop" type="PlatformStop" x="608" y="224" width="32" height="32"/>
+  <object id="24" name="stop" type="PlatformStop" x="608" y="448" width="32" height="32"/>
+  <object id="26" name="stop" type="PlatformStop" x="608" y="192" width="32" height="32"/>
  </objectgroup>
  <layer name="platforms" width="40" height="23">
   <data encoding="base64" compression="zlib">
-   eJzt1bENACAMA0Er+w+N0lJiCC7+pesdGkpSAcBDCaXv69jnxT6vW/um7kt7vz32ef3+twCcWyB3BHM=
+   eJztlTEOACAIxC78/9HG1UlF4YY26WwhJoSkQET8qAPufRP6ctCX41Vf1Xxu+1s57aueZ/e9rv/afbcQ8d4BVT8Efw==
   </data>
  </layer>
  <layer name="background" width="40" height="23">
