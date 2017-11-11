@@ -159,14 +159,14 @@ public float getFloat(String key, MapObject mp)
         	if(chainVectors.size == 0) {
         		//setup first vertex
         		startx = tx;
-        		chainVectors.add(new Vector2(0,Box2dVars.PIXELS_PER_METER*.05f));
+        		chainVectors.add(new Vector2(0,Box2dVars.PIXELS_PER_METER*.1f));
         		chainVectors.add(new Vector2(0,tilesize));
         	}
         	chainVectors.add(new Vector2((chainVectors.peek().x+tilesize),tilesize));
         }
         if((c==null||tx+1 == m_mapWidth)&&chainVectors.size>0){
         	
-        	chainVectors.add(new Vector2((chainVectors.peek().x),Box2dVars.PIXELS_PER_METER*.05f));
+        	chainVectors.add(new Vector2((chainVectors.peek().x),Box2dVars.PIXELS_PER_METER*.1f));
         	bodyDef = new BodyDef();
         	bodyDef.type = BodyType.StaticBody;
         	chain = new PolygonShape();
@@ -216,7 +216,20 @@ public float getFloat(String key, MapObject mp)
   {
     m_stage = stage;
     m_level = lv;
-
+    
+    //KEEP TRACK FOR EXIT PURPOSE-----------------------------
+    GameMain.getSingleton().setGlobal("m_stage", ""+stage);
+    GameMain.getSingleton().setGlobal("m_level", ""+lv);
+    //NEXT LEVEL
+    if(lv+1 <= 10) //10 is an arbitrary number of levels per stage
+    	GameMain.getSingleton().setGlobal("m_next_level", ""+lv+1);
+    else 
+    	if(stage+1 <= 10) //10 is an arbitraty number of stages
+    		GameMain.getSingleton().setGlobal("m_stage", ""+stage+1);
+    	else //if there is no more stages then the game is complete
+    		GameMain.getSingleton().setGlobal("game_complete", "true");
+    	
+    //---------------------------------------------------------
     this.removeAll();
 
     if (world != null)
