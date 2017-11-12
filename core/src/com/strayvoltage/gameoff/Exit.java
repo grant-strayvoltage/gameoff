@@ -5,12 +5,13 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.maps.MapProperties;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
+import com.strayvoltage.gamelib.GameLayer;
 import com.strayvoltage.gamelib.GameMain;
 
 public class Exit extends GameMapObject implements Box2dCollisionHandler{
 
 	//how many players must touch exit to complete level
-	static int REQUIREMENT = 1;
+	static int REQUIREMENT = 2;
 	
 	int players_touched = 0;
 	
@@ -36,11 +37,17 @@ public class Exit extends GameMapObject implements Box2dCollisionHandler{
 			boolean game_complete = Boolean.parseBoolean(GameMain.getSingleton().getGlobal("game_complete"));
 			if(game_complete) {
 				//go to the main menu for now?
+				GameLayer titleLayer = new TitleScreenLayer();
+		        GameMain.getSingleton().replaceActiveLayer(titleLayer);
+		        //reset game vars
+		        GameMain.getSingleton().setGlobal("m_stage", "1");
+		        GameMain.getSingleton().setGlobal("m_next_level", "1");
+		        //TODO: add newgame+
 			}else {
 				int stage = Integer.parseInt(GameMain.getSingleton().getGlobal("m_stage"));
 				int level = Integer.parseInt(GameMain.getSingleton().getGlobal("m_next_level"));
 				MainLayer ml = new MainLayer();
-		        ml.loadLevel(1,1);
+		        ml.loadLevel(stage,level);
 		        GameMain.getSingleton().replaceActiveLayer(ml);
 			}
 		}

@@ -28,6 +28,9 @@ import com.strayvoltage.gamelib.GameMain;
 import com.strayvoltage.gamelib.GameTileMap;
 
 public class MainLayer extends GameLayer  {
+	
+	public static final int MAX_STAGES = 1;
+	public static final int MAX_LEVELS_PER_STGE = 3;
 
 int m_stage, m_level, gameState;
 AssetManager m_assets;
@@ -137,8 +140,9 @@ public float getFloat(String key, MapObject mp)
     fixtureDef.restitution = 0.25f;
     //floor is now floor lol
     fixtureDef.filter.categoryBits = Box2dVars.FLOOR;
-    //i think without a mask it m eans the floor can collide with everything. This way it cant. 
-    fixtureDef.filter.maskBits = Box2dVars.PLAYER_FOOT | Box2dVars.BLOCK | Box2dVars.PLAYER_NORMAL | Box2dVars.PLAYER_JUMPING | Box2dVars.POWER;
+    //i think without a mask it means the floor can collide with everything. This way it cant. 
+    fixtureDef.filter.maskBits =  Box2dVars.BLOCK | Box2dVars.PLAYER_NORMAL | Box2dVars.PLAYER_JUMPING
+    							| Box2dVars.POWER| Box2dVars.PLAYER_FOOT | Box2dVars.OBJECT;
     fixtureDef.friction = 0.5f;
     float w = 0;
     float boxY = 0;
@@ -222,12 +226,13 @@ public float getFloat(String key, MapObject mp)
     GameMain.getSingleton().setGlobal("m_stage", ""+stage);
     GameMain.getSingleton().setGlobal("m_level", ""+lv);
     //NEXT LEVEL
-    if(lv+1 <= 10) //10 is an arbitrary number of levels per stage
-    	GameMain.getSingleton().setGlobal("m_next_level", ""+lv+1);
+    if(lv+1 <= MAX_LEVELS_PER_STGE) //10 is an arbitrary number of levels per stage
+    	GameMain.getSingleton().setGlobal("m_next_level", ""+(lv+1));
     else 
-    	if(stage+1 <= 10) //10 is an arbitraty number of stages
-    		GameMain.getSingleton().setGlobal("m_stage", ""+stage+1);
-    	else //if there is no more stages then the game is complete
+    	if(stage+1 <= MAX_STAGES) { //10 is an arbitrary number of stages
+    		GameMain.getSingleton().setGlobal("m_stage", ""+(stage+1));
+    		GameMain.getSingleton().setGlobal("m_next_level",""+1);
+    	}else //if there is no more stages then the game is complete
     		GameMain.getSingleton().setGlobal("game_complete", "true");
     	
     //---------------------------------------------------------
