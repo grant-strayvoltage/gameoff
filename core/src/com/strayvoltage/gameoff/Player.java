@@ -7,8 +7,6 @@ import java.util.Iterator;
 import java.util.ArrayList;
 import com.badlogic.gdx.math.*;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.glutils.*;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.strayvoltage.gamelib.*;
 import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.physics.box2d.*;
@@ -42,11 +40,14 @@ public class Player extends GameSprite implements Box2dCollisionHandler{
   float stillTime = 0;
   World m_world = null;
   float m_hForce = 50;
+  
+  int trampoline_state;
 
   public Player(TextureRegion texture, GameInputManager2 controller)
   {
     super(texture);
     m_controller = controller;
+    trampoline_state = Trampoline.NONE;
   }
 
   public void setMap(GameTileMap m, Player p, float jumpDY, PowerUnit pu)
@@ -96,7 +97,7 @@ public class Player extends GameSprite implements Box2dCollisionHandler{
     fixtureDef.friction = 0f;
     fixtureDef.restitution = 0f;
     fixtureDef.filter.categoryBits = Box2dVars.PLAYER_FOOT; //changed to foot so we can do separate collision testing. 
-    fixtureDef.filter.maskBits = Box2dVars.FLOOR | Box2dVars.BLOCK | Box2dVars.PLATFORM;
+    fixtureDef.filter.maskBits = Box2dVars.FLOOR | Box2dVars.BLOCK | Box2dVars.PLATFORM | Box2dVars.OBJECT;
 
 	playerSensorFixture = m_body.createFixture(fixtureDef);
 	playerSensorFixture.setUserData(this);
@@ -285,9 +286,10 @@ public class Player extends GameSprite implements Box2dCollisionHandler{
             m_jumpTicks--;
           } else
           {
-            m_body.applyLinearImpulse(0, m_jumpDY, 0, 0, true);
-            m_jumpTicks = 12;
-            m_onGround = false;
+        	  jump();
+//            m_body.applyLinearImpulse(0, m_jumpDY, 0, 0, true);
+//            m_jumpTicks = 12;
+//            m_onGround = false;
           }
         }
       } else
@@ -317,6 +319,17 @@ public class Player extends GameSprite implements Box2dCollisionHandler{
       }
     }
 
+  }
+  
+  public void jump() {
+	  if(trampoline_state != Trampoline.NONE) {
+		  m_body.applyLinearImpulse(0, m_jumpDY*2, 0, 0, true);
+		  m_jumpTicks = 12;
+	  }else {
+		  m_body.applyLinearImpulse(0, m_jumpDY, 0, 0, true);
+	      m_jumpTicks = 12;
+	  }
+      m_onGround = false;
   }
 
   public void setPositionToBody()
@@ -410,7 +423,7 @@ public class Player extends GameSprite implements Box2dCollisionHandler{
 			//cast it themselves whenever they need to but this is simpler for now. 
 			if(collision.target!=null) {
 				//do stuff with the collision target
-				GameMapObject obj = collision.target;
+				GameMapObject obj = (GameMapObject) collision.target;
 			}
 		}
 		
@@ -420,7 +433,6 @@ public class Player extends GameSprite implements Box2dCollisionHandler{
 	
 	@Override
 	public void handleEnd(Box2dCollision collision) {
-		
 	}
   
 }
