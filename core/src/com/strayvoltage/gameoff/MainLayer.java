@@ -158,9 +158,12 @@ public float getFloat(String key, MapObject mp)
       
       for (int tx = 0; tx < m_mapWidth; tx++)
       {
+    	fixtureDef.filter.categoryBits = Box2dVars.FLOOR;
         TiledMapTileLayer.Cell c = p_Layer.getCell(tx,ty);
-        
-        if(c!=null) {
+        int cellid = 0;
+        if(c!=null)
+        	cellid = c.getTile().getId();
+        if(c!=null&&cellid==2) {
         	if(chainVectors.size == 0) {
         		//setup first vertex
         		startx = tx;
@@ -169,7 +172,7 @@ public float getFloat(String key, MapObject mp)
         	}
         	chainVectors.add(new Vector2((chainVectors.peek().x+tilesize),tilesize));
         }
-        if((c==null||tx+1 == m_mapWidth)&&chainVectors.size>0){
+        if((c==null||tx+1 == m_mapWidth||cellid!=2)&&chainVectors.size>0){
         	
         	chainVectors.add(new Vector2((chainVectors.peek().x),Box2dVars.PIXELS_PER_METER*.1f));
         	bodyDef = new BodyDef();
@@ -190,28 +193,32 @@ public float getFloat(String key, MapObject mp)
         	bodyDef = null;
         	startx = 0;
         }
-        
-        
-//        if (c != null)
-//        {
-//            float pw = c.getTile().getTextureRegion().getRegionWidth();
-//            bodyDef = new BodyDef();
-//            bodyDef.type = BodyDef.BodyType.StaticBody;
-//            w = (pw/16);
-//            boxLeftX = tx;
-//            boxY = ty;
-//            PolygonShape shape = new PolygonShape();
-//            shape.setAsBox(w/2,(pw-1)/16/2);
-//            fixtureDef.shape = shape;
-//            bodyDef.position.set(boxLeftX + w/2,boxY + (pw-1)/16/2 + 2/16);
-//            Body body = world.createBody(bodyDef);
-//            body.createFixture(fixtureDef);
-//            shape.dispose();
-//            //bodyDef.dispose();
-//            bodyDef = null;
-//            w = 0;
-//            
-//        }
+        if (c != null && cellid == 3)//spikes.. add other hazard here
+        {
+            bodyDef = new BodyDef();
+            bodyDef.type = BodyDef.BodyType.StaticBody;
+            boxY = ty;
+            PolygonShape shape = new PolygonShape();
+            
+            Vector2[] points = new Vector2[4];
+            points[0] = new Vector2(0,0).scl(1f/Box2dVars.PIXELS_PER_METER);
+            points[1] = new Vector2(0,tilesize-2).scl(1f/Box2dVars.PIXELS_PER_METER);
+            points[2] = new Vector2(tilesize,tilesize-2).scl(1f/Box2dVars.PIXELS_PER_METER);
+            points[3] = new Vector2(tilesize,0).scl(1f/Box2dVars.PIXELS_PER_METER);
+            
+            shape.set(points);
+            
+            fixtureDef.shape = shape;
+            fixtureDef.filter.categoryBits = Box2dVars.HAZARD;
+            bodyDef.position.set((tx*tilesize)/Box2dVars.PIXELS_PER_METER,(ty*tilesize)/Box2dVars.PIXELS_PER_METER);
+            Body body = world.createBody(bodyDef);
+            body.createFixture(fixtureDef);
+            shape.dispose();
+            //bodyDef.dispose();
+            bodyDef = null;
+            w = 0;
+            
+        }
       }
      
     }
@@ -375,6 +382,8 @@ public float getFloat(String key, MapObject mp)
       ufoEffectPool = new ParticleEffectPool(ufoEffect, 30, 15);
     } */
   }
+  
+  
 
   @Override
   public void update (float deltaTime) {

@@ -81,7 +81,7 @@ public class Player extends GameSprite implements Box2dCollisionHandler{
     fixtureDef.restitution = 0.2f;
 
     fixtureDef.filter.categoryBits = Box2dVars.PLAYER_NORMAL;
-    fixtureDef.filter.maskBits = Box2dVars.OBJECT | Box2dVars.FLOOR | Box2dVars.BLOCK | Box2dVars.PLATFORM;
+    fixtureDef.filter.maskBits = Box2dVars.OBJECT | Box2dVars.FLOOR | Box2dVars.BLOCK | Box2dVars.PLATFORM | Box2dVars.HAZARD;
 
     m_fixture = m_body.createFixture(fixtureDef);
     m_fixture.setUserData(this);
@@ -425,6 +425,24 @@ public class Player extends GameSprite implements Box2dCollisionHandler{
 				//do stuff with the collision target
 				GameMapObject obj = (GameMapObject) collision.target;
 			}
+		}
+		
+		if(collision.target_type == Box2dVars.HAZARD) {
+			Gdx.app.log("PlayerContactTest:", "we touched a HAZARD! YOU ARE DED!");
+			Gdx.app.postRunnable(new Runnable() {
+				
+				@Override
+				public void run() {
+					//PLAYER DEATH LOGIC HERE --------------------------------------
+					int stage = Integer.parseInt(GameMain.getSingleton().getGlobal("m_stage"));
+					int level = Integer.parseInt(GameMain.getSingleton().getGlobal("m_level"));
+					MainLayer ml = new MainLayer();
+			        ml.loadLevel(stage,level);
+			        GameMain.getSingleton().replaceActiveLayer(ml);
+					
+				}
+			});
+			
 		}
 		
 		

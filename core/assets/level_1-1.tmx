@@ -11,7 +11,7 @@
   <object id="5" name="P2" type="PlayerStart2" x="128" y="512" width="32" height="32"/>
   <object id="13" name="block2" type="Block" x="256" y="512" width="32" height="32"/>
   <object id="14" name="block3" type="Block" x="480" y="384" width="32" height="32"/>
-  <object id="16" name="exit" type="Exit" x="1248" y="512" width="32" height="32"/>
+  <object id="16" name="exit" type="Exit" x="1216" y="512" width="32" height="32"/>
   <object id="18" name="platform2" type="Platform" x="576" y="416" width="96" height="32">
    <properties>
     <property name="contactTrigger" type="bool" value="false"/>
@@ -23,7 +23,7 @@
  </objectgroup>
  <layer name="platforms" width="40" height="23">
   <data encoding="base64" compression="zlib">
-   eJzt1bENACAMA0Er+w+N0lJiCC7+pesdGkpSAcBDCaXv69jnxT6vW/um7kt7vz32ef3+twCcWyB3BHM=
+   eJxjYmBgYBrFgxKTAwaz20bdR7r7hlLaw+fewQJG3UcZGHUfZWCkuI8e/huM4YcMRt1HGaBnfceMBQ9U3TuKR/FwwQBynQP8
   </data>
  </layer>
  <layer name="background" width="40" height="23">
