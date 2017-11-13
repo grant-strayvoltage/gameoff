@@ -8,7 +8,7 @@ import com.strayvoltage.gameoff.GameOff;
 
 public class DesktopLauncher {
 	//set to false when we deploy
-	public static boolean AUTO_PACK = true;
+	public static boolean AUTO_PACK = false;
 	
 	public static void main (String[] arg) {
 		
