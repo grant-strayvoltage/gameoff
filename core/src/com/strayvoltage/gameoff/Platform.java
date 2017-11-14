@@ -35,7 +35,7 @@ public class Platform extends GameMapObject {
   {
 	
 	m_categoryBits = Box2dVars.PLATFORM;
-	m_filterMask = Box2dVars.PLAYER_FOOT | Box2dVars.POWER | Box2dVars.FLOOR | Box2dVars.PLAYER_NORMAL | Box2dVars.PLAYER_JUMPING | Box2dVars.BLOCK;
+	m_filterMask = Box2dVars.PLAYER_FOOT | Box2dVars.BRAIN_FOOT | Box2dVars.POWER | Box2dVars.FLOOR | Box2dVars.PLAYER_NORMAL | Box2dVars.PLAYER_JUMPING | Box2dVars.BLOCK;
     m_gravityScale = 0;
     m_colBits = 3;
     m_sizeScale = 0.9f;
