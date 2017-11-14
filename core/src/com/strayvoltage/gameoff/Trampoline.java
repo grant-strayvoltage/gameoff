@@ -27,12 +27,13 @@ public class Trampoline extends GameMapObject implements Box2dCollisionHandler{
 	
 	//can handle players 
 	Player[] players;
+	PowerUnit brain = null;
 	
 	@Override
 	public void init(MapProperties mp, TextureAtlas textures) {
 		m_isSensor = false;
 		m_btype = BodyType.DynamicBody;
-		m_filterMask = Box2dVars.BLOCK | Box2dVars.PLAYER_FOOT | Box2dVars.FLOOR | Box2dVars.PLAYER_NORMAL | Box2dVars.PLAYER_JUMPING;
+		m_filterMask = Box2dVars.BLOCK | Box2dVars.PLAYER_FOOT | Box2dVars.FLOOR | Box2dVars.PLAYER_NORMAL | Box2dVars.PLAYER_JUMPING | Box2dVars.BRAIN_FOOT;
 		m_categoryBits = Box2dVars.OBJECT;
 	    up = textures.findRegion("tramp_up");
 	    down = textures.findRegion("tramp_down");
@@ -40,6 +41,11 @@ public class Trampoline extends GameMapObject implements Box2dCollisionHandler{
 		setSize(Box2dVars.PIXELS_PER_METER, Box2dVars.PIXELS_PER_METER);
 		current_state = UP;
 		players = new Player[2];
+
+		if (getBool("static",mp) == true)
+		{
+			m_btype = BodyType.StaticBody;
+		}
 	}
 	
 
@@ -54,6 +60,11 @@ public class Trampoline extends GameMapObject implements Box2dCollisionHandler{
 				players[0] = p;
 			else
 				players[1] = p;
+		} else if(collision.target_type == Box2dVars.BRAIN_FOOT) {
+			current_state = DOWN;
+			setRegion(down);
+			brain = (PowerUnit) collision.target;
+			brain.trampoline_state = DOWN;
 		}
 	}
 
@@ -67,6 +78,15 @@ public class Trampoline extends GameMapObject implements Box2dCollisionHandler{
 				players[0] = null;
 			else
 				players[1] = null;
+			if(players[0] == null && players[1] == null) {
+				current_state = UP;
+				setRegion(up);
+			}
+		} else if(collision.target_type == Box2dVars.BRAIN_FOOT) {
+			
+			PowerUnit brain = (PowerUnit)collision.target;
+			brain.trampoline_state = NONE;
+			brain = null;
 			if(players[0] == null && players[1] == null) {
 				current_state = UP;
 				setRegion(up);
@@ -87,12 +107,19 @@ public class Trampoline extends GameMapObject implements Box2dCollisionHandler{
 					}
 						
 				}
+				if (brain != null) brain.jump();
 			}
 			
 		}
 		this.setPositionToBody();
 		super.update(deltaTime);
 	}
+
+	public void setBodyPosition(float xx, float yy)
+  	{
+    	this.setPosition(xx,yy);
+    	m_body.setTransform((xx + this.getWidth()/2)/Box2dVars.PIXELS_PER_METER , (yy + this.getHeight()/2)/Box2dVars.PIXELS_PER_METER - 0.25f, this.getRotation()/180f * 3.14f);
+  	}
 	
 	public void setPositionToBody()
 	  {

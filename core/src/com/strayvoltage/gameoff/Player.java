@@ -89,8 +89,8 @@ public class Player extends GameSprite implements Box2dCollisionHandler{
 
     fixtureDef = new FixtureDef();
     CircleShape circle = new CircleShape();		
-		circle.setRadius((this.getWidth()-2)/(2*Box2dVars.PIXELS_PER_METER));
-		circle.setPosition(new Vector2(0, -this.getHeight()/(2*Box2dVars.PIXELS_PER_METER)));
+		circle.setRadius((this.getWidth()-4)/(2*Box2dVars.PIXELS_PER_METER));
+		circle.setPosition(new Vector2(0, -this.getHeight()/(2*Box2dVars.PIXELS_PER_METER) + 0.1f));
     fixtureDef.shape = circle;
 
     fixtureDef.density = 0f; 
@@ -99,10 +99,10 @@ public class Player extends GameSprite implements Box2dCollisionHandler{
     fixtureDef.filter.categoryBits = Box2dVars.PLAYER_FOOT; //changed to foot so we can do separate collision testing. 
     fixtureDef.filter.maskBits = Box2dVars.FLOOR | Box2dVars.BLOCK | Box2dVars.PLATFORM | Box2dVars.OBJECT;
 
-	playerSensorFixture = m_body.createFixture(fixtureDef);
-	playerSensorFixture.setUserData(this);
+	  playerSensorFixture = m_body.createFixture(fixtureDef);
+	  playerSensorFixture.setUserData(this);
     playerSensorFixture.setSensor(true);		
-		circle.dispose();		
+		circle.dispose();		 
 		
   }
 
@@ -177,14 +177,19 @@ public class Player extends GameSprite implements Box2dCollisionHandler{
       if (m_ownsPowerUnit == false)
       {
         m_powered = false;
-        if (m_powerUnit.canPickUp())
-        {
-          if ((dist(m_powerUnit.getX(), m_powerUnit.getY())) < 100)
-          {
-            m_powered = true;
-          }
-        }
+        //if (m_powerUnit.canPickUp())
+        //{
+        //  if ((dist(m_powerUnit.getX(), m_powerUnit.getY())) < 100)
+        //  {
+        //    m_powered = true;
+        //  }
+       // }
       }
+    } else{
+      if (m_lastDx > 0)
+        m_powerUnit.setFlip(true,false);
+      else
+      m_powerUnit.setFlip(false,false);
     }
 
     if ((m_powered) && (m_playerControlled))
@@ -267,11 +272,11 @@ public class Player extends GameSprite implements Box2dCollisionHandler{
       m_controlDelayTicks--;
     } else if (m_playerControlled)
     {
-      if (m_controller.isTriggerPressed())
-      {
-        m_playerControlled = false;
-        m_otherPlayer.playerTakeControl();
-      }
+      //if (m_controller.isTriggerPressed())
+      //{
+      //  m_playerControlled = false;
+      //  m_otherPlayer.playerTakeControl();
+      //}
     }
 
     //now do vertical
@@ -287,9 +292,6 @@ public class Player extends GameSprite implements Box2dCollisionHandler{
           } else
           {
         	  jump();
-//            m_body.applyLinearImpulse(0, m_jumpDY, 0, 0, true);
-//            m_jumpTicks = 12;
-//            m_onGround = false;
           }
         }
       } else
@@ -315,6 +317,7 @@ public class Player extends GameSprite implements Box2dCollisionHandler{
         if (Intersector.overlaps(this.getBoundingRectangle(), m_powerUnit.getBoundingRectangle()))
         {
           m_powerUnit.pickUp(this);
+          this.playerTakeControl();
         }
       }
     }
@@ -365,18 +368,23 @@ public class Player extends GameSprite implements Box2dCollisionHandler{
     m_ownsPowerUnit = false;
     m_powered = false;
 
-    if (m_firePressedTicks > 30) m_firePressedTicks = 30;
+    float r = 6f;
+    float ry = 9f;
 
-    float r = ((float)m_firePressedTicks / 30f) * 8;
+    if (m_firePressedTicks < 9)
+    {
+      r = 2f;
+      ry = 4f;
+    }
 
     if (m_lastDx > 0)
     {
-      m_powerUnit.throwUnit(r,2);
-       m_throwDelayTicks = 60;
+      m_powerUnit.throwUnit(r,ry);
+       m_throwDelayTicks = 90;
     } else
     {
-      m_powerUnit.throwUnit(-r,2);
-      m_throwDelayTicks = 60;
+      m_powerUnit.throwUnit(-r,ry);
+      m_throwDelayTicks = 90;
     }
   }
 
@@ -384,6 +392,7 @@ public class Player extends GameSprite implements Box2dCollisionHandler{
   {
     m_playerControlled = true;
     m_controlDelayTicks = 30;
+    stillTime = 0;
   }
 
   public void setBodyPosition(float xx, float yy)
@@ -433,6 +442,8 @@ public class Player extends GameSprite implements Box2dCollisionHandler{
 				
 				@Override
 				public void run() {
+
+            
 					//PLAYER DEATH LOGIC HERE --------------------------------------
 					int stage = Integer.parseInt(GameMain.getSingleton().getGlobal("m_stage"));
 					int level = Integer.parseInt(GameMain.getSingleton().getGlobal("m_level"));

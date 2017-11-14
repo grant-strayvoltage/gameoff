@@ -16,6 +16,7 @@ public class Box2dVars {
 	public static final short FLOOR = 512;
 	public static final short OBJECT = 1024;
 	public static final short PLAYER_FOOT = 2048;
+	public static final short BRAIN_FOOT = 4096;
 	
 	
 

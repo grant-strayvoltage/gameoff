@@ -48,6 +48,7 @@ TextureAtlas m_sprites = null;
 public ArrayList<GameMapObject> m_gameMapObjects = new ArrayList<GameMapObject>();
 static public World world;
 static public Box2DDebugRenderer debug_renderer;
+PowerUnit m_brain = null;
 
 Player m_player1, m_player2;
 
@@ -142,7 +143,7 @@ public float getFloat(String key, MapObject mp)
     fixtureDef.filter.categoryBits = Box2dVars.FLOOR;
     //i think without a mask it means the floor can collide with everything. This way it cant. 
     fixtureDef.filter.maskBits =  Box2dVars.BLOCK | Box2dVars.PLAYER_NORMAL | Box2dVars.PLAYER_JUMPING
-    							| Box2dVars.POWER| Box2dVars.PLAYER_FOOT | Box2dVars.OBJECT;
+    							| Box2dVars.POWER| Box2dVars.PLAYER_FOOT | Box2dVars.BRAIN_FOOT | Box2dVars.OBJECT;
     fixtureDef.friction = 0.5f;
     float w = 0;
     float boxY = 0;
@@ -158,7 +159,7 @@ public float getFloat(String key, MapObject mp)
       
       for (int tx = 0; tx < m_mapWidth; tx++)
       {
-    	fixtureDef.filter.categoryBits = Box2dVars.FLOOR;
+    	  fixtureDef.filter.categoryBits = Box2dVars.FLOOR;
         TiledMapTileLayer.Cell c = p_Layer.getCell(tx,ty);
         int cellid = 0;
         if(c!=null)
@@ -262,10 +263,10 @@ public float getFloat(String key, MapObject mp)
     }
       
 
-    PowerUnit pu = new PowerUnit();
-    pu.init(null,m_sprites);
-    m_gameMapObjects.add(pu);
-    pu.addToWorld(world);
+    m_brain = new PowerUnit();
+    m_brain.init(null,m_sprites);
+    m_gameMapObjects.add(m_brain);
+    m_brain.addToWorld(world);
 
     m_player1 = new Player(m_sprites.findRegion("player1_stand"), inputManager);
     this.add(m_player1);
@@ -273,12 +274,12 @@ public float getFloat(String key, MapObject mp)
     m_player2 = new Player(m_sprites.findRegion("player2_stand"), inputManager);
     this.add(m_player2);
 
-    pu.pickUp(m_player1);
+    m_brain.pickUp(m_player1);
 
     m_player1.addToWorld(world);
     m_player2.addToWorld(world);
 
-    this.add(pu);
+    this.add(m_brain);
 
     //set music
     if (tiledMap != null)
@@ -288,9 +289,9 @@ public float getFloat(String key, MapObject mp)
     }
 
     tiledMap = new GameTileMap("level_" + stage + "-" + lv + ".tmx", m_camera);
-    m_player1.setMap(tiledMap, m_player2,23,pu);
-    m_player2.setMap(tiledMap, m_player1,8,pu);
-    pu.setMap(tiledMap);
+    m_player1.setMap(tiledMap, m_player2,23,m_brain);
+    m_player2.setMap(tiledMap, m_player1,8,m_brain);
+    m_brain.setMap(tiledMap);
 
 
 
@@ -401,6 +402,13 @@ public float getFloat(String key, MapObject mp)
     	MainLayer ml = new MainLayer();
         ml.loadLevel(m_stage,m_level);
         this.replaceActiveLayer(ml);
+    }
+
+    if (m_brain.isAlive() == false)
+    {
+    	MainLayer ml = new MainLayer();
+      ml.loadLevel(m_stage,m_level);
+      this.replaceActiveLayer(ml);
     }
   }
 

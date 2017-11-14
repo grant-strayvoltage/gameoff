@@ -8,25 +8,25 @@ import com.strayvoltage.gameoff.GameOff;
 
 public class DesktopLauncher {
 	//set to false when we deploy
-	public static boolean AUTO_PACK = false;
+	public static boolean AUTO_PACK = true;
 	
 	public static void main (String[] arg) {
 		
 		//TEXTURE PACKING AT RUNTIME ------------------------------
 		if(AUTO_PACK) {
 			String input_dir = "../../input_assets";
-			String output_dir = "image";
+			String output_dir = "./";
 			
 			Settings settings = new Settings();
 			settings.useIndexes = true;
 			//use power of two - faster on older OpenGl versions
 			settings.pot = true;
 			//huge atlases. this is a lot bigger than what im usually comfortable with lol
-			settings.maxWidth = 2048; 
+			settings.maxWidth = 1024; 
 			settings.atlasExtension = ".txt";
-			settings.maxHeight = 2048;
-			settings.stripWhitespaceX = true;
-			settings.stripWhitespaceY = true;
+			settings.maxHeight = 1024;
+			settings.stripWhitespaceX = false;
+			settings.stripWhitespaceY = false;
 			//i dont usually use rotation because it restricts to the use of atlas_sprites but 
 			//you can use them if you want its not a big deal 
 			settings.rotation = false;
@@ -34,10 +34,10 @@ public class DesktopLauncher {
 			//You can process several different input sub_dirs
 			
 			//TEST
-			TexturePacker.process(settings,input_dir+"/test", output_dir, "super_test");
+			//TexturePacker.process(settings,input_dir+"/sprites", output_dir, "sprites");
 			
 			//GAMESPRITES -------------
-			//TexturePacker.process(input_dir+"/game_sprites", output_dir, "game_sprites");
+			TexturePacker.process(settings,input_dir+"/game_sprites", output_dir, "game_sprites");
 		}
 		
 		
