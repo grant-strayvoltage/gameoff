@@ -189,7 +189,7 @@ public class Player extends GameSprite implements Box2dCollisionHandler{
       if (m_lastDx > 0)
         m_powerUnit.setFlip(true,false);
       else
-      m_powerUnit.setFlip(false,false);
+        m_powerUnit.setFlip(false,false);
     }
 
     if ((m_powered) && (m_playerControlled))
@@ -265,6 +265,10 @@ public class Player extends GameSprite implements Box2dCollisionHandler{
           m_firePressedTicks = 0;
         }
       }
+    } else
+    {
+      Vector2 cv = m_body.getLinearVelocity();
+      m_body.setLinearVelocity(cv.x * 0.9f, cv.y);
     }
 
     if (m_controlDelayTicks > 0)
