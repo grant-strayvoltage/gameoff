@@ -1,18 +1,18 @@
 package com.strayvoltage.gameoff;
 
-import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.*;
-import com.badlogic.gdx.graphics.g2d.*;
-import java.util.Iterator;
-import java.util.ArrayList;
-import com.badlogic.gdx.math.*;
-import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.glutils.*;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.MapProperties;
+import com.badlogic.gdx.physics.box2d.Body;
+import com.badlogic.gdx.physics.box2d.BodyDef;
+import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
+import com.badlogic.gdx.physics.box2d.Fixture;
+import com.badlogic.gdx.physics.box2d.FixtureDef;
+import com.badlogic.gdx.physics.box2d.PolygonShape;
+import com.badlogic.gdx.physics.box2d.World;
 
-public class Platform extends GameMapObject {
+public class Platform extends GameMapObject implements Box2dCollisionHandler{
 
   boolean m_shapeHorizontal = false;
   boolean m_moveVertical = false;
@@ -28,14 +28,22 @@ public class Platform extends GameMapObject {
   float m_accel = 0.025f;
   float m_maxSpeed = 1f;
   int m_ticks = 0;
+  
+  int direction = 0;
+  float speed = 2;//meters per second
+  float stop_elapsed = 0;
+  float stop_duration = 3f;
+  
+  Body sensor_bod;
 
  
 
   public void init(MapProperties mp, TextureAtlas textures)
   {
-	
+	m_btype = BodyType.KinematicBody;
 	m_categoryBits = Box2dVars.PLATFORM;
-	m_filterMask = Box2dVars.PLAYER_FOOT | Box2dVars.BRAIN_FOOT | Box2dVars.POWER | Box2dVars.FLOOR | Box2dVars.PLAYER_NORMAL | Box2dVars.PLAYER_JUMPING | Box2dVars.BLOCK;
+	m_filterMask =Box2dVars.PLATFORM_STOP | Box2dVars.PLAYER_FOOT | Box2dVars.BRAIN_FOOT | Box2dVars.POWER | 
+				  Box2dVars.FLOOR | Box2dVars.PLAYER_NORMAL | Box2dVars.PLAYER_JUMPING | Box2dVars.BLOCK;
     m_gravityScale = 0;
     m_colBits = 3;
     m_sizeScale = 0.9f;
@@ -63,8 +71,7 @@ public class Platform extends GameMapObject {
     else
      m_moveVertical = true;
 
-    m_startDir = getInt("startDir",mp);
-    m_currDir = m_startDir;
+    direction = getInt("startDir",mp);
 
     this.setSize(texture.getRegionWidth(),texture.getRegionHeight());
 
@@ -76,56 +83,53 @@ public class Platform extends GameMapObject {
     //then override update, to handle movement, etc. as required.
 
   }
-
-  public void moveVertical()
+  
+  public void addToWorld(World world)
   {
-    float ly = m_body.getLinearVelocity().y;
-    if (Math.abs(ly) < 3) m_body.applyForceToCenter(0,m_currDir*8*m_density,true);
-    m_body.setLinearVelocity(m_body.getLinearVelocity().clamp(0,3));
+
+    BodyDef bodyDef = new BodyDef();
+    bodyDef.type = m_btype;
+    bodyDef.fixedRotation = true;
+
+    m_body = world.createBody(bodyDef);
+    m_body.setUserData(this);
+
+    FixtureDef fixtureDef = new FixtureDef();
+
+    PolygonShape rect = null;
+    rect = new PolygonShape();
+    rect.setAsBox(this.getWidth()/(Box2dVars.PIXELS_PER_METER*2) * m_sizeScale, this.getHeight()/(Box2dVars.PIXELS_PER_METER*2) * m_sizeScale);
+    fixtureDef.shape = rect;
+
+    fixtureDef.density = m_density;
+    fixtureDef.friction = 1f;
+    fixtureDef.restitution = m_restitution;
+    fixtureDef.isSensor = m_isSensor;
+    fixtureDef.filter.categoryBits = m_categoryBits;
+    fixtureDef.filter.maskBits = m_filterMask;
+
+    m_fixture = m_body.createFixture(fixtureDef);
+    m_fixture.setUserData(this);
+    m_body.setGravityScale(m_gravityScale);
+
     
-    float y = this.getY();
+    rect.dispose();
+    
+    
 
-    float yCheck = y;
-    if (m_currDir > 0) yCheck += this.getHeight();
-
-    //check if near tile and should slow down.
-    if (isSolid(this.getX() + this.getWidth()/2, yCheck + (m_currDir * 20)))
+    if (m_hasPhysics == false)
     {
-      m_state += 1;
-      m_currDir = -m_currDir;
-    } else
-    {
-      GameMapObject o = checkObjectCollisions(this.getX(),y + (m_currDir*21), 8);
-      if (o != null)
-      {
-        m_state += 1;
-        m_currDir = -m_currDir;
-      }
-    }
-
-  }
-
-  public void moveHorizontal()
-  {
-
-  }
-
-  public void slowVertical()
-  {
-    m_body.applyForceToCenter(0,m_currDir*8f*m_density,true);
-
-    if((m_body.getLinearVelocity().y < 0.25f) && (m_body.getLinearVelocity().y > -0.25f))
-    {
-      m_body.setLinearVelocity(0,0);
-      m_state += 1;
-      m_ticks = 160;
+      m_body.setActive(false);
     }
   }
-
-  public void slowHorizontal()
+  
+  public void setBodyPosition(float xx, float yy)
   {
-
+    this.setPosition(xx,yy);
+    m_body.setTransform((xx + this.getWidth()/2)/Box2dVars.PIXELS_PER_METER , (yy + this.getHeight()/2)/Box2dVars.PIXELS_PER_METER, this.getRotation()/180f * 3.14f);
+    if(sensor_bod!=null)sensor_bod.setTransform((xx + this.getWidth()/2)/Box2dVars.PIXELS_PER_METER , (yy + this.getHeight()/2)/Box2dVars.PIXELS_PER_METER, this.getRotation()/180f * 3.14f);
   }
+
 
   public void update(float deltaTime)
   {
@@ -134,24 +138,49 @@ public class Platform extends GameMapObject {
       if (m_state == 0)
       {
         //moving
-        if (m_moveVertical) moveVertical();
-        else moveHorizontal();
+        if (m_moveVertical) 
+        	m_body.setLinearVelocity(0,direction*speed);
+        else
+        	m_body.setLinearVelocity(direction*speed, 0);
+        
       } else if (m_state == 1)
       {
-        //slowing down
-        if (m_moveVertical) slowVertical();
-        else slowHorizontal();
-      } else if (m_state == 2)
-      {
-        //stopped and waiting to move 
-        m_ticks--;
-        if (m_ticks < 1)
-        {
-          m_state = 0;
-        }
+    	//stop
+    	  stop_elapsed+=deltaTime;
+    	  if(stop_elapsed>=stop_duration) {
+    		  stop_elapsed = 0;
+    		  m_state = 0;
+    	  }
+    	  
       }
     }
-  
+    
     setPositionToBody();
   }
+  
+  public void setPositionToBody()
+  {
+	if(sensor_bod!=null)sensor_bod.setTransform(m_body.getPosition(), sensor_bod.getAngle());
+    float cx = m_body.getPosition().x*Box2dVars.PIXELS_PER_METER;
+    float cy = m_body.getPosition().y*Box2dVars.PIXELS_PER_METER;
+    
+    this.setPosition(cx - this.getWidth()/2, cy - this.getHeight()/2);
+  }
+
+	@Override
+	public void handleBegin(Box2dCollision collision) {
+	
+		if(collision.target_type == Box2dVars.PLATFORM_STOP) {
+			Gdx.app.log("Platform_test:","platform hit stop");
+			direction=-direction;
+			m_state = 1;
+			m_body.setLinearVelocity(0, 0);
+		}
+		
+		
+	}
+
+	@Override
+	public void handleEnd(Box2dCollision collision) {
+	}
 }

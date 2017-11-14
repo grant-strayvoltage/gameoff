@@ -399,17 +399,25 @@ public float getFloat(String key, MapObject mp)
     
     //RELOAD CURRENT LEVEL
     if(inputManager.isTestPressed()) {
-    	MainLayer ml = new MainLayer();
-        ml.loadLevel(m_stage,m_level);
-        this.replaceActiveLayer(ml);
+    	reset();
     }
 
     if (m_brain.isAlive() == false)
     {
-    	MainLayer ml = new MainLayer();
-      ml.loadLevel(m_stage,m_level);
-      this.replaceActiveLayer(ml);
+    	reset();
     }
+  }
+  
+  public void reset() {
+	  Gdx.app.postRunnable(new Runnable() {
+		
+		@Override
+		public void run() {
+			MainLayer ml = new MainLayer();
+		      ml.loadLevel(m_stage,m_level);
+		      replaceActiveLayer(ml);
+		}
+	});
   }
 
   @Override

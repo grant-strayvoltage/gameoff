@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" tiledversion="1.0.3" orientation="orthogonal" renderorder="right-down" width="40" height="23" tilewidth="32" tileheight="32" nextobjectid="29">
+<map version="1.0" tiledversion="2017.07.25" orientation="orthogonal" renderorder="right-down" width="40" height="23" tilewidth="32" tileheight="32" nextobjectid="33">
  <properties>
   <property name="Title" value="Test Level One"/>
  </properties>
@@ -8,7 +8,7 @@
  <objectgroup name="objects">
   <object id="3" name="switch1" type="Switch" x="800" y="512" width="32" height="32"/>
   <object id="4" name="P1" type="PlayerStart1" x="192" y="480" width="32" height="64"/>
-  <object id="5" name="P2" type="PlayerStart2" x="128" y="512" width="32" height="32"/>
+  <object id="5" name="P2" type="PlayerStart2" x="1184" y="128" width="32" height="32"/>
   <object id="14" name="block3" type="Block" x="480" y="384" width="32" height="32"/>
   <object id="16" name="exit" type="Exit" x="1216" y="512" width="32" height="32"/>
   <object id="18" name="platform2" type="Platform" x="576" y="416" width="96" height="32">
@@ -16,8 +16,8 @@
     <property name="contactTrigger" type="bool" value="false"/>
    </properties>
   </object>
-  <object id="24" name="stop" type="PlatformStop" x="608" y="448" width="32" height="32"/>
-  <object id="26" name="stop" type="PlatformStop" x="608" y="192" width="32" height="32"/>
+  <object id="24" name="stop" type="PlatformStop" x="608" y="576" width="32" height="32"/>
+  <object id="26" name="stop" type="PlatformStop" x="640" y="288" width="32" height="32"/>
   <object id="27" name="Tramp1" type="Trampoline" x="416" y="512" width="32" height="32">
    <properties>
     <property name="static" type="bool" value="true"/>
@@ -28,10 +28,19 @@
     <property name="static" type="bool" value="false"/>
    </properties>
   </object>
+  <object id="29" name="platform2" type="Platform" x="800" y="320" width="96" height="32">
+   <properties>
+    <property name="contactTrigger" type="bool" value="false"/>
+    <property name="moveHorizontal" type="bool" value="true"/>
+    <property name="startDir" type="int" value="-1"/>
+   </properties>
+  </object>
+  <object id="30" name="stop" type="PlatformStop" x="1024" y="320" width="32" height="32"/>
+  <object id="32" name="stop" type="PlatformStop" x="672" y="320" width="32" height="32"/>
  </objectgroup>
  <layer name="platforms" width="40" height="23">
   <data encoding="base64" compression="zlib">
-   eJxjYmBgYBrFgxKTAwaz20bdR7r7hlLaw+fewQJG3UcZGHUfZWCkuI8e/huM4YcMRt1HGaBnfceMBQ9U3TuKR/FwwQBynQP8
+   eJztlTkOACAIBAn+/8+2FBQartXsJFPZjIaIiohSSG9AbrN9Xc0ZIPS9MHsnvSiwL0ZHH+dvjuz/vvJ+iO9nYV+Mqn3mnS/Hqd1L6S9uRF0D9A==
   </data>
  </layer>
  <layer name="background" width="40" height="23">

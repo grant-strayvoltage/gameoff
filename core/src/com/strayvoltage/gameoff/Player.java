@@ -40,6 +40,7 @@ public class Player extends GameSprite implements Box2dCollisionHandler{
   float stillTime = 0;
   World m_world = null;
   float m_hForce = 50;
+  Body platform = null;
   
   int trampoline_state;
 
@@ -240,6 +241,9 @@ public class Player extends GameSprite implements Box2dCollisionHandler{
         if(notMoved && stillTime > 0.2) {
           m_fixture.setFriction(100f);
           playerSensorFixture.setFriction(100f);
+          if(platform!=null) {
+        	  m_body.setLinearVelocity(platform.getLinearVelocity().x,m_body.getLinearVelocity().y);
+          }
         }
         else {
           m_fixture.setFriction(0.2f);
@@ -269,6 +273,9 @@ public class Player extends GameSprite implements Box2dCollisionHandler{
     {
       Vector2 cv = m_body.getLinearVelocity();
       m_body.setLinearVelocity(cv.x * 0.9f, cv.y);
+      if(platform!=null) {
+    	  m_body.setLinearVelocity(platform.getLinearVelocity().x,m_body.getLinearVelocity().y);
+      }
     }
 
     if (m_controlDelayTicks > 0)
@@ -330,7 +337,7 @@ public class Player extends GameSprite implements Box2dCollisionHandler{
   
   public void jump() {
 	  if(trampoline_state != Trampoline.NONE) {
-		  m_body.applyLinearImpulse(0, m_jumpDY*2, 0, 0, true);
+		  m_body.applyLinearImpulse(0, m_jumpDY*Trampoline.Multiplier, 0, 0, true);
 		  m_jumpTicks = 12;
 	  }else {
 		  m_body.applyLinearImpulse(0, m_jumpDY, 0, 0, true);
@@ -440,6 +447,10 @@ public class Player extends GameSprite implements Box2dCollisionHandler{
 			}
 		}
 		
+		if(collision.target_type == Box2dVars.PLATFORM) {
+			platform = collision.target.m_body;
+		}
+		
 		if(collision.target_type == Box2dVars.HAZARD) {
 			Gdx.app.log("PlayerContactTest:", "we touched a HAZARD! YOU ARE DED!");
 			Gdx.app.postRunnable(new Runnable() {
@@ -464,8 +475,14 @@ public class Player extends GameSprite implements Box2dCollisionHandler{
 		
 	}
 	
+	
+	
 	@Override
 	public void handleEnd(Box2dCollision collision) {
+		if(collision.target_type == Box2dVars.PLATFORM) {
+			platform = null;
+		}
+		
 	}
   
 }

@@ -16,6 +16,7 @@ public class Trampoline extends GameMapObject implements Box2dCollisionHandler{
 	public static final int DOWN = 1;
 	
 	public static float Bounce_Interval = .2f;
+	public static float Multiplier = 1.3f;
 	
 	int state = 0;
 	float down_elapsed;

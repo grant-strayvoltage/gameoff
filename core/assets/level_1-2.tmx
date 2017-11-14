@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" tiledversion="1.0.3" orientation="orthogonal" renderorder="right-down" width="40" height="23" tilewidth="32" tileheight="32" nextobjectid="27">
+<map version="1.0" tiledversion="2017.07.25" orientation="orthogonal" renderorder="right-down" width="40" height="23" tilewidth="32" tileheight="32" nextobjectid="27">
  <properties>
   <property name="Title" value="Test Level One"/>
  </properties>
@@ -21,7 +21,7 @@
  </objectgroup>
  <layer name="platforms" width="40" height="23">
   <data encoding="base64" compression="zlib">
-   eJztlTEOACAIxC78/9HG1UlF4YY26WwhJoSkQET8qAPufRP6ctCX41Vf1Xxu+1s57aueZ/e9rv/afbcQ8d4BVT8Efw==
+   eJztlTEOACAIxC78/9HG1UlF4YY26WwhJoSkQET8qAPufRP6ctCX41Vf1Wxu+1s57aueZ/e9rv/afbcQ8d4BSUcEfQ==
   </data>
  </layer>
  <layer name="background" width="40" height="23">
