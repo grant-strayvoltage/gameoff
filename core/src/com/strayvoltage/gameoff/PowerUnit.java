@@ -31,13 +31,14 @@ public class PowerUnit extends GameMapObject implements Box2dCollisionHandler {
   GameInputManager2 m_controller = null;
   int m_readyToMoveTicks = 0;
   float stillTime = 0;
-  float m_hForce = 50;
+  float m_hForce = 4;
   Fixture playerSensorFixture = null;
   World m_world;
   int m_liveTicks = 0;
   boolean m_dead = false;
   int trampoline_state;
-   float m_jumpDY = 8;
+   float m_jumpDY = 0.25f;
+   int m_jumpTicks = 0;
 
   public void init(MapProperties mp, TextureAtlas textures)
   {
@@ -50,7 +51,7 @@ public class PowerUnit extends GameMapObject implements Box2dCollisionHandler {
 
     m_pickedUpAnimation = new AnimateSpriteFrame(textures, new String[] {"brain_F1"}, 0.1f, 1);
     m_launchAnimation = new AnimateSpriteFrame(textures, new String[] {"brain_F1", "brain_F2"}, 0.1f, 1);
-    m_walkingAnimation = new AnimateSpriteFrame(textures, new String[] {"brain_F1", "brain_F2"}, 0.25f, -1);
+    m_walkingAnimation = new AnimateSpriteFrame(textures, new String[] {"brain_F1", "brain_F2"}, 0.2f, -1);
 
     m_deathAnimation = new AnimateFadeOut(0.5f);
     
@@ -64,7 +65,14 @@ public class PowerUnit extends GameMapObject implements Box2dCollisionHandler {
   }
 
   public void jump() {
-		m_body.applyLinearImpulse(0, m_jumpDY, 0, 0, true);
+	  if(trampoline_state != Trampoline.NONE) {
+		  m_body.applyLinearImpulse(0, m_jumpDY*1.5f, 0, 0, true);
+		  m_jumpTicks = 12;
+	  }else {
+		  m_body.applyLinearImpulse(0, m_jumpDY, 0, 0, true);
+	      m_jumpTicks = 12;
+	  }
+      m_onGround = false;
   }
 
   public void addToWorld(World world)
@@ -85,9 +93,9 @@ public class PowerUnit extends GameMapObject implements Box2dCollisionHandler {
     rect.setAsBox(this.getWidth()/(2*Box2dVars.PIXELS_PER_METER), this.getHeight()/(2*Box2dVars.PIXELS_PER_METER));
     fixtureDef.shape = rect;
 
-    fixtureDef.density = 1.0f; 
+    fixtureDef.density = 0.05f; 
     fixtureDef.friction = 0.5f;
-    fixtureDef.restitution = 0.2f;
+    fixtureDef.restitution = 0.4f;
 
     fixtureDef.filter.categoryBits = Box2dVars.POWER;
     fixtureDef.filter.maskBits = Box2dVars.OBJECT | Box2dVars.FLOOR | Box2dVars.BLOCK | Box2dVars.PLATFORM | Box2dVars.HAZARD;
@@ -116,7 +124,6 @@ public class PowerUnit extends GameMapObject implements Box2dCollisionHandler {
 
   public void pickUp(Player p)
   {
-     
       m_owner = p;
       m_pickedUp = true;
       m_body.setActive(false);
@@ -126,6 +133,7 @@ public class PowerUnit extends GameMapObject implements Box2dCollisionHandler {
       this.runAnimation(m_pickedUpAnimation);
       if (m_warnAnimation.isRunning()) m_warnAnimation.stop();
       this.setColor(1f,1f,1f,1f);
+      trampoline_state = Trampoline.NONE;
 
   }
 
@@ -148,7 +156,7 @@ public class PowerUnit extends GameMapObject implements Box2dCollisionHandler {
     m_owner = null;
     setPositionToBody();
     this.runAnimation(m_launchAnimation);
-    m_readyToMoveTicks = 200;
+    m_readyToMoveTicks = 20;
     if (dx > 0)
       this.setFlip(true,false);
     else
@@ -158,7 +166,8 @@ public class PowerUnit extends GameMapObject implements Box2dCollisionHandler {
     stillTime = 0;
     m_onGround = false;
     m_fixture.setFriction(0f);
-    playerSensorFixture.setFriction(0f);	
+    playerSensorFixture.setFriction(0f);
+    trampoline_state = Trampoline.NONE;
 
   }
 
@@ -254,11 +263,19 @@ public class PowerUnit extends GameMapObject implements Box2dCollisionHandler {
               m_body.setLinearVelocity(cv.x * 0.8f, cv.y);
           }
 
-          if (Math.abs(cv.x) > 4)
+          if (Math.abs(cv.x) > 5)
           {
-            if (cv.x > 0) cv.x = 4;
-            else cv.x = -4;
+            if (cv.x > 0) cv.x = 5;
+            else cv.x = -5;
             m_body.setLinearVelocity(cv);
+          }
+
+          if (m_jumpTicks > 0) m_jumpTicks--;
+
+          if ((m_onGround && m_controller.isJumpPressed()) && (m_jumpTicks < 1))
+          {
+            this.jump();
+            m_jumpTicks = 12;
           }
 
         }
