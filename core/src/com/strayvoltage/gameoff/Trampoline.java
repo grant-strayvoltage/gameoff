@@ -4,10 +4,11 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.MapProperties;
 import com.badlogic.gdx.physics.box2d.BodyDef;
+import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
-import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
+import com.badlogic.gdx.utils.Array;
 
 public class Trampoline extends GameMapObject implements Box2dCollisionHandler{
 
@@ -16,18 +17,25 @@ public class Trampoline extends GameMapObject implements Box2dCollisionHandler{
 	public static final int DOWN = 1;
 	
 	public static float Bounce_Interval = .2f;
+	public static float Multiplier = 1.3f;
+	
+	boolean no_exceptions = true; //interacts with all objects that it collides with
 	
 	int state = 0;
-	float down_elapsed;
+	float down_elapsed = 0f;//starts out at .1f so that first jump is near
+	//the force at which objects are pushed off at
+	float push_force = 20f;
 	
 	TextureRegion up;
 	TextureRegion down;
 	
 	int current_state;
 	
+	
 	//can handle players 
 	Player[] players;
 	PowerUnit brain = null;
+	Array<GameMapObject> objects;
 	
 	@Override
 	public void init(MapProperties mp, TextureAtlas textures) {
@@ -41,11 +49,13 @@ public class Trampoline extends GameMapObject implements Box2dCollisionHandler{
 		setSize(Box2dVars.PIXELS_PER_METER, Box2dVars.PIXELS_PER_METER);
 		current_state = UP;
 		players = new Player[2];
-
+		objects = new Array<GameMapObject>();
+		
 		if (getBool("static",mp) == true)
 		{
 			m_btype = BodyType.StaticBody;
 		}
+		
 	}
 	
 
@@ -62,26 +72,28 @@ public class Trampoline extends GameMapObject implements Box2dCollisionHandler{
 				players[1] = p;
 		} else if(collision.target_type == Box2dVars.BRAIN_FOOT) {
 			current_state = DOWN;
-			setRegion(down);
 			brain = (PowerUnit) collision.target;
 			brain.trampoline_state = DOWN;
+		}else if(no_exceptions && !(collision.target_type == Box2dVars.PLAYER_NORMAL||
+				collision.target_type== Box2dVars.PLAYER_JUMPING) && collision.target!=null) {
+			objects.add((GameMapObject) collision.target);
+			current_state = DOWN;
+			setRegion(down);
 		}
+		
 	}
 
 	@Override
 	public void handleEnd(Box2dCollision collision) {
 		if(collision.target_type == Box2dVars.PLAYER_FOOT) {
-			
+			setRegion(up);
 			Player p = (Player) collision.target;
 			p.trampoline_state = NONE;
 			if(players[0] == p)
 				players[0] = null;
 			else
 				players[1] = null;
-			if(players[0] == null && players[1] == null) {
-				current_state = UP;
-				setRegion(up);
-			}
+
 		} else if(collision.target_type == Box2dVars.BRAIN_FOOT) {
 			
 			PowerUnit brain = (PowerUnit)collision.target;
@@ -91,6 +103,19 @@ public class Trampoline extends GameMapObject implements Box2dCollisionHandler{
 				current_state = UP;
 				setRegion(up);
 			}
+		}else if(no_exceptions && !(collision.target_type == Box2dVars.PLAYER_NORMAL||
+				collision.target_type== Box2dVars.PLAYER_JUMPING)) {
+			if(objects.contains((GameMapObject) collision.target, true)) {
+				objects.removeValue((GameMapObject) collision.target,true);
+			}
+		}
+		
+		//check to see if anything is on trampoline
+		if(players[0] == null && players[1] == null && brain == null
+				&& objects.size == 0) {
+			current_state = UP;
+			setRegion(up);
+			down_elapsed = 0f;
 		}
 	}
 	
@@ -105,11 +130,13 @@ public class Trampoline extends GameMapObject implements Box2dCollisionHandler{
 						players[i].trampoline_state = NONE;
 						players[i].jump();
 					}
-						
 				}
 				if (brain != null) brain.jump();
+				
 			}
-			
+				for(GameMapObject object: objects)
+					object.m_body.applyLinearImpulse(0, push_force, 0, 0, true);
+
 		}
 		this.setPositionToBody();
 		super.update(deltaTime);

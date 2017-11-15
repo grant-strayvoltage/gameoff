@@ -51,12 +51,13 @@ static public Box2DDebugRenderer debug_renderer;
 PowerUnit m_brain = null;
 
 Player m_player1, m_player2;
-
+//handles all switches
+SwitchAdapter switch_adapter;
 public MainLayer()
   {
     super();
     m_assets = getAssetManager();
-
+    switch_adapter = new SwitchAdapter();
     gameState = 1;
 
     m_defaultMatrix = m_camera.combined.cpy();
@@ -348,6 +349,12 @@ public float getFloat(String key, MapObject mp)
         try
         {
           Object o = Class.forName("com.strayvoltage.gameoff." + t).newInstance();
+          if(o instanceof Switch) {
+        	  ((Switch)o).adapter = switch_adapter;
+        	  ((Switch)o).name = obj.getName();
+          }else if(o instanceof SwitchHandler) {
+        	  switch_adapter.addTarget((SwitchHandler) o);
+          }
           GameMapObject gmo = (GameMapObject)o;
           gmo.setMap(tiledMap);
           gmo.init(p,m_sprites);
@@ -399,17 +406,25 @@ public float getFloat(String key, MapObject mp)
     
     //RELOAD CURRENT LEVEL
     if(inputManager.isTestPressed()) {
-    	MainLayer ml = new MainLayer();
-        ml.loadLevel(m_stage,m_level);
-        this.replaceActiveLayer(ml);
+    	reset();
     }
 
     if (m_brain.isAlive() == false)
     {
-    	MainLayer ml = new MainLayer();
-      ml.loadLevel(m_stage,m_level);
-      this.replaceActiveLayer(ml);
+    	reset();
     }
+  }
+  
+  public void reset() {
+	  Gdx.app.postRunnable(new Runnable() {
+		
+		@Override
+		public void run() {
+			MainLayer ml = new MainLayer();
+		      ml.loadLevel(m_stage,m_level);
+		      replaceActiveLayer(ml);
+		}
+	});
   }
 
   @Override
