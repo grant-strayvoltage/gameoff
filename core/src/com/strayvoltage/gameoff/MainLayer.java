@@ -51,12 +51,13 @@ static public Box2DDebugRenderer debug_renderer;
 PowerUnit m_brain = null;
 
 Player m_player1, m_player2;
-
+//handles all switches
+SwitchAdapter switch_adapter;
 public MainLayer()
   {
     super();
     m_assets = getAssetManager();
-
+    switch_adapter = new SwitchAdapter();
     gameState = 1;
 
     m_defaultMatrix = m_camera.combined.cpy();
@@ -348,6 +349,12 @@ public float getFloat(String key, MapObject mp)
         try
         {
           Object o = Class.forName("com.strayvoltage.gameoff." + t).newInstance();
+          if(o instanceof Switch) {
+        	  ((Switch)o).adapter = switch_adapter;
+        	  ((Switch)o).name = obj.getName();
+          }else if(o instanceof SwitchHandler) {
+        	  switch_adapter.addTarget((SwitchHandler) o);
+          }
           GameMapObject gmo = (GameMapObject)o;
           gmo.setMap(tiledMap);
           gmo.init(p,m_sprites);

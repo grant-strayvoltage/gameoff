@@ -14,7 +14,7 @@ import com.badlogic.gdx.physics.box2d.BodyDef.*;
 
 public class GameSprite extends Sprite implements GameDrawable {
 
-  boolean m_visible = true;
+  public boolean m_visible = true;
   public float m_opacity = 1.0f;
   public ArrayList<GameAnimateable> m_animations = new ArrayList<GameAnimateable>();
   GameAnimateable m_nextAnimation = null;

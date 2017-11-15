@@ -6,7 +6,14 @@
  <tileset firstgid="1" source="tileset.tsx"/>
  <tileset firstgid="1025" source="tileset.tsx"/>
  <objectgroup name="objects">
-  <object id="3" name="switch1" type="Switch" x="800" y="512" width="32" height="32"/>
+  <object id="3" name="switch1" type="Switch" x="800" y="512" width="32" height="32">
+   <properties>
+    <property name="sensitive" type="bool" value="false"/>
+    <property name="startOn" type="bool" value="false"/>
+    <property name="toggle" type="bool" value="true"/>
+    <property name="visible" type="bool" value="true"/>
+   </properties>
+  </object>
   <object id="4" name="P1" type="PlayerStart1" x="192" y="480" width="32" height="64"/>
   <object id="5" name="P2" type="PlayerStart2" x="1184" y="128" width="32" height="32"/>
   <object id="14" name="block3" type="Block" x="480" y="384" width="32" height="32"/>
@@ -14,6 +21,9 @@
   <object id="18" name="platform2" type="Platform" x="576" y="416" width="96" height="32">
    <properties>
     <property name="contactTrigger" type="bool" value="false"/>
+    <property name="moveHorizontal" type="bool" value="false"/>
+    <property name="startOn" type="bool" value="false"/>
+    <property name="switches" value="switch1"/>
    </properties>
   </object>
   <object id="24" name="stop" type="PlatformStop" x="608" y="576" width="32" height="32"/>
@@ -28,11 +38,13 @@
     <property name="static" type="bool" value="false"/>
    </properties>
   </object>
-  <object id="29" name="platform2" type="Platform" x="800" y="320" width="96" height="32">
+  <object id="29" name="platform1" type="Platform" x="800" y="320" width="96" height="32">
    <properties>
     <property name="contactTrigger" type="bool" value="false"/>
     <property name="moveHorizontal" type="bool" value="true"/>
     <property name="startDir" type="int" value="-1"/>
+    <property name="startOn" type="bool" value="true"/>
+    <property name="switches" value="switch1"/>
    </properties>
   </object>
   <object id="30" name="stop" type="PlatformStop" x="1024" y="320" width="32" height="32"/>

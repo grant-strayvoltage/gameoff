@@ -82,7 +82,7 @@ public class Player extends GameSprite implements Box2dCollisionHandler{
     fixtureDef.restitution = 0.2f;
 
     fixtureDef.filter.categoryBits = Box2dVars.PLAYER_NORMAL;
-    fixtureDef.filter.maskBits = Box2dVars.OBJECT | Box2dVars.FLOOR | Box2dVars.BLOCK | Box2dVars.PLATFORM | Box2dVars.HAZARD;
+    fixtureDef.filter.maskBits = Box2dVars.SWITCH | Box2dVars.OBJECT | Box2dVars.FLOOR | Box2dVars.BLOCK | Box2dVars.PLATFORM | Box2dVars.HAZARD;
 
     m_fixture = m_body.createFixture(fixtureDef);
     m_fixture.setUserData(this);

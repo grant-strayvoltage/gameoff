@@ -1,18 +1,17 @@
 package com.strayvoltage.gameoff;
 
-import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.*;
-import com.badlogic.gdx.graphics.g2d.*;
-import java.util.Iterator;
-import java.util.ArrayList;
-import com.badlogic.gdx.math.*;
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.glutils.*;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.maps.MapProperties;
-import com.strayvoltage.gamelib.*;
-import com.badlogic.gdx.physics.box2d.*;
-import com.badlogic.gdx.physics.box2d.BodyDef.*;
+import com.badlogic.gdx.math.Intersector;
+import com.badlogic.gdx.physics.box2d.BodyDef;
+import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
+import com.badlogic.gdx.physics.box2d.Fixture;
+import com.badlogic.gdx.physics.box2d.FixtureDef;
+import com.badlogic.gdx.physics.box2d.PolygonShape;
+import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.utils.Array;
+import com.strayvoltage.gamelib.GameSprite;
+import com.strayvoltage.gamelib.GameTileMap;
 
 public abstract class GameMapObject extends GameSprite {
 
@@ -34,6 +33,8 @@ public abstract class GameMapObject extends GameSprite {
   float m_restitution = 0.2f;
   float m_density = 1f;
   BodyType m_btype;
+  
+  public boolean m_triggered;
 
   public GameMapObject()
   {
@@ -65,6 +66,23 @@ public abstract class GameMapObject extends GameSprite {
     Integer i = (Integer)mp.get(key);
     if (i == null) return 1;
     return i.intValue();
+  }
+  
+  public Array<String> getArray(String key,MapProperties mp){
+	  Array<String> array = new Array<String>();
+	  String s = (String) mp.get(key);//get array string
+	  if(s!=null) {
+		  if(s.contains(",")) {
+			  String[] ss = s.split(",");//split values by ","
+			  for (int i = 0; i < ss.length; i++) {
+				 array.add(ss[i]);
+			  }
+		  }else {
+			  array.add(s);
+		  }
+		 
+	  }
+	  return array;
   }
 
   public byte colBits()

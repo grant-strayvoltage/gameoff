@@ -11,12 +11,12 @@ import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.utils.Array;
 
-public class Platform extends GameMapObject implements Box2dCollisionHandler{
+public class Platform extends GameMapObject implements Box2dCollisionHandler,SwitchHandler{
 
   boolean m_shapeHorizontal = false;
   boolean m_moveVertical = false;
-  boolean m_triggered = true;
   int m_triggerType = 0;
 
   int m_state = 0;
@@ -36,10 +36,11 @@ public class Platform extends GameMapObject implements Box2dCollisionHandler{
   
   Body sensor_bod;
 
- 
+  Array<String> switches;
 
   public void init(MapProperties mp, TextureAtlas textures)
   {
+	m_triggered = getBool("startOn", mp);
 	m_btype = BodyType.KinematicBody;
 	m_categoryBits = Box2dVars.PLATFORM;
 	m_filterMask =Box2dVars.PLATFORM_STOP | Box2dVars.PLAYER_FOOT | Box2dVars.BRAIN_FOOT | Box2dVars.POWER | 
@@ -81,7 +82,7 @@ public class Platform extends GameMapObject implements Box2dCollisionHandler{
     //on contact, timed (default), or switch based
 
     //then override update, to handle movement, etc. as required.
-
+    switches = getArray("switches", mp);
   }
   
   public void addToWorld(World world)
@@ -171,7 +172,6 @@ public class Platform extends GameMapObject implements Box2dCollisionHandler{
 	public void handleBegin(Box2dCollision collision) {
 	
 		if(collision.target_type == Box2dVars.PLATFORM_STOP) {
-			Gdx.app.log("Platform_test:","platform hit stop");
 			direction=-direction;
 			m_state = 1;
 			m_body.setLinearVelocity(0, 0);
@@ -182,5 +182,16 @@ public class Platform extends GameMapObject implements Box2dCollisionHandler{
 
 	@Override
 	public void handleEnd(Box2dCollision collision) {
+	}
+
+	@Override
+	public void handleSwitch(Switch source) {
+		Gdx.app.log("Platform-switch-test","switch registered :"+source.name);
+		if(switches.contains(source.name, false)) {
+			m_body.setLinearVelocity(0, 0);
+			m_state = 0;
+			m_triggered = !m_triggered;
+		}
+		
 	}
 }

@@ -4,9 +4,11 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.maps.MapProperties;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
+import com.badlogic.gdx.utils.Array;
 
 public class PlatformStop extends GameMapObject {
-    
+
+	
   public void init(MapProperties mp, TextureAtlas textures)
   {
 	 m_categoryBits = Box2dVars.PLATFORM_STOP;
@@ -17,6 +19,7 @@ public class PlatformStop extends GameMapObject {
     m_gravityScale = 0;
     m_colBits = 8;
     this.setSize(Box2dVars.PIXELS_PER_METER,Box2dVars.PIXELS_PER_METER);
+    
   }
   
   @Override
