@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import com.badlogic.gdx.math.*;
 import com.badlogic.gdx.Gdx;
 import com.strayvoltage.gamelib.*;
-import com.badlogic.gdx.math.Intersector;
+import com.badlogic.gdx.math.*;
 import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.physics.box2d.BodyDef.*;
 import com.badlogic.gdx.utils.Array;
@@ -41,6 +41,7 @@ public class Player extends GameSprite implements Box2dCollisionHandler{
   World m_world = null;
   float m_hForce = 50;
   Body platform = null;
+  Rectangle m_brainRectangle = new Rectangle(0,0,7,4);
   
   int trampoline_state;
 
@@ -57,6 +58,13 @@ public class Player extends GameSprite implements Box2dCollisionHandler{
     m_otherPlayer = p;
     m_jumpDY = jumpDY;
     m_powerUnit = pu;
+  }
+
+  public void calcBrainRectangle()
+  {
+    Rectangle b = this.getBoundingRectangle();
+    m_brainRectangle.x = (b.x + b.width/2) - 3;
+    m_brainRectangle.y = b.y + b.height - 4;
   }
 
   public void addToWorld(World world)
@@ -76,6 +84,8 @@ public class Player extends GameSprite implements Box2dCollisionHandler{
     rect = new PolygonShape();
     rect.setAsBox(this.getWidth()/(2*Box2dVars.PIXELS_PER_METER), this.getHeight()/(2*Box2dVars.PIXELS_PER_METER));
     fixtureDef.shape = rect;
+
+
 
     fixtureDef.density = 1.0f; 
     fixtureDef.friction = 0.5f;
@@ -319,16 +329,27 @@ public class Player extends GameSprite implements Box2dCollisionHandler{
     }
 
     this.setPositionToBody();
+    calcBrainRectangle();
 
     if (m_throwDelayTicks > 0) m_throwDelayTicks--;
     else
     {
       if (m_powerUnit.canPickUp())
       {
-        if (Intersector.overlaps(this.getBoundingRectangle(), m_powerUnit.getBoundingRectangle()))
+        if (Intersector.overlaps(m_brainRectangle, m_powerUnit.getBoundingRectangle()))
         {
-          m_powerUnit.pickUp(this);
-          this.playerTakeControl();
+          float dly = m_powerUnit.m_body.getLinearVelocity().y - m_body.getLinearVelocity().y;
+          if (dly < 0.25f)
+          {
+            m_powerUnit.pickUp(this);
+            this.playerTakeControl();
+          }
+          //float dly = m_powerUnit.m_body.getLinearVelocity().y - m_body.getLinearVelocity().y;
+          //if (dly < 0.5f)
+          //{
+          //  m_powerUnit.pickUp(this);
+          //  this.playerTakeControl();
+          //}
         }
       }
     }
@@ -372,6 +393,11 @@ public class Player extends GameSprite implements Box2dCollisionHandler{
 
   public void throwUnit()
   {
+    if (m_firePressedTicks > 30)
+    {
+      return;
+    }
+
     if (m_ownsPowerUnit == false) return;
     if (m_powerUnit == null) return;
     if (m_powered == false) return;
@@ -379,23 +405,17 @@ public class Player extends GameSprite implements Box2dCollisionHandler{
     m_ownsPowerUnit = false;
     m_powered = false;
 
-    float r = 6f;
-    float ry = 9f;
-
-    if (m_firePressedTicks < 9)
-    {
-      r = 2f;
-      ry = 4f;
-    }
+    float r = 2f;
+    float ry = 4f;
 
     if (m_lastDx > 0)
     {
       m_powerUnit.throwUnit(r,ry);
-       m_throwDelayTicks = 90;
+       m_throwDelayTicks = 24;
     } else
     {
       m_powerUnit.throwUnit(-r,ry);
-      m_throwDelayTicks = 90;
+      m_throwDelayTicks = 24;
     }
   }
 
