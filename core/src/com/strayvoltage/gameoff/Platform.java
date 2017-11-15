@@ -44,7 +44,7 @@ public class Platform extends GameMapObject implements Box2dCollisionHandler,Swi
 	m_btype = BodyType.KinematicBody;
 	m_categoryBits = Box2dVars.PLATFORM;
 	m_filterMask =Box2dVars.PLATFORM_STOP | Box2dVars.PLAYER_FOOT | Box2dVars.BRAIN_FOOT | Box2dVars.POWER | 
-				  Box2dVars.FLOOR | Box2dVars.PLAYER_NORMAL | Box2dVars.PLAYER_JUMPING | Box2dVars.BLOCK;
+				  Box2dVars.FLOOR | Box2dVars.PLAYER_NORMAL | Box2dVars.BLOCK;
     m_gravityScale = 0;
     m_colBits = 3;
     m_sizeScale = 0.9f;
@@ -175,6 +175,8 @@ public class Platform extends GameMapObject implements Box2dCollisionHandler,Swi
 			direction=-direction;
 			m_state = 1;
 			m_body.setLinearVelocity(0, 0);
+		}else {
+			System.out.println("collision with :"+collision.target_type);
 		}
 		
 		
@@ -186,7 +188,7 @@ public class Platform extends GameMapObject implements Box2dCollisionHandler,Swi
 
 	@Override
 	public void handleSwitch(Switch source) {
-		Gdx.app.log("Platform-switch-test","switch registered :"+source.name);
+		//Gdx.app.log("Platform-switch-test","switch registered :"+source.name);
 		if(switches.contains(source.name, false)) {
 			m_body.setLinearVelocity(0, 0);
 			m_state = 0;

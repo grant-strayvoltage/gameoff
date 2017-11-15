@@ -1,5 +1,6 @@
 package com.strayvoltage.gameoff;
 
+import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.Contact;
 import com.badlogic.gdx.physics.box2d.ContactImpulse;
 import com.badlogic.gdx.physics.box2d.ContactListener;
@@ -72,7 +73,29 @@ public class Box2dCollisionAdapter implements ContactListener{
 
 	@Override
 	public void preSolve(Contact contact, Manifold oldManifold) {
+		Body platform = null;
+		Body object = null;
 		
+		if(contact.getFixtureA().getFilterData().categoryBits == Box2dVars.PLATFORM) {
+			platform  = contact.getFixtureA().getBody();
+			if(contact.getFixtureB().getFilterData().categoryBits!=Box2dVars.PLATFORM_STOP)
+				object = contact.getFixtureB().getBody();
+		}else if(contact.getFixtureB().getFilterData().categoryBits == Box2dVars.PLATFORM){
+			platform = contact.getFixtureB().getBody();
+			if(contact.getFixtureA().getFilterData().categoryBits!=Box2dVars.PLATFORM_STOP)
+				object = contact.getFixtureA().getBody();
+		}
+		
+		
+		//if this contact contains a platform check the collision
+		if(platform!=null && object!=null) {
+			GameMapObject p_object = (GameMapObject) platform.getUserData();
+			if(object.getLinearVelocity().y > 0 || object.getPosition().y < platform.getPosition().y+p_object.getHeight()/Box2dVars.PIXELS_PER_METER) {
+				contact.setEnabled(false);
+			}
+			
+		}
+			
 	}
 
 	@Override

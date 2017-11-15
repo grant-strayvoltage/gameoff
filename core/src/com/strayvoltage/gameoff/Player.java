@@ -183,6 +183,7 @@ public class Player extends GameSprite implements Box2dCollisionHandler{
 
   public void update(float deltaTime)
   {
+	
     if (m_playerControlled)
     {
       if (m_ownsPowerUnit == false)
@@ -357,6 +358,7 @@ public class Player extends GameSprite implements Box2dCollisionHandler{
   }
   
   public void jump() {
+	 
 	  if(trampoline_state != Trampoline.NONE) {
 		  m_body.applyLinearImpulse(0, m_jumpDY*Trampoline.Multiplier, 0, 0, true);
 		  m_jumpTicks = 12;
@@ -452,12 +454,12 @@ public class Player extends GameSprite implements Box2dCollisionHandler{
 		if(collision.self_type == Box2dVars.PLAYER_FOOT) {
 			//the collision target type is the type(categoryBits) of the thing we are colliding with. 
 			
-			Gdx.app.log("PlayerContactTest:","Target Collision Category="+collision.target_type);
-			
-			if(collision.target_type == Box2dVars.FLOOR) {
-				Gdx.app.log("PlayerContactTest:", "we touched a FLOOR!");
-			}
-			
+//			Gdx.app.log("PlayerContactTest:","Target Collision Category="+collision.target_type);
+//			
+//			if(collision.target_type == Box2dVars.FLOOR) {
+//				Gdx.app.log("PlayerContactTest:", "we touched a FLOOR!");
+//			}
+//			
 			//if the collision target is another gameMapObject we can access it from here
 			//i thought of removing this and just implementing it as Object and letting the programmer
 			//cast it themselves whenever they need to but this is simpler for now. 
