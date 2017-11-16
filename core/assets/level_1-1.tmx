@@ -8,7 +8,7 @@
  <objectgroup name="objects">
   <object id="3" name="switch1" type="Switch" x="800" y="512" width="32" height="32">
    <properties>
-    <property name="sensitive" type="bool" value="false"/>
+    <property name="sensitive" type="bool" value="true"/>
     <property name="startOn" type="bool" value="false"/>
     <property name="toggle" type="bool" value="true"/>
     <property name="visible" type="bool" value="true"/>
