@@ -335,7 +335,7 @@ public class PowerUnit extends GameMapObject implements Box2dCollisionHandler {
       } else
       {
         if (m_owner != null)
-          this.setBodyPosition(m_owner.getX() + m_owner.getWidth()/2 - this.getWidth()/2, m_owner.getY() + m_owner.getHeight() - this.getHeight()+2);
+          this.setBodyPosition(m_owner.getX() + m_owner.getWidth()/2 - this.getWidth()/2 + 2, m_owner.getY() + m_owner.getHeight() - 10);
       }
 
   }
