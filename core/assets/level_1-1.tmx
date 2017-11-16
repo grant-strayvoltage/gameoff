@@ -5,20 +5,19 @@
  </properties>
  <tileset firstgid="1" source="tileset.tsx"/>
  <objectgroup name="objects">
-  <object id="4" name="P1" type="PlayerStart1" x="225" y="465" width="60" height="77"/>
-  <object id="5" name="P2" type="PlayerStart2" x="120" y="498" width="47" height="44"/>
+  <object id="4" name="P1" type="PlayerStart1" x="130.138" y="464.797" width="60" height="77"/>
+  <object id="5" name="P2" type="PlayerStart2" x="233.214" y="498.664" width="47" height="44"/>
   <object id="14" name="block3" type="Block" x="512" y="384" width="32" height="32"/>
-  <object id="16" name="exit" type="Exit" x="1184" y="480" width="64" height="64"/>
-  <object id="28" name="Tramp1" type="Trampoline" x="896" y="480" width="32" height="32">
+  <object id="16" name="exit" type="Exit" x="1086.95" y="479.067" width="64" height="64"/>
+  <object id="28" name="Tramp1" type="Trampoline" x="831.61" y="480.933" width="32" height="32">
    <properties>
-    <property name="static" type="bool" value="false"/>
+    <property name="static" type="bool" value="true"/>
    </properties>
   </object>
-  <object id="33" name="block3" type="Block" x="640" y="384" width="32" height="32"/>
  </objectgroup>
  <layer name="platforms" width="40" height="23">
   <data encoding="base64" compression="zlib">
-   eJztlTEKADAIxMSf9f+fcnW8ouiVXiBrzSDVzcwlpTcwt+W+qeYOGPpe2D2klwX11VBfjV/6Nv8a5M3pPkbQvpPsmofM3bp9UsoeA4u5BOw=
+   eJzt1LENADAIA0GLzbL/UmlTQyyBeEtX8xUhKQDArMPoq42+2jb0OX/Bhj7nMn3n8etmpg/ALBcuigWO
   </data>
  </layer>
  <layer name="background" width="40" height="23">
