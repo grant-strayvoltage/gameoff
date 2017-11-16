@@ -6,140 +6,112 @@ filter: Nearest,Nearest
 repeat: none
 block1_moveable
   rotate: false
-  xy: 165, 154
+  xy: 2, 36
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 blood_particle
   rotate: false
-  xy: 241, 249
+  xy: 247, 225
   size: 5, 5
   orig: 5, 5
   offset: 0, 0
   index: -1
 brain_F1
   rotate: false
-  xy: 36, 31
-  size: 35, 26
-  orig: 35, 26
+  xy: 36, 55
+  size: 39, 28
+  orig: 39, 28
   offset: 0, 0
   index: -1
 brain_F2
   rotate: false
-  xy: 36, 3
-  size: 35, 26
-  orig: 35, 26
+  xy: 77, 36
+  size: 39, 28
+  orig: 39, 28
   offset: 0, 0
   index: -1
 platform_3v
   rotate: false
-  xy: 97, 90
+  xy: 98, 66
   size: 32, 96
   orig: 32, 96
   offset: 0, 0
   index: -1
 platform_3w
   rotate: false
-  xy: 73, 24
+  xy: 2, 2
   size: 96, 32
   orig: 96, 32
   offset: 0, 0
   index: -1
 platform_4v
   rotate: false
-  xy: 131, 58
+  xy: 132, 34
   size: 32, 128
   orig: 32, 128
   offset: 0, 0
   index: -1
 platform_4w
   rotate: false
-  xy: 36, 188
+  xy: 36, 164
   size: 128, 32
   orig: 128, 32
   offset: 0, 0
   index: -1
 platform_5v
   rotate: false
-  xy: 2, 94
+  xy: 2, 70
   size: 32, 160
   orig: 32, 160
   offset: 0, 0
   index: -1
 platform_5w
   rotate: false
-  xy: 36, 222
+  xy: 36, 198
   size: 160, 32
   orig: 160, 32
   offset: 0, 0
   index: -1
 player1_stand
   rotate: false
-  xy: 36, 111
-  size: 59, 75
-  orig: 59, 75
-  offset: 0, 0
-  index: -1
-player1_stand_s
-  rotate: false
-  xy: 36, 59
-  size: 39, 50
-  orig: 39, 50
-  offset: 0, 0
-  index: -1
-player1_standa
-  rotate: false
-  xy: 2, 29
-  size: 32, 63
-  orig: 32, 63
+  xy: 36, 85
+  size: 60, 77
+  orig: 60, 77
   offset: 0, 0
   index: -1
 player2_stand
   rotate: false
-  xy: 198, 216
-  size: 41, 38
-  orig: 41, 38
-  offset: 0, 0
-  index: -1
-player2_stand_s
-  rotate: false
-  xy: 2, 2
-  size: 27, 25
-  orig: 27, 25
-  offset: 0, 0
-  index: -1
-player2_standb
-  rotate: false
-  xy: 199, 115
-  size: 32, 31
-  orig: 32, 31
+  xy: 198, 186
+  size: 47, 44
+  orig: 47, 44
   offset: 0, 0
   index: -1
 switch_off
   rotate: false
-  xy: 165, 120
+  xy: 166, 152
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 switch_on
   rotate: false
-  xy: 165, 86
+  xy: 166, 118
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 tramp_down
   rotate: false
-  xy: 199, 182
+  xy: 200, 152
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 tramp_up
   rotate: false
-  xy: 199, 148
+  xy: 166, 84
   size: 32, 32
   orig: 32, 32
   offset: 0, 0

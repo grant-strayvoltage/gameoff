@@ -23,7 +23,7 @@ public class Player extends GameSprite implements Box2dCollisionHandler{
   boolean m_playerControlled = false;
   Player m_otherPlayer = null;
   int m_controlDelayTicks = 5;
-  float m_jumpDY = 10;
+  float m_jumpDY = 11;
   float m_gravity = -0.2f;
   int m_jumpTicks = 0;
   boolean m_onGround = true;
@@ -39,11 +39,14 @@ public class Player extends GameSprite implements Box2dCollisionHandler{
   long lastGroundTime = 0;
   float stillTime = 0;
   World m_world = null;
-  float m_hForce = 50;
+  float m_hForce = 100;
   Body platform = null;
   Rectangle m_brainRectangle = new Rectangle(0,0,7,4);
-  
+  float m_jumpForce = 40;
+  int id = 1;
+  float m_maxX = 4;
   int trampoline_state;
+  int m_vertTicks = 0;
 
   public Player(TextureRegion texture, GameInputManager2 controller)
   {
@@ -52,12 +55,23 @@ public class Player extends GameSprite implements Box2dCollisionHandler{
     trampoline_state = Trampoline.NONE;
   }
 
-  public void setMap(GameTileMap m, Player p, float jumpDY, PowerUnit pu)
+  public void setMap(GameTileMap m, Player p, float jumpDY, float jForce, PowerUnit pu, int pNum)
   {
     m_map = m;
     m_otherPlayer = p;
     m_jumpDY = jumpDY;
     m_powerUnit = pu;
+    m_jumpForce = jForce;
+    id = pNum;
+    if (pNum == 1)
+    {
+      m_hForce = 150;
+      m_maxX = 3;
+    } else
+    {
+      m_hForce = 100;
+      m_maxX = 4;
+    }
   }
 
   public void calcBrainRectangle()
@@ -86,10 +100,9 @@ public class Player extends GameSprite implements Box2dCollisionHandler{
     fixtureDef.shape = rect;
 
 
-
-    fixtureDef.density = 1.0f; 
+    fixtureDef.density = 0.6f; 
     fixtureDef.friction = 0.5f;
-    fixtureDef.restitution = 0.2f;
+    fixtureDef.restitution = -1f;
 
     fixtureDef.filter.categoryBits = Box2dVars.PLAYER_NORMAL;
     fixtureDef.filter.maskBits = Box2dVars.SWITCH | Box2dVars.OBJECT | Box2dVars.FLOOR | Box2dVars.BLOCK | Box2dVars.PLATFORM | Box2dVars.HAZARD;
@@ -99,10 +112,10 @@ public class Player extends GameSprite implements Box2dCollisionHandler{
     rect.dispose();
 
     fixtureDef = new FixtureDef();
-    CircleShape circle = new CircleShape();		
-		circle.setRadius((this.getWidth()-4)/(2*Box2dVars.PIXELS_PER_METER));
-		circle.setPosition(new Vector2(0, -this.getHeight()/(2*Box2dVars.PIXELS_PER_METER) + 0.1f));
-    fixtureDef.shape = circle;
+    PolygonShape rect2 = null;
+    rect2 = new PolygonShape();
+    rect2.setAsBox((this.getWidth()-6)/(2*Box2dVars.PIXELS_PER_METER), 0.1f,new Vector2(0,-this.getHeight()/(2*Box2dVars.PIXELS_PER_METER)),0);
+    fixtureDef.shape = rect2;
 
     fixtureDef.density = 0f; 
     fixtureDef.friction = 0f;
@@ -113,7 +126,7 @@ public class Player extends GameSprite implements Box2dCollisionHandler{
 	  playerSensorFixture = m_body.createFixture(fixtureDef);
 	  playerSensorFixture.setUserData(this);
     playerSensorFixture.setSensor(true);		
-		circle.dispose();		 
+		rect2.dispose();		 
 		
   }
 
@@ -235,11 +248,12 @@ public class Player extends GameSprite implements Box2dCollisionHandler{
           m_body.setLinearVelocity(cv.x * 0.9f, cv.y);
       }
 
+
       
-      if (Math.abs(cv.x) > 4)
+      if (Math.abs(cv.x) > m_maxX)
       {
-        if (cv.x > 0) cv.x = 4;
-        else cv.x = -4;
+        if (cv.x > 0) cv.x = m_maxX;
+        else cv.x = -m_maxX;
         m_body.setLinearVelocity(cv);
       }
 
@@ -314,6 +328,7 @@ public class Player extends GameSprite implements Box2dCollisionHandler{
           } else
           {
         	  jump();
+            m_jumpTicks = 15;
           }
         }
       } else
@@ -321,7 +336,7 @@ public class Player extends GameSprite implements Box2dCollisionHandler{
         if (m_jumpTicks > 0) m_jumpTicks--;
         if ((m_jumpTicks > 0) && (m_controller.isJumpPressed()))
         {
-          //m_body.applyForceToCenter(0,-1,true);
+          m_body.applyForceToCenter(0, m_jumpForce,true);
         } else
         {
           m_jumpTicks = 0;
@@ -332,7 +347,10 @@ public class Player extends GameSprite implements Box2dCollisionHandler{
     this.setPositionToBody();
     calcBrainRectangle();
 
-    if (m_throwDelayTicks > 0) m_throwDelayTicks--;
+    if (m_throwDelayTicks > 0) 
+    {
+      m_throwDelayTicks--;
+    }
     else
     {
       if (m_powerUnit.canPickUp())
@@ -361,10 +379,10 @@ public class Player extends GameSprite implements Box2dCollisionHandler{
 	 
 	  if(trampoline_state != Trampoline.NONE) {
 		  m_body.applyLinearImpulse(0, m_jumpDY*Trampoline.Multiplier, 0, 0, true);
-		  m_jumpTicks = 12;
+		  m_jumpTicks = 15;
 	  }else {
 		  m_body.applyLinearImpulse(0, m_jumpDY, 0, 0, true);
-	      m_jumpTicks = 12;
+	      m_jumpTicks = 15;
 	  }
       m_onGround = false;
   }
@@ -413,11 +431,11 @@ public class Player extends GameSprite implements Box2dCollisionHandler{
     if (m_lastDx > 0)
     {
       m_powerUnit.throwUnit(r,ry);
-       m_throwDelayTicks = 24;
+       m_throwDelayTicks = 40;
     } else
     {
       m_powerUnit.throwUnit(-r,ry);
-      m_throwDelayTicks = 24;
+      m_throwDelayTicks = 40;
     }
   }
 

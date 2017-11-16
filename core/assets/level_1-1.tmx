@@ -1,58 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" tiledversion="2017.07.25" orientation="orthogonal" renderorder="right-down" width="40" height="23" tilewidth="32" tileheight="32" nextobjectid="33">
+<map version="1.0" tiledversion="1.0.3" orientation="orthogonal" renderorder="right-down" width="40" height="23" tilewidth="32" tileheight="32" nextobjectid="34">
  <properties>
   <property name="Title" value="Test Level One"/>
  </properties>
  <tileset firstgid="1" source="tileset.tsx"/>
- <tileset firstgid="1025" source="tileset.tsx"/>
  <objectgroup name="objects">
-  <object id="3" name="switch1" type="Switch" x="800" y="512" width="32" height="32">
-   <properties>
-    <property name="sensitive" type="bool" value="true"/>
-    <property name="startOn" type="bool" value="false"/>
-    <property name="toggle" type="bool" value="true"/>
-    <property name="visible" type="bool" value="true"/>
-   </properties>
-  </object>
-  <object id="4" name="P1" type="PlayerStart1" x="192" y="480" width="32" height="64"/>
-  <object id="5" name="P2" type="PlayerStart2" x="1184" y="128" width="32" height="32"/>
-  <object id="14" name="block3" type="Block" x="480" y="384" width="32" height="32"/>
-  <object id="16" name="exit" type="Exit" x="1216" y="512" width="32" height="32"/>
-  <object id="18" name="platform2" type="Platform" x="576" y="416" width="96" height="32">
-   <properties>
-    <property name="contactTrigger" type="bool" value="false"/>
-    <property name="moveHorizontal" type="bool" value="false"/>
-    <property name="startOn" type="bool" value="false"/>
-    <property name="switches" value="switch1"/>
-   </properties>
-  </object>
-  <object id="24" name="stop" type="PlatformStop" x="608" y="576" width="32" height="32"/>
-  <object id="26" name="stop" type="PlatformStop" x="640" y="288" width="32" height="32"/>
-  <object id="27" name="Tramp1" type="Trampoline" x="416" y="512" width="32" height="32">
-   <properties>
-    <property name="static" type="bool" value="true"/>
-   </properties>
-  </object>
-  <object id="28" name="Tramp1" type="Trampoline" x="704" y="512" width="32" height="32">
+  <object id="4" name="P1" type="PlayerStart1" x="225" y="465" width="60" height="77"/>
+  <object id="5" name="P2" type="PlayerStart2" x="120" y="498" width="47" height="44"/>
+  <object id="14" name="block3" type="Block" x="512" y="384" width="32" height="32"/>
+  <object id="16" name="exit" type="Exit" x="1184" y="480" width="64" height="64"/>
+  <object id="28" name="Tramp1" type="Trampoline" x="896" y="480" width="32" height="32">
    <properties>
     <property name="static" type="bool" value="false"/>
    </properties>
   </object>
-  <object id="29" name="platform1" type="Platform" x="800" y="320" width="96" height="32">
-   <properties>
-    <property name="contactTrigger" type="bool" value="false"/>
-    <property name="moveHorizontal" type="bool" value="true"/>
-    <property name="startDir" type="int" value="-1"/>
-    <property name="startOn" type="bool" value="true"/>
-    <property name="switches" value="switch1"/>
-   </properties>
-  </object>
-  <object id="30" name="stop" type="PlatformStop" x="1024" y="320" width="32" height="32"/>
-  <object id="32" name="stop" type="PlatformStop" x="672" y="320" width="32" height="32"/>
+  <object id="33" name="block3" type="Block" x="640" y="384" width="32" height="32"/>
  </objectgroup>
  <layer name="platforms" width="40" height="23">
   <data encoding="base64" compression="zlib">
-   eJztlTkOACAIBAn+/8+2FBQartXsJFPZjIaIiohSSG9AbrN9Xc0ZIPS9MHsnvSiwL0ZHH+dvjuz/vvJ+iO9nYV+Mqn3mnS/Hqd1L6S9uRF0D9A==
+   eJztlTEKADAIxMSf9f+fcnW8ouiVXiBrzSDVzcwlpTcwt+W+qeYOGPpe2D2klwX11VBfjV/6Nv8a5M3pPkbQvpPsmofM3bp9UsoeA4u5BOw=
   </data>
  </layer>
  <layer name="background" width="40" height="23">

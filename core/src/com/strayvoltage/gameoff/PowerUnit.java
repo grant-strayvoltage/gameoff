@@ -34,8 +34,11 @@ public class PowerUnit extends GameMapObject implements Box2dCollisionHandler {
   int m_liveTicks = 0;
   boolean m_dead = false;
   int trampoline_state;
-   float m_jumpDY = 0.25f;
-   int m_jumpTicks = 0;
+  float m_jumpDY = 0.3f;
+  float m_jumpForce = 0.6f;
+  int m_jumpTicks = 0;
+  float m_yOff = 12;
+  float m_xOff = 3;
 
   public void init(MapProperties mp, TextureAtlas textures)
   {
@@ -63,11 +66,11 @@ public class PowerUnit extends GameMapObject implements Box2dCollisionHandler {
 
   public void jump() {
 	  if(trampoline_state != Trampoline.NONE) {
-		  m_body.applyLinearImpulse(0, m_jumpDY*1.5f, 0, 0, true);
-		  m_jumpTicks = 12;
+		  m_body.applyLinearImpulse(0, m_jumpDY*2f, 0, 0, true);
+		  m_jumpTicks = 15;
 	  }else {
 		  m_body.applyLinearImpulse(0, m_jumpDY, 0, 0, true);
-	      m_jumpTicks = 12;
+	      m_jumpTicks = 15;
 	  }
       m_onGround = false;
   }
@@ -90,9 +93,9 @@ public class PowerUnit extends GameMapObject implements Box2dCollisionHandler {
     rect.setAsBox(this.getWidth()/(2*Box2dVars.PIXELS_PER_METER), this.getHeight()/(2*Box2dVars.PIXELS_PER_METER));
     fixtureDef.shape = rect;
 
-    fixtureDef.density = 0.05f; 
+    fixtureDef.density = 0.04f; 
     fixtureDef.friction = 0.5f;
-    fixtureDef.restitution = 0.4f;
+    fixtureDef.restitution = 0.0f;
 
     fixtureDef.filter.categoryBits = Box2dVars.POWER;
     fixtureDef.filter.maskBits = Box2dVars.OBJECT | Box2dVars.FLOOR | Box2dVars.BLOCK | Box2dVars.PLATFORM | Box2dVars.HAZARD;
@@ -102,10 +105,10 @@ public class PowerUnit extends GameMapObject implements Box2dCollisionHandler {
     rect.dispose();
 
     fixtureDef = new FixtureDef();
-    CircleShape circle = new CircleShape();		
-		circle.setRadius((this.getWidth()-4)/(2*Box2dVars.PIXELS_PER_METER));
-		circle.setPosition(new Vector2(0, -this.getHeight()/(2*Box2dVars.PIXELS_PER_METER)+0.1f));
-    fixtureDef.shape = circle;
+    PolygonShape rect2 = null;
+    rect2 = new PolygonShape();
+    rect2.setAsBox((this.getWidth()-6)/(2*Box2dVars.PIXELS_PER_METER), 0.1f,new Vector2(0,-this.getHeight()/(2*Box2dVars.PIXELS_PER_METER)),0);
+    fixtureDef.shape = rect2;
 
     fixtureDef.density = 0f; 
     fixtureDef.friction = 0f;
@@ -116,7 +119,7 @@ public class PowerUnit extends GameMapObject implements Box2dCollisionHandler {
 	  playerSensorFixture = m_body.createFixture(fixtureDef);
 	  playerSensorFixture.setUserData(this);
     playerSensorFixture.setSensor(true);		
-		circle.dispose();		
+		rect2.dispose();		
   }
 
   public void pickUp(Player p)
@@ -131,6 +134,15 @@ public class PowerUnit extends GameMapObject implements Box2dCollisionHandler {
       if (m_warnAnimation.isRunning()) m_warnAnimation.stop();
       this.setColor(1f,1f,1f,1f);
       trampoline_state = Trampoline.NONE;
+      if (p.id == 1)
+      {
+        m_yOff = 12;
+        m_xOff = 3;
+      } else
+      {
+        m_yOff = 15;
+        m_xOff = 0;
+      }
 
   }
 
@@ -148,16 +160,16 @@ public class PowerUnit extends GameMapObject implements Box2dCollisionHandler {
   {
     m_pickedUp = false;
     Vector2 ov = m_owner.m_body.getLinearVelocity();
-    m_body.setLinearVelocity(ov.x+dx,ov.y+dy);
+    m_body.setLinearVelocity(ov.x,ov.y+dy);
     m_body.setActive(true);
     m_owner = null;
     setPositionToBody();
     this.runAnimation(m_launchAnimation);
-    m_readyToMoveTicks = 20;
-    if (dx > 0)
-      this.setFlip(true,false);
-    else
-      this.setFlip(false,false);
+    m_readyToMoveTicks = 10;
+    //if (dx > 0)
+    //  this.setFlip(true,false);
+    //else
+    //  this.setFlip(false,false);
 
     m_liveTicks = 360;
     stillTime = 0;
@@ -248,13 +260,13 @@ public class PowerUnit extends GameMapObject implements Box2dCollisionHandler {
             m_body.applyForceToCenter(m_hForce,0,true);
             notMoved = false;
             stillTime = 0;
-            this.setFlip(true,false);
+            //this.setFlip(true,false);
           } else if (m_controller.isLeftPressed())
           {
             m_body.applyForceToCenter(-m_hForce,0,true);
             notMoved = false;
             stillTime = 0;
-            this.setFlip(false,false);
+            //this.setFlip(false,false);
           } else {		
               stillTime += Gdx.graphics.getDeltaTime();
               m_body.setLinearVelocity(cv.x * 0.8f, cv.y);
@@ -272,7 +284,15 @@ public class PowerUnit extends GameMapObject implements Box2dCollisionHandler {
           if ((m_onGround && m_controller.isJumpPressed()) && (m_jumpTicks < 1))
           {
             this.jump();
-            m_jumpTicks = 12;
+          } else if (m_jumpTicks > 0)
+          {
+            if (m_controller.isJumpPressed())
+            {
+              m_body.applyForceToCenter(0,m_jumpForce,true);
+            } else
+            {
+              m_jumpTicks = 0;
+            }
           }
 
         }
@@ -322,6 +342,9 @@ public class PowerUnit extends GameMapObject implements Box2dCollisionHandler {
           }
         } else
         {
+          if (m_walkingAnimation.isRunning() == false)
+            this.runAnimation(m_walkingAnimation);
+
           if (cv.y < 0)
           {
             if (m_launchAnimation.isRunning() == false)
@@ -335,7 +358,9 @@ public class PowerUnit extends GameMapObject implements Box2dCollisionHandler {
       } else
       {
         if (m_owner != null)
-          this.setBodyPosition(m_owner.getX() + m_owner.getWidth()/2 - this.getWidth()/2 + 2, m_owner.getY() + m_owner.getHeight() - 10);
+        {
+          this.setBodyPosition(m_owner.getX() + m_owner.getWidth()/2 - this.getWidth()/2 + m_xOff, m_owner.getY() + m_owner.getHeight() - m_yOff);
+        }
       }
 
   }

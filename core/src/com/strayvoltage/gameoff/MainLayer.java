@@ -188,6 +188,7 @@ public float getFloat(String key, MapObject mp)
         	chain.set(VX);
         	chainVectors.clear();
         	fixtureDef.shape = chain;
+          fixtureDef.restitution = 0;
         	bodyDef.position.set((startx*tilesize)/Box2dVars.PIXELS_PER_METER, (ty*tilesize)/Box2dVars.PIXELS_PER_METER);
         	world.createBody(bodyDef).createFixture(fixtureDef);
         	chain.dispose();
@@ -290,8 +291,8 @@ public float getFloat(String key, MapObject mp)
     }
 
     tiledMap = new GameTileMap("level_" + stage + "-" + lv + ".tmx", m_camera);
-    m_player1.setMap(tiledMap, m_player2,23,m_brain);
-    m_player2.setMap(tiledMap, m_player1,8,m_brain);
+    m_player1.setMap(tiledMap, m_player2,24,40,m_brain,1);
+    m_player2.setMap(tiledMap, m_player1,8,15,m_brain,2);
     m_brain.setMap(tiledMap);
 
 

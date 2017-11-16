@@ -17,14 +17,14 @@ public class Trampoline extends GameMapObject implements Box2dCollisionHandler{
 	public static final int DOWN = 1;
 	
 	public static float Bounce_Interval = .2f;
-	public static float Multiplier = 1.3f;
+	public static float Multiplier = 1.5f;
 	
 	boolean no_exceptions = true; //interacts with all objects that it collides with
 	
 	int state = 0;
 	float down_elapsed = 0f;//starts out at .1f so that first jump is near
 	//the force at which objects are pushed off at
-	float push_force = 20f;
+	float push_force = 15f;
 	
 	TextureRegion up;
 	TextureRegion down;
@@ -74,6 +74,7 @@ public class Trampoline extends GameMapObject implements Box2dCollisionHandler{
 			current_state = DOWN;
 			brain = (PowerUnit) collision.target;
 			brain.trampoline_state = DOWN;
+			setRegion(down);
 		}else if(no_exceptions && !(collision.target_type == Box2dVars.PLAYER_NORMAL||
 				collision.target_type== Box2dVars.PLAYER_JUMPING) && collision.target!=null) {
 			objects.add((GameMapObject) collision.target);
@@ -96,8 +97,8 @@ public class Trampoline extends GameMapObject implements Box2dCollisionHandler{
 
 		} else if(collision.target_type == Box2dVars.BRAIN_FOOT) {
 			
-			PowerUnit brain = (PowerUnit)collision.target;
-			brain.trampoline_state = NONE;
+			PowerUnit brainLocal = (PowerUnit)collision.target;
+			brainLocal.trampoline_state = NONE;
 			brain = null;
 			if(players[0] == null && players[1] == null) {
 				current_state = UP;
