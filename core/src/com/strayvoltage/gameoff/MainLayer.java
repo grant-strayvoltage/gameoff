@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
@@ -409,12 +410,17 @@ public float getFloat(String key, MapObject mp)
     if(inputManager.isTestPressed()) {
     	reset();
     }
+    
+    if(Gdx.input.isKeyJustPressed(Keys.Q)) {
+    	Exit.loadNextLevel();
+    }
 
     if (m_brain.isAlive() == false)
     {
     	reset();
     }
   }
+  
   
   public void reset() {
 	  Gdx.app.postRunnable(new Runnable() {

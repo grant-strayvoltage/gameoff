@@ -7,7 +7,6 @@ import com.badlogic.gdx.maps.MapProperties;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
-import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
@@ -33,6 +32,7 @@ public class Platform extends GameMapObject implements Box2dCollisionHandler,Swi
   float speed = 2;//meters per second
   float stop_elapsed = 0;
   float stop_duration = 3f;
+  public boolean oneWay;
   
   Body sensor_bod;
 
@@ -40,6 +40,7 @@ public class Platform extends GameMapObject implements Box2dCollisionHandler,Swi
 
   public void init(MapProperties mp, TextureAtlas textures)
   {
+	oneWay = true;
 	m_triggered = getBool("startOn", mp);
 	m_btype = BodyType.KinematicBody;
 	m_categoryBits = Box2dVars.PLATFORM;
@@ -83,6 +84,10 @@ public class Platform extends GameMapObject implements Box2dCollisionHandler,Swi
 
     //then override update, to handle movement, etc. as required.
     switches = getArray("switches", mp);
+    //check if one way
+    if(mp.containsKey("oneWay")) {
+    	oneWay = getBool("oneWay", mp);
+    }
   }
   
   public void addToWorld(World world)

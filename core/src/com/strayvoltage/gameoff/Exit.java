@@ -34,7 +34,14 @@ public class Exit extends GameMapObject implements Box2dCollisionHandler{
 			//LEVEL IS COMPLETE
 			Gdx.app.log("Exit:","level complete");
 			//New level
-			final boolean game_complete = Boolean.parseBoolean(GameMain.getSingleton().getGlobal("game_complete"));
+			loadNextLevel();
+		}
+		super.update(deltaTime);
+	}
+	
+
+	  public static void loadNextLevel() {
+		  final boolean game_complete = Boolean.parseBoolean(GameMain.getSingleton().getGlobal("game_complete"));
 			Gdx.app.postRunnable(new Runnable() {
 				
 				@Override
@@ -57,10 +64,7 @@ public class Exit extends GameMapObject implements Box2dCollisionHandler{
 					
 				}
 			});
-			
-		}
-		super.update(deltaTime);
-	}
+	  }
 
 	@Override
 	public void handleBegin(Box2dCollision collision) {
