@@ -73,6 +73,7 @@ public class Box2dCollisionAdapter implements ContactListener{
 
 	@Override
 	public void preSolve(Contact contact, Manifold oldManifold) {
+		//===========PLATFORM PRESOLVES =======================================
 		Body platform = null;
 		Body object = null;
 		
@@ -95,8 +96,9 @@ public class Box2dCollisionAdapter implements ContactListener{
 					contact.setEnabled(false);
 				}
 			}
-			
 		}
+		//===================================================================
+		
 			
 	}
 
