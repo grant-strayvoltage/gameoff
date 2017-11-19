@@ -59,9 +59,10 @@
   </object>
   <object id="46" name="Gate1" type="Gate" x="1088" y="576" width="32" height="96">
    <properties>
-    <property name="hazard" type="bool" value="false"/>
+    <property name="hazard" type="bool" value="true"/>
     <property name="instant" type="bool" value="false"/>
     <property name="isOpen" type="bool" value="false"/>
+    <property name="openDown" type="bool" value="false"/>
     <property name="switches" value="switch1"/>
    </properties>
   </object>

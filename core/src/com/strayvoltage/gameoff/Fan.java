@@ -51,19 +51,24 @@ public class Fan extends GameMapObject implements Box2dCollisionHandler,SwitchHa
 	public void update(float deltaTime) {
 		if(isOn) {
 			for(GameSprite o: objects) {
-				if(direction == UP) {
-					if(o.m_body.getLinearVelocity().y < 14)
-						o.m_body.applyLinearImpulse(0,power, 0, 0, true);
-				}else if(direction == DOWN) {
-					if(o.m_body.getLinearVelocity().y > -14)
-						o.m_body.applyLinearImpulse(0,-power, 0, 0, true);
-				}else if(direction == RIGHT) {
-					if(o.m_body.getLinearVelocity().x < 14)
-						o.m_body.applyLinearImpulse(power,0, 0, 0, true);
-				}else if(direction == LEFT) {
-					if(o.m_body.getLinearVelocity().x > -14)
-						o.m_body.applyLinearImpulse(-power,0, 0, 0, true);
-				}	
+				if(o instanceof PowerUnit) {
+					//do something else
+				}else {
+					if(direction == UP) {
+						if(o.m_body.getLinearVelocity().y < 14)
+							o.m_body.applyLinearImpulse(0,power, 0, 0, true);
+					}else if(direction == DOWN) {
+						if(o.m_body.getLinearVelocity().y > -14)
+							o.m_body.applyLinearImpulse(0,-power, 0, 0, true);
+					}else if(direction == RIGHT) {
+						if(o.m_body.getLinearVelocity().x < 14)
+							o.m_body.applyLinearImpulse(power,0, 0, 0, true);
+					}else if(direction == LEFT) {
+						if(o.m_body.getLinearVelocity().x > -14)
+							o.m_body.applyLinearImpulse(-power,0, 0, 0, true);
+					}
+				}
+					
 				
 			}
 				
@@ -85,8 +90,16 @@ public class Fan extends GameMapObject implements Box2dCollisionHandler,SwitchHa
 	@Override
 	public void handleBegin(Box2dCollision collision) {
 		if(collision.target instanceof GameSprite) {
+			float brain_power = power*.2f;
 			if(collision.target instanceof PowerUnit)
-				collision.target.m_body.getFixtureList().first().setDensity(1f);
+				if(direction == UP)
+					collision.target.m_body.applyLinearImpulse(0,brain_power, 0, 0, true);
+				else if(direction == DOWN)
+					collision.target.m_body.applyLinearImpulse(0,-brain_power, 0, 0, true);
+				else if (direction == LEFT)
+					collision.target.m_body.applyLinearImpulse(-brain_power,0, 0, 0, true);
+				else if (direction == RIGHT)
+					collision.target.m_body.applyLinearImpulse(brain_power,0, 0, 0, true);
 			objects.add(collision.target);
 		
 		}
@@ -95,8 +108,6 @@ public class Fan extends GameMapObject implements Box2dCollisionHandler,SwitchHa
 	@Override
 	public void handleEnd(Box2dCollision collision) {
 		if(collision.target instanceof GameSprite) {
-			if(collision.target instanceof PowerUnit)
-				collision.target.m_body.getFixtureList().first().setDensity(.04f);
 			objects.removeValue(collision.target,true);
 		}
 	}
