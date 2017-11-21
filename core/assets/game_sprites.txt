@@ -1,6 +1,6 @@
 
 game_sprites.png
-size: 512,256
+size: 1024,256
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
@@ -13,56 +13,56 @@ block1_moveable
   index: -1
 blood_particle
   rotate: false
-  xy: 2, 19
+  xy: 324, 85
   size: 5, 5
   orig: 5, 5
   offset: 0, 0
   index: -1
 brain1_run_F1
   rotate: false
-  xy: 324, 4
+  xy: 809, 214
   size: 47, 40
   orig: 47, 40
   offset: 0, 0
   index: -1
 brain1_run_F2
   rotate: false
-  xy: 373, 54
+  xy: 858, 214
   size: 47, 40
   orig: 47, 40
   offset: 0, 0
   index: -1
 brain1_stand_F1
   rotate: false
-  xy: 373, 12
+  xy: 907, 214
   size: 47, 40
   orig: 47, 40
   offset: 0, 0
   index: -1
 brain1_stand_F2
   rotate: false
-  xy: 422, 54
+  xy: 956, 214
   size: 47, 40
   orig: 47, 40
   offset: 0, 0
   index: -1
 brain_F1
   rotate: false
-  xy: 422, 24
+  xy: 454, 180
   size: 39, 28
   orig: 39, 28
   offset: 0, 0
   index: -1
 brain_F2
   rotate: false
-  xy: 471, 158
+  xy: 454, 150
   size: 39, 28
   orig: 39, 28
   offset: 0, 0
   index: -1
 platform_3v
   rotate: false
-  xy: 358, 124
+  xy: 420, 124
   size: 32, 96
   orig: 32, 96
   offset: 0, 0
@@ -158,79 +158,100 @@ player1_stand_F2
   orig: 70, 108
   offset: 0, 0
   index: -1
+player1_stand_old
+  rotate: false
+  xy: 358, 143
+  size: 60, 77
+  orig: 60, 77
+  offset: 0, 0
+  index: -1
 player2_jump
   rotate: false
-  xy: 324, 46
+  xy: 760, 210
   size: 47, 44
   orig: 47, 44
   offset: 0, 0
   index: -1
 player2_land
   rotate: false
-  xy: 324, 46
+  xy: 760, 210
   size: 47, 44
   orig: 47, 44
   offset: 0, 0
   index: -1
 player2_run_F1
   rotate: false
-  xy: 426, 210
+  xy: 460, 210
   size: 48, 44
   orig: 48, 44
   offset: 0, 0
   index: -1
 player2_stand_F1
   rotate: false
-  xy: 426, 210
+  xy: 460, 210
   size: 48, 44
   orig: 48, 44
   offset: 0, 0
   index: -1
 player2_stand_F2
   rotate: false
-  xy: 426, 210
+  xy: 460, 210
   size: 48, 44
   orig: 48, 44
   offset: 0, 0
   index: -1
 player2_run_F2
   rotate: false
-  xy: 392, 142
+  xy: 510, 210
   size: 48, 44
   orig: 48, 44
   offset: 0, 0
   index: -1
 player2_run_F3
   rotate: false
-  xy: 392, 96
+  xy: 560, 210
   size: 48, 44
   orig: 48, 44
   offset: 0, 0
   index: -1
 switch_off
   rotate: false
-  xy: 2, 26
-  size: 32, 32
-  orig: 32, 32
+  xy: 358, 93
+  size: 48, 48
+  orig: 48, 48
   offset: 0, 0
   index: -1
 switch_on
   rotate: false
-  xy: 392, 188
-  size: 32, 32
-  orig: 32, 32
+  xy: 610, 206
+  size: 48, 48
+  orig: 48, 48
   offset: 0, 0
   index: -1
 tramp_down
   rotate: false
-  xy: 476, 222
+  xy: 660, 206
+  size: 48, 48
+  orig: 48, 48
+  offset: 0, 0
+  index: -1
+tramp_down_o
+  rotate: false
+  xy: 2, 26
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 tramp_up
   rotate: false
-  xy: 476, 188
+  xy: 710, 206
+  size: 48, 48
+  orig: 48, 48
+  offset: 0, 0
+  index: -1
+tramp_up_o
+  rotate: false
+  xy: 426, 222
   size: 32, 32
   orig: 32, 32
   offset: 0, 0

@@ -1,9 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" tiledversion="2017.07.25" orientation="orthogonal" renderorder="right-down" width="40" height="23" tilewidth="32" tileheight="32" nextobjectid="35">
+<map version="1.0" tiledversion="1.0.3" orientation="orthogonal" renderorder="right-down" width="40" height="23" tilewidth="32" tileheight="32" nextobjectid="35">
  <properties>
+  <property name="Back" value="back1"/>
   <property name="Title" value="Test Level One"/>
  </properties>
  <tileset firstgid="1" source="tileset.tsx"/>
+ <layer name="background" width="40" height="23">
+  <data encoding="base64" compression="zlib">
+   eJztwTEBAAAAwqD1T20IX6AAAADgNw5gAAE=
+  </data>
+ </layer>
+ <layer name="platforms" width="40" height="23">
+  <data encoding="base64" compression="zlib">
+   eJxjYmBgYBrFo3gUj2IaYlIAqeqJNXMkuY8S/bR2Hy3AqPsoA4PFfbjsGyj3UWLfYIpfbGAouU+JQowMKDULGZNTF47iUTxSMAC1nwkL
+  </data>
+ </layer>
  <objectgroup name="objects">
   <object id="3" name="switch2" type="Switch" x="479.253" y="254.611" width="32" height="32">
    <properties>
@@ -48,14 +59,4 @@
    </properties>
   </object>
  </objectgroup>
- <layer name="platforms" width="40" height="23">
-  <data encoding="base64" compression="zlib">
-   eJxjYmBgYBrFo3gUj2IaYlIAqeqJNXMkuY8S/bR2Hy3AqPsoA4PFfbjsGyj3UWLfYIpfbGAouY+a9c9A14WjeBSPFAwAtb4Eqw==
-  </data>
- </layer>
- <layer name="background" width="40" height="23">
-  <data encoding="base64" compression="zlib">
-   eJztwTEBAAAAwqD1T20IX6AAAADgNw5gAAE=
-  </data>
- </layer>
 </map>

@@ -21,10 +21,10 @@ public class DesktopLauncher {
 			settings.useIndexes = true;
 			//use power of two - faster on older OpenGl versions
 			settings.pot = true;
-			//huge atlases. this is a lot bigger than what im usually comfortable with lol
-			settings.maxWidth = 1024; 
+
+			settings.maxWidth = 4096;
 			settings.atlasExtension = ".txt";
-			settings.maxHeight = 1024;
+			settings.maxHeight = 4096;
 			settings.stripWhitespaceX = false;
 			settings.stripWhitespaceY = false;
 			//i dont usually use rotation because it restricts to the use of atlas_sprites but 
@@ -38,6 +38,8 @@ public class DesktopLauncher {
 			
 			//GAMESPRITES -------------
 			TexturePacker.process(settings,input_dir+"/game_sprites", output_dir, "game_sprites");
+			TexturePacker.process(settings,input_dir+"/backgrounds", output_dir, "backgrounds");
+			
 		}
 		
 		
