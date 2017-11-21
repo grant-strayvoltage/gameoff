@@ -171,7 +171,7 @@ public float getFloat(String key, MapObject mp)
         int cellid = 0;
         if(c!=null)
         	cellid = c.getTile().getId();
-        if(c!=null&&((cellid==2) || (cellid > 32))) {
+        if(c!=null&&(cellid<3 || cellid > 7)) {
         	if(chainVectors.size == 0) {
         		//setup first vertex
         		startx = tx;
@@ -180,7 +180,7 @@ public float getFloat(String key, MapObject mp)
         	}
         	chainVectors.add(new Vector2((chainVectors.peek().x+tilesize),tilesize));
         }
-        if((c==null||tx+1 == m_mapWidth||cellid!=2)&&chainVectors.size>0){
+        else if((c==null||tx+1 == m_mapWidth||(cellid > 2&&cellid < 8))&&chainVectors.size>0){
         	
         	chainVectors.add(new Vector2((chainVectors.peek().x),Box2dVars.PIXELS_PER_METER*.1f));
         	bodyDef = new BodyDef();
@@ -202,7 +202,7 @@ public float getFloat(String key, MapObject mp)
         	bodyDef = null;
         	startx = 0;
         }
-        if (c != null && ((cellid >= 3) && (cellid <= 7)))//spikes.. add other hazard here
+        if (c != null && ((cellid > 2) && (cellid < 8)))//spikes.. add other hazard here
         {
             bodyDef = new BodyDef();
             bodyDef.type = BodyDef.BodyType.StaticBody;
