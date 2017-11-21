@@ -1,14 +1,7 @@
 package com.strayvoltage.gameoff;
 
-import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.*;
-import com.badlogic.gdx.graphics.g2d.*;
-import java.util.Iterator;
-import java.util.ArrayList;
-import com.badlogic.gdx.math.*;
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.glutils.*;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.MapProperties;
 
 public class Block extends GameMapObject {
@@ -18,7 +11,7 @@ public class Block extends GameMapObject {
 	m_categoryBits = Box2dVars.BLOCK;
 	m_filterMask =Box2dVars.SWITCH | Box2dVars.OBJECT| Box2dVars.BLOCK | Box2dVars.PLAYER_FOOT | 
 					Box2dVars.POWER | Box2dVars.BRAIN_FOOT | Box2dVars.PLATFORM | Box2dVars.PLAYER_NORMAL | 
-					Box2dVars.PLAYER_JUMPING | Box2dVars.PLATFORM_STOP| Box2dVars.FLOOR;
+					Box2dVars.PLAYER_JUMPING | Box2dVars.PLATFORM_STOP| Box2dVars.FLOOR|Box2dVars.HAZARD;
     m_density = 3.0f;
     m_colBits = 3;
     TextureRegion texture = null;

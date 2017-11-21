@@ -1,5 +1,6 @@
 package com.strayvoltage.gameoff;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.utils.Array;
 
 public class SwitchAdapter {
@@ -18,9 +19,14 @@ public class SwitchAdapter {
 		targets.removeValue(target, true);
 	}
 	
-	public void trigger(Switch source) {
-		for(SwitchHandler h : targets)
-			h.handleSwitch(source);
+	public void trigger(final Switch source) {
+		Gdx.app.postRunnable(new Runnable() {
+			@Override
+			public void run() {
+				for(SwitchHandler h : targets)
+					h.handleSwitch(source);
+			}
+		});
 	}
 	
 	

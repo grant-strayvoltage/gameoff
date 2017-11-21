@@ -29,7 +29,7 @@ import com.strayvoltage.gamelib.*;
 public class MainLayer extends GameLayer  {
 	
 	public static final int MAX_STAGES = 1;
-	public static final int MAX_LEVELS_PER_STGE = 3;
+	public static final int MAX_LEVELS_PER_STGE = 5;
 
 int m_stage, m_level, gameState;
 AssetManager m_assets;
