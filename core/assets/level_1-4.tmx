@@ -1,10 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.0" tiledversion="1.0.3" orientation="orthogonal" renderorder="right-down" width="40" height="23" tilewidth="32" tileheight="32" nextobjectid="33">
  <properties>
+  <property name="Back" value="back3"/>
   <property name="Title" value="Test Level One"/>
  </properties>
  <tileset firstgid="1" source="tileset.tsx"/>
- <tileset firstgid="1025" source="tileset.tsx"/>
+ <layer name="background" width="40" height="23">
+  <data encoding="base64" compression="zlib">
+   eJztwTEBAAAAwqD1T20IX6AAAADgNw5gAAE=
+  </data>
+ </layer>
+ <layer name="platforms" width="40" height="23">
+  <data encoding="base64" compression="zlib">
+   eJztlUEKACAIBEX6/5u7eiol0a12YG6RcxBUEVEKaQTkNttX1ZwBQt8Nu+fpRYF9Z1T0cf/if/zSt5vjmdfRh8hNfZn3bPVuGLtuL6WvOAH4jQQT
+  </data>
+ </layer>
  <objectgroup name="objects">
   <object id="3" name="switch1" type="Switch" x="800" y="512" width="32" height="32">
    <properties>
@@ -50,14 +60,4 @@
   <object id="30" name="stop" type="PlatformStop" x="1024" y="320" width="32" height="32"/>
   <object id="32" name="stop" type="PlatformStop" x="672" y="320" width="32" height="32"/>
  </objectgroup>
- <layer name="platforms" width="40" height="23">
-  <data encoding="base64" compression="zlib">
-   eJztlUEKACAIBMX+/+eunkpJdKsdmFvkHARVRJRCGgG5zfZVNWeA0HfD7nl6UWDfGRV93L/4H7/07eZ45nX0IXJTX+Y9W70bxq7bS+krTu6pBBA=
-  </data>
- </layer>
- <layer name="background" width="40" height="23">
-  <data encoding="base64" compression="zlib">
-   eJztwTEBAAAAwqD1T20IX6AAAADgNw5gAAE=
-  </data>
- </layer>
 </map>

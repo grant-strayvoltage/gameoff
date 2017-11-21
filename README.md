@@ -71,3 +71,17 @@ Objects to use in puzzle elements:
 * Mix of levels - some more puzzle oriented, some more speed/action oriented.
 * Each level is discrete, no backtracking. Maybe have concept of special collectibles, a fixed number of them. Most regular levels don't have them. But there are secret levels, that are harder, but allow for getting these collectibles. These are the hardest levels. So you can complete game with perfect score, by getting these 5 or 10 extra collectibles on these hidden, hard levels. If you get to a hard level, and want to return, you can always back out- needs to be easy way back to regular levels.
 
+# Level Plan
+
+* Level 1 to 5: Only static tiles, spikes - nothing to interact with - quick, pretty easy levels
+* Level 6 to 10: Introduce moveable blocks
+* Level 11 to 15: Introduce Platforms, Gates, and Switches
+* Level 16 to 20: Introduce Trampolines
+* Level 21 to 25: Fans
+* Level 26 to 29: ?? maybe just hard levels with everything
+* Level 30: Final level with Boss?
+
+* Other thought is maybe we need to get a few more deadly things like moving enemy or two and some lasers or something- and make the progression a bit quicker like 3 to 4 levels per new idea
+
+* What do you guys think?
+

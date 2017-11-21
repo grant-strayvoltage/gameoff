@@ -24,9 +24,7 @@ import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
-import com.strayvoltage.gamelib.GameLayer;
-import com.strayvoltage.gamelib.GameMain;
-import com.strayvoltage.gamelib.GameTileMap;
+import com.strayvoltage.gamelib.*;
 
 public class MainLayer extends GameLayer  {
 	
@@ -54,6 +52,12 @@ PowerUnit m_brain = null;
 Player m_player1, m_player2;
 //handles all switches
 SwitchAdapter switch_adapter;
+TextureAtlas m_backgrounds;
+GameAnimateable m_mainBackAnim, m_lightning;
+GameSprite m_backSprite;
+
+int m_lightningTicks = 90;
+
 public MainLayer()
   {
     super();
@@ -70,6 +74,7 @@ public MainLayer()
     inputManager.setViewport(GameMain.getSingleton().m_viewport);
 
     m_sprites = m_assets.get("game_sprites.txt", TextureAtlas.class);
+    m_backgrounds = m_assets.get("backgrounds.txt", TextureAtlas.class);
 
     //gameSpritesTextures = m_assets.get("game_sprites.txt", TextureAtlas.class);
 
@@ -166,7 +171,7 @@ public float getFloat(String key, MapObject mp)
         int cellid = 0;
         if(c!=null)
         	cellid = c.getTile().getId();
-        if(c!=null&&cellid==2) {
+        if(c!=null&&((cellid==2) || (cellid > 32))) {
         	if(chainVectors.size == 0) {
         		//setup first vertex
         		startx = tx;
@@ -197,7 +202,7 @@ public float getFloat(String key, MapObject mp)
         	bodyDef = null;
         	startx = 0;
         }
-        if (c != null && cellid == 3)//spikes.. add other hazard here
+        if (c != null && ((cellid >= 3) && (cellid <= 7)))//spikes.. add other hazard here
         {
             bodyDef = new BodyDef();
             bodyDef.type = BodyDef.BodyType.StaticBody;
@@ -271,10 +276,10 @@ public float getFloat(String key, MapObject mp)
     m_gameMapObjects.add(m_brain);
     m_brain.addToWorld(world);
 
-    m_player1 = new Player(m_sprites.findRegion("player1_stand"), inputManager);
+    m_player1 = new Player(m_sprites,1,inputManager);
     this.add(m_player1);
 
-    m_player2 = new Player(m_sprites.findRegion("player2_stand"), inputManager);
+    m_player2 = new Player(m_sprites,2, inputManager);
     this.add(m_player2);
 
     m_brain.pickUp(m_player1);
@@ -306,6 +311,25 @@ public float getFloat(String key, MapObject mp)
 
     MapProperties mapProps = tiledMap.m_tiledMap.getProperties();
     String title = (String) mapProps.get("Title");
+
+
+    String backName = (String) mapProps.get("Back");
+
+
+    if (backName.equals("back5"))
+    {
+      m_backSprite = new GameSprite(m_backgrounds.findRegion(backName +"_F1"));
+      m_mainBackAnim = new AnimateSpriteFrame(m_backgrounds, new String[] {"back5_F1", "back5_F2", "back5_F3"}, 0.33f, -1);
+      m_lightning = new AnimateSpriteFrame(m_backgrounds, new String[] {"back5_F4", "back5_F5"}, 0.2f, 1);
+      m_backSprite.runAnimation(m_mainBackAnim);
+    } else
+    {
+      m_backSprite = new GameSprite(m_backgrounds.findRegion(backName));
+      m_mainBackAnim = null;
+      m_lightning = null;
+    }
+    this.add(m_backSprite,true);
+
 
     /*
     String levelType = "2";
@@ -405,6 +429,27 @@ public float getFloat(String key, MapObject mp)
      //     System.exit(0);
     //}
     world.step(1/60f, 6, 2);
+
+    if (m_mainBackAnim != null)
+    {
+      if (m_lightningTicks > 0) m_lightningTicks--;
+      else
+      {
+        if (Math.random() > 0.8f)
+        {
+          m_backSprite.stopAllAnimations();
+          m_backSprite.runAnimation(m_lightning);
+          m_lightningTicks = 13;
+        } else
+        {
+          if (m_mainBackAnim.isRunning() == false)
+          {
+            m_backSprite.runAnimation(m_mainBackAnim);
+          }
+          m_lightningTicks = 30;
+        }
+      }
+    }
     
     //RELOAD CURRENT LEVEL
     if(inputManager.isTestPressed()) {
@@ -438,16 +483,13 @@ public float getFloat(String key, MapObject mp)
   protected void preCustomDraw()
   {
     m_spriteBatch.setProjectionMatrix(m_defaultMatrix);
-    //m_spriteBatch.begin();
-    //m_backSprite.draw(m_spriteBatch);
-    //m_spriteBatch.end();
-    //super.drawBackSprites();
+    super.drawBackSprites();
 
     if (tiledMap != null)
       tiledMap.draw();
     
     //DEBUG RENDER BOX2D
-    debug_renderer.render(world, m_defaultMatrix.cpy().scl(Box2dVars.PIXELS_PER_METER));
+    //debug_renderer.render(world, m_defaultMatrix.cpy().scl(Box2dVars.PIXELS_PER_METER));
 
   }
 

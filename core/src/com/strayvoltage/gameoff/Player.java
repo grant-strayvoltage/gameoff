@@ -47,12 +47,32 @@ public class Player extends GameSprite implements Box2dCollisionHandler{
   float m_maxX = 4;
   int trampoline_state;
   int m_vertTicks = 0;
+  float m_yOff = 0;
+  GameAnimateable m_standingAnimation;
+  GameAnimateable m_runningAnimation;
+  GameAnimateable m_jumpingAnimation;
+  GameAnimateable m_fallingAnimation;
+  GameAnimateable m_landingAnimation;
+  float m_bhoff = 0;
 
-  public Player(TextureRegion texture, GameInputManager2 controller)
+  public Player(TextureAtlas textures, int p, GameInputManager2 controller)
   {
-    super(texture);
+    super(textures.findRegion("player" + p + "_stand_F1"));
     m_controller = controller;
     trampoline_state = Trampoline.NONE;
+
+    String pb = "player" + p + "_";
+
+    m_standingAnimation = new AnimateSpriteFrame(textures, new String[] {pb+"stand_F1", pb + "stand_F2"}, 0.6f, -1);
+    if (p == 1)
+      m_runningAnimation = new AnimateSpriteFrame(textures, new String[] {pb+"run_F1", pb + "run_F2", pb + "run_F3", pb + "run_F4"}, 0.8f, -1);
+    else
+      m_runningAnimation = new AnimateSpriteFrame(textures, new String[] {pb+"run_F1", pb + "run_F2", pb + "run_F3"}, 0.4f, -1);
+
+    m_jumpingAnimation = new AnimateSpriteFrame(textures, new String[] {pb+"jump"}, 0.5f, -1);
+    m_landingAnimation =  new AnimateSpriteFrame(textures, new String[] {pb+"land"}, 0.3f, 1);
+    this.runAnimation(m_standingAnimation);
+    id = p;
   }
 
   public void setMap(GameTileMap m, Player p, float jumpDY, float jForce, PowerUnit pu, int pNum)
@@ -78,7 +98,7 @@ public class Player extends GameSprite implements Box2dCollisionHandler{
   {
     Rectangle b = this.getBoundingRectangle();
     m_brainRectangle.x = (b.x + b.width/2) - 3;
-    m_brainRectangle.y = b.y + b.height - 4;
+    m_brainRectangle.y = b.y + b.height - m_bhoff;
   }
 
   public void addToWorld(World world)
@@ -95,8 +115,20 @@ public class Player extends GameSprite implements Box2dCollisionHandler{
     FixtureDef fixtureDef = new FixtureDef();
 
     PolygonShape rect = null;
+    float xf = 0.85f;
+    float yf = 0.67f;
     rect = new PolygonShape();
-    rect.setAsBox(this.getWidth()/(2*Box2dVars.PIXELS_PER_METER), this.getHeight()/(2*Box2dVars.PIXELS_PER_METER));
+   
+    if (id == 2)
+    {
+      yf = 1f;
+      xf = 0.95f;
+    }
+
+    m_yOff = (1 - yf) * this.getHeight()/2;
+    m_bhoff = (1 - yf) * this.getHeight()/2 + 2;
+
+    rect.setAsBox(this.getWidth()/(2*Box2dVars.PIXELS_PER_METER) * xf, this.getHeight()/(2*Box2dVars.PIXELS_PER_METER) * yf);
     fixtureDef.shape = rect;
 
 
@@ -114,7 +146,7 @@ public class Player extends GameSprite implements Box2dCollisionHandler{
     fixtureDef = new FixtureDef();
     PolygonShape rect2 = null;
     rect2 = new PolygonShape();
-    rect2.setAsBox((this.getWidth()-6)/(2*Box2dVars.PIXELS_PER_METER), 0.1f,new Vector2(0,-this.getHeight()/(2*Box2dVars.PIXELS_PER_METER)),0);
+    rect2.setAsBox((this.getWidth()-6)/(2*Box2dVars.PIXELS_PER_METER) * xf, 0.1f,new Vector2(0,-this.getHeight()/(2*Box2dVars.PIXELS_PER_METER) * yf),0);
     fixtureDef.shape = rect2;
 
     fixtureDef.density = 0f; 
@@ -209,12 +241,34 @@ public class Player extends GameSprite implements Box2dCollisionHandler{
         //    m_powered = true;
         //  }
        // }
+      } else
+      {
+        if (m_lastDx > 0)
+        {
+          m_powerUnit.setFlip(false,false);
+          this.setFlip(false,false);
+        }
+        else if (m_lastDx < 0)
+        {
+          m_powerUnit.setFlip(true,false);
+          this.setFlip(true,false);
+        }
       }
-    } else{
-      if (m_lastDx > 0)
-        m_powerUnit.setFlip(true,false);
-      else
-        m_powerUnit.setFlip(false,false);
+    } else
+    {
+      if (!m_onGround)
+      {
+        m_onGround = isPlayerGrounded(Gdx.graphics.getDeltaTime());
+      }
+
+      if (m_onGround)
+      {
+        if (m_standingAnimation.isRunning() == false)
+        {
+          this.stopAllAnimations();
+          this.runAnimation(m_standingAnimation);
+        }
+      }
     }
 
     if ((m_powered) && (m_playerControlled))
@@ -257,11 +311,44 @@ public class Player extends GameSprite implements Box2dCollisionHandler{
         m_body.setLinearVelocity(cv);
       }
 
+
+
       if(!m_onGround) {			
         m_fixture.setFriction(0f);
         playerSensorFixture.setFriction(0f);			
+        if (m_jumpingAnimation.isRunning() == false)
+        {
+          this.stopAllAnimations();
+          this.runAnimation(m_jumpingAnimation);
+        }
       } else {
 
+        if (Math.abs(cv.x) < 0.5f)
+        {
+          if (m_jumpingAnimation.isRunning())
+          {
+            if ((m_standingAnimation.isRunning() == false) && (m_landingAnimation.isRunning() == false))
+            {
+              this.stopAllAnimations();
+              this.chainAnimations(m_landingAnimation,m_standingAnimation);
+            }
+          } else
+          {
+            if ((m_standingAnimation.isRunning() == false) && (m_landingAnimation.isRunning() == false))
+            {
+              this.stopAllAnimations();
+              this.runAnimation(m_standingAnimation);
+            }
+          }
+
+        } else
+        {
+          if ((m_runningAnimation.isRunning() == false) && (m_jumpTicks < 1))
+          {
+            this.stopAllAnimations();
+            this.runAnimation(m_runningAnimation);
+          }
+        }
 
         if(notMoved && stillTime > 0.2) {
           m_fixture.setFriction(100f);
@@ -391,7 +478,7 @@ public class Player extends GameSprite implements Box2dCollisionHandler{
   {
     float cx = m_body.getPosition().x*Box2dVars.PIXELS_PER_METER;
     float cy = m_body.getPosition().y*Box2dVars.PIXELS_PER_METER;
-    this.setPosition(cx - this.getWidth()/2, cy - this.getHeight()/2);
+    this.setPosition(cx - this.getWidth()/2, cy - this.getHeight()/2 + m_yOff);
   }
 
   public void powerOn()
@@ -432,10 +519,12 @@ public class Player extends GameSprite implements Box2dCollisionHandler{
     {
       m_powerUnit.throwUnit(r,ry);
        m_throwDelayTicks = 40;
+       m_playerControlled = false;
     } else
     {
       m_powerUnit.throwUnit(-r,ry);
       m_throwDelayTicks = 40;
+      m_playerControlled = false;
     }
   }
 

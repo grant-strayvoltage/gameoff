@@ -136,7 +136,7 @@ public class PowerUnit extends GameMapObject implements Box2dCollisionHandler {
       trampoline_state = Trampoline.NONE;
       if (p.id == 1)
       {
-        m_yOff = 12;
+        m_yOff = 40;
         m_xOff = 3;
       } else
       {
@@ -318,8 +318,6 @@ public class PowerUnit extends GameMapObject implements Box2dCollisionHandler {
             //  player.applyLinearImpulse(0, -24, pos.x, pos.y);				
             //}
         }	
-
-        
 
         //is on ground and moving make sure walking animation is running
         if (m_onGround)
