@@ -271,10 +271,10 @@ public float getFloat(String key, MapObject mp)
     m_gameMapObjects.add(m_brain);
     m_brain.addToWorld(world);
 
-    m_player1 = new Player(m_sprites.findRegion("player1_stand"), inputManager);
+    m_player1 = new Player(m_sprites,1,inputManager);
     this.add(m_player1);
 
-    m_player2 = new Player(m_sprites.findRegion("player2_stand"), inputManager);
+    m_player2 = new Player(m_sprites,2, inputManager);
     this.add(m_player2);
 
     m_brain.pickUp(m_player1);

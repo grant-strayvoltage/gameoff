@@ -159,7 +159,7 @@ public abstract class GameMapObject extends GameSprite {
     fixtureDef.shape = rect;
 
     fixtureDef.density = m_density;
-    fixtureDef.friction = 0.1f;
+    fixtureDef.friction = 0.5f;
     fixtureDef.restitution = m_restitution;
     fixtureDef.isSensor = m_isSensor;
     fixtureDef.filter.categoryBits = m_categoryBits;
