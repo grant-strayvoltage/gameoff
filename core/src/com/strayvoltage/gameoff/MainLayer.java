@@ -489,7 +489,7 @@ public float getFloat(String key, MapObject mp)
       tiledMap.draw();
     
     //DEBUG RENDER BOX2D
-    //debug_renderer.render(world, m_defaultMatrix.cpy().scl(Box2dVars.PIXELS_PER_METER));
+    debug_renderer.render(world, m_defaultMatrix.cpy().scl(Box2dVars.PIXELS_PER_METER));
 
   }
 
