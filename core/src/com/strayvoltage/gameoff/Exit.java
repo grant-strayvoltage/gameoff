@@ -27,7 +27,7 @@ public class Exit extends GameMapObject implements Box2dCollisionHandler{
 		m_btype = BodyType.StaticBody;
 		m_filterMask = Box2dVars.PLAYER_NORMAL|Box2dVars.BRAIN_FOOT;
 		m_categoryBits = Box2dVars.OBJECT;
-		setSize(Box2dVars.PIXELS_PER_METER, Box2dVars.PIXELS_PER_METER*2);
+		setSize(mp.get("width", Float.class),mp.get("height",Float.class));
 	}
 	
 	@Override
