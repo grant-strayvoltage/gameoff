@@ -10,7 +10,10 @@ import com.strayvoltage.gamelib.GameMain;
 
 public class Exit extends GameMapObject implements Box2dCollisionHandler{
 	
-	public static boolean BRAIN_MODE = true;
+	//TURN THIS ON OR OFF TO ACTIVATE BRAN MODE
+	//brain mode makes it so the exit only requires brain contact to go to the 
+	//next level. 
+	public static boolean BRAIN_MODE = false;
 
 	//how many players must touch exit to complete level
 	static int REQUIREMENT = 2;

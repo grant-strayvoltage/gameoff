@@ -180,7 +180,7 @@ public float getFloat(String key, MapObject mp)
         	}
         	chainVectors.add(new Vector2((chainVectors.peek().x+tilesize),tilesize));
         }
-        else if((c==null||tx+1 == m_mapWidth||(cellid > 2&&cellid < 8))&&chainVectors.size>0){
+       if((c==null||tx+1 == m_mapWidth||(cellid > 2&&cellid < 8))&&chainVectors.size>0){
         	
         	chainVectors.add(new Vector2((chainVectors.peek().x),Box2dVars.PIXELS_PER_METER*.1f));
         	bodyDef = new BodyDef();
