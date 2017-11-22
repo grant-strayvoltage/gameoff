@@ -28,8 +28,8 @@ import com.strayvoltage.gamelib.*;
 
 public class MainLayer extends GameLayer  {
 	
-	public static final int MAX_STAGES = 1;
-	public static final int MAX_LEVELS_PER_STGE = 5;
+	public static final int MAX_STAGES = 1; //CHANGE IF YOU ADD MORE STAGES
+	public static final int MAX_LEVELS_PER_STGE = 5; //CHANGE IF YOU ADD or REMOVE LEVELS --
 
 int m_stage, m_level, gameState;
 AssetManager m_assets;
@@ -57,7 +57,7 @@ GameAnimateable m_mainBackAnim, m_lightning;
 GameSprite m_backSprite;
 
 int m_lightningTicks = 90;
-
+private float acumm = 0; //box2d var
 public MainLayer()
   {
     super();
@@ -163,7 +163,8 @@ public float getFloat(String key, MapObject mp)
       BodyDef bodyDef = null;
       PolygonShape chain = null;
       int startx = 0;
-      
+      final int SOLID_TILE_START = 32; //ALL TILES PAST ID 32 ARE SOLID SAFE TILES
+      final int HAZARD_START = 3;  //ALL TILES STARTING AT ID 3 ARE HAZARD TILES
       for (int tx = 0; tx < m_mapWidth; tx++)
       {
     	  fixtureDef.filter.categoryBits = Box2dVars.FLOOR;
@@ -171,7 +172,7 @@ public float getFloat(String key, MapObject mp)
         int cellid = 0;
         if(c!=null)
         	cellid = c.getTile().getId();
-        if(c!=null&&(cellid<3 || cellid > 7)) {
+        if(c!=null&&(cellid<HAZARD_START || cellid >= SOLID_TILE_START)) {
         	if(chainVectors.size == 0) {
         		//setup first vertex
         		startx = tx;
@@ -180,7 +181,7 @@ public float getFloat(String key, MapObject mp)
         	}
         	chainVectors.add(new Vector2((chainVectors.peek().x+tilesize),tilesize));
         }
-       if((c==null||tx+1 == m_mapWidth||(cellid > 2&&cellid < 8))&&chainVectors.size>0){
+       if((c==null||tx+1 == m_mapWidth||(cellid >= HAZARD_START&&cellid <= SOLID_TILE_START))&&chainVectors.size>0){
         	
         	chainVectors.add(new Vector2((chainVectors.peek().x),Box2dVars.PIXELS_PER_METER*.1f));
         	bodyDef = new BodyDef();
@@ -202,7 +203,7 @@ public float getFloat(String key, MapObject mp)
         	bodyDef = null;
         	startx = 0;
         }
-        if (c != null && ((cellid > 2) && (cellid < 8)))//spikes.. add other hazard here
+        if (c != null && ((cellid >= HAZARD_START) && (cellid <= SOLID_TILE_START)))//spikes.. add other hazard here
         {
             bodyDef = new BodyDef();
             bodyDef.type = BodyDef.BodyType.StaticBody;
@@ -428,7 +429,14 @@ public float getFloat(String key, MapObject mp)
      //   if (stateTime > 2)
      //     System.exit(0);
     //}
-    world.step(1/60f, 6, 2);
+    
+    float frameTime = Math.min(deltaTime, 0.25f);
+    acumm+=frameTime;
+    while(acumm >= 1/60f) {
+    	world.step(1/60f, 6, 2);
+    	acumm-=1/60f;
+    }
+    
 
     if (m_mainBackAnim != null)
     {
