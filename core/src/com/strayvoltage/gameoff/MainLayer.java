@@ -35,7 +35,7 @@ int m_stage, m_level, gameState;
 AssetManager m_assets;
 GameInputManager2 inputManager;
 Matrix4 m_defaultMatrix;
-public GameTileMap tiledMap;
+public GameTileMap tiledMap = null;
 float stateTime;
 float tw = 16f;
 float th = 16f;
@@ -145,7 +145,7 @@ public float getFloat(String key, MapObject mp)
 
     FixtureDef fixtureDef = new FixtureDef();
     fixtureDef.density = 1.0f;
-    fixtureDef.restitution = 0.25f;
+    fixtureDef.restitution = 0f;
     //floor is now floor lol
     fixtureDef.filter.categoryBits = Box2dVars.FLOOR;
     //i think without a mask it means the floor can collide with everything. This way it cant. 
@@ -169,20 +169,27 @@ public float getFloat(String key, MapObject mp)
     	  fixtureDef.filter.categoryBits = Box2dVars.FLOOR;
         TiledMapTileLayer.Cell c = p_Layer.getCell(tx,ty);
         int cellid = 0;
+
         if(c!=null)
         	cellid = c.getTile().getId();
-        if(c!=null&&(cellid<3 || cellid > 7)) {
+
+        //Gdx.app.log("MainLayer","(" + tx + ", " + ty + " = " + cellid);
+
+        if(cellid > 31) {
+
         	if(chainVectors.size == 0) {
         		//setup first vertex
         		startx = tx;
-        		chainVectors.add(new Vector2(0,Box2dVars.PIXELS_PER_METER*.1f));
+        		chainVectors.add(new Vector2(0,0));
         		chainVectors.add(new Vector2(0,tilesize));
         	}
         	chainVectors.add(new Vector2((chainVectors.peek().x+tilesize),tilesize));
+          //Gdx.app.log("MainLayer","(" + tx + ", " + ty + " = " + cellid + " ADDED");
         }
-        else if((c==null||tx+1 == m_mapWidth||(cellid > 2&&cellid < 8))&&chainVectors.size>0){
-        	
-        	chainVectors.add(new Vector2((chainVectors.peek().x),Box2dVars.PIXELS_PER_METER*.1f));
+        
+        if ((cellid < 32 || tx+1 == m_mapWidth ) && chainVectors.size>0){
+        	//Gdx.app.log("MainLayer","(" + tx + ", " + ty + " = " + cellid + " FLUSHED - END -1");
+        	chainVectors.add(new Vector2((chainVectors.peek().x),0));
         	bodyDef = new BodyDef();
         	bodyDef.type = BodyType.StaticBody;
         	chain = new PolygonShape();
@@ -202,7 +209,8 @@ public float getFloat(String key, MapObject mp)
         	bodyDef = null;
         	startx = 0;
         }
-        if (c != null && ((cellid > 2) && (cellid < 8)))//spikes.. add other hazard here
+        
+        if (cellid > 0 && cellid < 32)//spikes.. add other hazard here
         {
             bodyDef = new BodyDef();
             bodyDef.type = BodyDef.BodyType.StaticBody;
@@ -211,8 +219,8 @@ public float getFloat(String key, MapObject mp)
             
             Vector2[] points = new Vector2[4];
             points[0] = new Vector2(0,0).scl(1f/Box2dVars.PIXELS_PER_METER);
-            points[1] = new Vector2(0,tilesize-2).scl(1f/Box2dVars.PIXELS_PER_METER);
-            points[2] = new Vector2(tilesize,tilesize-2).scl(1f/Box2dVars.PIXELS_PER_METER);
+            points[1] = new Vector2(0,tilesize).scl(1f/Box2dVars.PIXELS_PER_METER);
+            points[2] = new Vector2(tilesize,tilesize).scl(1f/Box2dVars.PIXELS_PER_METER);
             points[3] = new Vector2(tilesize,0).scl(1f/Box2dVars.PIXELS_PER_METER);
             
             shape.set(points);
@@ -226,7 +234,6 @@ public float getFloat(String key, MapObject mp)
             //bodyDef.dispose();
             bodyDef = null;
             w = 0;
-            
         }
       }
      
@@ -272,8 +279,8 @@ public float getFloat(String key, MapObject mp)
       
 
     m_brain = new PowerUnit();
-    m_brain.init(null,m_sprites);
     m_gameMapObjects.add(m_brain);
+    m_brain.init(null,m_sprites);
     m_brain.addToWorld(world);
 
     m_player1 = new Player(m_sprites,1,inputManager);
@@ -297,6 +304,9 @@ public float getFloat(String key, MapObject mp)
     }
 
     tiledMap = new GameTileMap("level_" + stage + "-" + lv + ".tmx", m_camera);
+
+    m_brain.m_map = tiledMap;
+
     m_player1.setMap(tiledMap, m_player2,24,40,m_brain,1);
     m_player2.setMap(tiledMap, m_player1,8,15,m_brain,2);
     m_brain.setMap(tiledMap);
@@ -356,6 +366,7 @@ public float getFloat(String key, MapObject mp)
     MapLayer objectsLayer = (MapLayer) tiledMap.m_tiledMap.getLayers().get("objects");
     MapObjects mapObjects = objectsLayer.getObjects();
     float px,py;
+
 
     for (MapObject obj : mapObjects)
     {

@@ -39,11 +39,12 @@ public class PowerUnit extends GameMapObject implements Box2dCollisionHandler {
   int m_jumpTicks = 0;
   float m_yOff = 12;
   float m_xOff = 3;
+  GameTileMap m_map;
 
   public void init(MapProperties mp, TextureAtlas textures)
   {
     m_colBits = 16;
-        trampoline_state = Trampoline.NONE;
+    trampoline_state = Trampoline.NONE;
     TextureRegion texture = null;
     texture = textures.findRegion("brain_F1");
     this.setRegion(texture);
@@ -120,6 +121,25 @@ public class PowerUnit extends GameMapObject implements Box2dCollisionHandler {
 	  playerSensorFixture.setUserData(this);
     playerSensorFixture.setSensor(true);		
 		rect2.dispose();		
+  }
+
+  public boolean checkTileCollision(float xx, float yy)
+  {
+    if (m_map.getCollisionBitsAt(xx,yy) > 0) return true;
+    return false;
+  }
+
+  public boolean checkDir(int dx)
+  {
+    float xx = this.getX() + dx*(this.getWidth() + 2) - 1;
+    float yy = this.getY() + 1;
+
+    if (checkTileCollision(xx,yy)) return true;
+
+    yy += (this.getHeight() - 5);
+
+    return checkTileCollision(xx,yy);
+
   }
 
   public void pickUp(Player p)
@@ -257,13 +277,16 @@ public class PowerUnit extends GameMapObject implements Box2dCollisionHandler {
         {
           if (m_controller.isRightPressed())
           {
-            m_body.applyForceToCenter(m_hForce,0,true);
+            if (checkDir(1) == false)
+              m_body.applyForceToCenter(m_hForce,0,true);
+
             notMoved = false;
             stillTime = 0;
             //this.setFlip(true,false);
           } else if (m_controller.isLeftPressed())
           {
-            m_body.applyForceToCenter(-m_hForce,0,true);
+            if (checkDir(0) == false)
+              m_body.applyForceToCenter(-m_hForce,0,true);
             notMoved = false;
             stillTime = 0;
             //this.setFlip(false,false);

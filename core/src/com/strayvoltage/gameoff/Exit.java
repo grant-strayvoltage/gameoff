@@ -22,7 +22,7 @@ public class Exit extends GameMapObject implements Box2dCollisionHandler{
 	public void init(MapProperties mp, TextureAtlas textures) {
 		m_isSensor = true;
 		m_btype = BodyType.StaticBody;
-		m_filterMask = Box2dVars.PLAYER_NORMAL|Box2dVars.BRAIN_FOOT;
+		m_filterMask = Box2dVars.PLAYER_NORMAL;
 		m_categoryBits = Box2dVars.OBJECT;
 		setSize(Box2dVars.PIXELS_PER_METER, Box2dVars.PIXELS_PER_METER*2);
 	}
