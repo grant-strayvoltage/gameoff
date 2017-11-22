@@ -73,6 +73,8 @@ public MainLayer()
     inputManager = MasterInputManager.getSharedInstance().getController(0);
     inputManager.setViewport(GameMain.getSingleton().m_viewport);
 
+    m_assets.finishLoading();
+
     m_sprites = m_assets.get("game_sprites.txt", TextureAtlas.class);
     m_backgrounds = m_assets.get("backgrounds.txt", TextureAtlas.class);
 
@@ -138,7 +140,110 @@ public float getFloat(String key, MapObject mp)
       return ff.intValue();
   }
 
+  
   private void setupTileMapBox2D()
+  {
+
+    TiledMapTileLayer p_Layer = (TiledMapTileLayer) tiledMap.m_tiledMap.getLayers().get("platforms");
+
+    FixtureDef fixtureDef = new FixtureDef();
+    fixtureDef.density = 1.0f;
+    fixtureDef.restitution = 0f;
+    //floor is now floor lol
+    fixtureDef.filter.categoryBits = Box2dVars.FLOOR;
+    //i think without a mask it means the floor can collide with everything. This way it cant. 
+    fixtureDef.filter.maskBits =  Box2dVars.BLOCK | Box2dVars.PLAYER_NORMAL | Box2dVars.PLAYER_JUMPING
+    							| Box2dVars.POWER| Box2dVars.PLAYER_FOOT | Box2dVars.BRAIN_FOOT | Box2dVars.OBJECT;
+    fixtureDef.friction = 0.5f;
+    float w = 0;
+    float boxY = 0;
+    float boxLeftX = 0;
+    float tilesize = tiledMap.getTilePixelWidth();//assuming we dont ever use weird size tiles. 
+    Array<Vector2> chainVectors = new Array<Vector2>();
+    
+    for (int ty = 0; ty < m_mapHeight; ty++)
+    {
+      BodyDef bodyDef = null;
+      PolygonShape chain = null;
+      int startx = 0;
+      
+      for (int tx = 0; tx < m_mapWidth; tx++)
+      {
+    	  fixtureDef.filter.categoryBits = Box2dVars.FLOOR;
+        TiledMapTileLayer.Cell c = p_Layer.getCell(tx,ty);
+        int cellid = 0;
+
+        if(c!=null)
+        	cellid = c.getTile().getId();
+
+        //Gdx.app.log("MainLayer","(" + tx + ", " + ty + " = " + cellid);
+
+        if(cellid > 31) {
+
+        	if(chainVectors.size == 0) {
+        		//setup first vertex
+        		startx = tx;
+        		chainVectors.add(new Vector2(0,0));
+        		chainVectors.add(new Vector2(0,tilesize));
+        	}
+        	chainVectors.add(new Vector2((chainVectors.peek().x+tilesize),tilesize));
+          //Gdx.app.log("MainLayer","(" + tx + ", " + ty + " = " + cellid + " ADDED");
+        }
+        
+        if ((cellid < 32 || tx+1 == m_mapWidth ) && chainVectors.size>0){
+        	//Gdx.app.log("MainLayer","(" + tx + ", " + ty + " = " + cellid + " FLUSHED - END -1");
+        	chainVectors.add(new Vector2((chainVectors.peek().x),0));
+        	bodyDef = new BodyDef();
+        	bodyDef.type = BodyType.StaticBody;
+        	chain = new PolygonShape();
+        	Vector2[] VX = new Vector2[4];
+        	VX[0] = chainVectors.first().scl(1f/Box2dVars.PIXELS_PER_METER);
+        	VX[1] = chainVectors.get(1).scl(1f/Box2dVars.PIXELS_PER_METER);;
+        	VX[2] = chainVectors.get(chainVectors.size-2).scl(1f/Box2dVars.PIXELS_PER_METER);;
+        	VX[3] = chainVectors.peek().scl(1f/Box2dVars.PIXELS_PER_METER);;
+        	chain.set(VX);
+        	chainVectors.clear();
+        	fixtureDef.shape = chain;
+          fixtureDef.restitution = 0;
+        	bodyDef.position.set((startx*tilesize)/Box2dVars.PIXELS_PER_METER, (ty*tilesize)/Box2dVars.PIXELS_PER_METER);
+        	world.createBody(bodyDef).createFixture(fixtureDef);
+        	chain.dispose();
+        	chain = null;
+        	bodyDef = null;
+        	startx = 0;
+        }
+        
+        if (cellid > 0 && cellid < 32)//spikes.. add other hazard here
+        {
+            bodyDef = new BodyDef();
+            bodyDef.type = BodyDef.BodyType.StaticBody;
+            boxY = ty;
+            PolygonShape shape = new PolygonShape();
+            
+            Vector2[] points = new Vector2[4];
+            points[0] = new Vector2(0,0).scl(1f/Box2dVars.PIXELS_PER_METER);
+            points[1] = new Vector2(0,tilesize).scl(1f/Box2dVars.PIXELS_PER_METER);
+            points[2] = new Vector2(tilesize,tilesize).scl(1f/Box2dVars.PIXELS_PER_METER);
+            points[3] = new Vector2(tilesize,0).scl(1f/Box2dVars.PIXELS_PER_METER);
+            
+            shape.set(points);
+            
+            fixtureDef.shape = shape;
+            fixtureDef.filter.categoryBits = Box2dVars.HAZARD;
+            bodyDef.position.set((tx*tilesize)/Box2dVars.PIXELS_PER_METER,(ty*tilesize)/Box2dVars.PIXELS_PER_METER);
+            Body body = world.createBody(bodyDef);
+            body.createFixture(fixtureDef);
+            shape.dispose();
+            //bodyDef.dispose();
+            bodyDef = null;
+            w = 0;
+        }
+      }
+     
+    }
+  }
+
+  private void setupTileMapBox2Db()
   {
 
     TiledMapTileLayer p_Layer = (TiledMapTileLayer) tiledMap.m_tiledMap.getLayers().get("platforms");
@@ -172,18 +277,20 @@ public float getFloat(String key, MapObject mp)
         int cellid = 0;
         if(c!=null)
         	cellid = c.getTile().getId();
-        if(c!=null&&(cellid<HAZARD_START || cellid >= SOLID_TILE_START)) {
+
+        if (cellid >= SOLID_TILE_START) {
         	if(chainVectors.size == 0) {
         		//setup first vertex
         		startx = tx;
-        		chainVectors.add(new Vector2(0,Box2dVars.PIXELS_PER_METER*.1f));
+        		chainVectors.add(new Vector2(0,Box2dVars.PIXELS_PER_METER));
         		chainVectors.add(new Vector2(0,tilesize));
         	}
         	chainVectors.add(new Vector2((chainVectors.peek().x+tilesize),tilesize));
         }
-       if((c==null||tx+1 == m_mapWidth||(cellid >= HAZARD_START&&cellid <= SOLID_TILE_START))&&chainVectors.size>0){
+
+       if ((tx+1 == m_mapWidth || cellid < SOLID_TILE_START) && chainVectors.size>0){
         	
-        	chainVectors.add(new Vector2((chainVectors.peek().x),Box2dVars.PIXELS_PER_METER*.1f));
+        	chainVectors.add(new Vector2((chainVectors.peek().x),Box2dVars.PIXELS_PER_METER));
         	bodyDef = new BodyDef();
         	bodyDef.type = BodyType.StaticBody;
         	chain = new PolygonShape();
@@ -203,7 +310,8 @@ public float getFloat(String key, MapObject mp)
         	bodyDef = null;
         	startx = 0;
         }
-        if (c != null && ((cellid >= HAZARD_START) && (cellid <= SOLID_TILE_START)))//spikes.. add other hazard here
+
+        if ((cellid >= HAZARD_START) && (cellid < SOLID_TILE_START))//spikes.. add other hazard here
         {
             bodyDef = new BodyDef();
             bodyDef.type = BodyDef.BodyType.StaticBody;
@@ -227,7 +335,6 @@ public float getFloat(String key, MapObject mp)
             //bodyDef.dispose();
             bodyDef = null;
             w = 0;
-            
         }
       }
      

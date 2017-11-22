@@ -146,7 +146,7 @@ public class Player extends GameSprite implements Box2dCollisionHandler{
     fixtureDef = new FixtureDef();
     PolygonShape rect2 = null;
     rect2 = new PolygonShape();
-    rect2.setAsBox((this.getWidth()-6)/(2*Box2dVars.PIXELS_PER_METER) * xf, 0.1f,new Vector2(0,-this.getHeight()/(2*Box2dVars.PIXELS_PER_METER) * yf),0);
+    rect2.setAsBox((this.getWidth()*0.75f)/(2*Box2dVars.PIXELS_PER_METER) * xf, 0.1f,new Vector2(0,-this.getHeight()/(2*Box2dVars.PIXELS_PER_METER) * yf),0);
     fixtureDef.shape = rect2;
 
     fixtureDef.density = 0f; 
@@ -160,6 +160,29 @@ public class Player extends GameSprite implements Box2dCollisionHandler{
     playerSensorFixture.setSensor(true);		
 		rect2.dispose();		 
 		
+  }
+
+  public boolean checkTileCollision(float xx, float yy)
+  {
+    if (m_map.getCollisionBitsAt(xx,yy) > 0) return true;
+    return false;
+  }
+
+  public boolean checkDir(int dx)
+  {
+    float xx = this.getX() + dx*(this.getWidth() + 2) - 1;
+    float yy = this.getY() + 1;
+
+    if (checkTileCollision(xx,yy)) return true;
+
+    yy += (this.getHeight() - m_yOff*2)/2;
+
+    if (checkTileCollision(xx,yy)) return true;
+
+    yy += (this.getHeight() - m_yOff*2)/2 - 3;
+
+    return checkTileCollision(xx,yy);
+
   }
 
   public GameMapObject checkObjectCollisions(float xx, float yy)
@@ -287,13 +310,19 @@ public class Player extends GameSprite implements Box2dCollisionHandler{
 
       if (m_controller.isRightPressed())
       {
-        m_body.applyForceToCenter(m_hForce,0,true);
+        if (checkDir(1) == false)
+        {
+          m_body.applyForceToCenter(m_hForce,0,true);
+        }
         m_lastDx = 1;
         notMoved = false;
         stillTime = 0;
       } else if (m_controller.isLeftPressed())
       {
-        m_body.applyForceToCenter(-m_hForce,0,true);
+        if (checkDir(0) == false)
+        {
+          m_body.applyForceToCenter(-m_hForce,0,true);
+        }
         m_lastDx = -1;
         notMoved = false;
         stillTime = 0;
@@ -596,12 +625,8 @@ public class Player extends GameSprite implements Box2dCollisionHandler{
 			        GameMain.getSingleton().replaceActiveLayer(ml);
 					
 				}
-			});
-			
+			});	
 		}
-		
-		
-		
 	}
 	
 	
