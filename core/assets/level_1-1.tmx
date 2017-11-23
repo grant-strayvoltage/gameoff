@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" tiledversion="1.0.3" orientation="orthogonal" renderorder="right-down" width="40" height="23" tilewidth="32" tileheight="32" nextobjectid="36">
+<map version="1.0" tiledversion="1.0.3" orientation="orthogonal" renderorder="right-down" width="40" height="23" tilewidth="32" tileheight="32" nextobjectid="37">
  <properties>
   <property name="Back" value="back5"/>
   <property name="Title" value="Test Level One"/>
@@ -7,19 +7,19 @@
  <tileset firstgid="1" source="tileset.tsx"/>
  <layer name="background" width="40" height="23">
   <data encoding="base64" compression="zlib">
-   eJztziEBAAAIAzCISv8SWBT2ZkuwKgA+kw7Ao9MBADgWk10AYw==
+   eJxjYBgFIJA50A4gAMh1nyudsBOZ7qMXICX8XGnmCtxguKY/egFauy+RQv2DKfywuYUe7iO2LHEGYs8BcB8pAN09A+0+RjT+YHMfOhh1H2Vg1H3UBaPuowyMuo8yMFzdBwD3mham
   </data>
  </layer>
  <layer name="platforms" width="40" height="23">
   <data encoding="base64" compression="zlib">
-   eJxjYBgFo2AUjIJRgA8kAnESlXAyDdzXSEWzmqloFgyMuo8yMOo+ysBgd99CBuqVL4tp4L5RMApGwSggFQAAw4sV6Q==
+   eJzt1LEJACAQQ9Fwm6qTiJOIi+oCFkLO6gde/6uEpAAAXJWjmrSEvi7fBn300fe1b8r3LyuhDwBebeLwG9k=
   </data>
  </layer>
  <objectgroup name="objects">
   <object id="4" name="P1" type="PlayerStart1" x="374" y="401" width="60" height="77"/>
   <object id="5" name="P2" type="PlayerStart2" x="461" y="434" width="47" height="44"/>
   <object id="14" name="block3" type="Block" x="-64" y="352" width="32" height="32"/>
-  <object id="16" name="exit" type="Exit" x="864" y="416" width="64" height="64"/>
+  <object id="16" name="exit" type="Exit" x="864" y="389" width="64" height="90"/>
   <object id="28" name="Tramp1" type="Trampoline" x="-128" y="480" width="48" height="48">
    <properties>
     <property name="static" type="bool" value="true"/>
@@ -38,6 +38,14 @@
     <property name="power" type="int" value="500"/>
     <property name="startOn" type="bool" value="false"/>
     <property name="switches" value="switch1"/>
+   </properties>
+  </object>
+  <object id="36" name="BackObject" type="BackObject" x="672" y="352" width="128" height="128">
+   <properties>
+    <property name="frames" type="int" value="3"/>
+    <property name="speed" type="int" value="10"/>
+    <property name="sprite" value="vat"/>
+    <property name="style" type="int" value="2"/>
    </properties>
   </object>
  </objectgroup>

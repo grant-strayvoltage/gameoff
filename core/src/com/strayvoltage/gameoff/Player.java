@@ -564,6 +564,11 @@ public class Player extends GameSprite implements Box2dCollisionHandler{
     stillTime = 0;
   }
 
+  public void removeControl()
+  {
+    m_playerControlled = false;
+  }
+
   public void setBodyPosition(float xx, float yy)
   {
     this.setPosition(xx,yy);
