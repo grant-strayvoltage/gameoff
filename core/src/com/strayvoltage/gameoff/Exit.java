@@ -25,7 +25,7 @@ public class Exit extends GameMapObject implements Box2dCollisionHandler{
 	public void init(MapProperties mp, TextureAtlas textures) {
 		m_isSensor = true;
 		m_btype = BodyType.StaticBody;
-		m_filterMask = Box2dVars.PLAYER_NORMAL|Box2dVars.BRAIN_FOOT;
+		m_filterMask = Box2dVars.PLAYER_NORMAL|Box2dVars.POWER;
 		m_categoryBits = Box2dVars.OBJECT;
 		setSize(mp.get("width", Float.class),mp.get("height",Float.class));
 	}
@@ -84,7 +84,7 @@ public class Exit extends GameMapObject implements Box2dCollisionHandler{
 
 	@Override
 	public void handleBegin(Box2dCollision collision) {
-		if(collision.target_type == Box2dVars.BRAIN_FOOT) {
+		if(collision.target_type == Box2dVars.POWER) {
 			brain_touched = true;
 		}else {
 			players_touched++;
@@ -95,7 +95,7 @@ public class Exit extends GameMapObject implements Box2dCollisionHandler{
 
 	@Override
 	public void handleEnd(Box2dCollision collision) {
-		if(collision.target_type == Box2dVars.BRAIN_FOOT) {
+		if(collision.target_type == Box2dVars.POWER) {
 			brain_touched = false;
 		}else {
 			players_touched--;
