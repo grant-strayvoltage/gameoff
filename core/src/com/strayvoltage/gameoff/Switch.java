@@ -77,9 +77,10 @@ public class Switch extends GameMapObject implements Box2dCollisionHandler{
 	public void setOn() {
 		if(!first_trigger)
 			first_trigger = true;
-		if(!is_On)
+		if(!is_On) {
+			is_On = true;
 			adapter.trigger(this);
-		is_On = true;
+		}
 		setRegion(this.on);
 		
 		
@@ -87,9 +88,12 @@ public class Switch extends GameMapObject implements Box2dCollisionHandler{
 	
 	public void setOff() {
 		setRegion(this.off);
-		if(is_On)
+		if(is_On){
+			is_On = false;
 			adapter.trigger(this);
-		is_On = false;
+		}
+			
+		
 	}
 	
 	@Override
