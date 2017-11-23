@@ -2,7 +2,9 @@
 <map version="1.0" tiledversion="1.0.3" orientation="orthogonal" renderorder="right-down" width="40" height="23" tilewidth="32" tileheight="32" nextobjectid="37">
  <properties>
   <property name="Back" value="back5"/>
-  <property name="Title" value="Test Level One"/>
+  <property name="Title" value="Two Robot Bodies...One Brain"/>
+  <property name="backOffX" type="int" value="0"/>
+  <property name="backOffY" type="int" value="-100"/>
  </properties>
  <tileset firstgid="1" source="tileset.tsx"/>
  <layer name="background" width="40" height="23">
@@ -16,10 +18,10 @@
   </data>
  </layer>
  <objectgroup name="objects">
-  <object id="4" name="P1" type="PlayerStart1" x="374" y="401" width="60" height="77"/>
-  <object id="5" name="P2" type="PlayerStart2" x="461" y="434" width="47" height="44"/>
+  <object id="4" name="P1" type="PlayerStart1" x="371.058" y="402.742" width="60" height="77"/>
+  <object id="5" name="P2" type="PlayerStart2" x="458.724" y="435.675" width="47" height="44"/>
   <object id="14" name="block3" type="Block" x="-64" y="352" width="32" height="32"/>
-  <object id="16" name="exit" type="Exit" x="864" y="389" width="64" height="90"/>
+  <object id="16" name="exit" type="Exit" x="857.435" y="389.062" width="64" height="90"/>
   <object id="28" name="Tramp1" type="Trampoline" x="-128" y="480" width="48" height="48">
    <properties>
     <property name="static" type="bool" value="true"/>

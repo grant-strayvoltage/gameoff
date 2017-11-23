@@ -32,7 +32,7 @@ public class Exit extends GameMapObject implements Box2dCollisionHandler{
 		texture = textures.findRegion("door_F1");
 		this.setRegion(texture);
 		this.setSize(texture.getRegionWidth(),texture.getRegionHeight());
-		m_doorOpen = new AnimateSpriteFrame(textures, new String[] {"door_F1", "door_F2", "door_F3", "door_F3","door_F4","door_F4","door_F4","door_F4","door_F4","door_F4","door_F4","door_F4","door_F4","door_F4","door_F4","door_F4","door_F4","door_F4","door_F4","door_F4","door_F4","door_F3","door_F2","door_F1","door_F1","door_F1"}, 3f, 1);
+		m_doorOpen = new AnimateSpriteFrame(textures, new String[] {"door_F1", "door_F2", "door_F3", "door_F3","door_F4","door_F4","door_F4","door_F4","door_F4","door_F4","door_F4","door_F4","door_F4","door_F4","door_F4","door_F4","door_F4","door_F4","door_F4","door_F4","door_F4","door_F3","door_F2","door_F1","door_F1","door_F1"}, 2.5f, 1);
 	}
 	
 	@Override
@@ -54,7 +54,7 @@ public class Exit extends GameMapObject implements Box2dCollisionHandler{
 		{
 			if (m_doorOpen.isRunning() == false)
 			{
-				loadNextLevel();
+				//loadNextLevel();
 			}
 		}
 		

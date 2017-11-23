@@ -1,25 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" tiledversion="2017.07.25" orientation="orthogonal" renderorder="right-down" width="40" height="23" tilewidth="32" tileheight="32" nextobjectid="36">
+<map version="1.0" tiledversion="1.0.3" orientation="orthogonal" renderorder="right-down" width="40" height="23" tilewidth="32" tileheight="32" nextobjectid="38">
  <properties>
   <property name="Back" value="back5"/>
-  <property name="Title" value="Test Level One"/>
+  <property name="Title" value="Brain Toss"/>
  </properties>
  <tileset firstgid="1" source="tileset.tsx"/>
- <layer name="background" width="40" height="23" visible="0">
+ <layer name="background" width="40" height="23">
   <data encoding="base64" compression="zlib">
    eJztwTEBAAAAwqD1T20IX6AAAADgNw5gAAE=
   </data>
  </layer>
  <layer name="platforms" width="40" height="23">
   <data encoding="base64" compression="zlib">
-   eJxjYBgFo2AUUAMkUYhpDRop0NtMNVfgBqPuowyMuo8yQMh9+PLqYHAfPjDqPoj7yC1z6eU+FhIwvd032Ou3UTAKRsHgAgAFHhlD
+   eJxjYmBgYBrFo3gUU4wTgTiJTJxMB/c1MpAPmkfdN+q+Ee6+JCQ8GN2HD4y6D+K+JAb88TjQ7mMhEg+E+xZiCT9i8WI6uG8Uj+JRPLgwAG3cH28=
   </data>
  </layer>
  <objectgroup name="objects">
-  <object id="4" name="P1" type="PlayerStart1" x="416" y="352" width="60" height="77"/>
-  <object id="5" name="P2" type="PlayerStart2" x="640" y="288" width="47" height="44"/>
+  <object id="4" name="P1" type="PlayerStart1" x="416" y="369.95" width="60" height="77"/>
+  <object id="5" name="P2" type="PlayerStart2" x="638.944" y="305.95" width="47" height="44"/>
   <object id="14" name="block3" type="Block" x="-64" y="352" width="32" height="32"/>
-  <object id="16" name="exit" type="Exit" x="768" y="448" width="64" height="64"/>
+  <object id="16" name="exit" type="Exit" x="755.33" y="420.548" width="64" height="90"/>
   <object id="28" name="Tramp1" type="Trampoline" x="-128" y="480" width="48" height="48">
    <properties>
     <property name="static" type="bool" value="true"/>
@@ -38,6 +38,22 @@
     <property name="power" type="int" value="500"/>
     <property name="startOn" type="bool" value="false"/>
     <property name="switches" value="switch1"/>
+   </properties>
+  </object>
+  <object id="36" name="BackObject" type="BackObject" x="400.347" y="220.349" width="82" height="64">
+   <properties>
+    <property name="frames" type="int" value="3"/>
+    <property name="speed" type="int" value="2"/>
+    <property name="sprite" value="screen"/>
+    <property name="style" type="int" value="2"/>
+   </properties>
+  </object>
+  <object id="37" name="BackObject" type="BackObject" x="735.053" y="220.349" width="82" height="64">
+   <properties>
+    <property name="frames" type="int" value="3"/>
+    <property name="speed" type="int" value="2"/>
+    <property name="sprite" value="screen"/>
+    <property name="style" type="int" value="2"/>
    </properties>
   </object>
  </objectgroup>

@@ -297,7 +297,7 @@ public class GameTileMap implements GameDrawable {
     //Gdx.app.log("GameTileMap","getCollisionBitsAt " + xx + ", " + yy + " = " + tx + ", " + ty);
     TiledMapTileLayer.Cell c = m_platforms.getCell(tx,ty);
     if (c == null) return 0;
-    if (c.getTile().getId() >= 64) return 3;
+    if (c.getTile().getId() >= 32) return 3;
     return m_tileBitFlags[c.getTile().getId()-1];
   }
 

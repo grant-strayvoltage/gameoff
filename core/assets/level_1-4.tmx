@@ -1,25 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" tiledversion="2017.07.25" orientation="orthogonal" renderorder="right-down" width="40" height="23" tilewidth="32" tileheight="32" nextobjectid="36">
+<map version="1.0" tiledversion="1.0.3" orientation="orthogonal" renderorder="right-down" width="40" height="23" tilewidth="32" tileheight="32" nextobjectid="38">
  <properties>
   <property name="Back" value="back5"/>
-  <property name="Title" value="Test Level One"/>
+  <property name="Title" value="Brain Squeeze"/>
  </properties>
  <tileset firstgid="1" source="tileset.tsx"/>
- <layer name="background" width="40" height="23" visible="0">
+ <layer name="background" width="40" height="23">
   <data encoding="base64" compression="zlib">
-   eJztwTEBAAAAwqD1T20IX6AAAADgNw5gAAE=
+   eJzt0bEJACAMBdHMJuj+I9krROSKCN6DX6U5SIReNqoDDuxj7GPs2/Vk670V9N3wv4x9jH2MfdK/JgveBw8=
   </data>
  </layer>
  <layer name="platforms" width="40" height="23">
   <data encoding="base64" compression="zlib">
-   eJztkUEKgDAMBHPoS3xaf2L8iS8VqUIoDVpWbCg7MJe0hyERmYsd8A/Wh/etc/417MNgH8bZl41vO7i/AvswWn2LMWKfJXqfR5T73tZwfwX2YfT26WXEPpXxfcn5pzKmLzdMzrx2Rg43vy6Y
+   eJzt1jEKgDAMheFH8ST2ZOpJiidRL6pLIXYIwSE8Yh78S6cPsrQAKIFans4PbU6+Bn278p6+9P3Bt4oYfdrSF883ixh9o4PZp7kZ7ttj8lmWvni+KmLzVXD4JoPN03fg/X+xdjn5vLsBkVUwwg==
   </data>
  </layer>
  <objectgroup name="objects">
-  <object id="4" name="P1" type="PlayerStart1" x="416" y="128" width="60" height="77"/>
-  <object id="5" name="P2" type="PlayerStart2" x="576" y="384" width="47" height="44"/>
+  <object id="4" name="P1" type="PlayerStart1" x="417.96" y="145.644" width="60" height="77"/>
+  <object id="5" name="P2" type="PlayerStart2" x="576" y="402.624" width="47" height="44"/>
   <object id="14" name="block3" type="Block" x="-64" y="352" width="32" height="32"/>
-  <object id="16" name="exit" type="Exit" x="768" y="512" width="64" height="64"/>
+  <object id="16" name="exit" type="Exit" x="758.198" y="485.535" width="64" height="90"/>
   <object id="28" name="Tramp1" type="Trampoline" x="-128" y="480" width="48" height="48">
    <properties>
     <property name="static" type="bool" value="true"/>
@@ -38,6 +38,22 @@
     <property name="power" type="int" value="500"/>
     <property name="startOn" type="bool" value="false"/>
     <property name="switches" value="switch1"/>
+   </properties>
+  </object>
+  <object id="36" name="BackObject" type="BackObject" x="437.587" y="335.862" width="82" height="64">
+   <properties>
+    <property name="frames" type="int" value="3"/>
+    <property name="speed" type="int" value="2"/>
+    <property name="sprite" value="screen"/>
+    <property name="style" type="int" value="2"/>
+   </properties>
+  </object>
+  <object id="37" name="BackObject" type="BackObject" x="679.168" y="141.865" width="82" height="64">
+   <properties>
+    <property name="frames" type="int" value="3"/>
+    <property name="speed" type="int" value="2"/>
+    <property name="sprite" value="screen"/>
+    <property name="style" type="int" value="2"/>
    </properties>
   </object>
  </objectgroup>

@@ -6,8 +6,8 @@ import java.util.Arrays;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.assets.AssetManager;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.graphics.*;
+import com.badlogic.gdx.graphics.g2d.*;
 import com.badlogic.gdx.maps.MapLayer;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.MapObjects;
@@ -31,7 +31,7 @@ public class MainLayer extends GameLayer  {
 	public static final int MAX_STAGES = 1; //CHANGE IF YOU ADD MORE STAGES
 	public static final int MAX_LEVELS_PER_STGE = 5; //CHANGE IF YOU ADD or REMOVE LEVELS --
 
-int m_gameState = 10;
+int m_gameState = 5;
 Exit m_exit;
 int m_stage, m_level, gameState;
 AssetManager m_assets;
@@ -57,9 +57,13 @@ SwitchAdapter switch_adapter;
 TextureAtlas m_backgrounds;
 GameAnimateable m_mainBackAnim, m_lightning;
 GameSprite m_backSprite;
+GameSprite m_titleBackSprite;
 
 int m_lightningTicks = 90;
 private float acumm = 0; //box2d var
+GameText m_titleText;
+GameSprite m_fadeOutSprite;
+
 public MainLayer()
   {
     super();
@@ -96,6 +100,10 @@ public MainLayer()
       m_font24 = new BitmapFont(Gdx.files.internal("Font24.fnt"), Gdx.files.internal("Font24.png"), false);
       m_font16 = new BitmapFont(Gdx.files.internal("Font16.fnt"), Gdx.files.internal("Font16.png"), false);
     }
+
+    //m_fadeOutTexture = m_assets.get("fade_out.png", Texture.class);
+    m_fadeOutSprite = new GameSprite(m_assets.get("fade_out.png", Texture.class));
+    m_fadeOutSprite.setOpacity(0);
 
     /*
     if (bombEffectPool == null)
@@ -142,7 +150,18 @@ public float getFloat(String key, MapObject mp)
       return ff.intValue();
   }
 
-  
+  public void fadeIn(float duration)
+  {
+    m_fadeOutSprite.setOpacity(1.0f);
+    m_fadeOutSprite.runAnimation(new AnimateFadeOut(duration));
+  }
+
+  public void fadeToBlack(float duration)
+  {
+    m_fadeOutSprite.setOpacity(0f);
+    m_fadeOutSprite.runAnimation(new AnimateFadeIn(duration));
+  }
+
   private void setupTileMapBox2D()
   {
 
@@ -345,6 +364,13 @@ public float getFloat(String key, MapObject mp)
     }
     this.add(m_backSprite,true);
 
+    int byo = getInt("backOffY", mapProps);
+    int bxo = getInt("backOffX", mapProps);
+    m_backSprite.setPosition(bxo,byo);
+
+    m_titleBackSprite = new GameSprite(m_backgrounds.findRegion("title_back"));
+    
+
 
     /*
     String levelType = "2";
@@ -381,10 +407,12 @@ public float getFloat(String key, MapObject mp)
       py = this.getFloat("y", obj);
       if (t.equals("PlayerStart1"))
       {
-        m_player1.setBodyPosition(px,py);
+        m_player1.setBodyPosition(px,py-18);
+        m_player1.setPositionToBody();
       } else if (t.equals("PlayerStart2"))
       {
         m_player2.setBodyPosition(px,py);
+        m_player2.setPositionToBody();
       } else
       {
         Gdx.app.log("MainLayer","Add Map Object - type = " + t);
@@ -424,11 +452,20 @@ public float getFloat(String key, MapObject mp)
     this.add(m_player1);
     this.add(m_player2);
     this.add(m_brain);
+
+    this.add(m_titleBackSprite);
+    m_titleBackSprite.setPosition(140,620);
+
+    m_titleText = new GameText(m_font24, 980);
+    m_titleText.setText(title);
+    m_titleText.setPosition(150,655);
+    this.add(m_titleText);
     
     //ADD COLLISIONADAPTER After all world objects are set.
    	world.setContactListener(new Box2dCollisionAdapter());
 	
-	
+    m_fadeOutSprite.setOpacity(1.0f);
+    fadeIn(0.6f);
 
     //TODO: we'll add particle effects when player dies and in other spots
     /*
@@ -445,14 +482,32 @@ public float getFloat(String key, MapObject mp)
 
   @Override
   public void update (float deltaTime) {
+
     stateTime += deltaTime;
     inputManager.handleInput();
+
+    if (m_gameState == 5)
+    {
+      m_fadeOutSprite.animate(deltaTime);
+
+      //title displaying, waiting to fade
+      if ((stateTime > 0.62f) && (inputManager.anythingPressed()))
+      {
+        m_gameState = 10;
+        m_titleBackSprite.runAnimation(new AnimateMoveTo(0.5f,m_titleBackSprite.getX(), m_titleBackSprite.getY(), m_titleBackSprite.getX(), m_titleBackSprite.getY() + 150f));
+        m_titleText.runAnimation(new AnimateMoveTo(0.5f, m_titleText.getX(), m_titleText.getY(), m_titleText.getX(), m_titleText.getY() + 150f));
+        stateTime = 0;
+        startLevel();
+      }
+
+      return;
+    }
     //if (inputManager.isJumpPressed())
     //{
      //   if (stateTime > 2)
      //     System.exit(0);
     //}
-    
+
     float frameTime = Math.min(deltaTime, 0.25f);
     acumm+=frameTime;
     while(acumm >= 1/60f) {
@@ -485,17 +540,27 @@ public float getFloat(String key, MapObject mp)
     {
       if (m_exit.getState() == 1)
       {
+        m_gameState = 15;
+        m_player1.doExit(m_exit.getX() + m_exit.getWidth()/2);
+        m_player2.doExit(m_exit.getX() + m_exit.getWidth()/2);
+        stateTime = 0;
+      }
+    } else if (m_gameState == 15)
+    {
+      if (stateTime > 2.4f)
+      {
+        fadeToBlack(0.5f);
         m_gameState = 20;
-        m_player1.removeControl();
-        m_player2.removeControl();
-        
+        stateTime = 0;
       }
     } else if (m_gameState == 20)
     {
-    
+      m_fadeOutSprite.animate(deltaTime);
+      if (stateTime > 0.5f)
+      {
+        m_exit.loadNextLevel();
+      }
     }
-
-
     
     //RELOAD CURRENT LEVEL
     if(inputManager.isTestPressed()) {
@@ -504,6 +569,7 @@ public float getFloat(String key, MapObject mp)
     
     if(Gdx.input.isKeyJustPressed(Keys.Q)) {
     	Exit.loadNextLevel();
+      //m_exit.m_state = 1;
     }
 
     if (m_brain.isAlive() == false)
@@ -511,7 +577,21 @@ public float getFloat(String key, MapObject mp)
     	reset();
     }
   }
+
+  public int getInt(String key, MapProperties mp)
+  {
+    //if missing, or the default value from Tiled, assume 1
+    //If you don't want false as the default value, set the value explicitly in Tiled for this object.
+    Integer i = (Integer)mp.get(key);
+    if (i == null) return 0;
+    return i.intValue();
+  }
   
+  public void startLevel()
+  {
+    m_player1.startLevel();
+    m_player2.startLevel();
+  }
   
   public void reset() {
 	  Gdx.app.postRunnable(new Runnable() {
@@ -536,6 +616,19 @@ public float getFloat(String key, MapObject mp)
     
     //DEBUG RENDER BOX2D
     //debug_renderer.render(world, m_defaultMatrix.cpy().scl(Box2dVars.PIXELS_PER_METER));
+
+  }
+
+   @Override
+  protected void postCustomDraw()
+  {
+    m_spriteBatch.setProjectionMatrix(m_defaultMatrix);
+    m_spriteBatch.begin();
+
+    if (m_fadeOutSprite.getOpacity() > 0)
+      m_fadeOutSprite.draw(m_spriteBatch);
+
+    m_spriteBatch.end();
 
   }
 
