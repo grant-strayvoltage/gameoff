@@ -98,7 +98,7 @@ public class Exit extends GameMapObject implements Box2dCollisionHandler{
 
 	@Override
 	public void handleBegin(Box2dCollision collision) {
-		if(collision.target_type == Box2dVars.BRAIN_FOOT) {
+		if(collision.target_type == Box2dVars.POWER) {
 			brain_touched = true;
 		}else {
 			players_touched++;
@@ -109,7 +109,7 @@ public class Exit extends GameMapObject implements Box2dCollisionHandler{
 
 	@Override
 	public void handleEnd(Box2dCollision collision) {
-		if(collision.target_type == Box2dVars.BRAIN_FOOT) {
+		if(collision.target_type == Box2dVars.POWER) {
 			brain_touched = false;
 		}else {
 			players_touched--;
