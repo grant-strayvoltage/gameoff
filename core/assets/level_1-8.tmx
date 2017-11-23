@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" tiledversion="2017.07.25" orientation="orthogonal" renderorder="right-down" width="40" height="23" tilewidth="32" tileheight="32" nextobjectid="36">
+<map version="1.0" tiledversion="1.0.3" orientation="orthogonal" renderorder="right-down" width="40" height="23" tilewidth="32" tileheight="32" nextobjectid="38">
  <properties>
   <property name="Back" value="back5"/>
-  <property name="Title" value="Test Level One"/>
+  <property name="Title" value="Solo Robot"/>
  </properties>
  <tileset firstgid="1" source="tileset.tsx"/>
  <layer name="background" width="40" height="23">
@@ -12,12 +12,12 @@
  </layer>
  <layer name="platforms" width="40" height="23">
   <data encoding="base64" compression="zlib">
-   eJztlG0KgCAMhv2hF/Fm2Umqk1QXzYHCiLWMnEbsgReEiTx+TGMU5fsMMaFSRgG/qeJaS8W1Mn/zC0ytlx/nhGnhB/1S8s6pfUn4YR8bs8es5t6xlR+4gBP1X/gUCuyS57d6f46Zn/9L7OJSevcvuMFZzxcu0n6+MCF5tvaj4O76jHT/vkWyf7cUi8ZUuDp154qiPOcAcJMt9Q==
+   eJzt1FsKgCAQQFGR3Ig7S1dSrsTcaAojSEzmh45CM3BBqI/TQ6UQQnLc4u0x0yk7wHeIfuPY9zlmQV/NRO1L+8U2WLDnGuErPVssxHyDkcrnwWSQNISNK9b5fqr/T72Y0uTzsvQpaPb+Tbb0rs+HL89on27MgJPah03tW1P4Ws+TWb68fy9oK9ZYtethgI/j/tgNvaAy9Q==
   </data>
  </layer>
  <objectgroup name="objects">
-  <object id="4" name="P1" type="PlayerStart1" x="800" y="448" width="60" height="77"/>
-  <object id="5" name="P2" type="PlayerStart2" x="544" y="384" width="47" height="44"/>
+  <object id="4" name="P1" type="PlayerStart1" x="801.809" y="466.092" width="60" height="77"/>
+  <object id="5" name="P2" type="PlayerStart2" x="543.048" y="403.044" width="47" height="44"/>
   <object id="14" name="block3" type="Block" x="-64" y="352" width="32" height="32"/>
   <object id="16" name="exit" type="Exit" x="864" y="480" width="64" height="64"/>
   <object id="28" name="Tramp1" type="Trampoline" x="-128" y="480" width="48" height="48">
@@ -38,6 +38,22 @@
     <property name="power" type="int" value="500"/>
     <property name="startOn" type="bool" value="false"/>
     <property name="switches" value="switch1"/>
+   </properties>
+  </object>
+  <object id="36" name="BackObject" type="BackObject" x="438" y="195" width="82" height="64">
+   <properties>
+    <property name="frames" type="int" value="3"/>
+    <property name="speed" type="int" value="2"/>
+    <property name="sprite" value="screen"/>
+    <property name="style" type="int" value="2"/>
+   </properties>
+  </object>
+  <object id="37" name="BackObject" type="BackObject" x="820" y="195" width="82" height="64">
+   <properties>
+    <property name="frames" type="int" value="3"/>
+    <property name="speed" type="int" value="2"/>
+    <property name="sprite" value="screen"/>
+    <property name="style" type="int" value="2"/>
    </properties>
   </object>
  </objectgroup>
