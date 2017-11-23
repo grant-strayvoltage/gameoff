@@ -146,7 +146,7 @@ public class Player extends GameSprite implements Box2dCollisionHandler{
     fixtureDef = new FixtureDef();
     PolygonShape rect2 = null;
     rect2 = new PolygonShape();
-    rect2.setAsBox((this.getWidth()-10)/(2*Box2dVars.PIXELS_PER_METER) * xf, 0.1f,new Vector2(0,-this.getHeight()/(2*Box2dVars.PIXELS_PER_METER) * yf),0);
+    rect2.setAsBox((this.getWidth()*0.75f)/(2*Box2dVars.PIXELS_PER_METER) * xf, 0.1f,new Vector2(0,-this.getHeight()/(2*Box2dVars.PIXELS_PER_METER) * yf),0);
     fixtureDef.shape = rect2;
 
     fixtureDef.density = 0f; 
@@ -564,6 +564,11 @@ public class Player extends GameSprite implements Box2dCollisionHandler{
     stillTime = 0;
   }
 
+  public void removeControl()
+  {
+    m_playerControlled = false;
+  }
+
   public void setBodyPosition(float xx, float yy)
   {
     this.setPosition(xx,yy);
@@ -625,12 +630,8 @@ public class Player extends GameSprite implements Box2dCollisionHandler{
 			        GameMain.getSingleton().replaceActiveLayer(ml);
 					
 				}
-			});
-			
+			});	
 		}
-		
-		
-		
 	}
 	
 	

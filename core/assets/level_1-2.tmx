@@ -1,61 +1,43 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" tiledversion="1.0.3" orientation="orthogonal" renderorder="right-down" width="40" height="23" tilewidth="32" tileheight="32" nextobjectid="35">
+<map version="1.0" tiledversion="1.0.3" orientation="orthogonal" renderorder="right-down" width="40" height="23" tilewidth="32" tileheight="32" nextobjectid="36">
  <properties>
-  <property name="Back" value="back1"/>
+  <property name="Back" value="back5"/>
   <property name="Title" value="Test Level One"/>
  </properties>
  <tileset firstgid="1" source="tileset.tsx"/>
  <layer name="background" width="40" height="23">
   <data encoding="base64" compression="zlib">
-   eJztwTEBAAAAwqD1T20IX6AAAADgNw5gAAE=
+   eJxjYBgFo2AUjILBBTIH2gEEwEC5z5VI7ESG2eT6CdleWtpFzzAfau5jJEMPLcFQCz9a6SEXjLqPMjAc3TcKRsFQAwBO9wv5
   </data>
  </layer>
  <layer name="platforms" width="40" height="23">
   <data encoding="base64" compression="zlib">
-   eJztldEKABAQBH2LT70vlwclOemsrNqpebwzRbHEi3WyYlJK1xywzqFZ9UV2oUH3jTL13UB9Z7D0ee/1VZ937u4sy/3O+KUPYQ9qZ/urpJRzC1ym83c=
+   eJxjYmBgYBrFo3gUj+JRjBMnAnESlXAyDdzXyEA90DzqvlH3jboPBSgjYVq4byED7vKChUgxGF5MA/eN4lE8ikcxqRgAkn0bhg==
   </data>
  </layer>
  <objectgroup name="objects">
-  <object id="3" name="switch2" type="Switch" x="479.253" y="254.611" width="32" height="32">
-   <properties>
-    <property name="startOn" type="bool" value="false"/>
-    <property name="toggle" type="bool" value="true"/>
-    <property name="visible" type="bool" value="true"/>
-   </properties>
-  </object>
-  <object id="16" name="exit" type="Exit" x="1183.04" y="478.504" width="64" height="64"/>
-  <object id="18" name="platform2" type="Platform" x="576" y="288" width="96" height="32">
-   <properties>
-    <property name="contactTrigger" type="bool" value="false"/>
-    <property name="startDir" type="int" value="-1"/>
-    <property name="switches" value="switch1"/>
-   </properties>
-  </object>
-  <object id="24" name="stop" type="PlatformStop" x="608" y="576" width="32" height="32"/>
-  <object id="26" name="stop" type="PlatformStop" x="608" y="256" width="32" height="32"/>
-  <object id="28" name="platform2" type="Platform" x="1088" y="448" width="32" height="96">
-   <properties>
-    <property name="contactTrigger" type="bool" value="false"/>
-    <property name="oneWay" type="bool" value="false"/>
-    <property name="shapeVertical" type="bool" value="true"/>
-    <property name="startDir" type="int" value="1"/>
-    <property name="switches" value="switch2"/>
-   </properties>
-  </object>
-  <object id="29" name="stop" type="PlatformStop" x="1088" y="320" width="32" height="32"/>
-  <object id="30" name="stop" type="PlatformStop" x="1088" y="544" width="32" height="32"/>
-  <object id="31" name="P1" type="PlayerStart1" x="96.1608" y="465.79" width="60" height="77"/>
-  <object id="32" name="P2" type="PlayerStart2" x="192.481" y="498.27" width="47" height="44"/>
-  <object id="33" name="switch1" type="Switch" x="800.078" y="415.384" width="32" height="32">
-   <properties>
-    <property name="startOn" type="bool" value="false"/>
-    <property name="toggle" type="bool" value="true"/>
-    <property name="visible" type="bool" value="true"/>
-   </properties>
-  </object>
-  <object id="34" name="Tramp1" type="Trampoline" x="964.512" y="509.782" width="32" height="32">
+  <object id="4" name="P1" type="PlayerStart1" x="372" y="401" width="60" height="77"/>
+  <object id="5" name="P2" type="PlayerStart2" x="456" y="434" width="47" height="44"/>
+  <object id="14" name="block3" type="Block" x="-64" y="352" width="32" height="32"/>
+  <object id="16" name="exit" type="Exit" x="864" y="384" width="64" height="64"/>
+  <object id="28" name="Tramp1" type="Trampoline" x="-128" y="480" width="48" height="48">
    <properties>
     <property name="static" type="bool" value="true"/>
+   </properties>
+  </object>
+  <object id="34" name="switch1" type="Switch" x="-128" y="256" width="48" height="48">
+   <properties>
+    <property name="startOn" type="bool" value="false"/>
+    <property name="toggle" type="bool" value="true"/>
+    <property name="visible" type="bool" value="true"/>
+   </properties>
+  </object>
+  <object id="35" name="fan1" type="Fan" x="-256" y="96" width="32" height="32">
+   <properties>
+    <property name="dir" type="int" value="1"/>
+    <property name="power" type="int" value="500"/>
+    <property name="startOn" type="bool" value="false"/>
+    <property name="switches" value="switch1"/>
    </properties>
   </object>
  </objectgroup>

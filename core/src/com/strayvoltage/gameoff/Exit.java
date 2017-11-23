@@ -2,21 +2,25 @@ package com.strayvoltage.gameoff;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.graphics.g2d.*;
 import com.badlogic.gdx.maps.MapProperties;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
-import com.strayvoltage.gamelib.GameLayer;
-import com.strayvoltage.gamelib.GameMain;
+import com.strayvoltage.gamelib.*;
 
 public class Exit extends GameMapObject implements Box2dCollisionHandler{
 	
-	public static boolean BRAIN_MODE = true;
+	//TURN THIS ON OR OFF TO ACTIVATE BRAN MODE
+	//brain mode makes it so the exit only requires brain contact to go to the 
+	//next level. 
+	public static boolean BRAIN_MODE = false;
 
 	//how many players must touch exit to complete level
 	static int REQUIREMENT = 2;
 	
 	int players_touched = 0;
 	boolean brain_touched = false;
+	GameAnimateable m_doorOpen;
+	int m_state = 0;
 	
 	@Override
 	public void init(MapProperties mp, TextureAtlas textures) {
@@ -24,30 +28,43 @@ public class Exit extends GameMapObject implements Box2dCollisionHandler{
 		m_btype = BodyType.StaticBody;
 		m_filterMask = Box2dVars.PLAYER_NORMAL;
 		m_categoryBits = Box2dVars.OBJECT;
-		setSize(Box2dVars.PIXELS_PER_METER, Box2dVars.PIXELS_PER_METER*2);
-	}
-	
-	@Override
-	public void draw(Batch batch) {
+		TextureRegion texture = null;
+		texture = textures.findRegion("door_F1");
+		this.setRegion(texture);
+		this.setSize(texture.getRegionWidth(),texture.getRegionHeight());
+		m_doorOpen = new AnimateSpriteFrame(textures, new String[] {"door_F1", "door_F2", "door_F3", "door_F3","door_F4","door_F4","door_F4","door_F4","door_F4","door_F4","door_F4","door_F4","door_F4","door_F4","door_F4","door_F4","door_F4","door_F4","door_F4","door_F4","door_F4","door_F3","door_F2","door_F1","door_F1","door_F1"}, 3f, 1);
 	}
 	
 	@Override
 	public void update(float deltaTime) {
-		if(BRAIN_MODE&&brain_touched) {
-			//LEVEL IS COMPLETE
-			Gdx.app.log("Exit:","level complete");
-			//New level
-			loadNextLevel();
-		}else if(players_touched>=REQUIREMENT) {
-			//LEVEL IS COMPLETE
-			Gdx.app.log("Exit:","level complete");
-			//New level
-			loadNextLevel();
+
+		if (m_state < 1)
+		{
+			if(players_touched>=REQUIREMENT)
+			{
+				//LEVEL IS COMPLETE
+				Gdx.app.log("Exit:","level complete");
+				//New level
+				m_state = 1;
+				this.runAnimation(m_doorOpen);
+			}
+		}
+
+		if (m_state == 1)
+		{
+			if (m_doorOpen.isRunning() == false)
+			{
+				loadNextLevel();
+			}
 		}
 		
 		super.update(deltaTime);
 	}
-	
+
+	public int getState()
+	{
+		return m_state;
+	}
 
 	  public static void loadNextLevel() {
 		  final boolean game_complete = Boolean.parseBoolean(GameMain.getSingleton().getGlobal("game_complete"));

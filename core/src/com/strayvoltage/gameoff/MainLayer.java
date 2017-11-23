@@ -28,9 +28,11 @@ import com.strayvoltage.gamelib.*;
 
 public class MainLayer extends GameLayer  {
 	
-	public static final int MAX_STAGES = 1;
-	public static final int MAX_LEVELS_PER_STGE = 5;
+	public static final int MAX_STAGES = 1; //CHANGE IF YOU ADD MORE STAGES
+	public static final int MAX_LEVELS_PER_STGE = 5; //CHANGE IF YOU ADD or REMOVE LEVELS --
 
+int m_gameState = 10;
+Exit m_exit;
 int m_stage, m_level, gameState;
 AssetManager m_assets;
 GameInputManager2 inputManager;
@@ -57,7 +59,7 @@ GameAnimateable m_mainBackAnim, m_lightning;
 GameSprite m_backSprite;
 
 int m_lightningTicks = 90;
-
+private float acumm = 0; //box2d var
 public MainLayer()
   {
     super();
@@ -72,6 +74,8 @@ public MainLayer()
 
     inputManager = MasterInputManager.getSharedInstance().getController(0);
     inputManager.setViewport(GameMain.getSingleton().m_viewport);
+
+    m_assets.finishLoading();
 
     m_sprites = m_assets.get("game_sprites.txt", TextureAtlas.class);
     m_backgrounds = m_assets.get("backgrounds.txt", TextureAtlas.class);
@@ -138,6 +142,7 @@ public float getFloat(String key, MapObject mp)
       return ff.intValue();
   }
 
+  
   private void setupTileMapBox2D()
   {
 
@@ -284,17 +289,17 @@ public float getFloat(String key, MapObject mp)
     m_brain.addToWorld(world);
 
     m_player1 = new Player(m_sprites,1,inputManager);
-    this.add(m_player1);
+    //this.add(m_player1);
 
     m_player2 = new Player(m_sprites,2, inputManager);
-    this.add(m_player2);
+    //this.add(m_player2);
 
     m_brain.pickUp(m_player1);
 
     m_player1.addToWorld(world);
     m_player2.addToWorld(world);
 
-    this.add(m_brain);
+    //this.add(m_brain);
 
     //set music
     if (tiledMap != null)
@@ -391,6 +396,9 @@ public float getFloat(String key, MapObject mp)
         	  ((Switch)o).name = obj.getName();
           }else if(o instanceof SwitchHandler) {
         	  switch_adapter.addTarget((SwitchHandler) o);
+          } else if (o instanceof Exit)
+          {
+            m_exit = (Exit)o;
           }
           GameMapObject gmo = (GameMapObject)o;
           gmo.setMap(tiledMap);
@@ -411,6 +419,11 @@ public float getFloat(String key, MapObject mp)
         }
       }
     }
+
+
+    this.add(m_player1);
+    this.add(m_player2);
+    this.add(m_brain);
     
     //ADD COLLISIONADAPTER After all world objects are set.
    	world.setContactListener(new Box2dCollisionAdapter());
@@ -439,7 +452,13 @@ public float getFloat(String key, MapObject mp)
      //   if (stateTime > 2)
      //     System.exit(0);
     //}
-    world.step(1/60f, 6, 2);
+    
+    float frameTime = Math.min(deltaTime, 0.25f);
+    acumm+=frameTime;
+    while(acumm >= 1/60f) {
+    	world.step(1/60f, 6, 2);
+    	acumm-=1/60f;
+    }
 
     if (m_mainBackAnim != null)
     {
@@ -461,6 +480,22 @@ public float getFloat(String key, MapObject mp)
         }
       }
     }
+
+    if (m_gameState == 10)
+    {
+      if (m_exit.getState() == 1)
+      {
+        m_gameState = 20;
+        m_player1.removeControl();
+        m_player2.removeControl();
+        
+      }
+    } else if (m_gameState == 20)
+    {
+    
+    }
+
+
     
     //RELOAD CURRENT LEVEL
     if(inputManager.isTestPressed()) {
@@ -500,7 +535,7 @@ public float getFloat(String key, MapObject mp)
       tiledMap.draw();
     
     //DEBUG RENDER BOX2D
-    debug_renderer.render(world, m_defaultMatrix.cpy().scl(Box2dVars.PIXELS_PER_METER));
+    //debug_renderer.render(world, m_defaultMatrix.cpy().scl(Box2dVars.PIXELS_PER_METER));
 
   }
 

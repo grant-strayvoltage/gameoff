@@ -5,34 +5,34 @@
   <property name="Title" value="Test Level One"/>
  </properties>
  <tileset firstgid="1" source="tileset.tsx"/>
- <layer name="background" width="40" height="23" visible="0">
+ <layer name="background" width="40" height="23">
   <data encoding="base64" compression="zlib">
-   eJztwTEBAAAAwqD1T20IX6AAAADgNw5gAAE=
+   eJxjYMAP3MiUIwZQqp+QGS5A7EoBdqKS+3C5cbCE30C6j1AcODPgjofBEH74zBks7qOV+SMl/EbdRxtz6Fm+ILOxlTG4xGntPmoBRjL00NN95IBR91EGRt1HGRh1H2Vg1H2UgeHgPgDMghcJ
   </data>
  </layer>
  <layer name="platforms" width="40" height="23">
   <data encoding="base64" compression="zlib">
-   eJztkUEKgDAMBHPoS3xaf2L8iS8VqUIoDVpWbCg7MJe0hyERmYsd8A/Wh/etc/417MNgH8bZl41vO7i/AvswWn2LMWKfJXqfR5T73tZwfwX2YfT26WXEPpXxfcn5pzKmLzdMzrx2Rg43vy6Y
+   eJztlVEKgCAMhvfiRbpZdRLXSayLZuCDBb8amg3cB//LmPCBbCNSlHGZfZYoa2Ffr/AjG/CzPruAMPBD3l9gErHgTU+/FOpXBppbKX6O7nNxhLoUP0QLvymTGlr4pfaDqbIb43/fUnpjLxyoW+p3YznTi7z/vr3xnlEUCZyenFzi
   </data>
  </layer>
  <objectgroup name="objects">
-  <object id="4" name="P1" type="PlayerStart1" x="416" y="128" width="60" height="77"/>
-  <object id="5" name="P2" type="PlayerStart2" x="576" y="384" width="47" height="44"/>
-  <object id="14" name="block3" type="Block" x="-64" y="352" width="32" height="32"/>
-  <object id="16" name="exit" type="Exit" x="768" y="512" width="64" height="64"/>
-  <object id="28" name="Tramp1" type="Trampoline" x="-128" y="480" width="48" height="48">
+  <object id="4" name="P1" type="PlayerStart1" x="130.138" y="464.797" width="60" height="77"/>
+  <object id="5" name="P2" type="PlayerStart2" x="233.214" y="498.664" width="47" height="44"/>
+  <object id="14" name="block3" type="Block" x="477.301" y="384" width="32" height="32"/>
+  <object id="16" name="exit" type="Exit" x="1086.95" y="479.067" width="64" height="64"/>
+  <object id="28" name="Tramp1" type="Trampoline" x="810.04" y="462.177" width="48" height="48">
    <properties>
     <property name="static" type="bool" value="true"/>
    </properties>
   </object>
-  <object id="34" name="switch1" type="Switch" x="-128" y="256" width="48" height="48">
+  <object id="34" name="switch1" type="Switch" x="629.222" y="365.694" width="48" height="48">
    <properties>
     <property name="startOn" type="bool" value="false"/>
     <property name="toggle" type="bool" value="true"/>
     <property name="visible" type="bool" value="true"/>
    </properties>
   </object>
-  <object id="35" name="fan1" type="Fan" x="-256" y="96" width="32" height="32">
+  <object id="35" name="fan1" type="Fan" x="95.6579" y="61.8963" width="32" height="32">
    <properties>
     <property name="dir" type="int" value="1"/>
     <property name="power" type="int" value="500"/>
