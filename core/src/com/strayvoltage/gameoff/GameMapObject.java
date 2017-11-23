@@ -67,6 +67,12 @@ public abstract class GameMapObject extends GameSprite {
     if (i == null) return 1;
     return i.intValue();
   }
+
+  public String getString(String key, MapProperties mp)
+  {
+    String s = (String)mp.get(key);
+    return s;
+  }
   
   public Array<String> getArray(String key,MapProperties mp){
 	  Array<String> array = new Array<String>();

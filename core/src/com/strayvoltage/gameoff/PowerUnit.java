@@ -39,6 +39,7 @@ public class PowerUnit extends GameMapObject implements Box2dCollisionHandler {
   int m_jumpTicks = 0;
   float m_yOff = 12;
   float m_xOff = 3;
+  GameTileMap m_map;
 
   public void init(MapProperties mp, TextureAtlas textures)
   {

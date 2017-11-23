@@ -53,7 +53,12 @@ public class Player extends GameSprite implements Box2dCollisionHandler{
   GameAnimateable m_jumpingAnimation;
   GameAnimateable m_fallingAnimation;
   GameAnimateable m_landingAnimation;
+  GameAnimateable m_exitAnimation;
   float m_bhoff = 0;
+  int m_ticks = 0;
+  int m_state = 2; //paused
+  float m_targetX = 0;
+  int m_groundCheckTicks = 5;
 
   public Player(TextureAtlas textures, int p, GameInputManager2 controller)
   {
@@ -73,6 +78,8 @@ public class Player extends GameSprite implements Box2dCollisionHandler{
     m_landingAnimation =  new AnimateSpriteFrame(textures, new String[] {pb+"land"}, 0.3f, 1);
     this.runAnimation(m_standingAnimation);
     id = p;
+
+    m_exitAnimation = new AnimateFadeOut(0.5f);
   }
 
   public void setMap(GameTileMap m, Player p, float jumpDY, float jForce, PowerUnit pu, int pNum)
@@ -99,6 +106,19 @@ public class Player extends GameSprite implements Box2dCollisionHandler{
     Rectangle b = this.getBoundingRectangle();
     m_brainRectangle.x = (b.x + b.width/2) - 3;
     m_brainRectangle.y = b.y + b.height - m_bhoff;
+  }
+
+  // call passing in center of the door roughly
+  public void doExit(float xx)
+  {
+    //start animation to move to 'center of door'
+    //then fade out
+
+    m_targetX = xx - (float)Math.random()*12f + 6f;
+    m_state = 10;
+    this.removeControl();
+    m_powered = true;
+    m_ticks = 0;
   }
 
   public void addToWorld(World world)
@@ -215,6 +235,12 @@ public class Player extends GameSprite implements Box2dCollisionHandler{
 
   private boolean isPlayerGrounded(float deltaTime) {
 
+    if (m_groundCheckTicks > 0) 
+    {
+      m_groundCheckTicks--;
+      return true;
+    }
+  
 		//groundedPlatform = null;
 		Array<Contact> contactList = m_world.getContactList();
 		for(int i = 0; i < contactList.size; i++) {
@@ -251,6 +277,45 @@ public class Player extends GameSprite implements Box2dCollisionHandler{
 
   public void update(float deltaTime)
   {
+    if (m_state == 2)
+      return;
+
+    boolean isRightPressed = false;
+    boolean isLeftPressed = false;
+
+    if (m_state > 9)
+    {
+      m_ticks++;
+      if (m_ticks > 30)
+      {
+        //exiting
+        float dx = m_targetX - (this.getX() + this.getWidth()/2);
+        if (Math.abs(dx) > 3)
+        {
+          if (dx > 0)
+            isRightPressed = true;
+          else
+            isLeftPressed = true;
+        } else
+        {
+          m_body.setLinearVelocity(0,0);
+          if (m_exitAnimation.isRunning() == false)
+          {
+            this.runAnimation(m_standingAnimation);
+            this.runAnimation(m_exitAnimation);
+            if (m_ownsPowerUnit == true)
+            {
+              GameAnimateable fade = new AnimateFadeOut(0.5f);
+              m_powerUnit.runAnimation(fade);
+            }
+
+            m_state = 11;
+          }
+          return;
+        }
+      }
+    }
+
 	
     if (m_playerControlled)
     {
@@ -279,22 +344,43 @@ public class Player extends GameSprite implements Box2dCollisionHandler{
       }
     } else
     {
-      if (!m_onGround)
+      if (m_state == 10)
       {
-        m_onGround = isPlayerGrounded(Gdx.graphics.getDeltaTime());
+        if (m_lastDx > 0)
+        {
+          this.setFlip(false,false);
+        }
+        else if (m_lastDx < 0)
+        {
+          this.setFlip(true,false);
+        }
       }
 
-      if (m_onGround)
+      if (m_state < 11)
       {
-        if (m_standingAnimation.isRunning() == false)
+        if (!m_onGround)
         {
-          this.stopAllAnimations();
-          this.runAnimation(m_standingAnimation);
+          m_onGround = isPlayerGrounded(Gdx.graphics.getDeltaTime());
+        }
+
+        if (m_onGround)
+        {
+          if (m_standingAnimation.isRunning() == false)
+          {
+            this.stopAllAnimations();
+            this.runAnimation(m_standingAnimation);
+          }
         }
       }
     }
 
     if ((m_powered) && (m_playerControlled))
+    {
+      isRightPressed = m_controller.isRightPressed();
+      isLeftPressed = m_controller.isLeftPressed();
+    }
+
+    if (m_powered)
     {
       Vector2 cv = m_body.getLinearVelocity();
       boolean notMoved = true;
@@ -308,7 +394,7 @@ public class Player extends GameSprite implements Box2dCollisionHandler{
         }
       }
 
-      if (m_controller.isRightPressed())
+      if (isRightPressed)
       {
         if (checkDir(1) == false)
         {
@@ -317,7 +403,7 @@ public class Player extends GameSprite implements Box2dCollisionHandler{
         m_lastDx = 1;
         notMoved = false;
         stillTime = 0;
-      } else if (m_controller.isLeftPressed())
+      } else if (isLeftPressed)
       {
         if (checkDir(0) == false)
         {
@@ -395,6 +481,9 @@ public class Player extends GameSprite implements Box2dCollisionHandler{
         //  player.applyLinearImpulse(0, -24, pos.x, pos.y);				
         //}
       }	
+    }
+    if ((m_powered) && (m_playerControlled))
+    {
 
       if (m_controller.isFirePressed())
       {
@@ -469,26 +558,28 @@ public class Player extends GameSprite implements Box2dCollisionHandler{
     }
     else
     {
-      if (m_powerUnit.canPickUp())
+      if (m_state < 10)
       {
-        if (Intersector.overlaps(m_brainRectangle, m_powerUnit.getBoundingRectangle()))
+        if (m_powerUnit.canPickUp())
         {
-          float dly = m_powerUnit.m_body.getLinearVelocity().y - m_body.getLinearVelocity().y;
-          if (dly < 0.25f)
+          if (Intersector.overlaps(m_brainRectangle, m_powerUnit.getBoundingRectangle()))
           {
-            m_powerUnit.pickUp(this);
-            this.playerTakeControl();
+            float dly = m_powerUnit.m_body.getLinearVelocity().y - m_body.getLinearVelocity().y;
+            if (dly < 0.25f)
+            {
+              m_powerUnit.pickUp(this);
+              this.playerTakeControl();
+            }
+            //float dly = m_powerUnit.m_body.getLinearVelocity().y - m_body.getLinearVelocity().y;
+            //if (dly < 0.5f)
+            //{
+            //  m_powerUnit.pickUp(this);
+            //  this.playerTakeControl();
+            //}
           }
-          //float dly = m_powerUnit.m_body.getLinearVelocity().y - m_body.getLinearVelocity().y;
-          //if (dly < 0.5f)
-          //{
-          //  m_powerUnit.pickUp(this);
-          //  this.playerTakeControl();
-          //}
         }
       }
     }
-
   }
   
   public void jump() {
@@ -520,6 +611,12 @@ public class Player extends GameSprite implements Box2dCollisionHandler{
     m_powerUnit = pu;
     m_powered = true;
     m_ownsPowerUnit = true;
+  }
+
+  public void startLevel()
+  {
+    m_state = 0; //resume
+    m_groundCheckTicks = 4;
   }
 
   public void powerOff()
@@ -562,6 +659,11 @@ public class Player extends GameSprite implements Box2dCollisionHandler{
     m_playerControlled = true;
     m_controlDelayTicks = 30;
     stillTime = 0;
+  }
+
+  public void removeControl()
+  {
+    m_playerControlled = false;
   }
 
   public void setBodyPosition(float xx, float yy)

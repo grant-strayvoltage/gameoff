@@ -6,8 +6,8 @@ import java.util.Arrays;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.assets.AssetManager;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.graphics.*;
+import com.badlogic.gdx.graphics.g2d.*;
 import com.badlogic.gdx.maps.MapLayer;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.MapObjects;
@@ -31,11 +31,13 @@ public class MainLayer extends GameLayer  {
 	public static final int MAX_STAGES = 1; //CHANGE IF YOU ADD MORE STAGES
 	public static final int MAX_LEVELS_PER_STGE = 8; //CHANGE IF YOU ADD or REMOVE LEVELS --
 
+int m_gameState = 5;
+Exit m_exit;
 int m_stage, m_level, gameState;
 AssetManager m_assets;
 GameInputManager2 inputManager;
 Matrix4 m_defaultMatrix;
-public GameTileMap tiledMap;
+public GameTileMap tiledMap = null;
 float stateTime;
 float tw = 16f;
 float th = 16f;
@@ -55,9 +57,13 @@ SwitchAdapter switch_adapter;
 TextureAtlas m_backgrounds;
 GameAnimateable m_mainBackAnim, m_lightning;
 GameSprite m_backSprite;
+GameSprite m_titleBackSprite;
 
 int m_lightningTicks = 90;
 private float acumm = 0; //box2d var
+GameText m_titleText;
+GameSprite m_fadeOutSprite;
+
 public MainLayer()
   {
     super();
@@ -94,6 +100,10 @@ public MainLayer()
       m_font24 = new BitmapFont(Gdx.files.internal("Font24.fnt"), Gdx.files.internal("Font24.png"), false);
       m_font16 = new BitmapFont(Gdx.files.internal("Font16.fnt"), Gdx.files.internal("Font16.png"), false);
     }
+
+    //m_fadeOutTexture = m_assets.get("fade_out.png", Texture.class);
+    m_fadeOutSprite = new GameSprite(m_assets.get("fade_out.png", Texture.class));
+    m_fadeOutSprite.setOpacity(0);
 
     /*
     if (bombEffectPool == null)
@@ -140,7 +150,18 @@ public float getFloat(String key, MapObject mp)
       return ff.intValue();
   }
 
-  
+  public void fadeIn(float duration)
+  {
+    m_fadeOutSprite.setOpacity(1.0f);
+    m_fadeOutSprite.runAnimation(new AnimateFadeOut(duration));
+  }
+
+  public void fadeToBlack(float duration)
+  {
+    m_fadeOutSprite.setOpacity(0f);
+    m_fadeOutSprite.runAnimation(new AnimateFadeIn(duration));
+  }
+
   private void setupTileMapBox2D()
   {
 
@@ -243,104 +264,6 @@ public float getFloat(String key, MapObject mp)
     }
   }
 
-  private void setupTileMapBox2Db()
-  {
-
-    TiledMapTileLayer p_Layer = (TiledMapTileLayer) tiledMap.m_tiledMap.getLayers().get("platforms");
-
-    FixtureDef fixtureDef = new FixtureDef();
-    fixtureDef.density = 1.0f;
-    fixtureDef.restitution = 0.25f;
-    //floor is now floor lol
-    fixtureDef.filter.categoryBits = Box2dVars.FLOOR;
-    //i think without a mask it means the floor can collide with everything. This way it cant. 
-    fixtureDef.filter.maskBits =  Box2dVars.BLOCK | Box2dVars.PLAYER_NORMAL | Box2dVars.PLAYER_JUMPING
-    							| Box2dVars.POWER| Box2dVars.PLAYER_FOOT | Box2dVars.BRAIN_FOOT | Box2dVars.OBJECT;
-    fixtureDef.friction = 0.5f;
-    float w = 0;
-    float boxY = 0;
-    float boxLeftX = 0;
-    float tilesize = tiledMap.getTilePixelWidth();//assuming we dont ever use weird size tiles. 
-    Array<Vector2> chainVectors = new Array<Vector2>();
-    
-    for (int ty = 0; ty < m_mapHeight; ty++)
-    {
-      BodyDef bodyDef = null;
-      PolygonShape chain = null;
-      int startx = 0;
-      final int SOLID_TILE_START = 32; //ALL TILES PAST ID 32 ARE SOLID SAFE TILES
-      final int HAZARD_START = 3;  //ALL TILES STARTING AT ID 3 ARE HAZARD TILES
-      for (int tx = 0; tx < m_mapWidth; tx++)
-      {
-    	  fixtureDef.filter.categoryBits = Box2dVars.FLOOR;
-        TiledMapTileLayer.Cell c = p_Layer.getCell(tx,ty);
-        int cellid = 0;
-        if(c!=null)
-        	cellid = c.getTile().getId();
-
-        if (cellid >= SOLID_TILE_START) {
-        	if(chainVectors.size == 0) {
-        		//setup first vertex
-        		startx = tx;
-        		chainVectors.add(new Vector2(0,Box2dVars.PIXELS_PER_METER));
-        		chainVectors.add(new Vector2(0,tilesize));
-        	}
-        	chainVectors.add(new Vector2((chainVectors.peek().x+tilesize),tilesize));
-        }
-
-       if ((tx+1 == m_mapWidth || cellid < SOLID_TILE_START) && chainVectors.size>0){
-        	
-        	chainVectors.add(new Vector2((chainVectors.peek().x),Box2dVars.PIXELS_PER_METER));
-        	bodyDef = new BodyDef();
-        	bodyDef.type = BodyType.StaticBody;
-        	chain = new PolygonShape();
-        	Vector2[] VX = new Vector2[4];
-        	VX[0] = chainVectors.first().scl(1f/Box2dVars.PIXELS_PER_METER);
-        	VX[1] = chainVectors.get(1).scl(1f/Box2dVars.PIXELS_PER_METER);;
-        	VX[2] = chainVectors.get(chainVectors.size-2).scl(1f/Box2dVars.PIXELS_PER_METER);;
-        	VX[3] = chainVectors.peek().scl(1f/Box2dVars.PIXELS_PER_METER);;
-        	chain.set(VX);
-        	chainVectors.clear();
-        	fixtureDef.shape = chain;
-          fixtureDef.restitution = 0;
-        	bodyDef.position.set((startx*tilesize)/Box2dVars.PIXELS_PER_METER, (ty*tilesize)/Box2dVars.PIXELS_PER_METER);
-        	world.createBody(bodyDef).createFixture(fixtureDef);
-        	chain.dispose();
-        	chain = null;
-        	bodyDef = null;
-        	startx = 0;
-        }
-
-        if ((cellid >= HAZARD_START) && (cellid < SOLID_TILE_START))//spikes.. add other hazard here
-        {
-            bodyDef = new BodyDef();
-            bodyDef.type = BodyDef.BodyType.StaticBody;
-            boxY = ty;
-            PolygonShape shape = new PolygonShape();
-            
-            Vector2[] points = new Vector2[4];
-            points[0] = new Vector2(0,0).scl(1f/Box2dVars.PIXELS_PER_METER);
-            points[1] = new Vector2(0,tilesize-2).scl(1f/Box2dVars.PIXELS_PER_METER);
-            points[2] = new Vector2(tilesize,tilesize-2).scl(1f/Box2dVars.PIXELS_PER_METER);
-            points[3] = new Vector2(tilesize,0).scl(1f/Box2dVars.PIXELS_PER_METER);
-            
-            shape.set(points);
-            
-            fixtureDef.shape = shape;
-            fixtureDef.filter.categoryBits = Box2dVars.HAZARD;
-            bodyDef.position.set((tx*tilesize)/Box2dVars.PIXELS_PER_METER,(ty*tilesize)/Box2dVars.PIXELS_PER_METER);
-            Body body = world.createBody(bodyDef);
-            body.createFixture(fixtureDef);
-            shape.dispose();
-            //bodyDef.dispose();
-            bodyDef = null;
-            w = 0;
-        }
-      }
-     
-    }
-  }
-
   public void loadLevel(int stage, int lv)
   {
     m_stage = stage;
@@ -380,22 +303,22 @@ public float getFloat(String key, MapObject mp)
       
 
     m_brain = new PowerUnit();
-    m_brain.init(null,m_sprites);
     m_gameMapObjects.add(m_brain);
+    m_brain.init(null,m_sprites);
     m_brain.addToWorld(world);
 
     m_player1 = new Player(m_sprites,1,inputManager);
-    this.add(m_player1);
+    //this.add(m_player1);
 
     m_player2 = new Player(m_sprites,2, inputManager);
-    this.add(m_player2);
+    //this.add(m_player2);
 
     m_brain.pickUp(m_player1);
 
     m_player1.addToWorld(world);
     m_player2.addToWorld(world);
 
-    this.add(m_brain);
+    //this.add(m_brain);
 
     //set music
     if (tiledMap != null)
@@ -405,6 +328,9 @@ public float getFloat(String key, MapObject mp)
     }
 
     tiledMap = new GameTileMap("level_" + stage + "-" + lv + ".tmx", m_camera);
+
+    m_brain.m_map = tiledMap;
+
     m_player1.setMap(tiledMap, m_player2,24,40,m_brain,1);
     m_player2.setMap(tiledMap, m_player1,8,15,m_brain,2);
     m_brain.setMap(tiledMap);
@@ -438,6 +364,13 @@ public float getFloat(String key, MapObject mp)
     }
     this.add(m_backSprite,true);
 
+    int byo = getInt("backOffY", mapProps);
+    int bxo = getInt("backOffX", mapProps);
+    m_backSprite.setPosition(bxo,byo);
+
+    m_titleBackSprite = new GameSprite(m_backgrounds.findRegion("title_back"));
+    
+
 
     /*
     String levelType = "2";
@@ -465,6 +398,7 @@ public float getFloat(String key, MapObject mp)
     MapObjects mapObjects = objectsLayer.getObjects();
     float px,py;
 
+
     for (MapObject obj : mapObjects)
     {
       MapProperties p = obj.getProperties();
@@ -473,10 +407,12 @@ public float getFloat(String key, MapObject mp)
       py = this.getFloat("y", obj);
       if (t.equals("PlayerStart1"))
       {
-        m_player1.setBodyPosition(px,py);
+        m_player1.setBodyPosition(px,py-18);
+        m_player1.setPositionToBody();
       } else if (t.equals("PlayerStart2"))
       {
         m_player2.setBodyPosition(px,py);
+        m_player2.setPositionToBody();
       } else
       {
         Gdx.app.log("MainLayer","Add Map Object - type = " + t);
@@ -488,6 +424,9 @@ public float getFloat(String key, MapObject mp)
         	  ((Switch)o).name = obj.getName();
           }else if(o instanceof SwitchHandler) {
         	  switch_adapter.addTarget((SwitchHandler) o);
+          } else if (o instanceof Exit)
+          {
+            m_exit = (Exit)o;
           }
           GameMapObject gmo = (GameMapObject)o;
           gmo.setMap(tiledMap);
@@ -508,11 +447,25 @@ public float getFloat(String key, MapObject mp)
         }
       }
     }
+
+
+    this.add(m_player1);
+    this.add(m_player2);
+    this.add(m_brain);
+
+    this.add(m_titleBackSprite);
+    m_titleBackSprite.setPosition(140,620);
+
+    m_titleText = new GameText(m_font24, 980);
+    m_titleText.setText(title);
+    m_titleText.setPosition(150,655);
+    this.add(m_titleText);
     
     //ADD COLLISIONADAPTER After all world objects are set.
    	world.setContactListener(new Box2dCollisionAdapter());
 	
-	
+    m_fadeOutSprite.setOpacity(1.0f);
+    fadeIn(0.6f);
 
     //TODO: we'll add particle effects when player dies and in other spots
     /*
@@ -529,21 +482,38 @@ public float getFloat(String key, MapObject mp)
 
   @Override
   public void update (float deltaTime) {
+
     stateTime += deltaTime;
     inputManager.handleInput();
+
+    if (m_gameState == 5)
+    {
+      m_fadeOutSprite.animate(deltaTime);
+
+      //title displaying, waiting to fade
+      if ((stateTime > 0.62f) && (inputManager.anythingPressed()))
+      {
+        m_gameState = 10;
+        m_titleBackSprite.runAnimation(new AnimateMoveTo(0.5f,m_titleBackSprite.getX(), m_titleBackSprite.getY(), m_titleBackSprite.getX(), m_titleBackSprite.getY() + 150f));
+        m_titleText.runAnimation(new AnimateMoveTo(0.5f, m_titleText.getX(), m_titleText.getY(), m_titleText.getX(), m_titleText.getY() + 150f));
+        stateTime = 0;
+        startLevel();
+      }
+
+      return;
+    }
     //if (inputManager.isJumpPressed())
     //{
      //   if (stateTime > 2)
      //     System.exit(0);
     //}
-    
+
     float frameTime = Math.min(deltaTime, 0.25f);
     acumm+=frameTime;
     while(acumm >= 1/60f) {
     	world.step(1/60f, 6, 2);
     	acumm-=1/60f;
     }
-    
 
     if (m_mainBackAnim != null)
     {
@@ -565,6 +535,32 @@ public float getFloat(String key, MapObject mp)
         }
       }
     }
+
+    if (m_gameState == 10)
+    {
+      if (m_exit.getState() == 1)
+      {
+        m_gameState = 15;
+        m_player1.doExit(m_exit.getX() + m_exit.getWidth()/2);
+        m_player2.doExit(m_exit.getX() + m_exit.getWidth()/2);
+        stateTime = 0;
+      }
+    } else if (m_gameState == 15)
+    {
+      if (stateTime > 2.4f)
+      {
+        fadeToBlack(0.5f);
+        m_gameState = 20;
+        stateTime = 0;
+      }
+    } else if (m_gameState == 20)
+    {
+      m_fadeOutSprite.animate(deltaTime);
+      if (stateTime > 0.5f)
+      {
+        m_exit.loadNextLevel();
+      }
+    }
     
     //RELOAD CURRENT LEVEL
     if(inputManager.isTestPressed()) {
@@ -573,6 +569,7 @@ public float getFloat(String key, MapObject mp)
     
     if(Gdx.input.isKeyJustPressed(Keys.Q)) {
     	Exit.loadNextLevel();
+      //m_exit.m_state = 1;
     }
 
     if (m_brain.isAlive() == false)
@@ -580,7 +577,21 @@ public float getFloat(String key, MapObject mp)
     	reset();
     }
   }
+
+  public int getInt(String key, MapProperties mp)
+  {
+    //if missing, or the default value from Tiled, assume 1
+    //If you don't want false as the default value, set the value explicitly in Tiled for this object.
+    Integer i = (Integer)mp.get(key);
+    if (i == null) return 0;
+    return i.intValue();
+  }
   
+  public void startLevel()
+  {
+    m_player1.startLevel();
+    m_player2.startLevel();
+  }
   
   public void reset() {
 	  Gdx.app.postRunnable(new Runnable() {
@@ -604,7 +615,20 @@ public float getFloat(String key, MapObject mp)
       tiledMap.draw();
     
     //DEBUG RENDER BOX2D
-    debug_renderer.render(world, m_defaultMatrix.cpy().scl(Box2dVars.PIXELS_PER_METER));
+    //debug_renderer.render(world, m_defaultMatrix.cpy().scl(Box2dVars.PIXELS_PER_METER));
+
+  }
+
+   @Override
+  protected void postCustomDraw()
+  {
+    m_spriteBatch.setProjectionMatrix(m_defaultMatrix);
+    m_spriteBatch.begin();
+
+    if (m_fadeOutSprite.getOpacity() > 0)
+      m_fadeOutSprite.draw(m_spriteBatch);
+
+    m_spriteBatch.end();
 
   }
 
