@@ -73,15 +73,17 @@ Objects to use in puzzle elements:
 
 # Level Plan
 
-* Level 1 to 5: Only static tiles, spikes - nothing to interact with - quick, pretty easy levels
-* Level 6 to 10: Introduce moveable blocks
-* Level 11 to 15: Introduce Platforms, Gates, and Switches
-* Level 16 to 20: Introduce Trampolines
-* Level 21 to 25: Fans
-* Level 26 to 29: ?? maybe just hard levels with everything
-* Level 30: Final level with Boss?
+* John - Stage 1: Only static tiles, spikes - nothing to interact with - quick, pretty easy levels
+* John - Stage 2: Moveable blocks introduced
+* Grant -Stage 3: Platforms, Switches, Gates introduced
+* John - Stage 4: Trampolines
+* Grant - Stage 5: Fans
+* Stage 6: Moving Enemies/Killer/crushing blocks
+* Stage 7: Final levels - hard, lots all mixed together, "boss" if we have one in the end.
 
-* Other thought is maybe we need to get a few more deadly things like moving enemy or two and some lasers or something- and make the progression a bit quicker like 3 to 4 levels per new idea
+* Keep first 3 to 4 levels quite easy in each stage and teach the new mechanic
+* Then mix in some of the previous mechanics combined with the new one for a few levels to make harder
+* Lets shoot for between 8 and 10 levels per stage?
+* Stage 7 might be shorter, might be just boss, we'll figure that out!
 
-* What do you guys think?
 
