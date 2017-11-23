@@ -12,7 +12,7 @@ public class PlatformStop extends GameMapObject {
   public void init(MapProperties mp, TextureAtlas textures)
   {
 	 m_categoryBits = Box2dVars.PLATFORM_STOP;
-	m_filterMask = Box2dVars.PLATFORM;
+	m_filterMask = Box2dVars.PLATFORM|Box2dVars.OBJECT;
 	m_btype = BodyType.DynamicBody;
     m_isSensor = false;
     m_sizeScale = 1.1f;

@@ -122,7 +122,12 @@ public class TitleScreenLayer extends GameLayer{
       if (m_inputManager.nextPressed())
       {
         MainLayer l = new MainLayer();
-        l.loadLevel(1,1);
+        
+        
+        if(GameOff.DEBUG) {
+        	l.loadLevel(23,23);
+        }else
+        	l.loadLevel(1, 1);
         this.replaceActiveLayer(l);
         this.cleanUp();
       }

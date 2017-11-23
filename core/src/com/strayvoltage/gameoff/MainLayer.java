@@ -52,8 +52,8 @@ static public Box2DDebugRenderer debug_renderer;
 PowerUnit m_brain = null;
 
 Player m_player1, m_player2;
-//handles all switches
-SwitchAdapter switch_adapter;
+
+SwitchAdapter switch_adapter;//handles all switches
 TextureAtlas m_backgrounds;
 GameAnimateable m_mainBackAnim, m_lightning;
 GameSprite m_backSprite;
@@ -490,7 +490,7 @@ public float getFloat(String key, MapObject mp)
         m_player2.removeControl();
         
       }
-    } else if (m_gameState == 20)
+    } else if (m_gameState == 20)     
     {
     
     }
@@ -502,11 +502,12 @@ public float getFloat(String key, MapObject mp)
     	reset();
     }
     
+    //LOAD NEXT LEVEL
     if(Gdx.input.isKeyJustPressed(Keys.Q)) {
     	Exit.loadNextLevel();
     }
 
-    if (m_brain.isAlive() == false)
+    if (!m_brain.isAlive()||!m_player1.isAlive()||!m_player2.isAlive())
     {
     	reset();
     }
@@ -534,8 +535,8 @@ public float getFloat(String key, MapObject mp)
     if (tiledMap != null)
       tiledMap.draw();
     
-    //DEBUG RENDER BOX2D
-    //debug_renderer.render(world, m_defaultMatrix.cpy().scl(Box2dVars.PIXELS_PER_METER));
+    if(GameOff.DEBUG)
+    	debug_renderer.render(world, m_defaultMatrix.cpy().scl(Box2dVars.PIXELS_PER_METER));
 
   }
 
