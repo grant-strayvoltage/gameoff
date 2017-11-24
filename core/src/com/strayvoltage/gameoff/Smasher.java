@@ -1,7 +1,7 @@
 package com.strayvoltage.gameoff;
 
-import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.graphics.*;
+import com.badlogic.gdx.graphics.g2d.*;
 import com.badlogic.gdx.maps.MapProperties;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.badlogic.gdx.utils.Array;
@@ -36,19 +36,20 @@ public class Smasher extends GameMapObject implements SwitchHandler,Box2dCollisi
 		m_btype = BodyType.KinematicBody;
 		m_categoryBits = Box2dVars.OBJECT;
 		m_filterMask = Box2dVars.PLAYER_NORMAL|Box2dVars.POWER|Box2dVars.PLATFORM_STOP|Box2dVars.PLAYER_FOOT;
-		setSize(mp.get("width", Float.class),mp.get("height",Float.class));
+		//setSize(mp.get("width", Float.class),mp.get("height",Float.class));
 		riseSpeed = mp.get("riseSpeed",.8f,Float.class);
 		acceleration = mp.get("acceleration",1f,Float.class);
 		grounded_elapsed = 0f;
 		ground_time = mp.get("groundTime",1f,Float.class);
 //		spiked = getBool("spiked", mp);
+
+		TextureRegion texture = null;
+		texture = textures.findRegion("smasher_F1");
+		this.setRegion(texture);
+		this.setSize(texture.getRegionWidth(),texture.getRegionHeight());
 		
 	}
 	
-	@Override
-	public void draw(Batch batch) {
-		//TODO: ADD ART for smasher. 
-	}
 	
 	@Override
 	public void update(float deltaTime) {
@@ -74,6 +75,8 @@ public class Smasher extends GameMapObject implements SwitchHandler,Box2dCollisi
 		}else if(current_state == RISING) {
 			m_body.setLinearVelocity(0,riseSpeed);
 		}
+
+		setPositionToBody();
 		
 		super.update(deltaTime);
 	}
