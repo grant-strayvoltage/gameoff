@@ -73,12 +73,12 @@ Objects to use in puzzle elements:
 
 # Level Plan
 
-* John - Stage 1: Only static tiles, spikes - nothing to interact with - quick, pretty easy levels
+* John - DONE - Stage 1: Only static tiles, spikes - nothing to interact with - quick, pretty easy levels
 * John - Stage 2: Moveable blocks introduced
 * Grant -Stage 3: Platforms, Switches, Gates introduced
 * John - Stage 4: Trampolines
 * Grant - Stage 5: Fans
-* Stage 6: Moving Enemies/Killer/crushing blocks
+* Stage 6: Smashers introduced
 * Stage 7: Final levels - hard, lots all mixed together, "boss" if we have one in the end.
 
 * Keep first 3 to 4 levels quite easy in each stage and teach the new mechanic
