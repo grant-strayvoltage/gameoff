@@ -147,6 +147,13 @@ public abstract class GameMapObject extends GameSprite {
     this.setPosition(cx - this.getWidth()/2, cy - this.getHeight()/2);
   }
 
+  public void setPositionToBody(float ox, float oy)
+  {
+    float cx = m_body.getPosition().x*Box2dVars.PIXELS_PER_METER;
+    float cy = m_body.getPosition().y*Box2dVars.PIXELS_PER_METER;
+    this.setPosition(cx - this.getWidth()/2 + ox, cy - this.getHeight()/2 + oy);
+  }
+
   public void addToWorld(World world)
   {
 
