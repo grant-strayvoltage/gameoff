@@ -48,6 +48,7 @@ public class Player extends GameSprite implements Box2dCollisionHandler{
   int trampoline_state;
   int m_vertTicks = 0;
   float m_yOff = 0;
+  private boolean m_dead;
   GameAnimateable m_standingAnimation;
   GameAnimateable m_runningAnimation;
   GameAnimateable m_jumpingAnimation;
@@ -65,6 +66,7 @@ public class Player extends GameSprite implements Box2dCollisionHandler{
     super(textures.findRegion("player" + p + "_stand_F1"));
     m_controller = controller;
     trampoline_state = Trampoline.NONE;
+    m_dead = false;
 
     String pb = "player" + p + "_";
 
@@ -679,7 +681,7 @@ public class Player extends GameSprite implements Box2dCollisionHandler{
 
   public boolean isAlive()
   {
-    return true;
+    return !m_dead;
   }
 
   
@@ -712,24 +714,10 @@ public class Player extends GameSprite implements Box2dCollisionHandler{
 		}
 		
 		if(collision.target_type == Box2dVars.HAZARD) {
-			Gdx.app.log("PlayerContactTest:", "we touched a HAZARD! YOU ARE DED!");
-			Gdx.app.postRunnable(new Runnable() {
-				
-				@Override
-				public void run() {
-
-          if (m_state < 9)
-          {
-            //PLAYER DEATH LOGIC HERE --------------------------------------
-            int stage = Integer.parseInt(GameMain.getSingleton().getGlobal("m_stage"));
-            int level = Integer.parseInt(GameMain.getSingleton().getGlobal("m_level"));
-            MainLayer ml = new MainLayer();
-                ml.loadLevel(stage,level);
-                GameMain.getSingleton().replaceActiveLayer(ml);
-          }
-					
-				}
-			});	
+      if (m_state < 9)
+      {
+			  die();
+      }
 		}
 	}
 	
@@ -742,6 +730,18 @@ public class Player extends GameSprite implements Box2dCollisionHandler{
 		}
 		
 	}
+	
+	@Override
+	public void die() {
+		if(m_dead)
+			return;
+		stopAllAnimations();
+		m_dead = true;
+	}
+	
+	
+	
+	
   
 }
 

@@ -9,9 +9,11 @@ import com.strayvoltage.gamelib.GameMain;
 
 public class GameOff extends GameMain {
   
+	public static final boolean DEBUG = false;
+	
   public void setupGame()
   {
-
+	 
 	m_camera = new OrthographicCamera(1280,720);
 	m_camera.update();
 
