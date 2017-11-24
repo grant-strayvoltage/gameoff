@@ -718,13 +718,15 @@ public class Player extends GameSprite implements Box2dCollisionHandler{
 				@Override
 				public void run() {
 
-            
-					//PLAYER DEATH LOGIC HERE --------------------------------------
-					int stage = Integer.parseInt(GameMain.getSingleton().getGlobal("m_stage"));
-					int level = Integer.parseInt(GameMain.getSingleton().getGlobal("m_level"));
-					MainLayer ml = new MainLayer();
-			        ml.loadLevel(stage,level);
-			        GameMain.getSingleton().replaceActiveLayer(ml);
+          if (m_state < 9)
+          {
+            //PLAYER DEATH LOGIC HERE --------------------------------------
+            int stage = Integer.parseInt(GameMain.getSingleton().getGlobal("m_stage"));
+            int level = Integer.parseInt(GameMain.getSingleton().getGlobal("m_level"));
+            MainLayer ml = new MainLayer();
+                ml.loadLevel(stage,level);
+                GameMain.getSingleton().replaceActiveLayer(ml);
+          }
 					
 				}
 			});	
