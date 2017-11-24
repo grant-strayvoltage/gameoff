@@ -1,25 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" tiledversion="1.0.3" orientation="orthogonal" renderorder="right-down" width="40" height="23" tilewidth="32" tileheight="32" nextobjectid="38">
+<map version="1.0" tiledversion="1.0.3" orientation="orthogonal" renderorder="right-down" width="40" height="23" tilewidth="32" tileheight="32" nextobjectid="42">
  <properties>
   <property name="Back" value="back5"/>
-  <property name="Title" value="Big Jump...Little Robot"/>
+  <property name="Title" value="Big Jump...Little Cyborg"/>
  </properties>
  <tileset firstgid="1" source="tileset.tsx"/>
  <layer name="background" width="40" height="23">
   <data encoding="base64" compression="zlib">
-   eJztzkEJAEAIAEHLWcT+Ie57AQRFZmD/GwFcl40Bu9T0AAB8Hnv1BYI=
+   eJztwzENAAAIA7CZw78lDOzlIW3SBPhsDgIAQLOHOgWq
   </data>
  </layer>
  <layer name="platforms" width="40" height="23">
   <data encoding="base64" compression="zlib">
-   eJxjYmBgYBrFo3gQ40QgTqIiTqay+xoZqAuaR9036r5R9w0q97ExYJYjA+0+JSLdM1DuIxcMNveB4l6ZAVEPUdt9C4F4EQPx9RcLA2bcI+PFVHbfKB7Fo3gUk4MBeEojWQ==
+   eJxjYmBgYBrFo3iQ4kQgTqIBTqaS+5oZaAOaR9036r5R9w0K97ExYC9DBtJ9IPuViHTLQLiPUjDY3AdKA7C6KJmK7lsINXMRA/F1FwsDatyj48VQTA33jeJRPIpHMbkYAEoBJag=
   </data>
  </layer>
  <objectgroup name="objects">
-  <object id="4" name="P1" type="PlayerStart1" x="338" y="403" width="60" height="77"/>
-  <object id="5" name="P2" type="PlayerStart2" x="419" y="435" width="47" height="44"/>
+  <object id="4" name="P1" type="PlayerStart1" x="298" y="403" width="60" height="77"/>
+  <object id="5" name="P2" type="PlayerStart2" x="375" y="435" width="47" height="44"/>
   <object id="14" name="block3" type="Block" x="-64" y="352" width="32" height="32"/>
-  <object id="16" name="exit" type="Exit" x="858" y="357" width="64" height="90"/>
+  <object id="16" name="exit" type="Exit" x="890" y="357" width="64" height="90"/>
   <object id="28" name="Tramp1" type="Trampoline" x="-128" y="480" width="48" height="48">
    <properties>
     <property name="static" type="bool" value="true"/>
@@ -53,6 +53,22 @@
     <property name="frames" type="int" value="3"/>
     <property name="speed" type="int" value="2"/>
     <property name="sprite" value="screen"/>
+    <property name="style" type="int" value="2"/>
+   </properties>
+  </object>
+  <object id="40" name="BackObject" type="BackObject" x="463" y="302" width="32" height="64">
+   <properties>
+    <property name="frames" type="int" value="1"/>
+    <property name="speed" type="int" value="10"/>
+    <property name="sprite" value="blood3"/>
+    <property name="style" type="int" value="2"/>
+   </properties>
+  </object>
+  <object id="41" name="BackObject" type="BackObject" x="800" y="384" width="32" height="64">
+   <properties>
+    <property name="frames" type="int" value="1"/>
+    <property name="speed" type="int" value="10"/>
+    <property name="sprite" value="blood3"/>
     <property name="style" type="int" value="2"/>
    </properties>
   </object>

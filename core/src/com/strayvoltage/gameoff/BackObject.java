@@ -28,6 +28,7 @@ public class BackObject extends GameMapObject {
     if (frames == 2)
     {
         animation = new AnimateSpriteFrame(textures, new String[] {sn + "_F1", sn + "_F2"},tm,-1);
+            this.runAnimation(animation);
     } else if (frames == 3)
     {
         if (st == 1)
@@ -36,12 +37,15 @@ public class BackObject extends GameMapObject {
         }
         else
             animation = new AnimateSpriteFrame(textures, new String[] {sn + "_F1", sn + "_F2", sn + "_F3"},tm,-1);
+        
+        this.runAnimation(animation);
     } else if (frames == 4)
     {
         animation = new AnimateSpriteFrame(textures, new String[] {sn + "_F1", sn + "_F2", sn + "_F3", sn + "F4"},tm,-1);
+        this.runAnimation(animation);
     }
 
 
-    this.runAnimation(animation);
+
   }
 }
