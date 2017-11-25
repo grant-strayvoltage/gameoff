@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" tiledversion="2017.07.25" orientation="orthogonal" renderorder="right-down" width="40" height="23" tilewidth="32" tileheight="32" nextobjectid="62">
+ <properties>
+  <property name="Back" value="back2"/>
+  <property name="Title" value="Stage_2-8"/>
+  <property name="backOffX" type="int" value="0"/>
+  <property name="backOffY" type="int" value="0"/>
+ </properties>
+ <tileset firstgid="1" source="tileset.tsx"/>
+ <layer name="background" width="40" height="23">
+  <data encoding="base64" compression="zlib">
+   eJztwTEBAAAAwqD1T20IX6AAAADgNw5gAAE=
+  </data>
+ </layer>
+ <layer name="platforms" width="40" height="23">
+  <data encoding="base64" compression="zlib">
+   eJztlmEKgCAMRofUQbOTRCcpL1qDjCU2XWlG+cH7UcZ86ooUAKjKL+hW5sL0jN8A5TPCN/3G/Gr7PFf9dER92kt6o0/oZ2vS4LURzOFmEjiW6j909K0d05GxVH60Zsy5c3XwbNqNVH5nz0rX6PZNTj/cR1+v6RN8PZ17/0JjoTzhZ9+Ft/rdSfU7Rvr94fywb5oA0v8ljob423uG8atUnmYBB2tNrQ==
+  </data>
+ </layer>
+ <objectgroup name="objects">
+  <object id="4" name="P1" type="PlayerStart1" x="130.667" y="181.333" width="60" height="77"/>
+  <object id="5" name="P2" type="PlayerStart2" x="544" y="523.833" width="47" height="44"/>
+  <object id="14" name="block3" type="Block" x="-64" y="352" width="32" height="32"/>
+  <object id="16" name="exit" type="Exit" x="672" y="134.333" width="64" height="90"/>
+  <object id="28" name="Tramp1" type="Trampoline" x="-128" y="480" width="48" height="48">
+   <properties>
+    <property name="static" type="bool" value="true"/>
+   </properties>
+  </object>
+  <object id="34" name="switch1" type="Switch" x="-128" y="256" width="48" height="48">
+   <properties>
+    <property name="startOn" type="bool" value="false"/>
+    <property name="toggle" type="bool" value="true"/>
+    <property name="visible" type="bool" value="true"/>
+   </properties>
+  </object>
+  <object id="35" name="fan1" type="Fan" x="-256" y="96" width="32" height="32">
+   <properties>
+    <property name="dir" type="int" value="1"/>
+    <property name="power" type="int" value="500"/>
+    <property name="startOn" type="bool" value="false"/>
+    <property name="switches" value="switch1"/>
+   </properties>
+  </object>
+  <object id="38" name="Block1" type="Block" x="480" y="288" width="32" height="32"/>
+  <object id="56" name="Tramp1" type="Trampoline" x="384" y="544" width="32" height="32">
+   <properties>
+    <property name="static" type="bool" value="true"/>
+   </properties>
+  </object>
+  <object id="59" name="Tramp1" type="Trampoline" x="416" y="544" width="32" height="32">
+   <properties>
+    <property name="static" type="bool" value="true"/>
+   </properties>
+  </object>
+  <object id="60" name="Tramp1" type="Trampoline" x="762.667" y="497.333" width="48" height="48">
+   <properties>
+    <property name="static" type="bool" value="true"/>
+   </properties>
+  </object>
+  <object id="61" name="special_pickup?" type="Pickup" x="1120" y="416" width="32" height="32"/>
+ </objectgroup>
+</map>

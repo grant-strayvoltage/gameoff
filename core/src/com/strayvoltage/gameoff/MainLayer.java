@@ -28,7 +28,7 @@ import com.strayvoltage.gamelib.*;
 
 public class MainLayer extends GameLayer  {
 	
-	public static final int MAX_STAGES = 1; //CHANGE IF YOU ADD MORE STAGES
+	public static final int MAX_STAGES = 2; //CHANGE IF YOU ADD MORE STAGES
 	public static final int MAX_LEVELS_PER_STGE = 8; //CHANGE IF YOU ADD or REMOVE LEVELS --
 
 int m_gameState = 5;
@@ -165,6 +165,8 @@ public float getFloat(String key, MapObject mp)
   private void setupTileMapBox2D()
   {
 
+	final int SOLID_TILE_START = 32; // the start of all solid tiles(end of hazards)
+	final int HAZARD_TILE_START = 3; //the start of all hazard tiles
     TiledMapTileLayer p_Layer = (TiledMapTileLayer) tiledMap.m_tiledMap.getLayers().get("platforms");
 
     FixtureDef fixtureDef = new FixtureDef();
@@ -199,7 +201,7 @@ public float getFloat(String key, MapObject mp)
 
         //Gdx.app.log("MainLayer","(" + tx + ", " + ty + " = " + cellid);
 
-        if(cellid > 31) {
+        if(cellid >= SOLID_TILE_START) {
 
         	if(chainVectors.size == 0) {
         		//setup first vertex
@@ -211,7 +213,7 @@ public float getFloat(String key, MapObject mp)
           //Gdx.app.log("MainLayer","(" + tx + ", " + ty + " = " + cellid + " ADDED");
         }
         
-        if ((cellid < 32 || tx+1 == m_mapWidth ) && chainVectors.size>0){
+        if ((cellid < SOLID_TILE_START || tx+1 == m_mapWidth ) && chainVectors.size>0){
         	//Gdx.app.log("MainLayer","(" + tx + ", " + ty + " = " + cellid + " FLUSHED - END -1");
         	chainVectors.add(new Vector2((chainVectors.peek().x),0));
         	bodyDef = new BodyDef();
@@ -235,6 +237,7 @@ public float getFloat(String key, MapObject mp)
         }
         
         if (cellid > 2 && cellid < 32)//spikes.. add other hazard here
+
         {
             bodyDef = new BodyDef();
             bodyDef.type = BodyDef.BodyType.StaticBody;
