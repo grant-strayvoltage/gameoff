@@ -74,16 +74,13 @@ Objects to use in puzzle elements:
 # Level Plan
 
 * John - DONE - Stage 1: Only static tiles, spikes - nothing to interact with - quick, pretty easy levels
-* John - Stage 2: Moveable blocks introduced
-* Grant -Stage 3: Platforms, Switches, Gates introduced
-* John - Stage 4: Trampolines
-* Grant - Stage 5: Fans
-* Stage 6: Smashers introduced
-* Stage 7: Final levels - hard, lots all mixed together, "boss" if we have one in the end.
+* John - Stage 2: Moveable blocks & Trampolines
+* Grant or John -Stage 3: Platforms, Switches, Gates introduced, Possibly Smasher either here or in Stage 4...thinking Smasher towards the end can make a little urgency like have to move quick hit a switch before smasher, smashes you etc.
+* Grant- Stage 4: Fans- be neat to have it and the brain be able to fling brain really far back to other side quick, plus also creates sort of one way paths, maybe blow blocks too
+* Grant or John - Stage 5: More challenging levels mixing everything in- larger levels too, take up more like full screen.
 
 * Keep first 3 to 4 levels quite easy in each stage and teach the new mechanic
 * Then mix in some of the previous mechanics combined with the new one for a few levels to make harder
-* Lets shoot for between 8 and 10 levels per stage?
-* Stage 7 might be shorter, might be just boss, we'll figure that out!
+* Lets shoot for between 8 and 10 levels per stage, whatever seems right and based on how much time we have!
 
 
