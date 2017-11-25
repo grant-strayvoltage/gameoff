@@ -402,6 +402,13 @@ public abstract class GameMain extends ApplicationAdapter  {
         return sId;
     }
 
+    public void addDeath()
+    {
+        int deaths = Integer.parseInt(getGlobal("deaths"));
+        deaths++;
+        this.setGlobal("deaths","" + deaths);
+    }
+
     public static GameMain getSingleton()
     {
     	return m_instance;

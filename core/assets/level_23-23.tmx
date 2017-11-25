@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" tiledversion="2017.07.25" orientation="orthogonal" renderorder="right-down" width="40" height="23" tilewidth="32" tileheight="32" nextobjectid="54">
+<map version="1.0" tiledversion="1.0.3" orientation="orthogonal" renderorder="right-down" width="40" height="23" tilewidth="32" tileheight="32" nextobjectid="56">
  <properties>
   <property name="Back" value="back5"/>
   <property name="Title" value="Test Level One"/>
@@ -40,7 +40,7 @@
     <property name="switches" value="switch1"/>
    </properties>
   </object>
-  <object id="36" name="Smasher1" type="Smasher" x="576" y="160" width="64" height="32">
+  <object id="36" name="Smasher1" type="Smasher" x="576" y="160" width="96" height="96">
    <properties>
     <property name="acceleration" type="float" value="8"/>
     <property name="riseSpeed" type="float" value="1.1"/>
@@ -74,6 +74,22 @@
    </properties>
   </object>
   <object id="53" name="switch1" type="Switch" x="608" y="448" width="32" height="32">
+   <properties>
+    <property name="sensitive" type="bool" value="true"/>
+    <property name="startOn" type="bool" value="false"/>
+    <property name="toggle" type="bool" value="true"/>
+    <property name="visible" type="bool" value="false"/>
+   </properties>
+  </object>
+  <object id="54" name="switch1" type="Switch" x="640" y="384" width="32" height="32">
+   <properties>
+    <property name="sensitive" type="bool" value="true"/>
+    <property name="startOn" type="bool" value="false"/>
+    <property name="toggle" type="bool" value="true"/>
+    <property name="visible" type="bool" value="false"/>
+   </properties>
+  </object>
+  <object id="55" name="switch1" type="Switch" x="640" y="448" width="32" height="32">
    <properties>
     <property name="sensitive" type="bool" value="true"/>
     <property name="startOn" type="bool" value="false"/>

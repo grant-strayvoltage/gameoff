@@ -236,7 +236,8 @@ public float getFloat(String key, MapObject mp)
         	startx = 0;
         }
         
-        if (cellid >= HAZARD_TILE_START && cellid < SOLID_TILE_START)//spikes.. add other hazard here
+        if (cellid > 2 && cellid < 32)//spikes.. add other hazard here
+
         {
             bodyDef = new BodyDef();
             bodyDef.type = BodyDef.BodyType.StaticBody;
@@ -283,6 +284,8 @@ public float getFloat(String key, MapObject mp)
     		GameMain.getSingleton().setGlobal("m_next_level",""+1);
     	}else //if there is no more stages then the game is complete
     		GameMain.getSingleton().setGlobal("game_complete", "true");
+
+    this.saveGame();
     	
     //---------------------------------------------------------
     this.removeAll();
@@ -565,7 +568,8 @@ public float getFloat(String key, MapObject mp)
     }
     
     //RELOAD CURRENT LEVEL
-    if(inputManager.isTestPressed()) {
+    if((inputManager.isTestPressed()) || (inputManager.isSpeedPressed())) {
+      GameMain.getSingleton().addDeath();
     	reset();
     }
     

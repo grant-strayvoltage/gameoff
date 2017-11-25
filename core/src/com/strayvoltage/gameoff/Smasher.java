@@ -1,10 +1,11 @@
 package com.strayvoltage.gameoff;
 
-import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.graphics.*;
+import com.badlogic.gdx.graphics.g2d.*;
 import com.badlogic.gdx.maps.MapProperties;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.badlogic.gdx.utils.Array;
+import com.strayvoltage.gamelib.*;
 
 public class Smasher extends GameMapObject implements SwitchHandler,Box2dCollisionHandler{
 
@@ -13,6 +14,7 @@ public class Smasher extends GameMapObject implements SwitchHandler,Box2dCollisi
 	private static final int FALLING = 1; //smasher is falling down and accelerating
 	private static final int GROUNDED = 2;//smasher has hit the ground and is going to start heading up
 	private static final int RISING = 3; //smasher is now slowly returning back to its initial state. 
+	private static final int SHAKING = 4; //smasher is shaking just before dropping
 	
 	int active_detections; //how many switches are currently active 
 	int current_state;		//the current sate of this smasher
@@ -27,6 +29,13 @@ public class Smasher extends GameMapObject implements SwitchHandler,Box2dCollisi
 	
 //	boolean spiked;			//if this smasher is spiked then any contact with player will cause death
 //							//otherwise only when falling on top of the player will this cause death
+
+	GameAnimateable m_fallingAnimation;
+	GameAnimateable m_restingAnimation;
+	float m_offX = 0;
+	float m_offY = 0;
+	int m_state = 0;
+	int m_ticks = 0;
 	
 
 	@Override
@@ -36,27 +45,50 @@ public class Smasher extends GameMapObject implements SwitchHandler,Box2dCollisi
 		m_btype = BodyType.KinematicBody;
 		m_categoryBits = Box2dVars.OBJECT;
 		m_filterMask = Box2dVars.PLAYER_NORMAL|Box2dVars.POWER|Box2dVars.PLATFORM_STOP|Box2dVars.PLAYER_FOOT;
-		setSize(mp.get("width", Float.class),mp.get("height",Float.class));
+		//setSize(mp.get("width", Float.class),mp.get("height",Float.class));
 		riseSpeed = mp.get("riseSpeed",.8f,Float.class);
 		acceleration = mp.get("acceleration",1f,Float.class);
 		grounded_elapsed = 0f;
 		ground_time = mp.get("groundTime",1f,Float.class);
 //		spiked = getBool("spiked", mp);
+
+		TextureRegion texture = null;
+		texture = textures.findRegion("smasher_F1");
+		this.setRegion(texture);
+		this.setSize(texture.getRegionWidth(),texture.getRegionHeight());
 		
+		m_fallingAnimation = new AnimateSpriteFrame(textures, new String[] {"smasher_F2"}, 0.5f, 1);
+		m_restingAnimation = new AnimateSpriteFrame(textures, new String[] {"smasher_F1"}, 10f, -1);
+
 	}
 	
-	@Override
-	public void draw(Batch batch) {
-		//TODO: ADD ART for smasher. 
-	}
 	
 	@Override
 	public void update(float deltaTime) {
 		if(current_state == WAITING) {
+			if (m_restingAnimation.isRunning() == false)
+			{
+				this.runAnimation(m_restingAnimation);
+			}
+
 			m_body.setLinearVelocity(0, 0);//should not be moving
 			//wait for trigger
 			if(isTriggered()) {
+				current_state = SHAKING;
+				m_ticks = 30;
+			}
+		}else if (current_state == SHAKING)
+		{
+			m_ticks--;
+			m_offX = -2f + (float)Math.random()*4f;
+			m_offY = -1f + (float)Math.random()*2f;
+			if (m_ticks < 1)
+			{
 				current_state = FALLING;
+				this.stopAllAnimations();
+				this.runAnimation(m_fallingAnimation);
+				m_offX = 0;
+				m_offY = 0;
 			}
 		}else if(current_state == FALLING) {
 			m_body.setLinearVelocity(0,m_body.getLinearVelocity().y-acceleration*deltaTime);
@@ -69,11 +101,15 @@ public class Smasher extends GameMapObject implements SwitchHandler,Box2dCollisi
 			if(grounded_elapsed>= ground_time) {
 				grounded_elapsed = 0;
 				current_state = RISING;
+				this.runAnimation(m_restingAnimation);
+
 			}
 			
 		}else if(current_state == RISING) {
 			m_body.setLinearVelocity(0,riseSpeed);
 		}
+
+		setPositionToBody(m_offX, m_offY);
 		
 		super.update(deltaTime);
 	}

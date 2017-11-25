@@ -9,7 +9,6 @@ import com.strayvoltage.gameoff.GameOff;
 public class DesktopLauncher {
 	//set to false when we deploy
 	public static boolean AUTO_PACK = true ;//&& GameOff.DEBUG;
-	
 	public static void main (String[] arg) {
 		
 		//TEXTURE PACKING AT RUNTIME ------------------------------
@@ -39,6 +38,7 @@ public class DesktopLauncher {
 			//GAMESPRITES -------------
 			TexturePacker.process(settings,input_dir+"/game_sprites", output_dir, "game_sprites");
 			TexturePacker.process(settings,input_dir+"/backgrounds", output_dir, "backgrounds");
+			TexturePacker.process(settings,input_dir+"/cut_sprites", output_dir, "cut_sprites");
 			
 		}
 		
