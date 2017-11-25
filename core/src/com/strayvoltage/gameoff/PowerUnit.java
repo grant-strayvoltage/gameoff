@@ -246,6 +246,7 @@ public class PowerUnit extends GameMapObject implements Box2dCollisionHandler {
     this.stopAllAnimations();
     this.runAnimation(m_deathAnimation);
     m_dead = true;
+    GameMain.getSingleton().addDeath();
   }
 
   public void update(float deltaTime)

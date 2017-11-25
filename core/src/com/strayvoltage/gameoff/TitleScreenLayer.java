@@ -31,7 +31,7 @@ import com.badlogic.gdx.math.Matrix4;
 import com.strayvoltage.gamelib.*;
 import com.badlogic.gdx.assets.AssetManager;
 
-public class TitleScreenLayer extends GameLayer{
+public class TitleScreenLayer extends GameLayer implements GameMenuListener {
   GameInputManager2 m_inputManager;
   Matrix4 m_defaultMatrix = new Matrix4();
   GameSprite m_introSprite;
@@ -43,6 +43,7 @@ public class TitleScreenLayer extends GameLayer{
   int m_delayTicks = 0;
   int m_buttonDelay = 30;
   AssetManager m_assets = null;
+  GameMenu m_menu;
 
   public TitleScreenLayer() {
     //Gdx.app.setLogLevel(Gdx.app.LOG_DEBUG);
@@ -50,10 +51,8 @@ public class TitleScreenLayer extends GameLayer{
     //this.setMusic("VS_SA_title_bgm.mp3");
 
     m_assets = getAssetManager();
-
     if (m_assets.isLoaded("title.png") == false)
     {
-      Gdx.app.debug("TitleScreenLayer", "IntroSprite2.png not loaded. Blocking until loaded.");
       m_assets.finishLoading();
     }
 
@@ -70,26 +69,21 @@ public class TitleScreenLayer extends GameLayer{
     m_defaultMatrix = m_camera.combined.cpy();
     m_defaultMatrix.setToOrtho2D(0, 0, 1280, 720);
 
-    if (m_assets.isLoaded("g_sprites.txt") == false)
+    if (m_assets.isLoaded("game_sprites.txt") == false)
     {
-      Gdx.app.debug("TitleScreenLayer", "g_sprites.txt not loaded. Blocking until loaded.");
       m_assets.finishLoading();
     }
 
-    m_gameTextures = m_assets.get("g_sprites.txt", TextureAtlas.class);
+    m_gameTextures = m_assets.get("game_sprites.txt", TextureAtlas.class);
 
-    m_pressPlay = new GameSprite(m_gameTextures.findRegion("pressplay"));
-    m_pressPlay.setPosition(320-m_pressPlay.getWidth()/2, 200);
+    GameImageButton newGame = new GameImageButton(m_gameTextures, "newButton");
+    GameImageButton contGame = new GameImageButton(m_gameTextures, "continue");
 
-    GameAnimateable g = AnimateScaleTo.createPulseSequence(0.75f, 1.0f, 1.1f, -1);
-    m_pressPlay.runAnimation(g);
-
-    GameAnimateable g2 = AnimateColorTo.createColorSequence(0.1f, 0.03f, 1, 1, 1, 0.3f, 0f, 0.2f, -1);
-    m_pressPlay.runAnimation(g2);
+    m_menu = new GameMenu(newGame, contGame, 2, 25, false, m_inputManager, this);
+    this.add(m_menu);
+    m_menu.setPosition(440,75);
 
     m_musicStarted = false;
-
-
     this.setCameraPosition(640,360);
   }
 
@@ -103,7 +97,7 @@ public class TitleScreenLayer extends GameLayer{
 
     m_delayTicks++;
 
-    m_pressPlay.animate(deltaTime);
+    m_menu.animate(deltaTime);
 
     if (!m_musicStarted)
     {
@@ -116,23 +110,54 @@ public class TitleScreenLayer extends GameLayer{
       if (m_delayTicks > 60)
         System.exit(0);
     }
+  }
 
-    if (m_buttonDelay > 20)
+   public void buttonSelected(int buttonNum, boolean mainClick)
+  {
+    if (buttonNum == 1)
     {
-      if (m_inputManager.nextPressed())
-      {
+      this.eraseGame(0);
+      this.loadGameDefaults();
+      this.setGlobal("m_stage","1");
+      this.setGlobal("m_level", "1");
+      this.loadGame(0);
+      //todo opening cut scene
+
+      
+      if(GameOff.DEBUG) {
         MainLayer l = new MainLayer();
-        
-        
-        if(GameOff.DEBUG) {
-        	l.loadLevel(23,23);
-        }else
-        	l.loadLevel(1, 1);
+        l.loadLevel(23,23);
         this.replaceActiveLayer(l);
         this.cleanUp();
+      }else
+      {
+        MainLayer l = new MainLayer();
+        l.loadLevel(1,1);
+        CutScene scene1 = new CutScene(new String[]{"The experiment was a success. Sentience was acheived and a melding","of meat and machine was achieved."},"cut1", 3.0f);
+        CutScene scene2 = new CutScene(new String[]{"Scene number two.","some other text goes here"},"cut2", 3.0f);
+        scene1.setNextScene(scene2);
+        scene2.setNextScene(l);
+        this.replaceActiveLayer(scene1);
+        this.cleanUp();
       }
-    }
-    
+      
+
+
+    } else if (buttonNum == 2)
+    {
+      this.loadGameDefaults();
+      this.loadGame(0);
+
+      int scene = Integer.parseInt(this.getGlobal("m_stage"));
+      int level = Integer.parseInt(this.getGlobal("m_level"));
+
+      MainLayer l = new MainLayer();
+      l.loadLevel(scene, level);
+      
+      this.replaceActiveLayer(l);
+      this.cleanUp();
+
+    } 
   }
 
   @Override
@@ -143,7 +168,7 @@ public class TitleScreenLayer extends GameLayer{
     m_spriteBatch.begin();
     m_introSprite.draw(m_spriteBatch);
 
-    m_pressPlay.draw(m_spriteBatch);
+    m_menu.draw(m_spriteBatch);
 
     m_spriteBatch.end();
   }

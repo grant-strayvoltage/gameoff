@@ -737,11 +737,8 @@ public class Player extends GameSprite implements Box2dCollisionHandler{
 			return;
 		stopAllAnimations();
 		m_dead = true;
+    GameMain.getSingleton().addDeath();
 	}
 	
-	
-	
-	
-  
 }
 

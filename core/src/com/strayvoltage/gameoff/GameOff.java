@@ -9,7 +9,7 @@ import com.strayvoltage.gamelib.GameMain;
 
 public class GameOff extends GameMain {
   
-	public static final boolean DEBUG = true;
+	public static final boolean DEBUG = false;
 	
   public void setupGame()
   {
@@ -44,7 +44,10 @@ public class GameOff extends GameMain {
 
   public void loadGameDefaults()
   {
-      this.setGlobal("Level", "1");
+      this.setGlobal("m_level", "1");
+      this.setGlobal("m_stage","1");
+      this.setGlobal("deaths","0");
+      this.setGlobal("time", "0");
       this.setGlobal("game_complete", "false");
   }
 

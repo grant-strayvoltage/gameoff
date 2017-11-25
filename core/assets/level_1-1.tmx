@@ -2,7 +2,7 @@
 <map version="1.0" tiledversion="1.0.3" orientation="orthogonal" renderorder="right-down" width="40" height="23" tilewidth="32" tileheight="32" nextobjectid="38">
  <properties>
   <property name="Back" value="back5"/>
-  <property name="Title" value="Two Robot Bodies...One Brain"/>
+  <property name="Title" value="Two Cyborg Bodies...One Brain"/>
   <property name="backOffX" type="int" value="0"/>
   <property name="backOffY" type="int" value="-100"/>
  </properties>
