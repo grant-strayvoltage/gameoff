@@ -125,7 +125,7 @@ public class TitleScreenLayer extends GameLayer{
         
         
         if(GameOff.DEBUG) {
-        	l.loadLevel(23,23);
+        	l.loadLevel(2,7);
         }else
         	l.loadLevel(1, 1);
         this.replaceActiveLayer(l);

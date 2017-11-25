@@ -17,7 +17,7 @@ public class Block extends GameMapObject {
     TextureRegion texture = null;
     texture = textures.findRegion("block1_moveable");
     this.setRegion(texture);
-    this.setSize(texture.getRegionWidth(),texture.getRegionHeight());
+    this.setSize(texture.getRegionWidth()-1,texture.getRegionHeight()-1);
   }
 
   public void update(float deltaTime)
