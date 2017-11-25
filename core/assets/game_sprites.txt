@@ -62,7 +62,7 @@ brain1_stand_F1
   index: -1
 brain1_stand_F2
   rotate: false
-  xy: 1451, 116
+  xy: 1437, 2
   size: 47, 40
   orig: 47, 40
   offset: 0, 0
@@ -121,6 +121,13 @@ door_F4
   xy: 1140, 64
   size: 64, 90
   orig: 64, 90
+  offset: 0, 0
+  index: -1
+fan_F1
+  rotate: false
+  xy: 1795, 142
+  size: 32, 32
+  orig: 32, 32
   offset: 0, 0
   index: -1
 meter_F1
@@ -307,7 +314,7 @@ player2_run_F2
   index: -1
 player2_run_F3
   rotate: false
-  xy: 1401, 112
+  xy: 1401, 94
   size: 48, 44
   orig: 48, 44
   offset: 0, 0
@@ -368,30 +375,44 @@ station_F3
   orig: 152, 64
   offset: 0, 0
   index: -1
-switch_off
+switch2_off
   rotate: false
   xy: 1302, 140
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
-switch_on
+switch2_on
   rotate: false
   xy: 1240, 61
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
-tramp_down
+switch_off
   rotate: false
   xy: 1290, 44
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
-tramp_up
+switch_on
   rotate: false
   xy: 1340, 44
+  size: 48, 48
+  orig: 48, 48
+  offset: 0, 0
+  index: -1
+tramp_down
+  rotate: false
+  xy: 1390, 44
+  size: 48, 48
+  orig: 48, 48
+  offset: 0, 0
+  index: -1
+tramp_up
+  rotate: false
+  xy: 1440, 44
   size: 48, 48
   orig: 48, 48
   offset: 0, 0

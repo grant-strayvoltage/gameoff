@@ -57,9 +57,17 @@ public class Switch extends GameMapObject implements Box2dCollisionHandler{
 		is_On = getBool("startOn",mp);
 		contacts = 0;
 		m_isSensor = true;
+
+		if (sensitive)
+		{
+			on = textures.findRegion("switch2_on");
+			off = textures.findRegion("switch2_off");	
+		} else
+		{
+			on = textures.findRegion("switch_on");
+			off = textures.findRegion("switch_off");
+		}
 		
-		on = textures.findRegion("switch_on");
-		off = textures.findRegion("switch_off");
 		
 		m_btype = BodyType.StaticBody;
 		m_categoryBits = Box2dVars.SWITCH;

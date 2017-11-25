@@ -9,12 +9,12 @@
  <tileset firstgid="1" source="tileset.tsx"/>
  <layer name="background" width="40" height="23">
   <data encoding="base64" compression="zlib">
-   eJztzgENAAAIA6B3t7gxvikkIAEumXYAAIC3FnRPAIQ=
+   eJztzrEJACAQBEF7E23MYmzTL8BE8ROZgU2PKwX4yUjY7AmbL/l3b0Y1apsAAE4tJgwDmQ==
   </data>
  </layer>
  <layer name="platforms" width="40" height="23">
   <data encoding="base64" compression="zlib">
-   eJzt1FEKgCAQhOHBm7Z7kugk2UU1EBIxinRDaga+9581cgAcEX3SFIkR7dA3w24L+9jHvt/3SXK22j9SX+y72lq0+WgbqO/u8jvrgH37nT2O+/boq73dE+X3KamxtY/IUgBeBjB5
+   eJxjYmBgYBrFo3gUD0ucCMRJNMLJVHBfIwPtQPOo+0bdN+q+Ee2+gwyQsmopHnuwlZHJdHIfMeG3EM1ti4B48SByH7EAOZyTB6H7QOG8iAERvtRwH7a4Iwejp88kqBspdd8oHsW0xAAsmzD8
   </data>
  </layer>
  <objectgroup name="objects">
