@@ -128,7 +128,7 @@ public class TitleScreenLayer extends GameLayer implements GameMenuListener {
 
   public void buttonSelected(int buttonNum, boolean mainClick)
   {
-    if (m_delayTicks < 70) return;
+    if (m_delayTicks < 50) return;
 
     if (buttonNum == 1)
     {
