@@ -35,6 +35,8 @@ public class Fan extends GameMapObject implements Box2dCollisionHandler,SwitchHa
 
 	GameAnimateable m_rotateAnimation;
 	GameSprite m_fanSprite;
+	TextureAtlas m_textures;
+	GameParticleSystem m_particleSystem;
 	
 	@Override
 	public void init(MapProperties mp, TextureAtlas textures) {
@@ -68,6 +70,7 @@ public class Fan extends GameMapObject implements Box2dCollisionHandler,SwitchHa
 
 		m_fanSprite = new GameSprite(textures.findRegion("fan_F1"));
 		m_rotateAnimation = new AnimateRotateTo(0.25f, 0f, 359.9f, -1);
+		m_textures = textures;
 		
 	}
 
@@ -75,6 +78,15 @@ public class Fan extends GameMapObject implements Box2dCollisionHandler,SwitchHa
 	{
 		l.add(m_fanSprite);
 		m_fanSprite.setPosition(xx,yy);
+		m_particleSystem = new GameParticleSystem(l, m_textures, "fan_particle", 25, direction, 5, 55,0.13f,0.0025f);
+		if (direction == RIGHT)
+		{
+			m_particleSystem.setLocation(xx + 34,yy-28,1,88);
+		} else
+		{
+			m_particleSystem.setLocation(xx -2,yy-28,1,88);
+		}
+		
 	}
 
 	public void setBodyPosition(float xx, float yy)
@@ -97,6 +109,7 @@ public class Fan extends GameMapObject implements Box2dCollisionHandler,SwitchHa
 	public void update(float deltaTime) {
 		if(isOn) {
 			if (m_rotateAnimation.isRunning() == false) m_fanSprite.runAnimation(m_rotateAnimation);
+			m_particleSystem.update(deltaTime);
 			for(GameSprite o: objects) {
 				if(o instanceof PowerUnit) {
 					if(direction == RIGHT) {
@@ -108,7 +121,26 @@ public class Fan extends GameMapObject implements Box2dCollisionHandler,SwitchHa
 						float dx = (o.getX() - m_fx)/(Box2dVars.PIXELS_PER_METER*2);
 						o.m_body.applyForceToCenter(-(m_force/25) / (dx*dx),0,true);
 					}
-				}else {
+				} else if (o instanceof Player)
+				{
+					if (((Player)o).m_state < 9)
+					{
+						if(direction == RIGHT) {
+							if (((Player)o).checkDir(1) == false)
+							{
+								float dx = (o.getX() - m_fx)/Box2dVars.PIXELS_PER_METER;
+								o.m_body.applyForceToCenter(m_force / (dx*dx),0,true);
+							}
+						}else if(direction == LEFT) {
+							if (((Player)o).checkDir(0) == false)
+							{
+								float dx = (o.getX() - m_fx)/(Box2dVars.PIXELS_PER_METER*2);
+								o.m_body.applyForceToCenter(-m_force / (dx*dx),0,true);
+							}
+						}	
+					}				
+					
+				} else {
 					if(direction == UP) {
 						if(o.m_body.getLinearVelocity().y < 14)
 							o.m_body.applyLinearImpulse(0,power, 0, 0, true);

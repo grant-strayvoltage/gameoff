@@ -130,6 +130,13 @@ fan_F1
   orig: 32, 32
   offset: 0, 0
   index: -1
+fan_particle
+  rotate: false
+  xy: 1836, 201
+  size: 3, 3
+  orig: 3, 3
+  offset: 0, 0
+  index: -1
 meter_F1
   rotate: false
   xy: 2, 158

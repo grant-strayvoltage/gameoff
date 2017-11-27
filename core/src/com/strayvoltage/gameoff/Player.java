@@ -425,8 +425,8 @@ public class Player extends GameSprite implements Box2dCollisionHandler{
       float mrx = m_maxX;
       float mlx = m_maxX;
 
-      if (m_fanRight > 0) mrx = mrx * 2f;
-      if (m_fanLeft > 0) mlx = mlx* 2f;
+      if (m_fanRight > 0) mrx = mrx * 2.5f;
+      if (m_fanLeft > 0) mlx = mlx* 2.5f;
       
       if (cv.x > 0)
       {

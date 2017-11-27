@@ -48,8 +48,6 @@ static BitmapFont m_font32 = null;
 TextureAtlas m_sprites = null;
 public ArrayList<GameMapObject> m_gameMapObjects = new ArrayList<GameMapObject>();
 
-//public ArrayList<GameParticle> m_particles = new ArrayList<GameParticle>();
-
 static public World world;
 static public Box2DDebugRenderer debug_renderer;
 PowerUnit m_brain = null;
@@ -342,7 +340,7 @@ public float getFloat(String key, MapObject mp)
     m_brain.m_map = tiledMap;
 
     m_player1.setMap(tiledMap, m_player2,24,40,m_brain,1);
-    m_player2.setMap(tiledMap, m_player1,8,15,m_brain,2);
+    m_player2.setMap(tiledMap, m_player1,8.5f,15,m_brain,2);
     m_brain.setMap(tiledMap);
 
 
