@@ -60,6 +60,10 @@ public class Player extends GameSprite implements Box2dCollisionHandler{
   int m_state = 2; //paused
   float m_targetX = 0;
   int m_groundCheckTicks = 5;
+  
+  boolean fixed_jump = false;
+  float fixed_jump_cd = 0.05f;
+  float fixed_jump_elapsed = 0f;
 
   public Player(TextureAtlas textures, int p, GameInputManager2 controller)
   {
@@ -279,6 +283,15 @@ public class Player extends GameSprite implements Box2dCollisionHandler{
 
   public void update(float deltaTime)
   {
+	
+	 //update for fixed jump
+	  if(fixed_jump) {
+		  fixed_jump_elapsed+=deltaTime;
+		  if(fixed_jump_elapsed>=fixed_jump_cd) {
+			  fixed_jump_elapsed = 0;
+			  fixed_jump = false;
+		  }
+	  }
     if (m_state == 2)
       return;
 
@@ -585,7 +598,7 @@ public class Player extends GameSprite implements Box2dCollisionHandler{
   }
   
   public void jump() {
-	 
+	 if(fixed_jump)return; //if the fixed jump is on do not jump
 	  if(trampoline_state != Trampoline.NONE) {
 		  m_body.applyLinearImpulse(0, m_jumpDY*Trampoline.Multiplier, 0, 0, true);
 		  m_jumpTicks = 15;
@@ -711,6 +724,10 @@ public class Player extends GameSprite implements Box2dCollisionHandler{
 		
 		if(collision.target_type == Box2dVars.PLATFORM) {
 			platform = collision.target.m_body;
+			//enable a fixed jump so that the player cannot jump exactly after making contact with the platform. 
+			//this is to prevent insane vertical speed
+			fixed_jump = true;
+			
 		}
 		
 		if(collision.target_type == Box2dVars.HAZARD) {

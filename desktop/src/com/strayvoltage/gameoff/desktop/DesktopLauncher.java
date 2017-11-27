@@ -8,7 +8,7 @@ import com.strayvoltage.gameoff.GameOff;
 
 public class DesktopLauncher {
 	//set to false when we deploy
-	public static boolean AUTO_PACK = true ;//&& GameOff.DEBUG;
+	public static boolean AUTO_PACK = false && GameOff.DEBUG;
 	public static void main (String[] arg) {
 		
 		//TEXTURE PACKING AT RUNTIME ------------------------------

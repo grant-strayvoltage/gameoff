@@ -32,9 +32,12 @@ public class Gate extends GameMapObject implements SwitchHandler,Box2dCollisionH
 	float moving_elapsed;
 	
 	int direction;
+	boolean horizontal;
 	//magic number
 	float startx = -1;
 	float starty = -1;
+	
+	private float offset = 5;
 
 	@Override
 	public void init(MapProperties mp, TextureAtlas textures) {
@@ -45,7 +48,7 @@ public class Gate extends GameMapObject implements SwitchHandler,Box2dCollisionH
 		open_speed = 100;
 		m_filterMask = Box2dVars.PLAYER_NORMAL|Box2dVars.POWER|Box2dVars.OBJECT|Box2dVars.BLOCK;
 		m_btype = BodyType.KinematicBody;
-		setSize(Box2dVars.PIXELS_PER_METER,Box2dVars.PIXELS_PER_METER*3);
+		setSize(mp.get("width", Float.class),mp.get("height",Float.class));
 		instant = getBool("instant", mp);
 		isOpen = getBool("isOpen",mp);
 		direction = UP;
@@ -53,39 +56,71 @@ public class Gate extends GameMapObject implements SwitchHandler,Box2dCollisionH
 		if(getBool("openDown", mp)) {
 			direction = DOWN;
 		}
+		horizontal = getBool("horizontal", mp);
 	}
 	
 	@Override
 	public void update(float deltaTime) {
 		if(state==MOVING) {
 			System.out.println("moving gate");
-			if(isOpen) {//OPEN GATE
-				setBodyPosition(getX(), getY()+(direction*(open_speed*deltaTime)));
-				if(direction == DOWN) {
-					if(getY() <= starty-getHeight()) {
-						setBodyPosition(getX(), starty-getHeight());
-						state = OPEN;
+			if(horizontal) {
+				if(isOpen) {//OPEN GATE
+					setBodyPosition(getX()+(direction*(open_speed*deltaTime)), getY());
+					if(direction == DOWN) {
+						if(getX() <= startx-(getWidth()+offset)) {
+							setBodyPosition(startx-(getWidth()+offset), getY());
+							state = OPEN;
+						}
+					}else {
+						if(getX() >= startx+getWidth()+offset) {
+							setBodyPosition(startx+getWidth()+offset, getY());
+							state = OPEN;
+						}
 					}
 				}else {
-					if(getY() >= starty+getHeight()) {
-						setBodyPosition(getX(), starty+getHeight());
-						state = OPEN;
+					setBodyPosition(getX()-(direction*(open_speed*deltaTime)), getY());
+					if(direction == DOWN) {
+						if(getX() >= startx) {
+							setBodyPosition(startx, getY());
+							state = OPEN;
+						}
+					}else {
+						if(getX() <= startx) {
+							setBodyPosition(startx, getY());
+							state = OPEN;
+						}
 					}
 				}
 			}else {
-				setBodyPosition(getX(), getY()-(direction*(open_speed*deltaTime)));
-				if(direction == DOWN) {
-					if(getY() >= starty) {
-						setBodyPosition(getX(), starty);
-						state = OPEN;
+				if(isOpen) {//OPEN GATE
+					setBodyPosition(getX(), getY()+(direction*(open_speed*deltaTime)));
+					if(direction == DOWN) {
+						if(getY() <= starty-(getHeight()+offset)) {
+							setBodyPosition(getX(), starty-(getHeight()+offset));
+							state = OPEN;
+						}
+					}else {
+						if(getY() >= starty+getHeight()) {
+							setBodyPosition(getX(), starty+getHeight()+offset);
+							state = OPEN;
+						}
 					}
 				}else {
-					if(getY() <= starty) {
-						setBodyPosition(getX(), starty);
-						state = OPEN;
+					setBodyPosition(getX(), getY()-(direction*(open_speed*deltaTime)));
+					if(direction == DOWN) {
+						if(getY() >= starty) {
+							setBodyPosition(getX(), starty);
+							state = OPEN;
+						}
+					}else {
+						if(getY() <= starty) {
+							setBodyPosition(getX(), starty);
+							state = OPEN;
+						}
 					}
 				}
 			}
+			
 		}
 		super.update(deltaTime);
 	}
@@ -93,7 +128,19 @@ public class Gate extends GameMapObject implements SwitchHandler,Box2dCollisionH
 	public void open() {
 		if(instant) {
 			state = OPEN;
-			m_body.setTransform(m_body.getPosition().x,m_body.getPosition().y+(direction*getHeight()/Box2dVars.PIXELS_PER_METER), m_body.getAngle());
+			isOpen = true;
+			if(horizontal) {
+				if(direction == DOWN)
+					setBodyPosition(startx-(getWidth()+offset), getY());
+				else
+					setBodyPosition(startx+getWidth()+offset, getY());
+			}else {
+				if(direction == DOWN)
+					setBodyPosition(getX(), starty-(getHeight()+offset));
+				else
+					setBodyPosition(getX(), starty+getHeight()+offset);
+			}
+			
 		}else {
 			state = MOVING;
 		}
@@ -103,7 +150,8 @@ public class Gate extends GameMapObject implements SwitchHandler,Box2dCollisionH
 	public void close() {
 		if(instant) {
 			state = CLOSED;
-			m_body.setTransform(m_body.getPosition().x,m_body.getPosition().y-(direction*getHeight()/Box2dVars.PIXELS_PER_METER), m_body.getAngle());
+			isOpen = false;
+			setBodyPosition(startx, startx);
 		}else {
 			state = MOVING;
 		}
