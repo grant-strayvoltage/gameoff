@@ -82,7 +82,15 @@ public class TitleScreenLayer extends GameLayer implements GameMenuListener {
     GameImageButton newGame = new GameImageButton(m_gameTextures, "newButton");
     GameImageButton contGame = new GameImageButton(m_gameTextures, "continue");
 
-    m_menu = new GameMenu(newGame, contGame, 2, 25, false, m_inputManager, this);
+    int defaultButton = 1;
+
+    if (GameMain.getSingleton().doesGameExist(0)) defaultButton = 2;
+    else
+    {
+      contGame.setDisabled(true);
+    }
+
+    m_menu = new GameMenu(newGame, contGame, defaultButton, 25, false, m_inputManager, this);
     this.add(m_menu);
     m_menu.setPosition(440,65);
 

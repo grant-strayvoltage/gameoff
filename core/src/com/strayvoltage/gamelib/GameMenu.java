@@ -188,7 +188,7 @@ public class GameMenu extends GamePanel {
           {
             m_selectedButton++;
             if (m_selectedButton > m_numButtons)
-              m_selectedButton = m_numButtons;
+              m_selectedButton = 1;
           }
         }
       }
@@ -219,7 +219,7 @@ public class GameMenu extends GamePanel {
           {
             m_selectedButton++;
             if (m_selectedButton > m_numButtons)
-              m_selectedButton = m_numButtons;
+              m_selectedButton = 1;
           }
         }
       }

@@ -234,6 +234,15 @@ public abstract class GameMain extends ApplicationAdapter  {
         }
     }
 
+    public boolean doesGameExist(int num)
+    {
+        if(Gdx.files.local("saveGame_" + num + ".txt").exists())
+            return true;
+
+        return false;
+    }
+
+
     public void saveGame()
     {
       String gsid = this.getGlobal("GameSaveID");
