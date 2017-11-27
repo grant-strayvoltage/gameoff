@@ -51,15 +51,18 @@ public class TitleScreenLayer extends GameLayer implements GameMenuListener {
     //this.setMusic("VS_SA_title_bgm.mp3");
 
     m_assets = getAssetManager();
-    if (m_assets.isLoaded("title.png") == false)
-    {
-      m_assets.finishLoading();
-    }
+    m_assets.finishLoading();
 
     m_introScreenTexture = m_assets.get("title.png", Texture.class);
 
     m_introSprite = new GameSprite(m_introScreenTexture);
     m_introSprite.setPosition(0,0);
+
+    GameSprite titleText = new GameSprite(m_assets.get("escape_title.png", Texture.class));
+    this.add(titleText);
+    titleText.setOpacity(0);
+    GameAnimateable an = new AnimateFadeIn(2.0f);
+    titleText.runAnimation(an);
 
     m_delayTicks = 0;
 
@@ -81,7 +84,12 @@ public class TitleScreenLayer extends GameLayer implements GameMenuListener {
 
     m_menu = new GameMenu(newGame, contGame, 2, 25, false, m_inputManager, this);
     this.add(m_menu);
-    m_menu.setPosition(440,75);
+    m_menu.setPosition(440,65);
+
+    m_menu.setOpacity(0);
+    GameAnimateable an2 = new AnimateFadeIn(2.0f);
+    m_menu.runAnimation(an2);
+
 
     m_musicStarted = false;
     this.setCameraPosition(640,360);
@@ -97,8 +105,6 @@ public class TitleScreenLayer extends GameLayer implements GameMenuListener {
 
     m_delayTicks++;
 
-    m_menu.animate(deltaTime);
-
     if (!m_musicStarted)
     {
       //this.loopSound("music", 0.95f);  
@@ -112,8 +118,10 @@ public class TitleScreenLayer extends GameLayer implements GameMenuListener {
     }
   }
 
-   public void buttonSelected(int buttonNum, boolean mainClick)
+  public void buttonSelected(int buttonNum, boolean mainClick)
   {
+    if (m_delayTicks < 70) return;
+
     if (buttonNum == 1)
     {
       this.eraseGame(0);
@@ -133,10 +141,15 @@ public class TitleScreenLayer extends GameLayer implements GameMenuListener {
       {
         MainLayer l = new MainLayer();
         l.loadLevel(1,1);
-        CutScene scene1 = new CutScene(new String[]{"The experiment was a success. Sentience was acheived and a melding","of meat and machine was achieved."},"cut1", 3.0f);
-        CutScene scene2 = new CutScene(new String[]{"Scene number two.","some other text goes here"},"cut2", 3.0f);
+        //CutScene scene1 = new CutScene(new String[]{"The experiment was a success. Sentience was acheived and a melding","of meat and machine was achieved."},"cut1", 3.0f);
+        //CutScene scene2 = new CutScene(new String[]{"Scene number two.","some other text goes here"},"cut2", 3.0f);
+        CutSceneImage scene1 = new CutSceneImage("cut1");
+        CutSceneImage scene2 = new CutSceneImage("cut2");
+        CutSceneImage scene3 = new CutSceneImage("cut3");
+
         scene1.setNextScene(scene2);
-        scene2.setNextScene(l);
+        scene2.setNextScene(scene3);
+        scene3.setNextScene(l);
         this.replaceActiveLayer(scene1);
         this.cleanUp();
       }

@@ -1,28 +1,28 @@
 
 cut_sprites.png
-size: 1024,512
+size: 4096,2048
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
 cut1
   rotate: false
-  xy: 2, 2
-  size: 600, 400
-  orig: 600, 400
+  xy: 2, 1126
+  size: 1280, 720
+  orig: 1280, 720
   offset: 0, 0
   index: -1
 cut2
   rotate: false
-  xy: 2, 2
-  size: 600, 400
-  orig: 600, 400
+  xy: 2, 404
+  size: 1280, 720
+  orig: 1280, 720
   offset: 0, 0
   index: -1
 cut3
   rotate: false
-  xy: 2, 2
-  size: 600, 400
-  orig: 600, 400
+  xy: 1284, 1126
+  size: 1280, 720
+  orig: 1280, 720
   offset: 0, 0
   index: -1
 cut4
