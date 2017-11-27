@@ -1,27 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" tiledversion="1.0.3" orientation="orthogonal" renderorder="right-down" width="40" height="23" tilewidth="32" tileheight="32" nextobjectid="39">
+<map version="1.0" tiledversion="1.0.3" orientation="orthogonal" renderorder="right-down" width="40" height="23" tilewidth="32" tileheight="32" nextobjectid="42">
  <properties>
   <property name="Back" value="back5"/>
-  <property name="Title" value="Two Cyborg Bodies...One Brain"/>
-  <property name="backOffX" type="int" value="0"/>
-  <property name="backOffY" type="int" value="-100"/>
+  <property name="Title" value="Big Jump...Little Cyborg"/>
  </properties>
  <tileset firstgid="1" source="tileset.tsx"/>
  <layer name="background" width="40" height="23">
   <data encoding="base64" compression="zlib">
-   eJxjYBgFIJA50A4gAMh1nyudsBOZ7qMXICX8XGnmCtxguKY/egFauy+RQv0jPfxSKcStNHYfpWCg45eRgPxAu48QGHUfaQDdPaPuowyMuo8yMOo+ysBwdR8ANtIXxw==
+   eJztzkEJAAAIADHLmcX+DSwhgrLB/S8C+CwHqvVrAAAuaqVxBP0=
   </data>
  </layer>
  <layer name="platforms" width="40" height="23">
   <data encoding="base64" compression="zlib">
-   eJzt1LEJACAQQ9Fwm6qTiJOIi+oCFkLO6gde/6uEpAAAXJWjmrSEvi7fBn300fe1b8r3LyuhDwBebeLwG9k=
+   eJxjYmBgYBrFo3iQ4kQgTqIBTqaS+5oZaAOaR9036r5R9426b9R9w9p9Cxkg9dEiBuLrLpBaJQLyi6nkvlE8ikfxKCYXAwClVyHh
   </data>
  </layer>
  <objectgroup name="objects">
-  <object id="4" name="P1" type="PlayerStart1" x="371.058" y="402.742" width="60" height="77"/>
-  <object id="5" name="P2" type="PlayerStart2" x="458.724" y="435.675" width="47" height="44"/>
+  <object id="4" name="P1" type="PlayerStart1" x="307" y="402" width="60" height="77"/>
+  <object id="5" name="P2" type="PlayerStart2" x="442" y="434" width="47" height="44"/>
   <object id="14" name="block3" type="Block" x="-64" y="352" width="32" height="32"/>
-  <object id="16" name="exit" type="Exit" x="857.435" y="389.062" width="64" height="90"/>
+  <object id="16" name="exit" type="Exit" x="866" y="389" width="64" height="90"/>
   <object id="28" name="Tramp1" type="Trampoline" x="-128" y="480" width="48" height="48">
    <properties>
     <property name="static" type="bool" value="true"/>
@@ -42,27 +40,19 @@
     <property name="switches" value="switch1"/>
    </properties>
   </object>
-  <object id="36" name="BackObject" type="BackObject" x="672" y="352" width="128" height="128">
+  <object id="36" name="BackObject" type="BackObject" x="576" y="256" width="82" height="64">
    <properties>
     <property name="frames" type="int" value="3"/>
-    <property name="speed" type="int" value="10"/>
-    <property name="sprite" value="vat"/>
+    <property name="speed" type="int" value="2"/>
+    <property name="sprite" value="screen"/>
     <property name="style" type="int" value="2"/>
    </properties>
   </object>
-  <object id="37" name="BackObject" type="BackObject" x="384" y="384" width="96" height="96">
+  <object id="40" name="BackObject" type="BackObject" x="736" y="384" width="32" height="64">
    <properties>
     <property name="frames" type="int" value="1"/>
     <property name="speed" type="int" value="10"/>
-    <property name="sprite" value="blood1"/>
-    <property name="style" type="int" value="2"/>
-   </properties>
-  </object>
-  <object id="38" name="hint1" type="BackObject" x="512" y="512" width="128" height="128">
-   <properties>
-    <property name="frames" type="int" value="1"/>
-    <property name="speed" type="int" value="10"/>
-    <property name="sprite" value="hint1"/>
+    <property name="sprite" value="blood3"/>
     <property name="style" type="int" value="2"/>
    </properties>
   </object>

@@ -149,15 +149,21 @@ public class TitleScreenLayer extends GameLayer implements GameMenuListener {
       {
         MainLayer l = new MainLayer();
         l.loadLevel(1,1);
-        //CutScene scene1 = new CutScene(new String[]{"The experiment was a success. Sentience was acheived and a melding","of meat and machine was achieved."},"cut1", 3.0f);
-        //CutScene scene2 = new CutScene(new String[]{"Scene number two.","some other text goes here"},"cut2", 3.0f);
         CutSceneImage scene1 = new CutSceneImage("cut1");
         CutSceneImage scene2 = new CutSceneImage("cut2");
         CutSceneImage scene3 = new CutSceneImage("cut3");
+        CutSceneImage scene4 = new CutSceneImage("cut4");
+        CutSceneImage scene5 = new CutSceneImage("cut5");
+        CutSceneImage scene6 = new CutSceneImage("cut6");
+        CutSceneImage scene7 = new CutSceneImage("cut7");
 
         scene1.setNextScene(scene2);
         scene2.setNextScene(scene3);
-        scene3.setNextScene(l);
+        scene3.setNextScene(scene4);
+        scene4.setNextScene(scene5);
+        scene5.setNextScene(scene6);
+        scene6.setNextScene(scene7);
+        scene7.setNextScene(l);
         this.replaceActiveLayer(scene1);
         this.cleanUp();
       }

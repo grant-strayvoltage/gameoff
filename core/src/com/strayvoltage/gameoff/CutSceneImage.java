@@ -36,6 +36,7 @@ public class CutSceneImage extends GameLayer {
   GameInputManager2 m_inputManager;
   Matrix4 m_defaultMatrix = new Matrix4();
   GameLayer m_nextScene = null;
+  GameSprite m_nextImage = null;
 
   int m_delayTicks = 0;
   int m_buttonDelay = 0;
@@ -73,6 +74,11 @@ public class CutSceneImage extends GameLayer {
     this.add(m_img);
     m_img.setOpacity(0);
 
+    m_nextImage = new GameSprite(textures.findRegion("next_img"));
+    this.add(m_nextImage);
+    m_nextImage.setOpacity(0f);
+    m_nextImage.setVisible(false);
+    m_nextImage.setPosition(1075,65);
 
     this.setCameraPosition(1280/2,720/2);
 
@@ -91,6 +97,8 @@ public class CutSceneImage extends GameLayer {
       m_time = 0;
       GameAnimateable an = new AnimateFadeIn(1.0f);
       m_img.runAnimation(an);
+      GameAnimateable an2 = new AnimateFadeIn(1.0f);
+      m_nextImage.runAnimation(an2);
     }
   }
 
@@ -117,7 +125,12 @@ public class CutSceneImage extends GameLayer {
       runScene1();
     }
 
-    if (m_buttonDelay > 64)
+    if (m_buttonDelay > 120)
+    {
+      m_nextImage.setVisible(true);
+    }
+
+    if (m_buttonDelay > 140)
     {
       if (m_inputManager.nextPressed())
       {
@@ -129,6 +142,9 @@ public class CutSceneImage extends GameLayer {
     {
         GameAnimateable an = new AnimateFadeOut(1.0f);
         m_img.runAnimation(an);
+        GameAnimateable an2 = new AnimateFadeOut(1.0f);
+        m_nextImage.stopAllAnimations();
+        m_nextImage.runAnimation(an2);
         m_state = 10;
         m_time = 0;
     }
