@@ -47,6 +47,9 @@ static BitmapFont m_font24 = null;
 static BitmapFont m_font32 = null;
 TextureAtlas m_sprites = null;
 public ArrayList<GameMapObject> m_gameMapObjects = new ArrayList<GameMapObject>();
+
+//public ArrayList<GameParticle> m_particles = new ArrayList<GameParticle>();
+
 static public World world;
 static public Box2DDebugRenderer debug_renderer;
 PowerUnit m_brain = null;
@@ -104,6 +107,8 @@ public MainLayer()
     //m_fadeOutTexture = m_assets.get("fade_out.png", Texture.class);
     m_fadeOutSprite = new GameSprite(m_assets.get("fade_out.png", Texture.class));
     m_fadeOutSprite.setOpacity(0);
+
+    
 
     /*
     if (bombEffectPool == null)
@@ -437,6 +442,10 @@ public float getFloat(String key, MapObject mp)
           gmo.setMap(tiledMap);
           gmo.init(p,m_sprites);
           this.add(gmo);
+          if (o instanceof Fan)
+          {
+            ((Fan)o).addFanSprite(this,px,py);
+          }
           gmo.addToWorld(world);
           m_gameMapObjects.add(gmo);
           gmo.setBodyPosition(px,py);

@@ -60,6 +60,8 @@ public class Player extends GameSprite implements Box2dCollisionHandler{
   int m_state = 2; //paused
   float m_targetX = 0;
   int m_groundCheckTicks = 5;
+  int m_fanRight = 0;
+  int m_fanLeft = 0;
 
   public Player(TextureAtlas textures, int p, GameInputManager2 controller)
   {
@@ -159,7 +161,7 @@ public class Player extends GameSprite implements Box2dCollisionHandler{
     fixtureDef.restitution = -1f;
 
     fixtureDef.filter.categoryBits = Box2dVars.PLAYER_NORMAL;
-    fixtureDef.filter.maskBits = Box2dVars.SWITCH | Box2dVars.OBJECT | Box2dVars.FLOOR | Box2dVars.BLOCK | Box2dVars.PLATFORM | Box2dVars.HAZARD;
+    fixtureDef.filter.maskBits = Box2dVars.SWITCH | Box2dVars.OBJECT | Box2dVars.FLOOR | Box2dVars.BLOCK | Box2dVars.PLATFORM | Box2dVars.HAZARD | Box2dVars.FAN;
 
     m_fixture = m_body.createFixture(fixtureDef);
     m_fixture.setUserData(this);
@@ -416,19 +418,31 @@ public class Player extends GameSprite implements Box2dCollisionHandler{
         stillTime = 0;
       } else {		
 			    stillTime += Gdx.graphics.getDeltaTime();
-          m_body.setLinearVelocity(cv.x * 0.9f, cv.y);
+          if ((m_fanLeft + m_fanRight) < 1)
+            m_body.setLinearVelocity(cv.x * 0.9f, cv.y);
       }
 
+      float mrx = m_maxX;
+      float mlx = m_maxX;
 
+      if (m_fanRight > 0) mrx = mrx * 2f;
+      if (m_fanLeft > 0) mlx = mlx* 2f;
       
-      if (Math.abs(cv.x) > m_maxX)
+      if (cv.x > 0)
       {
-        if (cv.x > 0) cv.x = m_maxX;
-        else cv.x = -m_maxX;
-        m_body.setLinearVelocity(cv);
+        if (cv.x > mrx)
+        {
+          cv.x = mrx;
+          m_body.setLinearVelocity(cv);
+        }
+      } else if (cv.x < 0)
+      {
+        if (Math.abs(cv.x) > mlx)
+        {
+          cv.x = - mlx;
+          m_body.setLinearVelocity(cv);
+        }
       }
-
-
 
       if(!m_onGround) {			
         m_fixture.setFriction(0f);
@@ -484,6 +498,7 @@ public class Player extends GameSprite implements Box2dCollisionHandler{
         //}
       }	
     }
+
     if ((m_powered) && (m_playerControlled))
     {
 
@@ -503,8 +518,36 @@ public class Player extends GameSprite implements Box2dCollisionHandler{
       }
     } else
     {
+
       Vector2 cv = m_body.getLinearVelocity();
-      m_body.setLinearVelocity(cv.x * 0.9f, cv.y);
+
+      float mrx = m_maxX;
+      float mlx = m_maxX;
+
+      if (m_fanRight > 0) mrx = mrx * 2f;
+      if (m_fanLeft > 0) mlx = mlx* 2f;
+      
+      if (cv.x > 0)
+      {
+        if (cv.x > mrx)
+        {
+          cv.x = mrx;
+          m_body.setLinearVelocity(cv);
+        }
+      } else if (cv.x < 0)
+      {
+        if (Math.abs(cv.x) > mlx)
+        {
+          cv.x = - mlx;
+          m_body.setLinearVelocity(cv);
+        }
+      }
+
+      if ((m_fanLeft + m_fanRight) < 1)
+      {
+        m_body.setLinearVelocity(cv.x * 0.9f, cv.y);
+      }
+
       if(platform!=null) {
     	  m_body.setLinearVelocity(platform.getLinearVelocity().x,m_body.getLinearVelocity().y);
       }
@@ -703,12 +746,25 @@ public class Player extends GameSprite implements Box2dCollisionHandler{
 			//if the collision target is another gameMapObject we can access it from here
 			//i thought of removing this and just implementing it as Object and letting the programmer
 			//cast it themselves whenever they need to but this is simpler for now. 
-			if(collision.target!=null) {
+			//if(collision.target!=null) {
 				//do stuff with the collision target
-				GameMapObject obj = (GameMapObject) collision.target;
-			}
+				//GameMapObject obj = (GameMapObject) collision.target;
+			//}
 		}
 		
+    if (collision.target_type == Box2dVars.FAN)
+    {
+      Fan f = (Fan) collision.target;
+      if (f.direction == f.RIGHT)
+      {
+        m_fanRight++;
+      } else if (f.direction == f.LEFT)
+      {
+        m_fanLeft++;
+      }
+    }
+
+
 		if(collision.target_type == Box2dVars.PLATFORM) {
 			platform = collision.target.m_body;
 		}
@@ -728,6 +784,18 @@ public class Player extends GameSprite implements Box2dCollisionHandler{
 		if(collision.target_type == Box2dVars.PLATFORM) {
 			platform = null;
 		}
+
+    if (collision.target_type == Box2dVars.FAN)
+    {
+        Fan f = (Fan) collision.target;
+        if (f.direction == f.RIGHT)
+        {
+          m_fanRight--;
+        } else if (f.direction == f.LEFT)
+        {
+          m_fanLeft--;
+        }
+     }
 		
 	}
 	

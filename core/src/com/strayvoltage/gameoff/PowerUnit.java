@@ -40,6 +40,8 @@ public class PowerUnit extends GameMapObject implements Box2dCollisionHandler {
   float m_yOff = 12;
   float m_xOff = 3;
   GameTileMap m_map;
+  int m_fanRight = 0;
+  int m_fanLeft = 0;
 
   public void init(MapProperties mp, TextureAtlas textures)
   {
@@ -99,7 +101,7 @@ public class PowerUnit extends GameMapObject implements Box2dCollisionHandler {
     fixtureDef.restitution = 0.0f;
 
     fixtureDef.filter.categoryBits = Box2dVars.POWER;
-    fixtureDef.filter.maskBits = Box2dVars.OBJECT | Box2dVars.FLOOR | Box2dVars.BLOCK | Box2dVars.PLATFORM | Box2dVars.HAZARD;
+    fixtureDef.filter.maskBits = Box2dVars.OBJECT | Box2dVars.FAN | Box2dVars.FLOOR | Box2dVars.BLOCK | Box2dVars.PLATFORM | Box2dVars.HAZARD;
 
     m_fixture = m_body.createFixture(fixtureDef);
     m_fixture.setUserData(this);
@@ -293,14 +295,30 @@ public class PowerUnit extends GameMapObject implements Box2dCollisionHandler {
             //this.setFlip(false,false);
           } else {		
               stillTime += Gdx.graphics.getDeltaTime();
-              m_body.setLinearVelocity(cv.x * 0.8f, cv.y);
+              if ((m_fanRight + m_fanLeft) < 1)
+                m_body.setLinearVelocity(cv.x * 0.8f, cv.y);
           }
 
-          if (Math.abs(cv.x) > 5)
+          float mrx = 5f;
+          float mlx = 5f;
+
+          if (m_fanRight > 0) mrx = mrx * 2f;
+          if (m_fanLeft > 0) mlx = mlx* 2f;
+      
+          if (cv.x > 0)
           {
-            if (cv.x > 0) cv.x = 5;
-            else cv.x = -5;
-            m_body.setLinearVelocity(cv);
+            if (cv.x > mrx)
+            {
+              cv.x = mrx;
+              m_body.setLinearVelocity(cv);
+            }
+          } else if (cv.x < 0)
+          {
+            if (Math.abs(cv.x) > mlx)
+            {
+              cv.x = - mlx;
+              m_body.setLinearVelocity(cv);
+            }
           }
 
           if (m_jumpTicks > 0) m_jumpTicks--;
@@ -391,28 +409,36 @@ public class PowerUnit extends GameMapObject implements Box2dCollisionHandler {
 	public void handleBegin(Box2dCollision collision) {
 		
 		if(collision.target_type == Box2dVars.HAZARD) {
-			Gdx.app.log("BrainContactTest:", "we touched a HAZARD! YOU ARE DED!");
-			/*Gdx.app.postRunnable(new Runnable() {
-				
-				@Override
-				public void run() {
-
-            
-					//PLAYER DEATH LOGIC HERE --------------------------------------
-					int stage = Integer.parseInt(GameMain.getSingleton().getGlobal("m_stage"));
-					int level = Integer.parseInt(GameMain.getSingleton().getGlobal("m_level"));
-					MainLayer ml = new MainLayer();
-			        ml.loadLevel(stage,level);
-			        GameMain.getSingleton().replaceActiveLayer(ml);
-					
-				}
-			});*/
 		  this.die();	
 		}	
+
+    if (collision.target_type == Box2dVars.FAN)
+    {
+      Fan f = (Fan) collision.target;
+      if (f.direction == f.RIGHT)
+      {
+        m_fanRight++;
+      } else if (f.direction == f.LEFT)
+      {
+        m_fanLeft++;
+      }
+    }
 	}
 
   @Override
 	public void handleEnd(Box2dCollision collision) {
+
+    if (collision.target_type == Box2dVars.FAN)
+    {
+        Fan f = (Fan) collision.target;
+        if (f.direction == f.RIGHT)
+        {
+          m_fanRight--;
+        } else if (f.direction == f.LEFT)
+        {
+          m_fanLeft--;
+        }
+     }
 	}
 
 }
