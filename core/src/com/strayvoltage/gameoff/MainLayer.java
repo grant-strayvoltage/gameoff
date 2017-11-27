@@ -248,10 +248,28 @@ public float getFloat(String key, MapObject mp)
             PolygonShape shape = new PolygonShape();
             
             Vector2[] points = new Vector2[4];
-            points[0] = new Vector2(0,0).scl(1f/Box2dVars.PIXELS_PER_METER);
-            points[1] = new Vector2(0,tilesize).scl(1f/Box2dVars.PIXELS_PER_METER);
-            points[2] = new Vector2(tilesize,tilesize).scl(1f/Box2dVars.PIXELS_PER_METER);
-            points[3] = new Vector2(tilesize,0).scl(1f/Box2dVars.PIXELS_PER_METER);
+
+            float lx = 0;
+            float rx = tilesize;
+            float bmy = 0;
+            float tpy = tilesize;
+
+            if ((cellid == 4) || (cellid == 5))
+            {
+              lx = 10;
+              rx = 22;
+            } else
+            {
+              lx = 10;
+              rx = 22;
+              tpy = 20;
+              bmy = 12;
+            }
+
+            points[0] = new Vector2(lx,bmy).scl(1f/Box2dVars.PIXELS_PER_METER);
+            points[1] = new Vector2(lx,tpy).scl(1f/Box2dVars.PIXELS_PER_METER);
+            points[2] = new Vector2(rx,tpy).scl(1f/Box2dVars.PIXELS_PER_METER);
+            points[3] = new Vector2(rx,bmy).scl(1f/Box2dVars.PIXELS_PER_METER);
             
             shape.set(points);
             
