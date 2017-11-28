@@ -431,10 +431,14 @@ public abstract class GameMain extends ApplicationAdapter  {
     {
         String tm = getGlobal("time");
         float tmf = Float.parseFloat(tm);
-
         float mins = tmf / 60f;
-
         String m = String.format("%.2f mins", mins);
+
+        if (tmf < 90)
+        {
+            m = String.format("%.0f seconds", tmf);
+        }
+
         return m;
     }
 

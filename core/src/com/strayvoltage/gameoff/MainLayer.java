@@ -28,7 +28,7 @@ import com.strayvoltage.gamelib.*;
 
 public class MainLayer extends GameLayer  {
 	
-	public static final int MAX_STAGES = 2; //CHANGE IF YOU ADD MORE STAGES
+	public static final int MAX_STAGES = 3; //CHANGE IF YOU ADD MORE STAGES
 	public static final int MAX_LEVELS_PER_STGE = 8; //CHANGE IF YOU ADD or REMOVE LEVELS --
 
 boolean m_musicStarted = false;
@@ -510,7 +510,7 @@ public float getFloat(String key, MapObject mp)
     this.add(m_brain);
 
     this.add(m_titleBackSprite);
-    m_titleBackSprite.setPosition(140,620);
+    m_titleBackSprite.setPosition(140,580);
 
     m_titleText = new GameText(m_font24, 980);
     m_titleText.setText(title);
@@ -522,7 +522,7 @@ public float getFloat(String key, MapObject mp)
 
     m_statsText = new GameText(m_font16, 980);
     m_statsText.setText("Deaths: " + deaths + "      Time: " + timeString);
-    m_statsText.setPosition(150,605);
+    m_statsText.setPosition(150,607);
     this.add(m_statsText);
     
     //ADD COLLISIONADAPTER After all world objects are set.
