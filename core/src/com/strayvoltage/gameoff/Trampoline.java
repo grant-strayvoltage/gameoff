@@ -130,13 +130,21 @@ public class Trampoline extends GameMapObject implements Box2dCollisionHandler{
 					if(players[i]!=null) {
 						players[i].trampoline_state = NONE;
 						players[i].jump();
+						this.playSound("bounce",1f);
 					}
 				}
-				if (brain != null) brain.jump();
-				
+				if (brain != null) 
+				{
+					brain.jump();
+					this.playSound("bounce",0.85f);
+				}
 			}
 				for(GameMapObject object: objects)
+				{
 					object.m_body.applyLinearImpulse(0, push_force, 0, 0, true);
+					this.playSound("bounce",0.85f);
+				}
+					
 
 		}
 		this.setPositionToBody();

@@ -170,6 +170,9 @@ public float getFloat(String key, MapObject mp)
   {
       stopSound("brainMove");
       stopSound("smasherLoop");
+      stopSound("1Move");
+      stopSound("2Move");
+      
         //add all other looping sounds here
   }
 
@@ -531,7 +534,7 @@ public float getFloat(String key, MapObject mp)
       if ((stateTime > 0.25f) && (!m_musicStarted))
       {
         this.setMusic("VS_GO_gameplay_BG.wav");
-        loopSound("music",0.35f);
+        loopSound("music",0.4f);
         m_musicStarted = true;
       }
 

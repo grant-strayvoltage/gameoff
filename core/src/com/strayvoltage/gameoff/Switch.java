@@ -32,19 +32,29 @@ public class Switch extends GameMapObject implements Box2dCollisionHandler{
 		if(contacts==1) {
 			if(toggle)
 				if(is_On)
+				{
 					setOff();
+					playSound("switchToggle",1f);
+				}
 				else
+				{
 					setOn();
+					playSound("switchToggle",1f);
+				}
+
 			else if(!is_On && !first_trigger) 
+			{
 				setOn();
+				playSound("switchToggle",1f);
+			}
 		}
-		
 	}
 
 	@Override
 	public void handleEnd(Box2dCollision collision) {
 		contacts--;
 		if(sensitive&&contacts==0) {
+			playSound("switchToggle",1f);			
 			setOff();
 		}
 	}

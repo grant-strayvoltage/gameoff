@@ -16,6 +16,7 @@ import com.badlogic.gdx.utils.Array;
 public class Player extends GameSprite implements Box2dCollisionHandler{
 
   GameInputManager2 m_controller;
+  long m_moveSound = -1;
   float m_dx = 0;
   float m_dy = 0;
   GameTileMap m_map = null;
@@ -63,6 +64,11 @@ public class Player extends GameSprite implements Box2dCollisionHandler{
   int m_fanRight = 0;
   int m_fanLeft = 0;
 
+  String dieSound = "cyborgDie";
+  String moveSound;
+  String jumpSound;
+  String landSound;
+
   public Player(TextureAtlas textures, int p, GameInputManager2 controller)
   {
     super(textures.findRegion("player" + p + "_stand_F1"));
@@ -71,6 +77,10 @@ public class Player extends GameSprite implements Box2dCollisionHandler{
     m_dead = false;
 
     String pb = "player" + p + "_";
+    moveSound = p + "Move";
+    jumpSound = p + "Jump";
+    landSound = p + "Land";
+
 
     m_standingAnimation = new AnimateSpriteFrame(textures, new String[] {pb+"stand_F1", pb + "stand_F2"}, 0.6f, -1);
     if (p == 1)
@@ -373,6 +383,7 @@ public class Player extends GameSprite implements Box2dCollisionHandler{
           {
             this.stopAllAnimations();
             this.runAnimation(m_standingAnimation);
+            stopMoveSound();
           }
         }
       }
@@ -403,6 +414,7 @@ public class Player extends GameSprite implements Box2dCollisionHandler{
         if (checkDir(1) == false)
         {
           m_body.applyForceToCenter(m_hForce,0,true);
+          startMoveSound();
         }
         m_lastDx = 1;
         notMoved = false;
@@ -412,6 +424,7 @@ public class Player extends GameSprite implements Box2dCollisionHandler{
         if (checkDir(0) == false)
         {
           m_body.applyForceToCenter(-m_hForce,0,true);
+          startMoveSound();
         }
         m_lastDx = -1;
         notMoved = false;
@@ -445,6 +458,7 @@ public class Player extends GameSprite implements Box2dCollisionHandler{
       }
 
       if(!m_onGround) {			
+        stopMoveSound();
         m_fixture.setFriction(0f);
         playerSensorFixture.setFriction(0f);			
         if (m_jumpingAnimation.isRunning() == false)
@@ -456,6 +470,7 @@ public class Player extends GameSprite implements Box2dCollisionHandler{
 
         if (Math.abs(cv.x) < 0.5f)
         {
+          stopMoveSound();
           if (m_jumpingAnimation.isRunning())
           {
             if ((m_standingAnimation.isRunning() == false) && (m_landingAnimation.isRunning() == false))
@@ -469,6 +484,7 @@ public class Player extends GameSprite implements Box2dCollisionHandler{
             {
               this.stopAllAnimations();
               this.runAnimation(m_standingAnimation);
+              stopMoveSound();
             }
           }
 
@@ -484,6 +500,7 @@ public class Player extends GameSprite implements Box2dCollisionHandler{
         if(notMoved && stillTime > 0.2) {
           m_fixture.setFriction(100f);
           playerSensorFixture.setFriction(100f);
+          stopMoveSound();
           if(platform!=null) {
         	  m_body.setLinearVelocity(platform.getLinearVelocity().x,m_body.getLinearVelocity().y);
           }
@@ -550,7 +567,10 @@ public class Player extends GameSprite implements Box2dCollisionHandler{
 
       if(platform!=null) {
     	  m_body.setLinearVelocity(platform.getLinearVelocity().x,m_body.getLinearVelocity().y);
+        stopMoveSound();
       }
+
+      if (Math.abs(cv.x) < 0.5f) stopMoveSound();
     }
 
     if (m_controlDelayTicks > 0)
@@ -578,11 +598,13 @@ public class Player extends GameSprite implements Box2dCollisionHandler{
           } else
           {
         	  jump();
+            stopMoveSound();
             m_jumpTicks = 15;
           }
         }
       } else
       {
+        stopMoveSound();
         if (m_jumpTicks > 0) m_jumpTicks--;
         if ((m_jumpTicks > 0) && (m_controller.isJumpPressed()))
         {
@@ -637,6 +659,7 @@ public class Player extends GameSprite implements Box2dCollisionHandler{
 	      m_jumpTicks = 15;
 	  }
       m_onGround = false;
+      this.playSound(jumpSound,1f);
   }
 
   public void setPositionToBody()
@@ -726,7 +749,25 @@ public class Player extends GameSprite implements Box2dCollisionHandler{
   {
     return !m_dead;
   }
+  
+  public void startMoveSound()
+  {
+    if (m_dead) return;
+    if (m_state > 9) return;
+    if (m_moveSound < 0)
+    {
+      m_moveSound = loopSound(moveSound,0.7f);
+    }
+  }
 
+  public void stopMoveSound()
+  {
+    if (m_moveSound >= 0)
+    {
+      stopSound(moveSound, m_moveSound);
+      m_moveSound = -1;
+    }
+  }
   
   /////COLLISION HANDLING EXAMPLE -------------------------------
   	//NOTE: in order to make any changes to the physics world or any physics related object
@@ -767,6 +808,11 @@ public class Player extends GameSprite implements Box2dCollisionHandler{
 
 		if(collision.target_type == Box2dVars.PLATFORM) {
 			platform = collision.target.m_body;
+      this.playSound(landSound,1f);
+		}
+
+		if(collision.target_type == Box2dVars.FLOOR) {
+      this.playSound(landSound,1f);
 		}
 		
 		if(collision.target_type == Box2dVars.HAZARD) {
@@ -776,8 +822,6 @@ public class Player extends GameSprite implements Box2dCollisionHandler{
       }
 		}
 	}
-	
-	
 	
 	@Override
 	public void handleEnd(Box2dCollision collision) {
@@ -806,6 +850,9 @@ public class Player extends GameSprite implements Box2dCollisionHandler{
 		stopAllAnimations();
 		m_dead = true;
     GameMain.getSingleton().addDeath();
+    m_body.setLinearVelocity(0,0);
+    stopMoveSound();
+    this.playSound(dieSound,1f);
 	}
 	
 }
