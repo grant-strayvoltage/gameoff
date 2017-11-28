@@ -1,62 +1,83 @@
 
 cut_sprites.png
-size: 4096,1024
+size: 4096,2048
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
 cut1
   rotate: false
-  xy: 2, 266
+  xy: 2, 1252
   size: 1280, 720
   orig: 1280, 720
   offset: 0, 0
   index: -1
 cut2
   rotate: false
-  xy: 1284, 266
+  xy: 2, 530
   size: 1280, 720
   orig: 1280, 720
   offset: 0, 0
   index: -1
 cut3
   rotate: false
-  xy: 2566, 266
+  xy: 1284, 1252
   size: 1280, 720
   orig: 1280, 720
   offset: 0, 0
   index: -1
 cut4
   rotate: false
-  xy: 2, 2
+  xy: 2, 266
   size: 646, 262
   orig: 646, 262
   offset: 0, 0
   index: -1
 cut5
   rotate: false
-  xy: 650, 2
+  xy: 2566, 988
   size: 646, 262
   orig: 646, 262
   offset: 0, 0
   index: -1
 cut6
   rotate: false
-  xy: 1298, 2
+  xy: 2, 2
   size: 645, 262
   orig: 645, 262
   offset: 0, 0
   index: -1
 cut7
   rotate: false
-  xy: 1945, 2
+  xy: 650, 266
   size: 645, 262
   orig: 645, 262
   offset: 0, 0
   index: -1
 next_img
   rotate: false
-  xy: 3848, 950
+  xy: 3848, 1936
   size: 140, 36
   orig: 140, 36
+  offset: 0, 0
+  index: -1
+vic1
+  rotate: false
+  xy: 1284, 530
+  size: 1280, 720
+  orig: 1280, 720
+  offset: 0, 0
+  index: -1
+vic2
+  rotate: false
+  xy: 2566, 1252
+  size: 1280, 720
+  orig: 1280, 720
+  offset: 0, 0
+  index: -1
+vic_panel
+  rotate: false
+  xy: 2566, 750
+  size: 350, 236
+  orig: 350, 236
   offset: 0, 0
   index: -1

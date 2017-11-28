@@ -49,6 +49,7 @@ static BitmapFont m_font32 = null;
 TextureAtlas m_sprites = null;
 public ArrayList<GameMapObject> m_gameMapObjects = new ArrayList<GameMapObject>();
 
+float gameTime = 0f;
 static public World world;
 static public Box2DDebugRenderer debug_renderer;
 PowerUnit m_brain = null;
@@ -176,6 +177,17 @@ public float getFloat(String key, MapObject mp)
       stopSound("fan");
       
         //add all other looping sounds here
+  }
+
+  public void doVictory()
+  {
+        CutSceneImage scene1 = new CutSceneImage("vic1");
+        CutSceneImage scene2 = new CutSceneImage("vic2");
+        scene2.setVictory();
+
+        scene1.setNextScene(scene2);
+        scene2.setNextScene(new TitleScreenLayer());
+        this.replaceActiveLayer(scene1);
   }
 
   private void setupTileMapBox2D()
@@ -527,6 +539,7 @@ public float getFloat(String key, MapObject mp)
   public void update (float deltaTime) {
 
     stateTime += deltaTime;
+
     inputManager.handleInput();
 
     if (m_gameState == 5)
@@ -536,7 +549,7 @@ public float getFloat(String key, MapObject mp)
       if ((stateTime > 0.25f) && (!m_musicStarted))
       {
         this.setMusic("VS_GO_gameplay_BG.ogg");
-        this.loopSound("music",0.5f);
+        loopSound("music",0.5f);
         m_musicStarted = true;
       }
 
@@ -552,6 +565,10 @@ public float getFloat(String key, MapObject mp)
 
       return;
     }
+
+    if (gameState < 10)
+      gameTime += deltaTime;
+
     //if (inputManager.isJumpPressed())
     //{
      //   if (stateTime > 2)
@@ -594,6 +611,7 @@ public float getFloat(String key, MapObject mp)
         m_player1.doExit(m_exit.getX() + m_exit.getWidth()/2);
         m_player2.doExit(m_exit.getX() + m_exit.getWidth()/2);
         stateTime = 0;
+        GameMain.getSingleton().setGlobal("time","" + gameTime);
       }
     } else if (m_gameState == 15)
     {
@@ -608,7 +626,12 @@ public float getFloat(String key, MapObject mp)
       m_fadeOutSprite.animate(deltaTime);
       if (stateTime > 0.5f)
       {
-        m_exit.loadNextLevel();
+        if ((m_stage == 5) && (m_level == 8))
+        {
+          doVictory();
+        } else
+          m_exit.loadNextLevel();
+
         stopAllLoops();
       }
     }
@@ -646,6 +669,8 @@ public float getFloat(String key, MapObject mp)
   {
     m_player1.startLevel();
     m_player2.startLevel();
+    String tm = GameMain.getSingleton().getGlobal("time");
+    gameTime  = Float.parseFloat(tm);
   }
   
   public void reset() {
@@ -653,6 +678,7 @@ public float getFloat(String key, MapObject mp)
 		
 		@Override
 		public void run() {
+      GameMain.getSingleton().setGlobal("time","" + gameTime);
 			MainLayer ml = new MainLayer();
 		      ml.loadLevel(m_stage,m_level);
 		      replaceActiveLayer(ml);
