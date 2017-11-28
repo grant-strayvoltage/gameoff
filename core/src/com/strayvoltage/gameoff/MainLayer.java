@@ -66,6 +66,7 @@ int m_lightningTicks = 90;
 private float acumm = 0; //box2d var
 GameText m_titleText;
 GameSprite m_fadeOutSprite;
+GameText m_statsText;
 
 public MainLayer()
   {
@@ -515,6 +516,14 @@ public float getFloat(String key, MapObject mp)
     m_titleText.setText(title);
     m_titleText.setPosition(150,655);
     this.add(m_titleText);
+
+    String timeString = GameMain.getSingleton().getTime();
+    String deaths = GameMain.getSingleton().getDeaths();
+
+    m_statsText = new GameText(m_font16, 980);
+    m_statsText.setText("Deaths: " + deaths + "      Time: " + timeString);
+    m_statsText.setPosition(150,605);
+    this.add(m_statsText);
     
     //ADD COLLISIONADAPTER After all world objects are set.
    	world.setContactListener(new Box2dCollisionAdapter());
@@ -557,8 +566,9 @@ public float getFloat(String key, MapObject mp)
       if ((stateTime > 0.62f) && (inputManager.anythingPressed()))
       {
         m_gameState = 10;
-        m_titleBackSprite.runAnimation(new AnimateMoveTo(0.5f,m_titleBackSprite.getX(), m_titleBackSprite.getY(), m_titleBackSprite.getX(), m_titleBackSprite.getY() + 150f));
-        m_titleText.runAnimation(new AnimateMoveTo(0.5f, m_titleText.getX(), m_titleText.getY(), m_titleText.getX(), m_titleText.getY() + 150f));
+        m_titleBackSprite.runAnimation(new AnimateMoveTo(0.5f,m_titleBackSprite.getX(), m_titleBackSprite.getY(), m_titleBackSprite.getX(), m_titleBackSprite.getY() + 200f));
+        m_titleText.runAnimation(new AnimateMoveTo(0.5f, m_titleText.getX(), m_titleText.getY(), m_titleText.getX(), m_titleText.getY() + 200f));
+        m_statsText.runAnimation(new AnimateMoveTo(0.5f, m_statsText.getX(), m_statsText.getY(), m_statsText.getX(), m_statsText.getY() + 200f));
         stateTime = 0;
         startLevel();
       }
