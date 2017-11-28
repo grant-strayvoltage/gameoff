@@ -22,6 +22,7 @@ public class Block extends GameMapObject {
 
   public void update(float deltaTime)
   {
+	  m_body.setActive(true);
       this.setPositionToBody();
   }
 

@@ -92,7 +92,7 @@ public class Box2dCollisionAdapter implements ContactListener{
 		if(platform!=null && object!=null ) {
 			GameMapObject p_object = (GameMapObject) platform.getUserData();
 			if(((Platform)p_object).oneWay) {
-				if(object.getLinearVelocity().y >= 0 && object.getPosition().y<platform.getPosition().y+(p_object.getHeight()+1)/Box2dVars.PIXELS_PER_METER) {
+				if(object.getLinearVelocity().y >= 0 && object.getPosition().y<platform.getPosition().y+((p_object.getHeight()-2f)/Box2dVars.PIXELS_PER_METER)) {
 					contact.setEnabled(false);
 				}
 			}

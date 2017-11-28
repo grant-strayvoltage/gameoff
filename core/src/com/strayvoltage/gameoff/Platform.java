@@ -88,6 +88,10 @@ public class Platform extends GameMapObject implements Box2dCollisionHandler,Swi
     if(mp.containsKey("oneWay")) {
     	oneWay = getBool("oneWay", mp);
     }
+    
+    if(mp.containsKey("speed")) {
+    	speed = mp.get("speed", Float.class);
+    }
   }
   
   public void addToWorld(World world)

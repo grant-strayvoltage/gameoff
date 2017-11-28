@@ -142,7 +142,7 @@ public class TitleScreenLayer extends GameLayer implements GameMenuListener {
       
       if(GameOff.DEBUG) {
         MainLayer l = new MainLayer();
-        l.loadLevel(23,23);
+        l.loadLevel(3,1);
         this.replaceActiveLayer(l);
         this.cleanUp();
       }else
