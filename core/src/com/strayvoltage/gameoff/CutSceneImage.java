@@ -37,12 +37,16 @@ public class CutSceneImage extends GameLayer {
   Matrix4 m_defaultMatrix = new Matrix4();
   GameLayer m_nextScene = null;
   GameSprite m_nextImage = null;
+  GameSprite m_panel = null;
+  GameText m_deathsText, m_timeText;
+  int m_nextDisplayTicks = 60;
 
   int m_delayTicks = 0;
   int m_buttonDelay = 0;
   float m_time = 0;
   float m_doneTime = 5000f;
   int m_state = 0;
+  boolean m_victory = false;
 
   boolean m_scene1Started = false;
 
@@ -102,6 +106,50 @@ public class CutSceneImage extends GameLayer {
     }
   }
 
+  public void setVictory()
+  {
+    AssetManager am = this.getAssetManager();
+    m_victory = true;
+    TextureAtlas textures = am.get("cut_sprites.txt", TextureAtlas.class);
+
+    m_panel = new GameSprite(textures.findRegion("vic_panel"));
+    this.add(m_panel);
+    m_panel.setOpacity(0f);
+    m_panel.setVisible(false);
+    m_panel.setPosition(110,380);
+    GameAnimateable an2 = new AnimateFadeIn(0.5f);
+    m_panel.runAnimation(an2);
+    m_nextDisplayTicks = 180;
+
+    BitmapFont font24 = new BitmapFont(Gdx.files.internal("Font24.fnt"), Gdx.files.internal("Font24.png"), false);
+    m_deathsText = new GameText(font24);
+    m_timeText = new GameText(font24);
+
+    this.add(m_deathsText);
+    this.add(m_timeText);
+
+    m_deathsText.setVisible(false);
+    m_timeText.setVisible(false);
+    m_deathsText.setOpacity(0);
+    m_timeText.setOpacity(0);
+
+    m_deathsText.setPosition(252,517);
+    m_timeText.setPosition(252,454);
+
+    GameAnimateable an5 = new AnimateFadeIn(0.5f);
+    m_deathsText.runAnimation(an5);
+
+
+    GameAnimateable an6 = new AnimateFadeIn(0.5f);
+    m_timeText.runAnimation(an6);
+
+    String deaths =  GameMain.getSingleton().getDeaths();
+    m_deathsText.setText(deaths);
+
+    String timeString =  GameMain.getSingleton().getTime();
+    m_timeText.setText(timeString);
+
+  }
 
   @Override
   public void update (float deltaTime) {
@@ -125,12 +173,23 @@ public class CutSceneImage extends GameLayer {
       runScene1();
     }
 
-    if (m_buttonDelay > 60)
+    if ((m_buttonDelay > 60) && (m_victory))
+    {
+        m_panel.setVisible(true);
+    }
+
+    if ((m_buttonDelay > 85) && (m_victory))
+    {
+        m_deathsText.setVisible(true);
+        m_timeText.setVisible(true);
+    }
+
+    if (m_buttonDelay > m_nextDisplayTicks)
     {
       m_nextImage.setVisible(true);
     }
 
-    if (m_buttonDelay > 80)
+    if (m_buttonDelay > (m_nextDisplayTicks+20))
     {
       if (m_inputManager.nextPressed())
       {
@@ -143,8 +202,16 @@ public class CutSceneImage extends GameLayer {
         GameAnimateable an = new AnimateFadeOut(0.5f);
         m_img.runAnimation(an);
         GameAnimateable an2 = new AnimateFadeOut(0.5f);
+
         m_nextImage.stopAllAnimations();
         m_nextImage.runAnimation(an2);
+        if (m_panel != null)
+        {
+          GameAnimateable an3 = new AnimateFadeOut(0.5f);
+          m_panel.runAnimation(an3);
+          m_deathsText.setVisible(false);
+          m_timeText.setVisible(false);
+        }
         m_state = 10;
         m_time = 0;
     }

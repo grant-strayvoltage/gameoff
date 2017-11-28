@@ -414,11 +414,32 @@ public abstract class GameMain extends ApplicationAdapter  {
         return sId;
     }
 
+
     public void addDeath()
     {
         int deaths = Integer.parseInt(getGlobal("deaths"));
         deaths++;
         this.setGlobal("deaths","" + deaths);
+    }
+
+    public String getDeaths()
+    {
+        return getGlobal("deaths");
+    }
+
+    public String getTime()
+    {
+        String tm = getGlobal("time");
+        float tmf = Float.parseFloat(tm);
+        float mins = tmf / 60f;
+        String m = String.format("%.2f mins", mins);
+
+        if (tmf < 90)
+        {
+            m = String.format("%.0f seconds", tmf);
+        }
+
+        return m;
     }
 
     public static GameMain getSingleton()
