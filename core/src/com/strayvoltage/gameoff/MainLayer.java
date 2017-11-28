@@ -535,8 +535,8 @@ public float getFloat(String key, MapObject mp)
 
       if ((stateTime > 0.25f) && (!m_musicStarted))
       {
-        this.setMusic("VS_GO_gameplay_BG.wav");
-        loopSound("music",0.5f);
+        this.setMusic("VS_GO_gameplay_BG.ogg");
+        this.loopSound("music",0.5f);
         m_musicStarted = true;
       }
 

@@ -180,7 +180,7 @@ public class Player extends GameSprite implements Box2dCollisionHandler{
     fixtureDef = new FixtureDef();
     PolygonShape rect2 = null;
     rect2 = new PolygonShape();
-    rect2.setAsBox((this.getWidth()*xf)/(2*Box2dVars.PIXELS_PER_METER) * xf, 0.1f,new Vector2(0,-this.getHeight()/(2*Box2dVars.PIXELS_PER_METER) * yf),0);
+    rect2.setAsBox(((this.getWidth()-4)*xf)/(2*Box2dVars.PIXELS_PER_METER) * xf, 0.1f,new Vector2(0,-this.getHeight()/(2*Box2dVars.PIXELS_PER_METER) * yf),0);
     fixtureDef.shape = rect2;
 
     fixtureDef.density = 0f; 
@@ -792,6 +792,16 @@ public class Player extends GameSprite implements Box2dCollisionHandler{
 				//do stuff with the collision target
 				//GameMapObject obj = (GameMapObject) collision.target;
 			//}
+
+      if(collision.target_type == Box2dVars.PLATFORM) {
+        platform = collision.target.m_body;
+        playLanding();
+      }
+
+      if(collision.target_type == Box2dVars.FLOOR) {
+        playLanding();
+      }
+
 		}
 		
     if (collision.target_type == Box2dVars.FAN)
@@ -805,16 +815,6 @@ public class Player extends GameSprite implements Box2dCollisionHandler{
         m_fanLeft++;
       }
     }
-
-
-		if(collision.target_type == Box2dVars.PLATFORM) {
-			platform = collision.target.m_body;
-      this.playSound(landSound,1f);
-		}
-
-		if(collision.target_type == Box2dVars.FLOOR) {
-      this.playSound(landSound,1f);
-		}
 		
 		if(collision.target_type == Box2dVars.HAZARD) {
       if (m_state < 9)
@@ -843,6 +843,11 @@ public class Player extends GameSprite implements Box2dCollisionHandler{
      }
 		
 	}
+
+  public void playLanding()
+  {
+    this.playSound(landSound,1f);
+  }
 	
 	@Override
 	public void die() {

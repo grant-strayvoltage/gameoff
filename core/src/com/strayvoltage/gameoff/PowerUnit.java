@@ -445,6 +445,11 @@ public class PowerUnit extends GameMapObject implements Box2dCollisionHandler {
 
   }
 
+  public void playLanding()
+  {
+        playSound("brainLand",0.85f);
+  }
+
   	@Override
 	public void handleBegin(Box2dCollision collision) {
 		
@@ -452,11 +457,14 @@ public class PowerUnit extends GameMapObject implements Box2dCollisionHandler {
 		  this.die();	
 		}
 
-    if ((collision.target_type == Box2dVars.PLATFORM)
-      || (collision.target_type == Box2dVars.FLOOR))
-      {
-        playSound("brainLand",0.7f);
-      }
+    if(collision.self_type == Box2dVars.BRAIN_FOOT) {
+
+      if ((collision.target_type == Box2dVars.PLATFORM)
+        || (collision.target_type == Box2dVars.FLOOR))
+        {
+          playLanding();
+        }
+    }
 
     if (collision.target_type == Box2dVars.FAN)
     {
