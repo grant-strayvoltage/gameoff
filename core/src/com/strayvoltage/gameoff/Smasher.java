@@ -76,6 +76,7 @@ public class Smasher extends GameMapObject implements SwitchHandler,Box2dCollisi
 			if(isTriggered()) {
 				current_state = SHAKING;
 				m_ticks = 30;
+				this.playSound("smasherDrop",0.9f);
 			}
 		}else if (current_state == SHAKING)
 		{
@@ -131,6 +132,8 @@ public class Smasher extends GameMapObject implements SwitchHandler,Box2dCollisi
 		}else { //hit something else need to stop(most likely the floor)
 			if(current_state == FALLING) {
 				current_state = GROUNDED;
+				this.playSound("boom",0.9f);
+				//this.stopSound("smasherLoop");
 			}
 			if(current_state == RISING) {
 				current_state = WAITING;

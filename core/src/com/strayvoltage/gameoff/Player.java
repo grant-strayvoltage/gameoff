@@ -612,7 +612,7 @@ public class Player extends GameSprite implements Box2dCollisionHandler{
             float dly = m_powerUnit.m_body.getLinearVelocity().y - m_body.getLinearVelocity().y;
             if (dly < 0.25f)
             {
-              m_powerUnit.pickUp(this);
+              m_powerUnit.pickUp(this,true);
               this.playerTakeControl();
             }
             //float dly = m_powerUnit.m_body.getLinearVelocity().y - m_body.getLinearVelocity().y;

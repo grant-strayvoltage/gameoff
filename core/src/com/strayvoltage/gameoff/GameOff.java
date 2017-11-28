@@ -36,8 +36,22 @@ public class GameOff extends GameMain {
   public void finishSetup()
   {
 
-	  this.addSound("toggle", "VS_SA_menu_move.wav");
-      this.addSound("click", "VS_SA_menu_select.wav");
+	  this.addSound("toggle", "VS_GO_menu_move.wav");
+    this.addSound("click", "VS_GO_menu_select.wav");
+    this.addSound("brainJump", "VS_GO_brain_jump.wav");
+    this.addSound("brainMove","VS_GO_brain_move.wav");
+    this.addSound("brainOff","VS_GO_brain_off.wav");
+    this.addSound("brainOn","VS_GO_brain_on.wav");
+    this.addSound("brainLand","VS_GO_brain_land.wav");
+    this.addSound("brainDie","VS_GO_brain_die.wav");
+
+    this.addSound("smasherDrop","VS_GO_smasher_drop.wav");
+    this.addSound("smasherLoop","VS_GO_smasher_dropping.wav");
+    this.addSound("switchToggle","VS_GO_switch_toggle.wav");
+    this.addSound("exit","VS_GO_exit.wav");
+
+    this.addSound("boom","VS_GO_boom.wav");
+
 
       loadGameDefaults();
   }

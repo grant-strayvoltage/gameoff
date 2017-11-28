@@ -31,6 +31,7 @@ public class MainLayer extends GameLayer  {
 	public static final int MAX_STAGES = 2; //CHANGE IF YOU ADD MORE STAGES
 	public static final int MAX_LEVELS_PER_STGE = 8; //CHANGE IF YOU ADD or REMOVE LEVELS --
 
+boolean m_musicStarted = false;
 int m_gameState = 5;
 Exit m_exit;
 int m_stage, m_level, gameState;
@@ -163,6 +164,13 @@ public float getFloat(String key, MapObject mp)
   {
     m_fadeOutSprite.setOpacity(0f);
     m_fadeOutSprite.runAnimation(new AnimateFadeIn(duration));
+  }
+
+  public void stopAllLoops()
+  {
+      stopSound("brainMove");
+      stopSound("smasherLoop");
+        //add all other looping sounds here
   }
 
   private void setupTileMapBox2D()
@@ -339,7 +347,7 @@ public float getFloat(String key, MapObject mp)
     m_player2 = new Player(m_sprites,2, inputManager);
     //this.add(m_player2);
 
-    m_brain.pickUp(m_player1);
+    m_brain.pickUp(m_player1,false);
 
     m_player1.addToWorld(world);
     m_player2.addToWorld(world);
@@ -520,6 +528,13 @@ public float getFloat(String key, MapObject mp)
     {
       m_fadeOutSprite.animate(deltaTime);
 
+      if ((stateTime > 0.25f) && (!m_musicStarted))
+      {
+        this.setMusic("VS_GO_gameplay_BG.mp3");
+        loopSound("music",0.35f);
+        m_musicStarted = true;
+      }
+
       //title displaying, waiting to fade
       if ((stateTime > 0.62f) && (inputManager.anythingPressed()))
       {
@@ -589,6 +604,7 @@ public float getFloat(String key, MapObject mp)
       if (stateTime > 0.5f)
       {
         m_exit.loadNextLevel();
+        stopAllLoops();
       }
     }
     
@@ -596,11 +612,13 @@ public float getFloat(String key, MapObject mp)
     if((inputManager.isTestPressed()) || (inputManager.isSpeedPressed())) {
       GameMain.getSingleton().addDeath();
     	reset();
+      stopAllLoops();
     }
     
     //LOAD NEXT LEVEL
     if(Gdx.input.isKeyJustPressed(Keys.Q)) {
     	Exit.loadNextLevel();
+      stopAllLoops();
       //m_exit.m_state = 1;
     }
 
