@@ -28,11 +28,7 @@ import com.strayvoltage.gamelib.*;
 
 public class MainLayer extends GameLayer  {
 	
-<<<<<<< HEAD
-	public static final int MAX_STAGES = 4; //CHANGE IF YOU ADD MORE STAGES
-=======
-	public static final int MAX_STAGES = 3; //CHANGE IF YOU ADD MORE STAGES
->>>>>>> fc55bbbda7dcf8d96a48f013e66e4c69906b7317
+	public static final int MAX_STAGES = 5; //CHANGE IF YOU ADD MORE STAGES
 	public static final int MAX_LEVELS_PER_STGE = 8; //CHANGE IF YOU ADD or REMOVE LEVELS --
 
 boolean m_musicStarted = false;
