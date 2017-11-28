@@ -70,7 +70,6 @@ public class SplashScreen extends GameLayer {
     m_assets.load("title.png", Texture.class);
     m_assets.load("escape_title.png", Texture.class);
 
-    //m_assets.load("g_sprites.txt", TextureAtlas.class);
     m_assets.load("game_sprites.txt", TextureAtlas.class);
     m_assets.load("backgrounds.txt", TextureAtlas.class);
     m_assets.load("fade_out.png", Texture.class);

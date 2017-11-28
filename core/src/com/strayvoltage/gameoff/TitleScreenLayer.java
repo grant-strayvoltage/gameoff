@@ -115,7 +115,8 @@ public class TitleScreenLayer extends GameLayer implements GameMenuListener {
 
     if (!m_musicStarted)
     {
-      //this.loopSound("music", 0.95f);  
+      this.setMusic("VS_GO_title_bgm.ogg");
+      this.loopSound("music",0.85f); 
       m_musicStarted = true; 
     }
 

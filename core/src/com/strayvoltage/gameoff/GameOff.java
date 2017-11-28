@@ -9,7 +9,7 @@ import com.strayvoltage.gamelib.GameMain;
 
 public class GameOff extends GameMain {
   
-	public static final boolean DEBUG = true;
+	public static final boolean DEBUG = false; 
 	
   public void setupGame()
   {

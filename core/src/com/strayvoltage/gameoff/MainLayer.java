@@ -28,7 +28,7 @@ import com.strayvoltage.gamelib.*;
 
 public class MainLayer extends GameLayer  {
 	
-	public static final int MAX_STAGES = 2; //CHANGE IF YOU ADD MORE STAGES
+	public static final int MAX_STAGES = 4; //CHANGE IF YOU ADD MORE STAGES
 	public static final int MAX_LEVELS_PER_STGE = 8; //CHANGE IF YOU ADD or REMOVE LEVELS --
 
 boolean m_musicStarted = false;
@@ -536,7 +536,7 @@ public float getFloat(String key, MapObject mp)
       if ((stateTime > 0.25f) && (!m_musicStarted))
       {
         this.setMusic("VS_GO_gameplay_BG.ogg");
-        this.loopSound("music",0.5f);
+        this.loopSound("music",1f);
         m_musicStarted = true;
       }
 
