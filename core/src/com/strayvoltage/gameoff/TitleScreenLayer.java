@@ -142,13 +142,14 @@ public class TitleScreenLayer extends GameLayer implements GameMenuListener {
       
       if(GameOff.DEBUG) {
         MainLayer l = new MainLayer();
-        l.loadLevel(4,1);
+        l.loadLevel(23,23);
         this.replaceActiveLayer(l);
         this.cleanUp();
       }else
       {
         MainLayer l = new MainLayer();
         l.loadLevel(1,1);
+ 
         CutSceneImage scene1 = new CutSceneImage("cut1");
         CutSceneImage scene2 = new CutSceneImage("cut2");
         CutSceneImage scene3 = new CutSceneImage("cut3");

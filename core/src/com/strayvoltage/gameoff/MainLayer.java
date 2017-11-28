@@ -170,8 +170,10 @@ public float getFloat(String key, MapObject mp)
   {
       stopSound("brainMove");
       stopSound("smasherLoop");
+      stopSound("smasherDrop");
       stopSound("1Move");
       stopSound("2Move");
+      stopSound("fan");
       
         //add all other looping sounds here
   }
@@ -267,12 +269,12 @@ public float getFloat(String key, MapObject mp)
 
             if ((cellid == 4) || (cellid == 5))
             {
-              lx = 10;
-              rx = 22;
+              lx = 6;
+              rx = 26;
             } else
             {
-              lx = 10;
-              rx = 22;
+              lx = 6;
+              rx = 26;
               tpy = 20;
               bmy = 12;
             }
@@ -534,7 +536,7 @@ public float getFloat(String key, MapObject mp)
       if ((stateTime > 0.25f) && (!m_musicStarted))
       {
         this.setMusic("VS_GO_gameplay_BG.wav");
-        loopSound("music",0.4f);
+        loopSound("music",0.5f);
         m_musicStarted = true;
       }
 

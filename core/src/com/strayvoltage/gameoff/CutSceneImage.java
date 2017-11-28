@@ -41,7 +41,7 @@ public class CutSceneImage extends GameLayer {
   int m_delayTicks = 0;
   int m_buttonDelay = 0;
   float m_time = 0;
-  float m_doneTime = 15.0f;
+  float m_doneTime = 5000f;
   int m_state = 0;
 
   boolean m_scene1Started = false;
@@ -95,9 +95,9 @@ public class CutSceneImage extends GameLayer {
     {
       m_scene1Started = true;
       m_time = 0;
-      GameAnimateable an = new AnimateFadeIn(1.0f);
+      GameAnimateable an = new AnimateFadeIn(0.5f);
       m_img.runAnimation(an);
-      GameAnimateable an2 = new AnimateFadeIn(1.0f);
+      GameAnimateable an2 = new AnimateFadeIn(0.5f);
       m_nextImage.runAnimation(an2);
     }
   }
@@ -125,24 +125,24 @@ public class CutSceneImage extends GameLayer {
       runScene1();
     }
 
-    if (m_buttonDelay > 120)
+    if (m_buttonDelay > 60)
     {
       m_nextImage.setVisible(true);
     }
 
-    if (m_buttonDelay > 140)
+    if (m_buttonDelay > 80)
     {
       if (m_inputManager.nextPressed())
       {
-        m_time = 100;
+        m_time = m_doneTime + 10f;
       }
     }
 
     if (m_time > m_doneTime)
     {
-        GameAnimateable an = new AnimateFadeOut(1.0f);
+        GameAnimateable an = new AnimateFadeOut(0.5f);
         m_img.runAnimation(an);
-        GameAnimateable an2 = new AnimateFadeOut(1.0f);
+        GameAnimateable an2 = new AnimateFadeOut(0.5f);
         m_nextImage.stopAllAnimations();
         m_nextImage.runAnimation(an2);
         m_state = 10;

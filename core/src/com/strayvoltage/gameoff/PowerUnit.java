@@ -90,6 +90,7 @@ public class PowerUnit extends GameMapObject implements Box2dCollisionHandler {
 	  if(trampoline_state != Trampoline.NONE) {
 		  m_body.applyLinearImpulse(0, m_jumpDY*2f, 0, 0, true);
 		  m_jumpTicks = 15;
+      this.playSound("bounce",0.85f);
 	  }else {
 		  m_body.applyLinearImpulse(0, m_jumpDY, 0, 0, true);
 	      m_jumpTicks = 15;

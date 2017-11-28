@@ -24,6 +24,12 @@ public class Switch extends GameMapObject implements Box2dCollisionHandler{
 	public boolean first_trigger;
 	TextureRegion on;
 	TextureRegion off;
+	boolean makeSound = false;
+
+	public void toggleSound()
+	{
+		if (makeSound) playSound("switchToggle",1f);
+	}
 	
 	@Override
 	public void handleBegin(Box2dCollision collision) {
@@ -34,18 +40,18 @@ public class Switch extends GameMapObject implements Box2dCollisionHandler{
 				if(is_On)
 				{
 					setOff();
-					playSound("switchToggle",1f);
+					toggleSound();
 				}
 				else
 				{
 					setOn();
-					playSound("switchToggle",1f);
+					toggleSound();
 				}
 
 			else if(!is_On && !first_trigger) 
 			{
 				setOn();
-				playSound("switchToggle",1f);
+				toggleSound();
 			}
 		}
 	}
@@ -54,7 +60,7 @@ public class Switch extends GameMapObject implements Box2dCollisionHandler{
 	public void handleEnd(Box2dCollision collision) {
 		contacts--;
 		if(sensitive&&contacts==0) {
-			playSound("switchToggle",1f);			
+			toggleSound();			
 			setOff();
 		}
 	}
@@ -87,6 +93,8 @@ public class Switch extends GameMapObject implements Box2dCollisionHandler{
 			setOn();
 		else
 			setOff();
+
+		makeSound = m_visible;
 		
 		setSize(Box2dVars.PIXELS_PER_METER, Box2dVars.PIXELS_PER_METER);
 		

@@ -61,6 +61,8 @@ public class GameOff extends GameMain {
     this.addSound("boom","VS_GO_boom.wav");
     this.addSound("bounce","VS_GO_bounce.wav");
 
+    this.addSound("fan","VS_GO_fan.wav");
+
 
       loadGameDefaults();
   }

@@ -149,14 +149,14 @@ public class Player extends GameSprite implements Box2dCollisionHandler{
     FixtureDef fixtureDef = new FixtureDef();
 
     PolygonShape rect = null;
-    float xf = 0.85f;
+    float xf = 0.6f;
     float yf = 0.67f;
     rect = new PolygonShape();
    
     if (id == 2)
     {
       yf = 1f;
-      xf = 0.95f;
+      xf = 0.67f;
     }
 
     m_yOff = (1 - yf) * this.getHeight()/2;
@@ -166,7 +166,7 @@ public class Player extends GameSprite implements Box2dCollisionHandler{
     fixtureDef.shape = rect;
 
 
-    fixtureDef.density = 0.6f; 
+    fixtureDef.density = 0.9f; 
     fixtureDef.friction = 0.5f;
     fixtureDef.restitution = -1f;
 
@@ -180,7 +180,7 @@ public class Player extends GameSprite implements Box2dCollisionHandler{
     fixtureDef = new FixtureDef();
     PolygonShape rect2 = null;
     rect2 = new PolygonShape();
-    rect2.setAsBox((this.getWidth()*0.75f)/(2*Box2dVars.PIXELS_PER_METER) * xf, 0.1f,new Vector2(0,-this.getHeight()/(2*Box2dVars.PIXELS_PER_METER) * yf),0);
+    rect2.setAsBox((this.getWidth()*xf)/(2*Box2dVars.PIXELS_PER_METER) * xf, 0.1f,new Vector2(0,-this.getHeight()/(2*Box2dVars.PIXELS_PER_METER) * yf),0);
     fixtureDef.shape = rect2;
 
     fixtureDef.density = 0f; 
@@ -205,7 +205,7 @@ public class Player extends GameSprite implements Box2dCollisionHandler{
   public boolean checkDir(int dx)
   {
     float xx = this.getX() + dx*(this.getWidth() + 2) - 1;
-    float yy = this.getY() + 1;
+    float yy = this.getY();
 
     if (checkTileCollision(xx,yy)) return true;
 
@@ -654,6 +654,7 @@ public class Player extends GameSprite implements Box2dCollisionHandler{
 	  if(trampoline_state != Trampoline.NONE) {
 		  m_body.applyLinearImpulse(0, m_jumpDY*Trampoline.Multiplier, 0, 0, true);
 		  m_jumpTicks = 15;
+      this.playSound("bounce",1f);
 	  }else {
 		  m_body.applyLinearImpulse(0, m_jumpDY, 0, 0, true);
 	      m_jumpTicks = 15;
