@@ -40,6 +40,9 @@ public class PowerUnit extends GameMapObject implements Box2dCollisionHandler {
   float m_yOff = 12;
   float m_xOff = 3;
   GameTileMap m_map;
+  int m_fanRight = 0;
+  int m_fanLeft = 0;
+  long m_brainMoveSound = -1;
 
   public void init(MapProperties mp, TextureAtlas textures)
   {
@@ -65,14 +68,34 @@ public class PowerUnit extends GameMapObject implements Box2dCollisionHandler {
     
   }
 
+  public void startMoveSound()
+  {
+    if (m_dead) return;
+    if (m_brainMoveSound < 0)
+    {
+      m_brainMoveSound = loopSound("brainMove",0.7f);
+    }
+  }
+
+  public void stopMoveSound()
+  {
+    if (m_brainMoveSound >= 0)
+    {
+      stopSound("brainMove", m_brainMoveSound);
+      m_brainMoveSound = -1;
+    }
+  }
+
   public void jump() {
 	  if(trampoline_state != Trampoline.NONE) {
 		  m_body.applyLinearImpulse(0, m_jumpDY*2f, 0, 0, true);
 		  m_jumpTicks = 15;
+      this.playSound("bounce",0.85f);
 	  }else {
 		  m_body.applyLinearImpulse(0, m_jumpDY, 0, 0, true);
 	      m_jumpTicks = 15;
 	  }
+      this.playSound("brainJump",1f);
       m_onGround = false;
   }
 
@@ -99,7 +122,7 @@ public class PowerUnit extends GameMapObject implements Box2dCollisionHandler {
     fixtureDef.restitution = 0.0f;
 
     fixtureDef.filter.categoryBits = Box2dVars.POWER;
-    fixtureDef.filter.maskBits = Box2dVars.OBJECT | Box2dVars.FLOOR | Box2dVars.BLOCK | Box2dVars.PLATFORM | Box2dVars.HAZARD;
+    fixtureDef.filter.maskBits = Box2dVars.OBJECT | Box2dVars.FAN | Box2dVars.FLOOR | Box2dVars.BLOCK | Box2dVars.PLATFORM | Box2dVars.HAZARD;
 
     m_fixture = m_body.createFixture(fixtureDef);
     m_fixture.setUserData(this);
@@ -142,8 +165,10 @@ public class PowerUnit extends GameMapObject implements Box2dCollisionHandler {
 
   }
 
-  public void pickUp(Player p)
+  public void pickUp(Player p, boolean sound)
   {
+      if (sound) this.playSound("brainOn",1f);
+
       m_owner = p;
       m_pickedUp = true;
       m_body.setActive(false);
@@ -197,6 +222,7 @@ public class PowerUnit extends GameMapObject implements Box2dCollisionHandler {
     m_fixture.setFriction(0f);
     playerSensorFixture.setFriction(0f);
     trampoline_state = Trampoline.NONE;
+    this.playSound("brainOff",1f);
 
   }
 
@@ -245,8 +271,11 @@ public class PowerUnit extends GameMapObject implements Box2dCollisionHandler {
     if (m_dead) return;
     this.stopAllAnimations();
     this.runAnimation(m_deathAnimation);
+    m_body.setLinearVelocity(0,0);
     m_dead = true;
     GameMain.getSingleton().addDeath();
+    stopMoveSound();
+    playSound("brainDie",1f);
   }
 
   public void update(float deltaTime)
@@ -266,6 +295,7 @@ public class PowerUnit extends GameMapObject implements Box2dCollisionHandler {
         } else if (m_liveTicks < 1)
         {
           this.die();
+          return;
         }
 
         m_onGround = isPlayerGrounded(Gdx.graphics.getDeltaTime());
@@ -279,28 +309,51 @@ public class PowerUnit extends GameMapObject implements Box2dCollisionHandler {
           if (m_controller.isRightPressed())
           {
             if (checkDir(1) == false)
+            {
               m_body.applyForceToCenter(m_hForce,0,true);
-
+              startMoveSound();
+            }
+    
             notMoved = false;
             stillTime = 0;
             //this.setFlip(true,false);
           } else if (m_controller.isLeftPressed())
           {
             if (checkDir(0) == false)
+            {
               m_body.applyForceToCenter(-m_hForce,0,true);
+              startMoveSound();
+            }
+              
             notMoved = false;
             stillTime = 0;
             //this.setFlip(false,false);
           } else {		
               stillTime += Gdx.graphics.getDeltaTime();
-              m_body.setLinearVelocity(cv.x * 0.8f, cv.y);
+              if ((m_fanRight + m_fanLeft) < 1)
+                m_body.setLinearVelocity(cv.x * 0.8f, cv.y);
           }
 
-          if (Math.abs(cv.x) > 5)
+          float mrx = 5f;
+          float mlx = 5f;
+
+          if (m_fanRight > 0) mrx = mrx * 2.5f;
+          if (m_fanLeft > 0) mlx = mlx* 2.5f;
+      
+          if (cv.x > 0)
           {
-            if (cv.x > 0) cv.x = 5;
-            else cv.x = -5;
-            m_body.setLinearVelocity(cv);
+            if (cv.x > mrx)
+            {
+              cv.x = mrx;
+              m_body.setLinearVelocity(cv);
+            }
+          } else if (cv.x < 0)
+          {
+            if (Math.abs(cv.x) > mlx)
+            {
+              cv.x = - mlx;
+              m_body.setLinearVelocity(cv);
+            }
           }
 
           if (m_jumpTicks > 0) m_jumpTicks--;
@@ -308,6 +361,7 @@ public class PowerUnit extends GameMapObject implements Box2dCollisionHandler {
           if ((m_onGround && m_controller.isJumpPressed()) && (m_jumpTicks < 1))
           {
             this.jump();
+            stopMoveSound();
           } else if (m_jumpTicks > 0)
           {
             if (m_controller.isJumpPressed())
@@ -318,11 +372,11 @@ public class PowerUnit extends GameMapObject implements Box2dCollisionHandler {
               m_jumpTicks = 0;
             }
           }
-
         }
 
         if(!m_onGround) 
-        {			
+        {
+          stopMoveSound();
           m_fixture.setFriction(0f);
           playerSensorFixture.setFriction(0f);			
         } else 
@@ -330,6 +384,7 @@ public class PowerUnit extends GameMapObject implements Box2dCollisionHandler {
           if(notMoved && stillTime > 0.2) {
             if (Math.abs(cv.x) < 0.2f)
             {
+              stopMoveSound();
               m_fixture.setFriction(100f);
               playerSensorFixture.setFriction(100f);
             }
@@ -360,6 +415,7 @@ public class PowerUnit extends GameMapObject implements Box2dCollisionHandler {
             {
               this.stopAllAnimations();
               this.runAnimation(m_pickedUpAnimation);
+              stopMoveSound();
             }
           }
         } else
@@ -371,10 +427,12 @@ public class PowerUnit extends GameMapObject implements Box2dCollisionHandler {
           {
             if (m_launchAnimation.isRunning() == false)
               this.runAnimation(m_launchAnimation);
+              stopMoveSound();
           } else
           {
             if (m_pickedUpAnimation.isRunning() == false)
               this.runAnimation(m_pickedUpAnimation);
+              stopMoveSound();
           }
         }
       } else
@@ -387,32 +445,54 @@ public class PowerUnit extends GameMapObject implements Box2dCollisionHandler {
 
   }
 
+  public void playLanding()
+  {
+        playSound("brainLand",0.85f);
+  }
+
   	@Override
 	public void handleBegin(Box2dCollision collision) {
 		
 		if(collision.target_type == Box2dVars.HAZARD) {
-			Gdx.app.log("BrainContactTest:", "we touched a HAZARD! YOU ARE DED!");
-			/*Gdx.app.postRunnable(new Runnable() {
-				
-				@Override
-				public void run() {
-
-            
-					//PLAYER DEATH LOGIC HERE --------------------------------------
-					int stage = Integer.parseInt(GameMain.getSingleton().getGlobal("m_stage"));
-					int level = Integer.parseInt(GameMain.getSingleton().getGlobal("m_level"));
-					MainLayer ml = new MainLayer();
-			        ml.loadLevel(stage,level);
-			        GameMain.getSingleton().replaceActiveLayer(ml);
-					
-				}
-			});*/
 		  this.die();	
-		}	
+		}
+
+    if(collision.self_type == Box2dVars.BRAIN_FOOT) {
+
+      if ((collision.target_type == Box2dVars.PLATFORM)
+        || (collision.target_type == Box2dVars.FLOOR))
+        {
+          playLanding();
+        }
+    }
+
+    if (collision.target_type == Box2dVars.FAN)
+    {
+      Fan f = (Fan) collision.target;
+      if (f.direction == f.RIGHT)
+      {
+        m_fanRight++;
+      } else if (f.direction == f.LEFT)
+      {
+        m_fanLeft++;
+      }
+    }
 	}
 
   @Override
 	public void handleEnd(Box2dCollision collision) {
+
+    if (collision.target_type == Box2dVars.FAN)
+    {
+        Fan f = (Fan) collision.target;
+        if (f.direction == f.RIGHT)
+        {
+          m_fanRight--;
+        } else if (f.direction == f.LEFT)
+        {
+          m_fanLeft--;
+        }
+     }
 	}
 
 }

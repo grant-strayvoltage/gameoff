@@ -47,6 +47,7 @@ public class Exit extends GameMapObject implements Box2dCollisionHandler{
 				//New level
 				m_state = 1;
 				this.runAnimation(m_doorOpen);
+				this.playSound("exit",1f);
 			}
 		}
 

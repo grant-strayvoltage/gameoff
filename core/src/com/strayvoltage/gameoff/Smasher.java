@@ -17,7 +17,7 @@ public class Smasher extends GameMapObject implements SwitchHandler,Box2dCollisi
 	private static final int SHAKING = 4; //smasher is shaking just before dropping
 	
 	int active_detections; //how many switches are currently active 
-	int current_state;		//the current sate of this smasher
+	int current_state = WAITING;		//the current sate of this smasher
 	
 	float riseSpeed;		//speed at which the grounder rises back to its original position(until it hits solid object/floor)
 	float acceleration;		//acceleration at which the smasher falls
@@ -76,6 +76,7 @@ public class Smasher extends GameMapObject implements SwitchHandler,Box2dCollisi
 			if(isTriggered()) {
 				current_state = SHAKING;
 				m_ticks = 30;
+				this.playSound("smasherDrop",1f);
 			}
 		}else if (current_state == SHAKING)
 		{
@@ -89,6 +90,7 @@ public class Smasher extends GameMapObject implements SwitchHandler,Box2dCollisi
 				this.runAnimation(m_fallingAnimation);
 				m_offX = 0;
 				m_offY = 0;
+				this.playSound("smasherLoop",1f);
 			}
 		}else if(current_state == FALLING) {
 			m_body.setLinearVelocity(0,m_body.getLinearVelocity().y-acceleration*deltaTime);
@@ -131,6 +133,8 @@ public class Smasher extends GameMapObject implements SwitchHandler,Box2dCollisi
 		}else { //hit something else need to stop(most likely the floor)
 			if(current_state == FALLING) {
 				current_state = GROUNDED;
+				this.playSound("boom",1f);
+				//this.stopSound("smasherLoop");
 			}
 			if(current_state == RISING) {
 				current_state = WAITING;

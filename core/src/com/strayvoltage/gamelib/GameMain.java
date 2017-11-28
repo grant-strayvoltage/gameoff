@@ -147,6 +147,7 @@ public abstract class GameMain extends ApplicationAdapter  {
 
     public void addSound(String key, String filename)
     {
+        //Gdx.app.log("GameMain","addSound: " + key);
         if (m_gameSounds.containsKey(key))
         {
             this.stopSound(key);
@@ -166,6 +167,7 @@ public abstract class GameMain extends ApplicationAdapter  {
         {
             Music music = Gdx.audio.newMusic(Gdx.files.internal(filename));
             m_gameSounds.put(key,music);
+            //Gdx.app.log("GameMain","put Sound: " + key + "music = " + music);
         } else
         {
     	   Sound s = Gdx.audio.newSound(Gdx.files.internal(filename));
@@ -233,6 +235,15 @@ public abstract class GameMain extends ApplicationAdapter  {
             Gdx.files.local("saveGame_" + num + ".txt").delete();
         }
     }
+
+    public boolean doesGameExist(int num)
+    {
+        if(Gdx.files.local("saveGame_" + num + ".txt").exists())
+            return true;
+
+        return false;
+    }
+
 
     public void saveGame()
     {
@@ -378,13 +389,14 @@ public abstract class GameMain extends ApplicationAdapter  {
 
         if (soundName.startsWith("music"))
         {
-            //Gdx.app.debug("loopSound****", "music: " + soundName);
+            //Gdx.app.log("loopSound****", "music: " + soundName);
             Music m = (Music) m_gameSounds.get(soundName);
+            //Gdx.app.log("loopSound****", "music: " + soundName + " m = " + m);
             m.setVolume(volume);
             if (m.isPlaying() == false)
             {
                 m.setLooping(true);
-                //Gdx.app.debug("loopSound****", "music: " + soundName + " started playing.");
+                //Gdx.app.log("loopSound****", "music: " + soundName + " started playing.");
                 
                 m.play();
                 return 0;

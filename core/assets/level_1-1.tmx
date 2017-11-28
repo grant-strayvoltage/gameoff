@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" tiledversion="1.0.3" orientation="orthogonal" renderorder="right-down" width="40" height="23" tilewidth="32" tileheight="32" nextobjectid="38">
+<map version="1.0" tiledversion="1.0.3" orientation="orthogonal" renderorder="right-down" width="40" height="23" tilewidth="32" tileheight="32" nextobjectid="39">
  <properties>
   <property name="Back" value="back5"/>
   <property name="Title" value="Two Cyborg Bodies...One Brain"/>
@@ -9,7 +9,7 @@
  <tileset firstgid="1" source="tileset.tsx"/>
  <layer name="background" width="40" height="23">
   <data encoding="base64" compression="zlib">
-   eJxjYBgFIJA50A4gAMh1nyudsBOZ7qMXICX8XGnmCtxguKY/egFauy+RQv2DKfywuYUe7iO2LHEGYs8BcB8pAN09A+0+RjT+YHMfOhh1H2Vg1H3UBaPuowyMuo8yMFzdBwD3mham
+   eJxjYBgFIJA50A4gAMh1nyudsBOZ7qMXICX8XGnmCtxguKY/egFauy+RQv0jPfxSKcStNHYfpWCg45eRgPxAu48QGHUfaQDdPaPuowyMuo8yMOo+ysBwdR8ANtIXxw==
   </data>
  </layer>
  <layer name="platforms" width="40" height="23">
@@ -55,6 +55,14 @@
     <property name="frames" type="int" value="1"/>
     <property name="speed" type="int" value="10"/>
     <property name="sprite" value="blood1"/>
+    <property name="style" type="int" value="2"/>
+   </properties>
+  </object>
+  <object id="38" name="hint1" type="BackObject" x="512" y="512" width="128" height="128">
+   <properties>
+    <property name="frames" type="int" value="1"/>
+    <property name="speed" type="int" value="10"/>
+    <property name="sprite" value="hint1"/>
     <property name="style" type="int" value="2"/>
    </properties>
   </object>

@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" tiledversion="1.0.3" orientation="orthogonal" renderorder="right-down" width="40" height="23" tilewidth="32" tileheight="32" nextobjectid="42">
+ <properties>
+  <property name="Back" value="back5"/>
+  <property name="Title" value="Big Jump...Little Cyborg"/>
+ </properties>
+ <tileset firstgid="1" source="tileset.tsx"/>
+ <layer name="background" width="40" height="23">
+  <data encoding="base64" compression="zlib">
+   eJztzkEJAAAIADHLmcX+DSwhgrLB/S8C+CwHqvVrAAAuaqVxBP0=
+  </data>
+ </layer>
+ <layer name="platforms" width="40" height="23">
+  <data encoding="base64" compression="zlib">
+   eJxjYmBgYBrFo3iQ4kQgTqIBTqaS+5oZaAOaR9036r5R9426b9R9w9p9Cxkg9dEiBuLrLpBaJQLyi6nkvlE8ikfxKCYXAwClVyHh
+  </data>
+ </layer>
+ <objectgroup name="objects">
+  <object id="4" name="P1" type="PlayerStart1" x="307" y="402" width="60" height="77"/>
+  <object id="5" name="P2" type="PlayerStart2" x="442" y="434" width="47" height="44"/>
+  <object id="14" name="block3" type="Block" x="-64" y="352" width="32" height="32"/>
+  <object id="16" name="exit" type="Exit" x="866" y="389" width="64" height="90"/>
+  <object id="28" name="Tramp1" type="Trampoline" x="-128" y="480" width="48" height="48">
+   <properties>
+    <property name="static" type="bool" value="true"/>
+   </properties>
+  </object>
+  <object id="34" name="switch1" type="Switch" x="-128" y="256" width="48" height="48">
+   <properties>
+    <property name="startOn" type="bool" value="false"/>
+    <property name="toggle" type="bool" value="true"/>
+    <property name="visible" type="bool" value="true"/>
+   </properties>
+  </object>
+  <object id="35" name="fan1" type="Fan" x="-256" y="96" width="32" height="32">
+   <properties>
+    <property name="dir" type="int" value="1"/>
+    <property name="power" type="int" value="500"/>
+    <property name="startOn" type="bool" value="false"/>
+    <property name="switches" value="switch1"/>
+   </properties>
+  </object>
+  <object id="36" name="BackObject" type="BackObject" x="576" y="256" width="82" height="64">
+   <properties>
+    <property name="frames" type="int" value="3"/>
+    <property name="speed" type="int" value="2"/>
+    <property name="sprite" value="screen"/>
+    <property name="style" type="int" value="2"/>
+   </properties>
+  </object>
+  <object id="40" name="BackObject" type="BackObject" x="736" y="384" width="32" height="64">
+   <properties>
+    <property name="frames" type="int" value="1"/>
+    <property name="speed" type="int" value="10"/>
+    <property name="sprite" value="blood3"/>
+    <property name="style" type="int" value="2"/>
+   </properties>
+  </object>
+ </objectgroup>
+</map>

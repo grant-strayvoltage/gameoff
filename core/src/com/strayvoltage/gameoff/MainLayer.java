@@ -31,6 +31,7 @@ public class MainLayer extends GameLayer  {
 	public static final int MAX_STAGES = 2; //CHANGE IF YOU ADD MORE STAGES
 	public static final int MAX_LEVELS_PER_STGE = 8; //CHANGE IF YOU ADD or REMOVE LEVELS --
 
+boolean m_musicStarted = false;
 int m_gameState = 5;
 Exit m_exit;
 int m_stage, m_level, gameState;
@@ -47,6 +48,7 @@ static BitmapFont m_font24 = null;
 static BitmapFont m_font32 = null;
 TextureAtlas m_sprites = null;
 public ArrayList<GameMapObject> m_gameMapObjects = new ArrayList<GameMapObject>();
+
 static public World world;
 static public Box2DDebugRenderer debug_renderer;
 PowerUnit m_brain = null;
@@ -105,6 +107,8 @@ public MainLayer()
     m_fadeOutSprite = new GameSprite(m_assets.get("fade_out.png", Texture.class));
     m_fadeOutSprite.setOpacity(0);
 
+    
+
     /*
     if (bombEffectPool == null)
     {
@@ -160,6 +164,18 @@ public float getFloat(String key, MapObject mp)
   {
     m_fadeOutSprite.setOpacity(0f);
     m_fadeOutSprite.runAnimation(new AnimateFadeIn(duration));
+  }
+
+  public void stopAllLoops()
+  {
+      stopSound("brainMove");
+      stopSound("smasherLoop");
+      stopSound("smasherDrop");
+      stopSound("1Move");
+      stopSound("2Move");
+      stopSound("fan");
+      
+        //add all other looping sounds here
   }
 
   private void setupTileMapBox2D()
@@ -245,10 +261,28 @@ public float getFloat(String key, MapObject mp)
             PolygonShape shape = new PolygonShape();
             
             Vector2[] points = new Vector2[4];
-            points[0] = new Vector2(0,0).scl(1f/Box2dVars.PIXELS_PER_METER);
-            points[1] = new Vector2(0,tilesize).scl(1f/Box2dVars.PIXELS_PER_METER);
-            points[2] = new Vector2(tilesize,tilesize).scl(1f/Box2dVars.PIXELS_PER_METER);
-            points[3] = new Vector2(tilesize,0).scl(1f/Box2dVars.PIXELS_PER_METER);
+
+            float lx = 0;
+            float rx = tilesize;
+            float bmy = 0;
+            float tpy = tilesize;
+
+            if ((cellid == 4) || (cellid == 5))
+            {
+              lx = 6;
+              rx = 26;
+            } else
+            {
+              lx = 6;
+              rx = 26;
+              tpy = 20;
+              bmy = 12;
+            }
+
+            points[0] = new Vector2(lx,bmy).scl(1f/Box2dVars.PIXELS_PER_METER);
+            points[1] = new Vector2(lx,tpy).scl(1f/Box2dVars.PIXELS_PER_METER);
+            points[2] = new Vector2(rx,tpy).scl(1f/Box2dVars.PIXELS_PER_METER);
+            points[3] = new Vector2(rx,bmy).scl(1f/Box2dVars.PIXELS_PER_METER);
             
             shape.set(points);
             
@@ -318,7 +352,7 @@ public float getFloat(String key, MapObject mp)
     m_player2 = new Player(m_sprites,2, inputManager);
     //this.add(m_player2);
 
-    m_brain.pickUp(m_player1);
+    m_brain.pickUp(m_player1,false);
 
     m_player1.addToWorld(world);
     m_player2.addToWorld(world);
@@ -337,7 +371,7 @@ public float getFloat(String key, MapObject mp)
     m_brain.m_map = tiledMap;
 
     m_player1.setMap(tiledMap, m_player2,24,40,m_brain,1);
-    m_player2.setMap(tiledMap, m_player1,8,15,m_brain,2);
+    m_player2.setMap(tiledMap, m_player1,8.5f,15,m_brain,2);
     m_brain.setMap(tiledMap);
 
 
@@ -437,6 +471,10 @@ public float getFloat(String key, MapObject mp)
           gmo.setMap(tiledMap);
           gmo.init(p,m_sprites);
           this.add(gmo);
+          if (o instanceof Fan)
+          {
+            ((Fan)o).addFanSprite(this,px,py);
+          }
           gmo.addToWorld(world);
           m_gameMapObjects.add(gmo);
           gmo.setBodyPosition(px,py);
@@ -494,6 +532,13 @@ public float getFloat(String key, MapObject mp)
     if (m_gameState == 5)
     {
       m_fadeOutSprite.animate(deltaTime);
+
+      if ((stateTime > 0.25f) && (!m_musicStarted))
+      {
+        this.setMusic("VS_GO_gameplay_BG.ogg");
+        this.loopSound("music",0.5f);
+        m_musicStarted = true;
+      }
 
       //title displaying, waiting to fade
       if ((stateTime > 0.62f) && (inputManager.anythingPressed()))
@@ -564,6 +609,7 @@ public float getFloat(String key, MapObject mp)
       if (stateTime > 0.5f)
       {
         m_exit.loadNextLevel();
+        stopAllLoops();
       }
     }
     
@@ -571,11 +617,13 @@ public float getFloat(String key, MapObject mp)
     if((inputManager.isTestPressed()) || (inputManager.isSpeedPressed())) {
       GameMain.getSingleton().addDeath();
     	reset();
+      stopAllLoops();
     }
     
     //LOAD NEXT LEVEL
     if(Gdx.input.isKeyJustPressed(Keys.Q)) {
     	Exit.loadNextLevel();
+      stopAllLoops();
       //m_exit.m_state = 1;
     }
 

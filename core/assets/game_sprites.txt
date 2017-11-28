@@ -6,413 +6,448 @@ filter: Nearest,Nearest
 repeat: none
 block1_moveable
   rotate: false
-  xy: 1166, 156
+  xy: 1617, 58
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 blood1_F1
   rotate: false
-  xy: 1400, 158
+  xy: 168, 44
   size: 113, 96
   orig: 113, 96
   offset: 0, 0
   index: -1
 blood2_F1
   rotate: false
-  xy: 1711, 206
+  xy: 1801, 206
   size: 128, 48
   orig: 128, 48
   offset: 0, 0
   index: -1
 blood3_F1
   rotate: false
-  xy: 2009, 190
+  xy: 2015, 190
   size: 25, 64
   orig: 25, 64
   offset: 0, 0
   index: -1
 blood_particle
   rotate: false
-  xy: 1393, 183
+  xy: 273, 151
   size: 5, 5
   orig: 5, 5
   offset: 0, 0
   index: -1
 brain1_run_F1
   rotate: false
-  xy: 1290, 2
+  xy: 164, 2
   size: 47, 40
   orig: 47, 40
   offset: 0, 0
   index: -1
 brain1_run_F2
   rotate: false
-  xy: 1339, 2
+  xy: 213, 2
   size: 47, 40
   orig: 47, 40
   offset: 0, 0
   index: -1
 brain1_stand_F1
   rotate: false
-  xy: 1388, 2
+  xy: 262, 2
   size: 47, 40
   orig: 47, 40
   offset: 0, 0
   index: -1
 brain1_stand_F2
   rotate: false
-  xy: 1451, 116
+  xy: 1353, 48
   size: 47, 40
   orig: 47, 40
   offset: 0, 0
   index: -1
 brain_F1
   rotate: false
-  xy: 1795, 176
+  xy: 1402, 60
   size: 39, 28
   orig: 39, 28
   offset: 0, 0
   index: -1
 brain_F2
   rotate: false
-  xy: 1352, 160
+  xy: 1443, 60
   size: 39, 28
   orig: 39, 28
   offset: 0, 0
   index: -1
 continue_notSelected
   rotate: false
-  xy: 594, 204
+  xy: 995, 204
   size: 170, 50
   orig: 170, 50
   offset: 0, 0
   index: -1
 continue_selected
   rotate: false
-  xy: 594, 152
+  xy: 995, 152
   size: 170, 50
   orig: 170, 50
   offset: 0, 0
   index: -1
 door_F1
   rotate: false
-  xy: 942, 64
+  xy: 1089, 60
   size: 64, 90
   orig: 64, 90
   offset: 0, 0
   index: -1
 door_F2
   rotate: false
-  xy: 1008, 64
+  xy: 1155, 60
   size: 64, 90
   orig: 64, 90
   offset: 0, 0
   index: -1
 door_F3
   rotate: false
-  xy: 1074, 64
+  xy: 1221, 60
   size: 64, 90
   orig: 64, 90
   offset: 0, 0
   index: -1
 door_F4
   rotate: false
-  xy: 1140, 64
+  xy: 1287, 60
   size: 64, 90
   orig: 64, 90
   offset: 0, 0
   index: -1
+fan_F1
+  rotate: false
+  xy: 1651, 56
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+fan_particle
+  rotate: false
+  xy: 585, 153
+  size: 3, 3
+  orig: 3, 3
+  offset: 0, 0
+  index: -1
+hint1_F1
+  rotate: false
+  xy: 2, 142
+  size: 269, 112
+  orig: 269, 112
+  offset: 0, 0
+  index: -1
 meter_F1
   rotate: false
-  xy: 2, 158
+  xy: 2, 44
   size: 164, 96
   orig: 164, 96
   offset: 0, 0
   index: -1
 meter_F2
   rotate: false
-  xy: 2, 60
+  xy: 273, 158
   size: 164, 96
   orig: 164, 96
   offset: 0, 0
   index: -1
 meter_F3
   rotate: false
-  xy: 168, 158
+  xy: 439, 158
   size: 164, 96
   orig: 164, 96
   offset: 0, 0
   index: -1
 newButton_notSelected
   rotate: false
-  xy: 766, 204
+  xy: 1167, 204
   size: 170, 50
   orig: 170, 50
   offset: 0, 0
   index: -1
 newButton_selected
   rotate: false
-  xy: 766, 152
+  xy: 1167, 152
   size: 170, 50
   orig: 170, 50
   offset: 0, 0
   index: -1
 platform_3v
   rotate: false
-  xy: 908, 54
+  xy: 1617, 92
   size: 32, 96
   orig: 32, 96
   offset: 0, 0
   index: -1
 platform_3w
   rotate: false
-  xy: 1068, 156
+  xy: 1469, 156
   size: 96, 32
   orig: 96, 32
   offset: 0, 0
   index: -1
 platform_4v
   rotate: false
-  xy: 298, 28
+  xy: 551, 28
   size: 32, 128
   orig: 32, 128
   offset: 0, 0
   index: -1
 platform_4w
   rotate: false
-  xy: 938, 156
+  xy: 1339, 156
   size: 128, 32
   orig: 128, 32
   offset: 0, 0
   index: -1
 platform_5v
   rotate: false
-  xy: 1206, 28
+  xy: 1583, 28
   size: 32, 160
   orig: 32, 160
   offset: 0, 0
   index: -1
 platform_5w
   rotate: false
-  xy: 2, 26
+  xy: 2, 10
   size: 160, 32
   orig: 160, 32
   offset: 0, 0
   index: -1
 player1_jump
   rotate: false
-  xy: 332, 16
+  xy: 479, 48
   size: 70, 108
   orig: 70, 108
   offset: 0, 0
   index: -1
 player1_land
   rotate: false
-  xy: 404, 16
+  xy: 585, 16
   size: 70, 108
   orig: 70, 108
   offset: 0, 0
   index: -1
 player1_run_F1
   rotate: false
-  xy: 476, 16
+  xy: 657, 16
   size: 70, 108
   orig: 70, 108
   offset: 0, 0
   index: -1
 player1_run_F2
   rotate: false
-  xy: 548, 16
+  xy: 729, 16
   size: 70, 108
   orig: 70, 108
   offset: 0, 0
   index: -1
 player1_run_F3
   rotate: false
-  xy: 620, 42
+  xy: 801, 16
   size: 70, 108
   orig: 70, 108
   offset: 0, 0
   index: -1
 player1_run_F4
   rotate: false
-  xy: 692, 42
+  xy: 873, 16
   size: 70, 108
   orig: 70, 108
   offset: 0, 0
   index: -1
 player1_stand_F1
   rotate: false
-  xy: 764, 42
+  xy: 945, 16
   size: 70, 108
   orig: 70, 108
   offset: 0, 0
   index: -1
 player1_stand_F2
   rotate: false
-  xy: 836, 42
+  xy: 1017, 42
   size: 70, 108
   orig: 70, 108
   offset: 0, 0
   index: -1
 player1_stand_old
   rotate: false
-  xy: 1240, 111
+  xy: 1521, 77
   size: 60, 77
   orig: 60, 77
   offset: 0, 0
   index: -1
 player2_jump
   rotate: false
-  xy: 1352, 94
+  xy: 1851, 110
   size: 47, 44
   orig: 47, 44
   offset: 0, 0
   index: -1
 player2_land
   rotate: false
-  xy: 1352, 94
+  xy: 1851, 110
   size: 47, 44
   orig: 47, 44
   offset: 0, 0
   index: -1
 player2_run_F1
   rotate: false
-  xy: 1240, 15
+  xy: 1701, 94
   size: 48, 44
   orig: 48, 44
   offset: 0, 0
   index: -1
 player2_stand_F1
   rotate: false
-  xy: 1240, 15
+  xy: 1701, 94
   size: 48, 44
   orig: 48, 44
   offset: 0, 0
   index: -1
 player2_stand_F2
   rotate: false
-  xy: 1240, 15
+  xy: 1701, 94
   size: 48, 44
   orig: 48, 44
   offset: 0, 0
   index: -1
 player2_run_F2
   rotate: false
-  xy: 1302, 94
+  xy: 1751, 94
   size: 48, 44
   orig: 48, 44
   offset: 0, 0
   index: -1
 player2_run_F3
   rotate: false
-  xy: 1401, 112
+  xy: 1801, 110
   size: 48, 44
   orig: 48, 44
   offset: 0, 0
   index: -1
 screen_F1
   rotate: false
-  xy: 1841, 190
+  xy: 1353, 90
   size: 82, 64
   orig: 82, 64
   offset: 0, 0
   index: -1
 screen_F2
   rotate: false
-  xy: 1925, 190
+  xy: 1931, 190
   size: 82, 64
   orig: 82, 64
   offset: 0, 0
   index: -1
 screen_F3
   rotate: false
-  xy: 1711, 140
+  xy: 1437, 90
   size: 82, 64
   orig: 82, 64
   offset: 0, 0
   index: -1
 smasher_F1
   rotate: false
-  xy: 1515, 158
+  xy: 283, 60
   size: 96, 96
   orig: 96, 96
   offset: 0, 0
   index: -1
 smasher_F2
   rotate: false
-  xy: 1613, 158
+  xy: 381, 60
   size: 96, 96
   orig: 96, 96
   offset: 0, 0
   index: -1
 station_F1
   rotate: false
-  xy: 938, 190
+  xy: 1339, 190
   size: 152, 64
   orig: 152, 64
   offset: 0, 0
   index: -1
 station_F2
   rotate: false
-  xy: 1092, 190
+  xy: 1493, 190
   size: 152, 64
   orig: 152, 64
   offset: 0, 0
   index: -1
 station_F3
   rotate: false
-  xy: 1246, 190
+  xy: 1647, 190
   size: 152, 64
   orig: 152, 64
   offset: 0, 0
   index: -1
+switch2_off
+  rotate: false
+  xy: 1651, 140
+  size: 48, 48
+  orig: 48, 48
+  offset: 0, 0
+  index: -1
+switch2_on
+  rotate: false
+  xy: 1701, 140
+  size: 48, 48
+  orig: 48, 48
+  offset: 0, 0
+  index: -1
 switch_off
   rotate: false
-  xy: 1302, 140
+  xy: 1751, 140
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
 switch_on
   rotate: false
-  xy: 1240, 61
+  xy: 1801, 156
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
 tramp_down
   rotate: false
-  xy: 1290, 44
+  xy: 1851, 156
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
 tramp_up
   rotate: false
-  xy: 1340, 44
+  xy: 1651, 90
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
 vat_F1
   rotate: false
-  xy: 168, 28
+  xy: 605, 126
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: -1
 vat_F2
   rotate: false
-  xy: 334, 126
+  xy: 735, 126
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: -1
 vat_F3
   rotate: false
-  xy: 464, 126
+  xy: 865, 126
   size: 128, 128
   orig: 128, 128
   offset: 0, 0

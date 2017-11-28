@@ -24,6 +24,12 @@ public class Switch extends GameMapObject implements Box2dCollisionHandler{
 	public boolean first_trigger;
 	TextureRegion on;
 	TextureRegion off;
+	boolean makeSound = false;
+
+	public void toggleSound()
+	{
+		if (makeSound) playSound("switchToggle",1f);
+	}
 	
 	@Override
 	public void handleBegin(Box2dCollision collision) {
@@ -32,19 +38,29 @@ public class Switch extends GameMapObject implements Box2dCollisionHandler{
 		if(contacts==1) {
 			if(toggle)
 				if(is_On)
+				{
 					setOff();
+					toggleSound();
+				}
 				else
+				{
 					setOn();
+					toggleSound();
+				}
+
 			else if(!is_On && !first_trigger) 
+			{
 				setOn();
+				toggleSound();
+			}
 		}
-		
 	}
 
 	@Override
 	public void handleEnd(Box2dCollision collision) {
 		contacts--;
 		if(sensitive&&contacts==0) {
+			toggleSound();			
 			setOff();
 		}
 	}
@@ -57,9 +73,17 @@ public class Switch extends GameMapObject implements Box2dCollisionHandler{
 		is_On = getBool("startOn",mp);
 		contacts = 0;
 		m_isSensor = true;
+
+		if (sensitive)
+		{
+			on = textures.findRegion("switch2_on");
+			off = textures.findRegion("switch2_off");	
+		} else
+		{
+			on = textures.findRegion("switch_on");
+			off = textures.findRegion("switch_off");
+		}
 		
-		on = textures.findRegion("switch_on");
-		off = textures.findRegion("switch_off");
 		
 		m_btype = BodyType.StaticBody;
 		m_categoryBits = Box2dVars.SWITCH;
@@ -69,6 +93,8 @@ public class Switch extends GameMapObject implements Box2dCollisionHandler{
 			setOn();
 		else
 			setOff();
+
+		makeSound = m_visible;
 		
 		setSize(Box2dVars.PIXELS_PER_METER, Box2dVars.PIXELS_PER_METER);
 		

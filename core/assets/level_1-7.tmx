@@ -7,7 +7,7 @@
  <tileset firstgid="1" source="tileset.tsx"/>
  <layer name="background" width="40" height="23">
   <data encoding="base64" compression="zlib">
-   eJztzrENADAIxECWS8Eo2X8BNgCiR6HxSe5tBuDVSfLFr47sXQkA8MfdHijwp+FPw59m4i8AEA8LYw==
+   eJxjYBgFo2AUkApcoTgVC/YcQHcRA5Dd7YoFY/MTNoyubxSMglEwCkYBfUDmQDuAABh1H2Vg1H2UgRUD7YAhDqgRvwBkUQ1Z
   </data>
  </layer>
  <layer name="platforms" width="40" height="23">

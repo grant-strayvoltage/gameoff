@@ -18,7 +18,6 @@ public class Box2dVars {
 	public static final short PLAYER_FOOT = 2048;
 	public static final short BRAIN_FOOT = 4096;
 	public static final short ENEMY = 8192; //enemies that move about and interact with objects
+	public static final short FAN = 1;
 	
-	
-
 }
