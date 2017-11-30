@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" tiledversion="1.0.3" orientation="orthogonal" renderorder="right-down" width="40" height="23" tilewidth="32" tileheight="32" nextobjectid="64">
+<map version="1.0" tiledversion="2017.07.25" orientation="orthogonal" renderorder="right-down" width="40" height="23" tilewidth="32" tileheight="32" nextobjectid="66">
  <properties>
   <property name="Back" value="back5"/>
   <property name="Title" value="Test Level One"/>
@@ -12,14 +12,14 @@
  </layer>
  <layer name="platforms" width="40" height="23">
   <data encoding="base64" compression="zlib">
-   eJxjYmBgYKIyTgTiJCJwMg3sJgY3MxAHmukUJofR+IcGwH2NeOxBlxuI8MPnvoVAvAgJLx5k7iMXDDb3LWHATKeDyX3oYLCF36j7Rt036r6h7T7kMvAQFd23kAF3+4CFSDEQXsSAWg9Sy32jeBSP4lFMKgYAwPIssg==
+   eJztllEKgCAQRAdvWp0kPInWSexi+WkGtsWWG8zA+xA/9jGI6gA4ZYbMKGB6YbYED1n8R51s1Tp18Jsbc+q9Hv21/EImFizG/J7Gmt+K8zm15FfHWn/0ox/9/u1X3oFJ0S9A9me6IuL4Dmr5EULIXXYz5i1u
   </data>
  </layer>
  <objectgroup name="objects">
   <object id="4" name="P1" type="PlayerStart1" x="372" y="401" width="60" height="77"/>
   <object id="5" name="P2" type="PlayerStart2" x="456" y="434" width="47" height="44"/>
   <object id="16" name="exit" type="Exit" x="917" y="128" width="64" height="64"/>
-  <object id="36" name="Smasher1" type="Smasher" x="576" y="160" width="96" height="96">
+  <object id="36" name="Smasher1" type="Smasher" x="576" y="32" width="96" height="96">
    <properties>
     <property name="acceleration" type="float" value="8"/>
     <property name="riseSpeed" type="float" value="1.1"/>
@@ -34,7 +34,7 @@
     <property name="visible" type="bool" value="false"/>
    </properties>
   </object>
-  <object id="47" name="smasherStop1" type="PlatformStop" x="608" y="480" width="32" height="32"/>
+  <object id="47" name="smasherStop1" type="PlatformStop" x="608" y="0" width="32" height="32"/>
   <object id="49" name="smasherStop" type="PlatformStop" x="608" y="128" width="32" height="32"/>
   <object id="51" name="switch1" type="Switch" x="608" y="384" width="32" height="32">
    <properties>
@@ -94,5 +94,13 @@
   <object id="61" name="stop1" type="PlatformStop" x="800" y="160" width="32" height="32"/>
   <object id="62" name="stop1" type="PlatformStop" x="800" y="384" width="32" height="32"/>
   <object id="63" name="block3" type="Block" x="884" y="160" width="32" height="32"/>
+  <object id="65" name="fan1" type="Fan" x="736" y="416" width="32" height="32">
+   <properties>
+    <property name="dir" type="int" value="0"/>
+    <property name="power" type="int" value="270"/>
+    <property name="startOn" type="bool" value="true"/>
+    <property name="switches" value="switch1"/>
+   </properties>
+  </object>
  </objectgroup>
 </map>

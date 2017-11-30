@@ -1,17 +1,8 @@
 package com.strayvoltage.gameoff;
 
-import java.util.ArrayList;
-import com.badlogic.gdx.graphics.g2d.*;
-import com.badlogic.gdx.maps.MapProperties;
-import com.badlogic.gdx.math.Intersector;
-import com.badlogic.gdx.physics.box2d.BodyDef;
-import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
-import com.badlogic.gdx.physics.box2d.Fixture;
-import com.badlogic.gdx.physics.box2d.FixtureDef;
-import com.badlogic.gdx.physics.box2d.PolygonShape;
-import com.badlogic.gdx.physics.box2d.World;
-import com.badlogic.gdx.Gdx;
-import com.strayvoltage.gamelib.*;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.utils.Array;
+import com.strayvoltage.gamelib.GameLayer;
 
 public class GameParticleSystem {
 
@@ -26,10 +17,11 @@ public class GameParticleSystem {
     boolean m_shouldSpawn = false;
     float m_grav = 0;
 
-    ArrayList<GameParticle> m_particles = new ArrayList<GameParticle>();
+    Array<GameParticle> m_particles;
 
     public GameParticleSystem(GameLayer layer, TextureAtlas textures, String imgName, int numParticles, int dir, int spd, int life, float freq, float grav)
     {
+    	m_particles = new Array<GameParticle>(numParticles);
         for (int i = 0; i < numParticles; i++)
         {
             GameParticle p =new GameParticle(textures,imgName);
