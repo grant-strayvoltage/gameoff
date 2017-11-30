@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" tiledversion="2017.07.25" orientation="orthogonal" renderorder="right-down" width="40" height="23" tilewidth="32" tileheight="32" nextobjectid="49">
+<map version="1.0" tiledversion="1.0.3" orientation="orthogonal" renderorder="right-down" width="40" height="23" tilewidth="32" tileheight="32" nextobjectid="51">
  <properties>
   <property name="Back" value="back2"/>
-  <property name="Title" value="Stage_2-6"/>
+  <property name="Title" value="Reach for the Sky"/>
   <property name="backOffX" type="int" value="0"/>
   <property name="backOffY" type="int" value="-100"/>
  </properties>
@@ -20,29 +20,8 @@
  <objectgroup name="objects">
   <object id="4" name="P1" type="PlayerStart1" x="354" y="561" width="60" height="77"/>
   <object id="5" name="P2" type="PlayerStart2" x="418.724" y="592.675" width="47" height="44"/>
-  <object id="14" name="block3" type="Block" x="-64" y="352" width="32" height="32"/>
   <object id="16" name="exit" type="Exit" x="864" y="480" width="64" height="96"/>
-  <object id="28" name="Tramp1" type="Trampoline" x="-128" y="480" width="32" height="32">
-   <properties>
-    <property name="static" type="bool" value="true"/>
-   </properties>
-  </object>
-  <object id="34" name="switch1" type="Switch" x="-128" y="256" width="48" height="48">
-   <properties>
-    <property name="startOn" type="bool" value="false"/>
-    <property name="toggle" type="bool" value="true"/>
-    <property name="visible" type="bool" value="true"/>
-   </properties>
-  </object>
-  <object id="35" name="fan1" type="Fan" x="-256" y="96" width="32" height="32">
-   <properties>
-    <property name="dir" type="int" value="1"/>
-    <property name="power" type="int" value="500"/>
-    <property name="startOn" type="bool" value="false"/>
-    <property name="switches" value="switch1"/>
-   </properties>
-  </object>
-  <object id="38" name="Block1" type="Block" x="704" y="192" width="32" height="32"/>
+  <object id="38" name="Block1" type="Block" x="708" y="192" width="32" height="32"/>
   <object id="39" name="Tramp1" type="Trampoline" x="512" y="608" width="32" height="32">
    <properties>
     <property name="static" type="bool" value="true"/>
@@ -67,6 +46,22 @@
   <object id="48" name="Tramp1" type="Trampoline" x="616" y="334" width="48" height="48">
    <properties>
     <property name="static" type="bool" value="true"/>
+   </properties>
+  </object>
+  <object id="49" name="BackObject" type="BackObject" x="416" y="192" width="180" height="96">
+   <properties>
+    <property name="frames" type="int" value="3"/>
+    <property name="speed" type="int" value="5"/>
+    <property name="sprite" value="meter"/>
+    <property name="style" type="int" value="2"/>
+   </properties>
+  </object>
+  <object id="50" name="BackObject" type="BackObject" x="736" y="548" width="96" height="96">
+   <properties>
+    <property name="frames" type="int" value="1"/>
+    <property name="speed" type="int" value="10"/>
+    <property name="sprite" value="blood1"/>
+    <property name="style" type="int" value="2"/>
    </properties>
   </object>
  </objectgroup>
