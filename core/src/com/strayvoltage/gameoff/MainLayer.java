@@ -384,7 +384,7 @@ public float getFloat(String key, MapObject mp)
     m_brain.m_map = tiledMap;
 
     m_player1.setMap(tiledMap, m_player2,24,40,m_brain,1);
-    m_player2.setMap(tiledMap, m_player1,8.5f,15,m_brain,2);
+    m_player2.setMap(tiledMap, m_player1,8.5f,18,m_brain,2);
     m_brain.setMap(tiledMap);
 
 
@@ -636,7 +636,7 @@ public float getFloat(String key, MapObject mp)
       m_fadeOutSprite.animate(deltaTime);
       if (stateTime > 0.5f)
       {
-        if ((m_stage == 5) && (m_level == 8))
+        if ((m_stage == 4) && (m_level == 2)) //change back to 5,8
         {
           doVictory();
         } else

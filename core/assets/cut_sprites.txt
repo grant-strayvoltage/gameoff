@@ -55,9 +55,9 @@ cut7
   index: -1
 next_img
   rotate: false
-  xy: 3848, 1936
-  size: 140, 36
-  orig: 140, 36
+  xy: 3848, 1907
+  size: 244, 65
+  orig: 244, 65
   offset: 0, 0
   index: -1
 vic1
@@ -77,7 +77,7 @@ vic2
 vic_panel
   rotate: false
   xy: 2566, 750
-  size: 350, 236
-  orig: 350, 236
+  size: 358, 236
+  orig: 358, 236
   offset: 0, 0
   index: -1
