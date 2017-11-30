@@ -1,0 +1,322 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" tiledversion="2017.07.25" orientation="orthogonal" renderorder="right-down" width="40" height="23" tilewidth="32" tileheight="32" nextobjectid="178">
+ <properties>
+  <property name="Back" value="back5"/>
+  <property name="Title" value="Descision Roulete"/>
+ </properties>
+ <tileset firstgid="1" source="tileset.tsx"/>
+ <layer name="background" width="40" height="23">
+  <data encoding="base64" compression="zlib">
+   eJztwTEBAAAAwqD1T20IX6AAAADgNw5gAAE=
+  </data>
+ </layer>
+ <layer name="platforms" width="40" height="23">
+  <data encoding="base64" compression="zlib">
+   eJxjYmBgYBrkOBGIkwYZTkZyXzMDJsAmRk8Asn/UfeSDUfdRBkbdRxlAdt9BHPIDCdDDbxEaXjxwTgMDQvE70GDUfZSBUfdRBkbdRxkg1n20an9Sy30DBYaS+xYyDHx/Ax0vRnLfYMYArAhB7A==
+  </data>
+ </layer>
+ <objectgroup name="objects">
+  <object id="4" name="P1" type="PlayerStart1" x="86.6667" y="590.667" width="60" height="77"/>
+  <object id="5" name="P2" type="PlayerStart2" x="181.333" y="624" width="47" height="44"/>
+  <object id="14" name="block3" type="Block" x="-64" y="352" width="32" height="32"/>
+  <object id="16" name="exit" type="Exit" x="1152" y="580" width="64" height="90"/>
+  <object id="28" name="Tramp1" type="Trampoline" x="-128" y="480" width="48" height="48">
+   <properties>
+    <property name="static" type="bool" value="true"/>
+   </properties>
+  </object>
+  <object id="34" name="switch1" type="Switch" x="-128" y="256" width="32" height="32">
+   <properties>
+    <property name="startOn" type="bool" value="false"/>
+    <property name="toggle" type="bool" value="true"/>
+    <property name="visible" type="bool" value="true"/>
+   </properties>
+  </object>
+  <object id="36" name="BackObject" type="BackObject" x="-192" y="32" width="82" height="64">
+   <properties>
+    <property name="frames" type="int" value="3"/>
+    <property name="speed" type="int" value="2"/>
+    <property name="sprite" value="screen"/>
+    <property name="style" type="int" value="2"/>
+   </properties>
+  </object>
+  <object id="40" name="BackObject" type="BackObject" x="-64" y="160" width="32" height="64">
+   <properties>
+    <property name="frames" type="int" value="1"/>
+    <property name="speed" type="int" value="10"/>
+    <property name="sprite" value="blood3"/>
+    <property name="style" type="int" value="2"/>
+   </properties>
+  </object>
+  <object id="44" name="Gate1" type="Gate" x="-160" y="320" width="32" height="96">
+   <properties>
+    <property name="openDown" type="bool" value="false"/>
+    <property name="switches" value="gate1_switch"/>
+   </properties>
+  </object>
+  <object id="75" name="fan1" type="Fan" x="-96" y="576" width="32" height="32">
+   <properties>
+    <property name="dir" type="int" value="0"/>
+    <property name="power" type="int" value="50"/>
+    <property name="startOn" type="bool" value="false"/>
+    <property name="switches" value="fanSwitch"/>
+   </properties>
+  </object>
+  <object id="88" name="SmasherStop" type="PlatformStop" x="1088" y="35" width="32" height="32"/>
+  <object id="96" name="PlatformStop" type="PlatformStop" x="128" y="96" width="32" height="32"/>
+  <object id="99" name="PlatformStop" type="PlatformStop" x="93.3333" y="344" width="32" height="32"/>
+  <object id="101" name="platform1" type="Platform" x="66" y="312" width="96" height="32">
+   <properties>
+    <property name="contactTrigger" type="bool" value="false"/>
+    <property name="moveHorizontal" type="bool" value="false"/>
+    <property name="speed" type="float" value="3"/>
+    <property name="startDir" type="int" value="-1"/>
+    <property name="startOn" type="bool" value="true"/>
+    <property name="switches" value=""/>
+   </properties>
+  </object>
+  <object id="102" name="block3" type="Block" x="86.1667" y="279.167" width="32" height="32"/>
+  <object id="127" name="switch11" type="Switch" x="80.6667" y="75" width="32" height="32">
+   <properties>
+    <property name="sensitive" type="bool" value="true"/>
+    <property name="startOn" type="bool" value="false"/>
+    <property name="toggle" type="bool" value="true"/>
+    <property name="visible" type="bool" value="true"/>
+   </properties>
+  </object>
+  <object id="128" name="switch10" type="Switch" x="80.75" y="90.8333" width="32" height="32">
+   <properties>
+    <property name="sensitive" type="bool" value="true"/>
+    <property name="startOn" type="bool" value="false"/>
+    <property name="toggle" type="bool" value="true"/>
+    <property name="visible" type="bool" value="true"/>
+   </properties>
+  </object>
+  <object id="129" name="switch9" type="Switch" x="81.0833" y="108" width="32" height="32">
+   <properties>
+    <property name="sensitive" type="bool" value="true"/>
+    <property name="startOn" type="bool" value="false"/>
+    <property name="toggle" type="bool" value="true"/>
+    <property name="visible" type="bool" value="true"/>
+   </properties>
+  </object>
+  <object id="130" name="switch8" type="Switch" x="80.5" y="123.583" width="32" height="32">
+   <properties>
+    <property name="sensitive" type="bool" value="true"/>
+    <property name="startOn" type="bool" value="false"/>
+    <property name="toggle" type="bool" value="true"/>
+    <property name="visible" type="bool" value="true"/>
+   </properties>
+  </object>
+  <object id="131" name="switch7" type="Switch" x="80" y="139.667" width="32" height="32">
+   <properties>
+    <property name="sensitive" type="bool" value="false"/>
+    <property name="startOn" type="bool" value="false"/>
+    <property name="toggle" type="bool" value="true"/>
+    <property name="visible" type="bool" value="true"/>
+   </properties>
+  </object>
+  <object id="132" name="switch6" type="Switch" x="80.6667" y="156.833" width="32" height="32">
+   <properties>
+    <property name="sensitive" type="bool" value="false"/>
+    <property name="startOn" type="bool" value="false"/>
+    <property name="toggle" type="bool" value="true"/>
+    <property name="visible" type="bool" value="true"/>
+   </properties>
+  </object>
+  <object id="133" name="switch5" type="Switch" x="79.4167" y="172.083" width="32" height="32">
+   <properties>
+    <property name="sensitive" type="bool" value="false"/>
+    <property name="startOn" type="bool" value="false"/>
+    <property name="toggle" type="bool" value="true"/>
+    <property name="visible" type="bool" value="true"/>
+   </properties>
+  </object>
+  <object id="134" name="switch4" type="Switch" x="80" y="190" width="32" height="32">
+   <properties>
+    <property name="sensitive" type="bool" value="false"/>
+    <property name="startOn" type="bool" value="false"/>
+    <property name="toggle" type="bool" value="true"/>
+    <property name="visible" type="bool" value="true"/>
+   </properties>
+  </object>
+  <object id="135" name="switch3" type="Switch" x="80" y="204.833" width="32" height="32">
+   <properties>
+    <property name="sensitive" type="bool" value="false"/>
+    <property name="startOn" type="bool" value="false"/>
+    <property name="toggle" type="bool" value="true"/>
+    <property name="visible" type="bool" value="true"/>
+   </properties>
+  </object>
+  <object id="136" name="switch2" type="Switch" x="80.0833" y="222.75" width="32" height="32">
+   <properties>
+    <property name="sensitive" type="bool" value="false"/>
+    <property name="startOn" type="bool" value="false"/>
+    <property name="toggle" type="bool" value="true"/>
+    <property name="visible" type="bool" value="true"/>
+   </properties>
+  </object>
+  <object id="140" name="switch1" type="Switch" x="80.0833" y="238.75" width="32" height="32">
+   <properties>
+    <property name="sensitive" type="bool" value="false"/>
+    <property name="startOn" type="bool" value="false"/>
+    <property name="toggle" type="bool" value="true"/>
+    <property name="visible" type="bool" value="true"/>
+   </properties>
+  </object>
+  <object id="142" name="Gate1" type="Gate" x="289" y="679" width="32" height="72">
+   <properties>
+    <property name="hazard" type="bool" value="true"/>
+    <property name="openDown" type="bool" value="false"/>
+    <property name="switches" value="switch1"/>
+   </properties>
+  </object>
+  <object id="143" name="Gate1" type="Gate" x="321" y="679" width="32" height="72">
+   <properties>
+    <property name="hazard" type="bool" value="true"/>
+    <property name="openDown" type="bool" value="false"/>
+    <property name="switches" value="switch2"/>
+   </properties>
+  </object>
+  <object id="144" name="Gate1" type="Gate" x="353" y="679" width="32" height="72">
+   <properties>
+    <property name="hazard" type="bool" value="true"/>
+    <property name="openDown" type="bool" value="false"/>
+    <property name="switches" value="switch3"/>
+   </properties>
+  </object>
+  <object id="145" name="Gate1" type="Gate" x="385" y="679" width="32" height="72">
+   <properties>
+    <property name="hazard" type="bool" value="true"/>
+    <property name="openDown" type="bool" value="false"/>
+    <property name="switches" value="switch4"/>
+   </properties>
+  </object>
+  <object id="146" name="Gate1" type="Gate" x="417" y="679" width="32" height="72">
+   <properties>
+    <property name="hazard" type="bool" value="true"/>
+    <property name="openDown" type="bool" value="false"/>
+    <property name="switches" value="switch5"/>
+   </properties>
+  </object>
+  <object id="148" name="Gate1" type="Gate" x="449" y="679" width="32" height="72">
+   <properties>
+    <property name="hazard" type="bool" value="true"/>
+    <property name="openDown" type="bool" value="false"/>
+    <property name="switches" value="switch6"/>
+   </properties>
+  </object>
+  <object id="149" name="Gate1" type="Gate" x="481" y="679" width="32" height="72">
+   <properties>
+    <property name="hazard" type="bool" value="true"/>
+    <property name="openDown" type="bool" value="false"/>
+    <property name="switches" value="switch7"/>
+   </properties>
+  </object>
+  <object id="150" name="Gate1" type="Gate" x="515" y="678" width="32" height="72">
+   <properties>
+    <property name="hazard" type="bool" value="true"/>
+    <property name="openDown" type="bool" value="false"/>
+    <property name="switches" value="switch8"/>
+   </properties>
+  </object>
+  <object id="151" name="Gate1" type="Gate" x="545" y="679" width="32" height="72">
+   <properties>
+    <property name="hazard" type="bool" value="true"/>
+    <property name="openDown" type="bool" value="false"/>
+    <property name="switches" value="switch9"/>
+   </properties>
+  </object>
+  <object id="152" name="Gate1" type="Gate" x="577" y="679" width="32" height="72">
+   <properties>
+    <property name="hazard" type="bool" value="true"/>
+    <property name="openDown" type="bool" value="false"/>
+    <property name="switches" value="switch10"/>
+   </properties>
+  </object>
+  <object id="153" name="Gate1" type="Gate" x="611" y="679" width="32" height="72">
+   <properties>
+    <property name="hazard" type="bool" value="true"/>
+    <property name="openDown" type="bool" value="false"/>
+    <property name="switches" value="switch11"/>
+   </properties>
+  </object>
+  <object id="167" name="Gate1" type="Gate" x="875" y="607" width="32" height="72">
+   <properties>
+    <property name="hazard" type="bool" value="true"/>
+    <property name="openDown" type="bool" value="true"/>
+    <property name="switches" value="switch8"/>
+   </properties>
+  </object>
+  <object id="168" name="Gate1" type="Gate" x="841" y="608" width="32" height="72">
+   <properties>
+    <property name="hazard" type="bool" value="true"/>
+    <property name="openDown" type="bool" value="true"/>
+    <property name="switches" value="switch7"/>
+   </properties>
+  </object>
+  <object id="169" name="Gate1" type="Gate" x="971" y="608" width="32" height="72">
+   <properties>
+    <property name="hazard" type="bool" value="true"/>
+    <property name="openDown" type="bool" value="true"/>
+    <property name="switches" value="switch11"/>
+   </properties>
+  </object>
+  <object id="170" name="Gate1" type="Gate" x="713" y="608" width="32" height="72">
+   <properties>
+    <property name="hazard" type="bool" value="true"/>
+    <property name="openDown" type="bool" value="true"/>
+    <property name="switches" value="switch3"/>
+   </properties>
+  </object>
+  <object id="171" name="Gate1" type="Gate" x="649" y="608" width="32" height="72">
+   <properties>
+    <property name="hazard" type="bool" value="true"/>
+    <property name="openDown" type="bool" value="true"/>
+    <property name="switches" value="switch1"/>
+   </properties>
+  </object>
+  <object id="172" name="Gate1" type="Gate" x="937" y="608" width="32" height="72">
+   <properties>
+    <property name="hazard" type="bool" value="true"/>
+    <property name="openDown" type="bool" value="true"/>
+    <property name="switches" value="switch10"/>
+   </properties>
+  </object>
+  <object id="173" name="Gate1" type="Gate" x="777" y="608" width="32" height="72">
+   <properties>
+    <property name="hazard" type="bool" value="true"/>
+    <property name="openDown" type="bool" value="true"/>
+    <property name="switches" value="switch5"/>
+   </properties>
+  </object>
+  <object id="174" name="Gate1" type="Gate" x="681" y="608" width="32" height="72">
+   <properties>
+    <property name="hazard" type="bool" value="true"/>
+    <property name="openDown" type="bool" value="true"/>
+    <property name="switches" value="switch2"/>
+   </properties>
+  </object>
+  <object id="175" name="Gate1" type="Gate" x="905" y="608" width="32" height="72">
+   <properties>
+    <property name="hazard" type="bool" value="true"/>
+    <property name="openDown" type="bool" value="true"/>
+    <property name="switches" value="switch9"/>
+   </properties>
+  </object>
+  <object id="176" name="Gate1" type="Gate" x="809" y="608" width="32" height="72">
+   <properties>
+    <property name="hazard" type="bool" value="true"/>
+    <property name="openDown" type="bool" value="true"/>
+    <property name="switches" value="switch6"/>
+   </properties>
+  </object>
+  <object id="177" name="Gate1" type="Gate" x="745" y="608" width="32" height="72">
+   <properties>
+    <property name="hazard" type="bool" value="true"/>
+    <property name="openDown" type="bool" value="true"/>
+    <property name="switches" value="switch4"/>
+   </properties>
+  </object>
+ </objectgroup>
+</map>
