@@ -1,0 +1,257 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" tiledversion="1.0.3" orientation="orthogonal" renderorder="right-down" width="40" height="23" tilewidth="32" tileheight="32" nextobjectid="81">
+ <properties>
+  <property name="Back" value="back4"/>
+  <property name="Title" value="Do a Lap"/>
+  <property name="backOffX" type="int" value="0"/>
+  <property name="backOffY" type="int" value="-75"/>
+ </properties>
+ <tileset firstgid="1" source="tileset.tsx"/>
+ <layer name="background" width="40" height="23">
+  <data encoding="base64" compression="zlib">
+   eJxjYEAFmQyDG4y6jzTgioadBtY5BMGKgXbAKBgFo2AUjEDQDsSpaHgUjIJRMApGAW3BYOs3oANy3QcABLUGJw==
+  </data>
+ </layer>
+ <layer name="platforms" width="40" height="23">
+  <data encoding="base64" compression="zlib">
+   eJztllsKgCAQABehi+TJqpNEJ+l1EDtZG/mhIrSxhSvswPwI4iAqGgDo0F6YA2q8I9oE/gl1jQniPmloHw9pfRvE9+MAWX0p0vYvRft4aB8P7eMR9jm438S9aFFMTftXa5/1Po19NY/SZzPm1qH4dh6l7/pHtAVM72ZN529GF2GuQZ9kT7FzSKA=
+  </data>
+ </layer>
+ <objectgroup name="objects">
+  <object id="4" name="P1" type="PlayerStart1" x="133.921" y="497.876" width="60" height="77"/>
+  <object id="5" name="P2" type="PlayerStart2" x="179.542" y="531.465" width="47" height="44"/>
+  <object id="16" name="exit" type="Exit" x="994.167" y="484.978" width="64" height="90"/>
+  <object id="37" name="BackObject" type="BackObject" x="503.333" y="484.333" width="96" height="96">
+   <properties>
+    <property name="frames" type="int" value="1"/>
+    <property name="speed" type="int" value="10"/>
+    <property name="sprite" value="blood1"/>
+    <property name="style" type="int" value="2"/>
+   </properties>
+  </object>
+  <object id="43" name="fan1" type="Fan" x="318.667" y="606.667" width="32" height="32">
+   <properties>
+    <property name="dir" type="int" value="0"/>
+    <property name="power" type="int" value="250"/>
+    <property name="startOn" type="bool" value="true"/>
+   </properties>
+  </object>
+  <object id="48" name="fan2" type="Fan" x="767" y="607.333" width="32" height="32">
+   <properties>
+    <property name="dir" type="int" value="0"/>
+    <property name="power" type="int" value="100"/>
+    <property name="startOn" type="bool" value="true"/>
+   </properties>
+  </object>
+  <object id="49" name="switch1" type="Switch" x="1135" y="111" width="48" height="48">
+   <properties>
+    <property name="startOn" type="bool" value="true"/>
+    <property name="toggle" type="bool" value="true"/>
+    <property name="visible" type="bool" value="true"/>
+   </properties>
+  </object>
+  <object id="50" name="BackObject" type="BackObject" x="1069.33" y="519.333" width="128" height="48">
+   <properties>
+    <property name="frames" type="int" value="1"/>
+    <property name="speed" type="int" value="10"/>
+    <property name="sprite" value="blood2"/>
+    <property name="style" type="int" value="2"/>
+   </properties>
+  </object>
+  <object id="51" name="BackObject" type="BackObject" x="536.333" y="126.333" width="82" height="64">
+   <properties>
+    <property name="frames" type="int" value="3"/>
+    <property name="speed" type="int" value="2"/>
+    <property name="sprite" value="screen"/>
+    <property name="style" type="int" value="2"/>
+   </properties>
+  </object>
+  <object id="52" name="fan4" type="Fan" x="448" y="607" width="32" height="32">
+   <properties>
+    <property name="dir" type="int" value="0"/>
+    <property name="power" type="int" value="100"/>
+    <property name="startOn" type="bool" value="true"/>
+   </properties>
+  </object>
+  <object id="54" name="BackObject" type="BackObject" x="90.3333" y="357" width="82" height="64">
+   <properties>
+    <property name="frames" type="int" value="3"/>
+    <property name="speed" type="int" value="2"/>
+    <property name="sprite" value="screen"/>
+    <property name="style" type="int" value="2"/>
+   </properties>
+  </object>
+  <object id="55" name="fan3" type="Fan" x="1010" y="608" width="32" height="32">
+   <properties>
+    <property name="dir" type="int" value="0"/>
+    <property name="power" type="int" value="100"/>
+    <property name="startOn" type="bool" value="true"/>
+    <property name="switches" value="switch1"/>
+   </properties>
+  </object>
+  <object id="56" name="fan4" type="Fan" x="641" y="607" width="32" height="32">
+   <properties>
+    <property name="dir" type="int" value="0"/>
+    <property name="power" type="int" value="100"/>
+    <property name="startOn" type="bool" value="true"/>
+   </properties>
+  </object>
+  <object id="57" name="fan2" type="Fan" x="894" y="607" width="32" height="32">
+   <properties>
+    <property name="dir" type="int" value="0"/>
+    <property name="power" type="int" value="100"/>
+    <property name="startOn" type="bool" value="true"/>
+   </properties>
+  </object>
+  <object id="58" name="Smasher1" type="Smasher" x="736" y="33" width="96" height="96">
+   <properties>
+    <property name="acceleration" type="float" value="8"/>
+    <property name="riseSpeed" type="float" value="4"/>
+    <property name="switches" value="smasherswitch"/>
+   </properties>
+  </object>
+  <object id="59" name="PlatformStop" type="PlatformStop" x="768" y="1" width="32" height="32"/>
+  <object id="60" name="smasherswitch" type="Switch" x="833" y="401" width="32" height="32">
+   <properties>
+    <property name="sensitive" type="bool" value="true"/>
+    <property name="startOn" type="bool" value="false"/>
+    <property name="toggle" type="bool" value="true"/>
+    <property name="visible" type="bool" value="false"/>
+   </properties>
+  </object>
+  <object id="61" name="smasherswitch" type="Switch" x="705" y="399" width="32" height="32">
+   <properties>
+    <property name="sensitive" type="bool" value="true"/>
+    <property name="startOn" type="bool" value="false"/>
+    <property name="toggle" type="bool" value="true"/>
+    <property name="visible" type="bool" value="false"/>
+   </properties>
+  </object>
+  <object id="62" name="smasherswitch" type="Switch" x="834" y="510" width="32" height="32">
+   <properties>
+    <property name="sensitive" type="bool" value="true"/>
+    <property name="startOn" type="bool" value="false"/>
+    <property name="toggle" type="bool" value="true"/>
+    <property name="visible" type="bool" value="false"/>
+   </properties>
+  </object>
+  <object id="63" name="smasherswitch" type="Switch" x="708" y="286" width="32" height="32">
+   <properties>
+    <property name="sensitive" type="bool" value="true"/>
+    <property name="startOn" type="bool" value="false"/>
+    <property name="toggle" type="bool" value="true"/>
+    <property name="visible" type="bool" value="false"/>
+   </properties>
+  </object>
+  <object id="64" name="smasherswitch" type="Switch" x="705" y="509" width="32" height="32">
+   <properties>
+    <property name="sensitive" type="bool" value="true"/>
+    <property name="startOn" type="bool" value="false"/>
+    <property name="toggle" type="bool" value="true"/>
+    <property name="visible" type="bool" value="false"/>
+   </properties>
+  </object>
+  <object id="65" name="smasherswitch" type="Switch" x="834" y="288" width="32" height="32">
+   <properties>
+    <property name="sensitive" type="bool" value="true"/>
+    <property name="startOn" type="bool" value="false"/>
+    <property name="toggle" type="bool" value="true"/>
+    <property name="visible" type="bool" value="false"/>
+   </properties>
+  </object>
+  <object id="66" name="PlatformStop" type="PlatformStop" x="767" y="608" width="32" height="32"/>
+  <object id="67" name="Smasher2" type="Smasher" x="287.5" y="32.5" width="96" height="96">
+   <properties>
+    <property name="acceleration" type="float" value="8"/>
+    <property name="riseSpeed" type="float" value="4"/>
+    <property name="switches" value="smasherswitch2"/>
+   </properties>
+  </object>
+  <object id="68" name="PlatformStop" type="PlatformStop" x="319.5" y="607.5" width="32" height="32"/>
+  <object id="69" name="smasherswitch2" type="Switch" x="254.5" y="509.5" width="32" height="32">
+   <properties>
+    <property name="sensitive" type="bool" value="true"/>
+    <property name="startOn" type="bool" value="false"/>
+    <property name="toggle" type="bool" value="true"/>
+    <property name="visible" type="bool" value="false"/>
+   </properties>
+  </object>
+  <object id="70" name="smasherswitch2" type="Switch" x="378.5" y="510.5" width="32" height="32">
+   <properties>
+    <property name="sensitive" type="bool" value="true"/>
+    <property name="startOn" type="bool" value="false"/>
+    <property name="toggle" type="bool" value="true"/>
+    <property name="visible" type="bool" value="false"/>
+   </properties>
+  </object>
+  <object id="71" name="smasherswitch2" type="Switch" x="256.5" y="399.5" width="32" height="32">
+   <properties>
+    <property name="sensitive" type="bool" value="true"/>
+    <property name="startOn" type="bool" value="false"/>
+    <property name="toggle" type="bool" value="true"/>
+    <property name="visible" type="bool" value="false"/>
+   </properties>
+  </object>
+  <object id="72" name="PlatformStop" type="PlatformStop" x="313.5" y="1.5" width="32" height="32"/>
+  <object id="73" name="smasherswitch2" type="Switch" x="379.5" y="401.5" width="32" height="32">
+   <properties>
+    <property name="sensitive" type="bool" value="true"/>
+    <property name="startOn" type="bool" value="false"/>
+    <property name="toggle" type="bool" value="true"/>
+    <property name="visible" type="bool" value="false"/>
+   </properties>
+  </object>
+  <object id="74" name="smasherswitch2" type="Switch" x="381.5" y="288.5" width="32" height="32">
+   <properties>
+    <property name="sensitive" type="bool" value="true"/>
+    <property name="startOn" type="bool" value="false"/>
+    <property name="toggle" type="bool" value="true"/>
+    <property name="visible" type="bool" value="false"/>
+   </properties>
+  </object>
+  <object id="75" name="smasherswitch2" type="Switch" x="259.5" y="287.5" width="32" height="32">
+   <properties>
+    <property name="sensitive" type="bool" value="true"/>
+    <property name="startOn" type="bool" value="false"/>
+    <property name="toggle" type="bool" value="true"/>
+    <property name="visible" type="bool" value="false"/>
+   </properties>
+  </object>
+  <object id="76" name="fan3" type="Fan" x="1216" y="639" width="32" height="32">
+   <properties>
+    <property name="dir" type="int" value="3"/>
+    <property name="power" type="int" value="100"/>
+    <property name="startOn" type="bool" value="true"/>
+   </properties>
+  </object>
+  <object id="77" name="fan4" type="Fan" x="63" y="703" width="32" height="32">
+   <properties>
+    <property name="dir" type="int" value="0"/>
+    <property name="power" type="int" value="60"/>
+    <property name="startOn" type="bool" value="true"/>
+   </properties>
+  </object>
+  <object id="78" name="fan3" type="Fan" x="767" y="640" width="32" height="32">
+   <properties>
+    <property name="dir" type="int" value="3"/>
+    <property name="power" type="int" value="100"/>
+    <property name="startOn" type="bool" value="true"/>
+   </properties>
+  </object>
+  <object id="79" name="fan3" type="Fan" x="352" y="639" width="32" height="32">
+   <properties>
+    <property name="dir" type="int" value="3"/>
+    <property name="power" type="int" value="100"/>
+    <property name="startOn" type="bool" value="true"/>
+   </properties>
+  </object>
+  <object id="80" name="BackObject" type="BackObject" x="909" y="216" width="180" height="96">
+   <properties>
+    <property name="frames" type="int" value="3"/>
+    <property name="speed" type="int" value="5"/>
+    <property name="sprite" value="meter"/>
+    <property name="style" type="int" value="2"/>
+   </properties>
+  </object>
+ </objectgroup>
+</map>

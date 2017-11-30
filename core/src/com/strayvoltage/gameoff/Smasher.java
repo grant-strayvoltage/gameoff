@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.g2d.*;
 import com.badlogic.gdx.maps.MapProperties;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.Gdx;
 import com.strayvoltage.gamelib.*;
 
 public class Smasher extends GameMapObject implements SwitchHandler,Box2dCollisionHandler{
@@ -72,6 +73,7 @@ public class Smasher extends GameMapObject implements SwitchHandler,Box2dCollisi
 			}
 
 			m_body.setLinearVelocity(0, 0);//should not be moving
+
 			//wait for trigger
 			if(isTriggered()) {
 				current_state = SHAKING;

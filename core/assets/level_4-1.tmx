@@ -1,34 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" tiledversion="1.0.3" orientation="orthogonal" renderorder="right-down" width="40" height="23" tilewidth="32" tileheight="32" nextobjectid="44">
+<map version="1.0" tiledversion="1.0.3" orientation="orthogonal" renderorder="right-down" width="40" height="23" tilewidth="32" tileheight="32" nextobjectid="54">
  <properties>
-  <property name="Back" value="back5"/>
-  <property name="Title" value="Two Cyborg Bodies...One Brain"/>
+  <property name="Back" value="back4"/>
+  <property name="Title" value="Blow Me Away"/>
   <property name="backOffX" type="int" value="0"/>
-  <property name="backOffY" type="int" value="-100"/>
+  <property name="backOffY" type="int" value="50"/>
  </properties>
  <tileset firstgid="1" source="tileset.tsx"/>
  <layer name="background" width="40" height="23">
   <data encoding="base64" compression="zlib">
-   eJxjYBgFIJA50A4gAMh1nyudsBOZ7qMXICX8XGnmCtxguKY/eoHB5L52IE5Fw60D6iLCYDCFHzYw6j78gJGA/EC7jxAYdR9lYNR9lIFR91EGBpv70N0z2NyHDoar+wBWYxLI
+   eJzt1csJACAMREFtTYi9WJpdilfBPyaL7ECu8ggBnaMqWQdMnPaJ0oTDPi07+5NnFX2/3t+q+Pj9W+h92TqATHnrAKIB9P8NHfr+0PraHrS+1q99BbCkDaw=
   </data>
  </layer>
  <layer name="platforms" width="40" height="23">
   <data encoding="base64" compression="zlib">
-   eJxjYmBgYBrFNMFJdMTNZLivkYF+YNR9o+4bdR9+95HqxlH3Uea+gwyY5ejSQeQ+Wocfev0x2NyHDEbdR7n7Bnv5N+o++rpvEQP+NiUyUELC+PTgw6S6Dx/G5RYlAvpwuYec8BvFhDEAoCcyBw==
+   eJxjYmBgYBrFo3gUDxucCMRJdMbJJLivkYH+oHnUfaPuG3XfoHLfEgbUMmTpIHMfKYCa7kMPF2LDiFruO0gF+9CBMhRTw320il9lBtzuHAj3KZOASXHfQiBeBMVJSGxisBIDee2DxSS4bxQPHwwAH3g0bg==
   </data>
  </layer>
  <objectgroup name="objects">
-  <object id="4" name="P1" type="PlayerStart1" x="273.365" y="530.465" width="60" height="77"/>
-  <object id="5" name="P2" type="PlayerStart2" x="359.496" y="561.465" width="47" height="44"/>
-  <object id="16" name="exit" type="Exit" x="999.836" y="517.978" width="64" height="90"/>
-  <object id="34" name="fan1" type="Fan" x="513.417" y="638.854" width="32" height="32">
-   <properties>
-    <property name="dir" type="int" value="0"/>
-    <property name="power" type="int" value="250"/>
-    <property name="startOn" type="bool" value="true"/>
-   </properties>
-  </object>
-  <object id="37" name="BackObject" type="BackObject" x="555" y="418" width="96" height="96">
+  <object id="4" name="P1" type="PlayerStart1" x="377.254" y="529.209" width="60" height="77"/>
+  <object id="5" name="P2" type="PlayerStart2" x="220.542" y="562.465" width="47" height="44"/>
+  <object id="16" name="exit" type="Exit" x="1002.5" y="484.978" width="64" height="90"/>
+  <object id="37" name="BackObject" type="BackObject" x="199.333" y="417.333" width="96" height="96">
    <properties>
     <property name="frames" type="int" value="1"/>
     <property name="speed" type="int" value="10"/>
@@ -36,20 +29,22 @@
     <property name="style" type="int" value="2"/>
    </properties>
   </object>
-  <object id="40" name="block1" type="Block" x="332" y="317.333" width="32" height="32"/>
-  <object id="42" name="fan2" type="Fan" x="797.968" y="63.1358" width="32" height="32">
+  <object id="48" name="fan1" type="Fan" x="832" y="543" width="32" height="32">
    <properties>
-    <property name="dir" type="int" value="2"/>
+    <property name="dir" type="int" value="3"/>
     <property name="power" type="int" value="100"/>
     <property name="startOn" type="bool" value="true"/>
+    <property name="switches" value="switch1"/>
    </properties>
   </object>
-  <object id="43" name="fan1" type="Fan" x="607.037" y="639.697" width="32" height="32">
+  <object id="51" name="BackObject" type="BackObject" x="895" y="254" width="82" height="64">
    <properties>
-    <property name="dir" type="int" value="0"/>
-    <property name="power" type="int" value="250"/>
-    <property name="startOn" type="bool" value="true"/>
+    <property name="frames" type="int" value="3"/>
+    <property name="speed" type="int" value="2"/>
+    <property name="sprite" value="screen"/>
+    <property name="style" type="int" value="2"/>
    </properties>
   </object>
+  <object id="52" name="block3" type="Block" x="800" y="384" width="32" height="32"/>
  </objectgroup>
 </map>

@@ -55,7 +55,7 @@ public class Fan extends GameMapObject implements Box2dCollisionHandler,SwitchHa
 		objects = new Array<GameSprite>();
 		snap = getBool("snap", mp);
 
-		m_force = 3000f * (power/100);
+		m_force = 3000f * ((float)power/100f);
 		
 		if(direction == UP ) {
 			setSize(Box2dVars.PIXELS_PER_METER*3,Box2dVars.PIXELS_PER_METER*fan_len);
@@ -137,6 +137,9 @@ public class Fan extends GameMapObject implements Box2dCollisionHandler,SwitchHa
 			m_fx = xx + this.getWidth();
 		}
 
+		m_fy = yy;
+		if (m_offY != 0) m_fy += this.getHeight();
+
 		super.setBodyPosition(xx,yy);
 		m_body.setActive(isOn);
 	}
@@ -150,13 +153,17 @@ public class Fan extends GameMapObject implements Box2dCollisionHandler,SwitchHa
 			for(GameSprite o: objects) {
 				if(o instanceof PowerUnit) {
 					if(direction == RIGHT) {
-						float dx = (o.getX() - m_fx)/Box2dVars.PIXELS_PER_METER;
-						o.m_body.applyForceToCenter((m_force/25) / (dx*dx),0,true);
+						if (((PowerUnit)o).checkDir(1) == false)
+						{
+							float dx = (o.getX() - m_fx)/Box2dVars.PIXELS_PER_METER;
+							o.m_body.applyForceToCenter((m_force/25) / (dx*dx),0,true);
+						}
 					}else if(direction == LEFT) {
-						//float dx = (o.getX() - m_fx)/Box2dVars.PIXELS_PER_METER;
-						//o.m_body.applyForceToCenter(-m_force / (dx*dx),0,true);
-						float dx = (o.getX() - m_fx)/(Box2dVars.PIXELS_PER_METER*2);
-						o.m_body.applyForceToCenter(-(m_force/25) / (dx*dx),0,true);
+						if (((PowerUnit)o).checkDir(0) == false)
+						{
+							float dx = (o.getX() - m_fx)/(Box2dVars.PIXELS_PER_METER*2);
+							o.m_body.applyForceToCenter(-(m_force/25) / (dx*dx),0,true);
+						}
 					}else if(direction == UP) {
 						float dy = (o.getY() - m_fy)/Box2dVars.PIXELS_PER_METER;
 						o.m_body.applyForceToCenter(0,(m_force/25) / (dy*dy),true);
@@ -181,17 +188,17 @@ public class Fan extends GameMapObject implements Box2dCollisionHandler,SwitchHa
 								o.m_body.applyForceToCenter(-m_force / (dx*dx),0,true);
 							}
 						}else if(direction == UP){
-							if (((Player)o).checkDir(2) == false) {
+							//if (((Player)o).checkDir(2) == false) {
 								float dy = (o.getY() - m_fy)/Box2dVars.PIXELS_PER_METER;
 								o.m_body.applyForceToCenter(0,m_force / (dy*dy),true);
-							}
+							//}
 							
 							
 						}else if(direction == DOWN) {
-							if (((Player)o).checkDir(3) == false) {
+							//if (((Player)o).checkDir(3) == false) {
 								float dy = (o.getY() - m_fy)/Box2dVars.PIXELS_PER_METER;
 								o.m_body.applyForceToCenter(0,-m_force / (dy*dy),true);
-							}
+							//}
 						}	
 					}				
 					
