@@ -21,6 +21,9 @@ public class GameParticle extends GameSprite {
   public float ddy = 0;
   public int m_state = 0;
   public GameAnimateable m_fadeOut = new AnimateFadeOut(0.5f);
+  float m_rfactor = 1f;
+  float m_r = 0;
+  boolean m_rotate = false;
  
     
   public GameParticle(TextureAtlas textures, String imgName)
@@ -28,6 +31,31 @@ public class GameParticle extends GameSprite {
     super(textures.findRegion(imgName));
     m_state = 0;
     this.setVisible(false);
+  }
+
+  public void setParticle(float xx, float yy, float w, float h, int dir, float spd, int life, float grav, float delta, boolean rotate)
+  {
+
+    spd = (spd * delta) + ((float)Math.random() * (spd * 2f * (1f - delta) * 2f));
+
+    setParticle(xx, yy, w, h,dir, spd, life, grav);
+    ddx = 0.99f;
+
+    if ((dir == 0) || (dir == 2))
+    {
+      dx = -spd + (float)Math.random() * 2f * spd;
+    } else
+    {
+      dy =  (float)Math.random() * spd;
+    }
+
+    m_rotate = rotate;
+
+    if (m_rotate)
+    {
+      m_rfactor = - 7f + (float)Math.random() * 14f;
+      m_r = (float)Math.random()*359f;
+    }
   }
 
   public void setParticle(float xx, float yy, float w, float h, int dir, float spd, int life, float grav)
@@ -93,6 +121,12 @@ public class GameParticle extends GameSprite {
         m_state = 0;
       }
       move();
+    }
+
+    if (m_rotate)
+    {
+      m_r += m_rfactor;
+      this.setRotation(m_r);
     }
   }
 }

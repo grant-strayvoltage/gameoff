@@ -357,6 +357,7 @@ public float getFloat(String key, MapObject mp)
     m_brain = new PowerUnit();
     m_gameMapObjects.add(m_brain);
     m_brain.init(null,m_sprites);
+    m_brain.setDeathParticles(this, m_sprites);
     m_brain.addToWorld(world);
 
     m_player1 = new Player(m_sprites,1,inputManager);
@@ -369,6 +370,9 @@ public float getFloat(String key, MapObject mp)
 
     m_player1.addToWorld(world);
     m_player2.addToWorld(world);
+
+    m_player1.setDeathParticles(this, m_sprites);
+    m_player2.setDeathParticles(this, m_sprites);
 
     //this.add(m_brain);
 
@@ -483,13 +487,18 @@ public float getFloat(String key, MapObject mp)
           GameMapObject gmo = (GameMapObject)o;
           gmo.setMap(tiledMap);
           gmo.init(p,m_sprites);
-          this.add(gmo);
+          gmo.setShapeRenderer(m_shapeRenderer);
+          if (o instanceof Gate)
+            this.add(gmo, true);
+          else
+            this.add(gmo);
           if (o instanceof Fan)
           {
             ((Fan)o).addFanSprite(this,px,py);
           }
           gmo.addToWorld(world);
           m_gameMapObjects.add(gmo);
+
           gmo.setBodyPosition(px,py);
         } catch (InstantiationException e)
         {
@@ -660,7 +669,7 @@ public float getFloat(String key, MapObject mp)
       //m_exit.m_state = 1;
     }
 
-    if (!m_brain.isAlive()||!m_player1.isAlive()||!m_player2.isAlive())
+    if (!m_brain.isAlive() || !m_player1.isAlive()|| !m_player2.isAlive())
     {
     	reset();
     }

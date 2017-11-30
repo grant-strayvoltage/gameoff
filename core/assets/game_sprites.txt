@@ -81,6 +81,13 @@ brain_F2
   orig: 39, 28
   offset: 0, 0
   index: -1
+brain_particle
+  rotate: false
+  xy: 597, 151
+  size: 6, 5
+  orig: 6, 5
+  offset: 0, 0
+  index: -1
 continue_notSelected
   rotate: false
   xy: 995, 204
@@ -132,9 +139,37 @@ fan_F1
   index: -1
 fan_particle
   rotate: false
-  xy: 585, 153
+  xy: 2, 5
   size: 3, 3
   orig: 3, 3
+  offset: 0, 0
+  index: -1
+gate_h
+  rotate: false
+  xy: 1617, 24
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+gate_h_haz
+  rotate: false
+  xy: 1651, 22
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+gate_v
+  rotate: false
+  xy: 1484, 56
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+gate_v_haz
+  rotate: false
+  xy: 1017, 8
+  size: 32, 32
+  orig: 32, 32
   offset: 0, 0
   index: -1
 hint1_F1
@@ -331,6 +366,20 @@ player2_run_F3
   xy: 1801, 110
   size: 48, 44
   orig: 48, 44
+  offset: 0, 0
+  index: -1
+player_particle
+  rotate: false
+  xy: 995, 132
+  size: 9, 18
+  orig: 9, 18
+  offset: 0, 0
+  index: -1
+player_particles
+  rotate: false
+  xy: 585, 136
+  size: 10, 20
+  orig: 10, 20
   offset: 0, 0
   index: -1
 screen_F1

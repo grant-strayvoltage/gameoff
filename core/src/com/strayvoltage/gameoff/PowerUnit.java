@@ -43,6 +43,7 @@ public class PowerUnit extends GameMapObject implements Box2dCollisionHandler {
   int m_fanRight = 0;
   int m_fanLeft = 0;
   long m_brainMoveSound = -1;
+  GameParticleSystem m_particleSystem1, m_particleSystem2;
 
   public void init(MapProperties mp, TextureAtlas textures)
   {
@@ -57,7 +58,11 @@ public class PowerUnit extends GameMapObject implements Box2dCollisionHandler {
     m_launchAnimation = new AnimateSpriteFrame(textures, new String[] {"brain_F1", "brain_F2"}, 0.1f, 1);
     m_walkingAnimation = new AnimateSpriteFrame(textures, new String[] {"brain_F1", "brain_F2"}, 0.2f, -1);
 
-    m_deathAnimation = new AnimateFadeOut(0.5f);
+    GameAnimateable f1 = new AnimateFadeOut(0.15f);
+    GameAnimateable d1 = new AnimateDelay(0.5f);
+
+    GameAnimateable[] ds = {f1,d1};
+    m_deathAnimation = new GameAnimationSequence(ds,1);
     
     AnimateColorTo a = new AnimateColorTo(0.46f,1f,1f,1f,1f,0f,0f);
     AnimateDelay d = new AnimateDelay(0.08f);
@@ -65,7 +70,15 @@ public class PowerUnit extends GameMapObject implements Box2dCollisionHandler {
     GameAnimateable[] a1 = {a,d,b};
     m_warnAnimation = new GameAnimationSequence(a1,3);
     m_warnAnimation.setIgnoreStop(true);
-    
+
+  }
+
+  public void setDeathParticles(MainLayer l, TextureAtlas textures)
+  {
+    m_particleSystem1 = new GameParticleSystem(l, textures, "brain_particle", 40, 0, 1.5f, 20,0.2f,0.03f);
+    m_particleSystem1.setRandom(0.9f,5,12);
+    m_particleSystem2 = new GameParticleSystem(l, textures, "brain_particle", 40, 2, 0.25f, 20,0.1f,0.03f);
+    m_particleSystem2.setRandom(0.9f,5,10);
   }
 
   public void startMoveSound()
@@ -276,12 +289,22 @@ public class PowerUnit extends GameMapObject implements Box2dCollisionHandler {
     GameMain.getSingleton().addDeath();
     stopMoveSound();
     playSound("brainDie",1f);
+    m_particleSystem1.start();
+    m_particleSystem2.start();
   }
 
   public void update(float deltaTime)
   {
       if (m_dead)
       {
+        
+        m_particleSystem1.setLocation(this.getX(), this.getY(), this.getWidth(), this.getHeight());
+        m_particleSystem2.setLocation(this.getX(), this.getY(), this.getWidth(), this.getHeight());
+ 
+        m_particleSystem1.update(deltaTime);
+        m_particleSystem2.update(deltaTime);
+
+
         setPositionToBody();
         return;
       }

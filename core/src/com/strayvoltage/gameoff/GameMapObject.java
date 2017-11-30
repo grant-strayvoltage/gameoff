@@ -12,6 +12,8 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
 import com.strayvoltage.gamelib.GameSprite;
 import com.strayvoltage.gamelib.GameTileMap;
+import com.badlogic.gdx.graphics.glutils.*;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 
 public abstract class GameMapObject extends GameSprite {
 
@@ -35,6 +37,7 @@ public abstract class GameMapObject extends GameSprite {
   BodyType m_btype;
   
   public boolean m_triggered;
+  protected ShapeRenderer shapeRenderer = null;
 
   public GameMapObject()
   {
@@ -188,6 +191,11 @@ public abstract class GameMapObject extends GameSprite {
       m_body.setActive(false);
     }
   }
+
+  public void setShapeRenderer(ShapeRenderer sr)
+	{
+		shapeRenderer = sr;
+	}
 
   public void setBodyPosition(float xx, float yy)
   {

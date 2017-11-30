@@ -1,11 +1,13 @@
 package com.strayvoltage.gameoff;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.graphics.g2d.*;
 import com.badlogic.gdx.maps.MapProperties;
 import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.graphics.glutils.*;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 
 public class Gate extends GameMapObject implements SwitchHandler,Box2dCollisionHandler{
 	
@@ -36,12 +38,20 @@ public class Gate extends GameMapObject implements SwitchHandler,Box2dCollisionH
 	//magic number
 	float startx = -1;
 	float starty = -1;
-	
+	int m_animTick = 0;
+
 	private float offset = 5;
+	private TextureRegion m_region = null;
+
+	int m_tileHeight;
+	int m_tileWidth;
 
 	@Override
 	public void init(MapProperties mp, TextureAtlas textures) {
-		if(getBool("hazard", mp)) 
+
+		boolean haz = getBool("hazard", mp);
+
+		if(haz) 
 			m_categoryBits = Box2dVars.HAZARD;
 		else
 			m_categoryBits = Box2dVars.OBJECT;
@@ -57,12 +67,29 @@ public class Gate extends GameMapObject implements SwitchHandler,Box2dCollisionH
 			direction = DOWN;
 		}
 		horizontal = getBool("horizontal", mp);
+
+
+		m_tileHeight = (int) (this.getHeight()/Box2dVars.PIXELS_PER_METER);
+		m_tileWidth = (int) (this.getWidth()/Box2dVars.PIXELS_PER_METER);
+
+		if (haz)
+		{
+			if (m_tileHeight > m_tileWidth)
+				m_region = textures.findRegion("gate_v_haz");
+			else
+				m_region = textures.findRegion("gate_h_haz");
+		} else
+		{
+			if (m_tileHeight > m_tileWidth)
+				m_region = textures.findRegion("gate_v");
+			else
+				m_region = textures.findRegion("gate_h");			
+		}
 	}
 	
 	@Override
 	public void update(float deltaTime) {
 		if(state==MOVING) {
-			System.out.println("moving gate");
 			if(horizontal) {
 				if(isOpen) {//OPEN GATE
 					setBodyPosition(getX()+(direction*(open_speed*deltaTime)), getY());
@@ -169,7 +196,24 @@ public class Gate extends GameMapObject implements SwitchHandler,Box2dCollisionH
 	
 	@Override
 	public void draw(Batch batch) {
-		//TODO:implement graphic
+
+		float xx = this.getX();
+		float yy = this.getY();
+		for (int ix = 0; ix < m_tileWidth; ix++)
+		{
+			for (int iy = 0; iy < m_tileHeight; iy++)
+			{
+				batch.draw(m_region,xx + ix *Box2dVars.PIXELS_PER_METER, yy + iy *Box2dVars.PIXELS_PER_METER);
+			}
+		}
+	}
+
+	public void drawShape()
+	{
+		//shapeRenderer.begin(ShapeType.Line);
+		//shapeRenderer.setColor(1, 0, 0, 1);
+		//shapeRenderer.rect(this.getX(), this.getY(), this.getWidth(), this.getHeight());
+		//shapeRenderer.end();
 	}
 	
 	@Override

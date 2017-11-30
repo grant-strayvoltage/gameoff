@@ -73,6 +73,9 @@ public class Player extends GameSprite implements Box2dCollisionHandler{
   String moveSound;
   String jumpSound;
   String landSound;
+  GameAnimateable m_deathAnimation;
+
+  GameParticleSystem m_particleSystem1, m_particleSystem2;
 
   public Player(TextureAtlas textures, int p, GameInputManager2 controller)
   {
@@ -99,6 +102,13 @@ public class Player extends GameSprite implements Box2dCollisionHandler{
     id = p;
 
     m_exitAnimation = new AnimateFadeOut(0.5f);
+
+
+    GameAnimateable f1 = new AnimateFadeOut(0.3f);
+    GameAnimateable d1 = new AnimateDelay(0.2f);
+
+    GameAnimateable[] ds = {f1,d1};
+    m_deathAnimation = new GameAnimationSequence(ds,1);
   }
 
   public void setMap(GameTileMap m, Player p, float jumpDY, float jForce, PowerUnit pu, int pNum)
@@ -118,6 +128,14 @@ public class Player extends GameSprite implements Box2dCollisionHandler{
       m_hForce = 100;
       m_maxX = 4;
     }
+  }
+
+  public void setDeathParticles(MainLayer l, TextureAtlas textures)
+  {
+    m_particleSystem1 = new GameParticleSystem(l, textures, "player_particle", 25, 0, 3.0f, 30,0.4f,0.04f);
+    m_particleSystem1.setRandom(0.9f,5,20);
+    m_particleSystem2 = new GameParticleSystem(l, textures, "player_particle", 15, 2, 1.5f, 30,0.3f,0.02f);
+    m_particleSystem2.setRandom(0.9f,5,10);
   }
 
   public void calcBrainRectangle()
@@ -296,6 +314,16 @@ public class Player extends GameSprite implements Box2dCollisionHandler{
 
   public void update(float deltaTime)
   {
+
+    if (m_dead)
+    {
+        m_particleSystem1.setLocation(this.getX(), this.getY(), this.getWidth(), this.getHeight());
+        m_particleSystem2.setLocation(this.getX(), this.getY(), this.getWidth(), this.getHeight());
+ 
+        m_particleSystem1.update(deltaTime);
+        m_particleSystem2.update(deltaTime);
+        return;
+    }
 	
 	 //update for fixed jump
 	  if(fixed_jump) {
@@ -762,7 +790,15 @@ public class Player extends GameSprite implements Box2dCollisionHandler{
 
   public boolean isAlive()
   {
-    return !m_dead;
+    if (m_dead == false) return true;
+
+    if (m_dead)
+    {
+      if (m_deathAnimation.isRunning()) return true;
+    }
+
+    return false;
+
   }
   
   public void startMoveSound()
@@ -868,12 +904,22 @@ public class Player extends GameSprite implements Box2dCollisionHandler{
 	public void die() {
 		if(m_dead)
 			return;
+
 		stopAllAnimations();
 		m_dead = true;
     GameMain.getSingleton().addDeath();
     m_body.setLinearVelocity(0,0);
     stopMoveSound();
+    this.runAnimation(m_deathAnimation);
     this.playSound(dieSound,1f);
+    m_particleSystem1.start();
+    m_particleSystem2.start();
+
+    if (m_ownsPowerUnit)
+    {
+      if (m_powerUnit != null)
+        m_powerUnit.die();
+    }
 	}
 	
 }
