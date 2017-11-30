@@ -82,7 +82,7 @@ public class CutSceneImage extends GameLayer {
     this.add(m_nextImage);
     m_nextImage.setOpacity(0f);
     m_nextImage.setVisible(false);
-    m_nextImage.setPosition(1075,65);
+    m_nextImage.setPosition(950,65);
 
     this.setCameraPosition(1280/2,720/2);
 
@@ -133,8 +133,8 @@ public class CutSceneImage extends GameLayer {
     m_deathsText.setOpacity(0);
     m_timeText.setOpacity(0);
 
-    m_deathsText.setPosition(252,517);
-    m_timeText.setPosition(252,454);
+    m_deathsText.setPosition(265,523);
+    m_timeText.setPosition(265,458);
 
     GameAnimateable an5 = new AnimateFadeIn(0.5f);
     m_deathsText.runAnimation(an5);

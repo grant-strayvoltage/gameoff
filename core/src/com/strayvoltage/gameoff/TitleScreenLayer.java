@@ -135,15 +135,14 @@ public class TitleScreenLayer extends GameLayer implements GameMenuListener {
     {
       this.eraseGame(0);
       this.loadGameDefaults();
-      this.setGlobal("m_stage","1");
+      this.setGlobal("m_stage","1"); 
       this.setGlobal("m_level", "1");
       this.loadGame(0);
-      //todo opening cut scene
 
       
       if(GameOff.DEBUG) {
         MainLayer l = new MainLayer();
-        l.loadLevel(3,1);
+        l.loadLevel(4,1);
         this.replaceActiveLayer(l);
         this.cleanUp();
       }else

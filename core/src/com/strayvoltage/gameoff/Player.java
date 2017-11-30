@@ -171,7 +171,7 @@ public class Player extends GameSprite implements Box2dCollisionHandler{
     fixtureDef.shape = rect;
 
 
-    fixtureDef.density = 0.9f; 
+    fixtureDef.density = 0.88f; 
     fixtureDef.friction = 0.5f;
     fixtureDef.restitution = -1f;
 
