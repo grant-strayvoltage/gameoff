@@ -1,6 +1,7 @@
 #JAVA
 # Compiled class file
 *.class
+saveGame0.txt
 
 #ECLIPSE
 .metadata
