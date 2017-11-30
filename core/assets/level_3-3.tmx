@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" tiledversion="2017.07.25" orientation="orthogonal" renderorder="right-down" width="40" height="23" tilewidth="32" tileheight="32" nextobjectid="53">
+<map version="1.0" tiledversion="1.0.3" orientation="orthogonal" renderorder="right-down" width="40" height="23" tilewidth="32" tileheight="32" nextobjectid="53">
  <properties>
   <property name="Back" value="back3"/>
-  <property name="Title" value="Stage_3-3"/>
+  <property name="Title" value="Stay There Please"/>
   <property name="backOffX" type="int" value="-30"/>
   <property name="backOffY" type="int" value="50"/>
  </properties>
@@ -21,15 +21,6 @@
   <object id="4" name="P1" type="PlayerStart1" x="354.058" y="432.742" width="60" height="77"/>
   <object id="5" name="P2" type="PlayerStart2" x="419" y="464" width="47" height="44"/>
   <object id="16" name="exit" type="Exit" x="862" y="389" width="64" height="90"/>
-  <object id="44" name="platform1" type="Platform" x="-256" y="800" width="96" height="32">
-   <properties>
-    <property name="contactTrigger" type="bool" value="false"/>
-    <property name="moveHorizontal" type="bool" value="true"/>
-    <property name="startDir" type="int" value="-1"/>
-    <property name="startOn" type="bool" value="true"/>
-    <property name="switches" value="switch1"/>
-   </properties>
-  </object>
   <object id="46" name="PlatformStop" type="PlatformStop" x="512" y="512" width="32" height="32"/>
   <object id="47" name="PlatformStop" type="PlatformStop" x="512" y="224" width="32" height="32"/>
   <object id="48" name="platform1" type="Platform" x="480" y="256" width="96" height="32">
@@ -41,7 +32,7 @@
     <property name="switches" value="switch1"/>
    </properties>
   </object>
-  <object id="49" name="Block1" type="Block" x="483" y="479" width="32" height="32"/>
+  <object id="49" name="Block1" type="Block" x="576" y="480" width="32" height="32"/>
   <object id="50" name="switch1" type="Switch" x="704" y="480" width="32" height="32">
    <properties>
     <property name="sensitive" type="bool" value="true"/>
@@ -57,6 +48,14 @@
     <property name="isOpen" type="bool" value="false"/>
     <property name="openDown" type="bool" value="false"/>
     <property name="switches" value="switch1"/>
+   </properties>
+  </object>
+  <object id="52" name="BackObject" type="BackObject" x="806" y="262" width="82" height="64">
+   <properties>
+    <property name="frames" type="int" value="3"/>
+    <property name="speed" type="int" value="2"/>
+    <property name="sprite" value="screen"/>
+    <property name="style" type="int" value="2"/>
    </properties>
   </object>
  </objectgroup>

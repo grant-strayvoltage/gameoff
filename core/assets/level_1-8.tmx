@@ -18,7 +18,6 @@
  <objectgroup name="objects">
   <object id="4" name="P1" type="PlayerStart1" x="801.809" y="466.092" width="60" height="77"/>
   <object id="5" name="P2" type="PlayerStart2" x="543.048" y="403.044" width="47" height="44"/>
-  <object id="14" name="block3" type="Block" x="274.401" y="398.855" width="32" height="32"/>
   <object id="16" name="exit" type="Exit" x="864" y="480" width="64" height="64"/>
   <object id="35" name="fan1" type="Fan" x="-256" y="96" width="32" height="32">
    <properties>

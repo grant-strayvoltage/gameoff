@@ -11,6 +11,13 @@ block1_moveable
   orig: 32, 32
   offset: 0, 0
   index: -1
+block2_moveable
+  rotate: false
+  xy: 1651, 140
+  size: 48, 48
+  orig: 48, 48
+  offset: 0, 0
+  index: -1
 blood1_F1
   rotate: false
   xy: 168, 44
@@ -146,28 +153,28 @@ fan_particle
   index: -1
 gate_h
   rotate: false
-  xy: 1617, 24
+  xy: 1685, 56
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 gate_h_haz
   rotate: false
-  xy: 1651, 22
+  xy: 1617, 24
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 gate_v
   rotate: false
-  xy: 1484, 56
+  xy: 1719, 56
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 gate_v_haz
   rotate: false
-  xy: 1017, 8
+  xy: 1651, 22
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
@@ -321,49 +328,49 @@ player1_stand_old
   index: -1
 player2_jump
   rotate: false
-  xy: 1851, 110
+  xy: 311, 2
   size: 47, 44
   orig: 47, 44
   offset: 0, 0
   index: -1
 player2_land
   rotate: false
-  xy: 1851, 110
+  xy: 311, 2
   size: 47, 44
   orig: 47, 44
   offset: 0, 0
   index: -1
 player2_run_F1
   rotate: false
-  xy: 1701, 94
+  xy: 1751, 94
   size: 48, 44
   orig: 48, 44
   offset: 0, 0
   index: -1
 player2_stand_F1
   rotate: false
-  xy: 1701, 94
+  xy: 1751, 94
   size: 48, 44
   orig: 48, 44
   offset: 0, 0
   index: -1
 player2_stand_F2
   rotate: false
-  xy: 1701, 94
+  xy: 1751, 94
   size: 48, 44
   orig: 48, 44
   offset: 0, 0
   index: -1
 player2_run_F2
   rotate: false
-  xy: 1751, 94
+  xy: 1801, 110
   size: 48, 44
   orig: 48, 44
   offset: 0, 0
   index: -1
 player2_run_F3
   rotate: false
-  xy: 1801, 110
+  xy: 1851, 110
   size: 48, 44
   orig: 48, 44
   offset: 0, 0
@@ -440,42 +447,42 @@ station_F3
   index: -1
 switch2_off
   rotate: false
-  xy: 1651, 140
+  xy: 1701, 140
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
 switch2_on
   rotate: false
-  xy: 1701, 140
+  xy: 1751, 140
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
 switch_off
   rotate: false
-  xy: 1751, 140
+  xy: 1801, 156
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
 switch_on
   rotate: false
-  xy: 1801, 156
+  xy: 1851, 156
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
 tramp_down
   rotate: false
-  xy: 1851, 156
+  xy: 1651, 90
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
 tramp_up
   rotate: false
-  xy: 1651, 90
+  xy: 1701, 90
   size: 48, 48
   orig: 48, 48
   offset: 0, 0

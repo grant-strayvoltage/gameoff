@@ -388,7 +388,7 @@ public float getFloat(String key, MapObject mp)
     m_brain.m_map = tiledMap;
 
     m_player1.setMap(tiledMap, m_player2,24,40,m_brain,1);
-    m_player2.setMap(tiledMap, m_player1,8.5f,18,m_brain,2);
+    m_player2.setMap(tiledMap, m_player1,8.1f,15,m_brain,2);
     m_brain.setMap(tiledMap);
 
 
