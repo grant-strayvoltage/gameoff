@@ -636,7 +636,7 @@ public float getFloat(String key, MapObject mp)
       m_fadeOutSprite.animate(deltaTime);
       if (stateTime > 0.5f)
       {
-        if ((m_stage == 4) && (m_level == 2)) //change back to 5,8
+        if ((m_stage == 5) && (m_level == 8))
         {
           doVictory();
         } else

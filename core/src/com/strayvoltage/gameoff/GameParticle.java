@@ -32,13 +32,28 @@ public class GameParticle extends GameSprite {
 
   public void setParticle(float xx, float yy, float w, float h, int dir, float spd, int life, float grav)
   {
-    dx = spd;
+
+    dx = 0;
+    dy = 0;
+
+    if (dir == 0) dy = spd;
+    if (dir == 1) dx = spd;
+    if (dir == 2) dy = -spd;
     if (dir == 3) dx = -spd;
+
     xx += Math.random() * w;
     yy += Math.random() * h;
-    dy = 0;
-    ddx = 0.995f;
-    ddy = grav;
+
+    if ((dir == 1) || (dir == 3))
+    {
+      ddx = 0.995f;
+      ddy = grav;
+    } else
+    {
+      ddx = 0f;
+      ddy = grav;
+    }
+
     ticksToLive = (int)(Math.random() * 10) + life;
     setPosition(xx,yy);
     this.setVisible(true);

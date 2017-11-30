@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.maps.MapProperties;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.Gdx;
 import com.strayvoltage.gamelib.*;
 
 public class Fan extends GameMapObject implements Box2dCollisionHandler,SwitchHandler{
@@ -45,7 +46,7 @@ public class Fan extends GameMapObject implements Box2dCollisionHandler,SwitchHa
 		m_btype = BodyType.StaticBody;
 		m_isSensor = true;
 		m_categoryBits = Box2dVars.FAN;
-		m_filterMask = Box2dVars.PLAYER_NORMAL|Box2dVars.PLAYER_JUMPING|Box2dVars.BLOCK|Box2dVars.OBJECT|Box2dVars.POWER;
+		m_filterMask = Box2dVars.PLAYER_NORMAL|Box2dVars.PLAYER_JUMPING|Box2dVars.BLOCK|Box2dVars.OBJECT|Box2dVars.POWER | Box2dVars.BLOCK;
 		isOn = getBool("startOn", mp);
 		//get fan direction
 		direction = getInt("dir", mp);
@@ -66,14 +67,14 @@ public class Fan extends GameMapObject implements Box2dCollisionHandler,SwitchHa
 			m_offY = Box2dVars.PIXELS_PER_METER;
 		}else if (direction == RIGHT)
 		{
-			setSize(Box2dVars.PIXELS_PER_METER*fan_len,Box2dVars.PIXELS_PER_METER*3);
+			setSize(Box2dVars.PIXELS_PER_METER*fan_len,(Box2dVars.PIXELS_PER_METER*3 - 4/Box2dVars.PIXELS_PER_METER));
 			m_offX = 0;
-			m_offY = -Box2dVars.PIXELS_PER_METER;			
+			m_offY = -Box2dVars.PIXELS_PER_METER + 1;		
 		} else if (direction == LEFT)
 		{
-			setSize(Box2dVars.PIXELS_PER_METER*fan_len,Box2dVars.PIXELS_PER_METER*3);
+			setSize(Box2dVars.PIXELS_PER_METER*fan_len,(Box2dVars.PIXELS_PER_METER*3 - 4/Box2dVars.PIXELS_PER_METER));
 			m_offX = -this.getWidth() + Box2dVars.PIXELS_PER_METER;
-			m_offY = -Box2dVars.PIXELS_PER_METER;
+			m_offY = -Box2dVars.PIXELS_PER_METER + 1;
 		}
 
 		m_fanSprite = new GameSprite(textures.findRegion("fan_F1"));
@@ -86,7 +87,7 @@ public class Fan extends GameMapObject implements Box2dCollisionHandler,SwitchHa
 	{
 		if (m_soundId < 0)
 		{
-			m_soundId = loopSound("fan",0.9f);
+			m_soundId = loopSound("fan",0.2f);
 		}
 	}
 
@@ -103,28 +104,22 @@ public class Fan extends GameMapObject implements Box2dCollisionHandler,SwitchHa
 	{
 		l.add(m_fanSprite);
 		m_fanSprite.setPosition(xx,yy);
-		m_particleSystem = new GameParticleSystem(l, m_textures, "fan_particle", 25, direction, 5, 55,0.13f,0.0025f);
-		
-//		if(direction == UP) {
-//			m_particleSystem.setLocation(xx + 34,yy-28,88,1);
-//		}
-//		else if(direction == DOWN) {
-//			m_particleSystem.setLocation(xx + 34,yy-28,88,1);
-//		}
-//		else if (direction == RIGHT)
-//		{
-//			m_particleSystem.setLocation(xx + 34,yy-28,1,88);
-//		} else
-//		{
-//			m_particleSystem.setLocation(xx -2,yy-28,1,88);
-//		} //Could not figure it out lol -john
+		float  grav = 0.0025f;
+		if (direction == UP) grav = 0.0225f;
+		if (direction == DOWN) grav = -0.0225f;
+		m_particleSystem = new GameParticleSystem(l, m_textures, "fan_particle", 25, direction, 5, 50,0.13f,grav);
 		
 		if (direction == RIGHT)
 		{
 			m_particleSystem.setLocation(xx + 34,yy-28,1,88);
-		} else
+		} else if (direction == LEFT)
 		{
 			m_particleSystem.setLocation(xx -2,yy-28,1,88);
+		} else if (direction == UP)
+		{
+			m_particleSystem.setLocation(xx - 28,yy + 34,88,1);
+		} else {
+			m_particleSystem.setLocation(xx - 28,yy - 2,88,1);
 		}
 		
 	}
@@ -143,6 +138,7 @@ public class Fan extends GameMapObject implements Box2dCollisionHandler,SwitchHa
 		}
 
 		super.setBodyPosition(xx,yy);
+		m_body.setActive(isOn);
 	}
 	
 	@Override
@@ -200,21 +196,19 @@ public class Fan extends GameMapObject implements Box2dCollisionHandler,SwitchHa
 					}				
 					
 				} else {
-					if(direction == UP) {
-						if(o.m_body.getLinearVelocity().y < 14)
-							o.m_body.applyLinearImpulse(0,power, 0, 0, true);
-					}else if(direction == DOWN) {
-						if(o.m_body.getLinearVelocity().y > -14)
-							o.m_body.applyLinearImpulse(0,-power, 0, 0, true);
-					}else if(direction == RIGHT) {
-						float dx = (o.getX() - m_fx)/Box2dVars.PIXELS_PER_METER;
-						o.m_body.applyForceToCenter(m_force / (dx*dx),0,true);
-					}else if(direction == LEFT) {
-						//float dx = (o.getX() - m_fx)/Box2dVars.PIXELS_PER_METER;
-						//o.m_body.applyForceToCenter(-m_force / (dx*dx),0,true);
-						float dx = (o.getX() - m_fx)/(Box2dVars.PIXELS_PER_METER*2);
-						o.m_body.applyForceToCenter(-m_force / (dx*dx),0,true);
-					}
+						if(direction == RIGHT) {
+							float dx = (o.getX() - m_fx)/Box2dVars.PIXELS_PER_METER;
+							o.m_body.applyForceToCenter(m_force / (dx*dx),0,true);
+						}else if(direction == LEFT) {
+							float dx = (o.getX() - m_fx)/(Box2dVars.PIXELS_PER_METER*2);
+							o.m_body.applyForceToCenter(-m_force / (dx*dx),0,true);
+						}else if(direction == UP){
+							float dy = (o.getY() - m_fy)/Box2dVars.PIXELS_PER_METER;
+							o.m_body.applyForceToCenter(0,m_force / (dy*dy),true);
+						}else if(direction == DOWN) {
+							float dy = (o.getY() - m_fy)/Box2dVars.PIXELS_PER_METER;
+							o.m_body.applyForceToCenter(0,-m_force / (dy*dy),true);
+						}	
 				}
 					
 				
@@ -223,6 +217,7 @@ public class Fan extends GameMapObject implements Box2dCollisionHandler,SwitchHa
 		} else
 		{
 			stopFanSound();
+			if (m_rotateAnimation.isRunning()) m_fanSprite.stopAllAnimations();
 		}
 		super.update(deltaTime);
 	}
@@ -235,6 +230,7 @@ public class Fan extends GameMapObject implements Box2dCollisionHandler,SwitchHa
 	public void handleSwitch(Switch source) {
 		if(switches.contains(source.name, false)) {
 			isOn = !isOn;
+			m_body.setActive(isOn);
 		}
 	}
 

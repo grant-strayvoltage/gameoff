@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" tiledversion="1.0.3" orientation="orthogonal" renderorder="right-down" width="40" height="23" tilewidth="32" tileheight="32" nextobjectid="42">
+<map version="1.0" tiledversion="1.0.3" orientation="orthogonal" renderorder="right-down" width="40" height="23" tilewidth="32" tileheight="32" nextobjectid="44">
  <properties>
   <property name="Back" value="back5"/>
   <property name="Title" value="Two Cyborg Bodies...One Brain"/>
@@ -9,22 +9,22 @@
  <tileset firstgid="1" source="tileset.tsx"/>
  <layer name="background" width="40" height="23">
   <data encoding="base64" compression="zlib">
-   eJxjYBgFIJA50A4gAMh1nyudsBOZ7qMXICX8XGnmCtxguKY/eoHB5L52IE5Fw60D6iLCYDCFHzYw2N23YoDtZxxg+0fBKEAG6Pl1sOffUfdRBkbdRxkYru4DAAhREWM=
+   eJxjYBgFIJA50A4gAMh1nyudsBOZ7qMXICX8XGnmCtxguKY/eoHB5L52IE5Fw60D6iLCYDCFHzYw6j78gJGA/EC7jxAYdR9lYNR9lIFR91EGBpv70N0z2NyHDoar+wBWYxLI
   </data>
  </layer>
  <layer name="platforms" width="40" height="23">
   <data encoding="base64" compression="zlib">
-   eJxjYmBgYBrFo3gUk4wTgTiJyjiZiu5rZKA+WEhFt9LCfcigcdR9w8J9S4B4KQ3cd5ABM/9hswcZJBKpjhruIzb8liC5fzGReujpPnIBqKyhpIyhlvtU8MhREob43AdLZ8kE3AXCzXjMWEyB+0DhvwgHfoxG41LzGI8aStw2ikfxKB78GACdFTP7
+   eJxjYmBgYBrFNMFJdMTNZLivkYF+YNR9o+4bdR9+95HqxlH3Uea+gwyY5ejSQeQ+Wocfev0x2NyHDEbdR7n7Bnv5N+o++rpvEQP+NiUyUELC+PTgw6S6Dx/G5RYlAvpwuYec8BvFhDEAoCcyBw==
   </data>
  </layer>
  <objectgroup name="objects">
-  <object id="4" name="P1" type="PlayerStart1" x="301" y="435" width="60" height="77"/>
-  <object id="5" name="P2" type="PlayerStart2" x="394.667" y="466" width="47" height="44"/>
-  <object id="16" name="exit" type="Exit" x="845.333" y="420" width="64" height="90"/>
-  <object id="34" name="fan1" type="Fan" x="992" y="446.667" width="32" height="32">
+  <object id="4" name="P1" type="PlayerStart1" x="273.365" y="530.465" width="60" height="77"/>
+  <object id="5" name="P2" type="PlayerStart2" x="359.496" y="561.465" width="47" height="44"/>
+  <object id="16" name="exit" type="Exit" x="999.836" y="517.978" width="64" height="90"/>
+  <object id="34" name="fan1" type="Fan" x="513.417" y="638.854" width="32" height="32">
    <properties>
-    <property name="dir" type="int" value="3"/>
-    <property name="power" type="int" value="100"/>
+    <property name="dir" type="int" value="0"/>
+    <property name="power" type="int" value="250"/>
     <property name="startOn" type="bool" value="true"/>
    </properties>
   </object>
@@ -37,5 +37,19 @@
    </properties>
   </object>
   <object id="40" name="block1" type="Block" x="332" y="317.333" width="32" height="32"/>
+  <object id="42" name="fan2" type="Fan" x="797.968" y="63.1358" width="32" height="32">
+   <properties>
+    <property name="dir" type="int" value="2"/>
+    <property name="power" type="int" value="100"/>
+    <property name="startOn" type="bool" value="true"/>
+   </properties>
+  </object>
+  <object id="43" name="fan1" type="Fan" x="607.037" y="639.697" width="32" height="32">
+   <properties>
+    <property name="dir" type="int" value="0"/>
+    <property name="power" type="int" value="250"/>
+    <property name="startOn" type="bool" value="true"/>
+   </properties>
+  </object>
  </objectgroup>
 </map>
