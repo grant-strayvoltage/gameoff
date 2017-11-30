@@ -76,6 +76,8 @@ public class Player extends GameSprite implements Box2dCollisionHandler{
   GameAnimateable m_deathAnimation;
 
   GameParticleSystem m_particleSystem1, m_particleSystem2;
+  
+  Array<Fan> fans;
 
   public Player(TextureAtlas textures, int p, GameInputManager2 controller)
   {
@@ -88,6 +90,7 @@ public class Player extends GameSprite implements Box2dCollisionHandler{
     moveSound = p + "Move";
     jumpSound = p + "Jump";
     landSound = p + "Land";
+    fans = new Array<Fan>();
 
 
     m_standingAnimation = new AnimateSpriteFrame(textures, new String[] {pb+"stand_F1", pb + "stand_F2"}, 0.6f, -1);
@@ -109,6 +112,14 @@ public class Player extends GameSprite implements Box2dCollisionHandler{
 
     GameAnimateable[] ds = {f1,d1};
     m_deathAnimation = new GameAnimationSequence(ds,1);
+  }
+  
+  public boolean hasOnFans() {
+	  for(Fan f : fans) {
+		  if(f.isOn)
+			  return true;
+	  }
+	  return false;
   }
 
   public void setMap(GameTileMap m, Player p, float jumpDY, float jForce, PowerUnit pu, int pNum)
@@ -314,6 +325,13 @@ public class Player extends GameSprite implements Box2dCollisionHandler{
 
   public void update(float deltaTime)
   {
+	  m_body.setActive(true);
+	  m_body.setAwake(true);
+	  if(hasOnFans()&&(m_body.getLinearVelocity().y == 0 && m_body.getLinearVelocity().x == 0 )) {
+    		m_fixture.setFriction(.1f);
+    		
+      }
+	
 
     if (m_dead)
     {
@@ -549,6 +567,7 @@ public class Player extends GameSprite implements Box2dCollisionHandler{
         }
 
         if(notMoved && stillTime > 0.2) {
+        	
           m_fixture.setFriction(100f);
           playerSensorFixture.setFriction(100f);
           stopMoveSound();
@@ -874,6 +893,7 @@ public class Player extends GameSprite implements Box2dCollisionHandler{
       {
         m_fanLeft++;
       }
+      fans.add((Fan) collision.target);
     }
 		
 		if(collision.target_type == Box2dVars.HAZARD) {
@@ -900,6 +920,8 @@ public class Player extends GameSprite implements Box2dCollisionHandler{
         {
           m_fanLeft--;
         }
+        if(fans.size > 0)
+        	fans.removeValue((Fan) collision.target, true);
      }
 		
 	}

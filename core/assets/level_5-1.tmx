@@ -1,0 +1,271 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" tiledversion="2017.07.25" orientation="orthogonal" renderorder="right-down" width="40" height="23" tilewidth="32" tileheight="32" nextobjectid="95">
+ <properties>
+  <property name="Back" value="back5"/>
+  <property name="Title" value="Switch Fan Fiction"/>
+ </properties>
+ <tileset firstgid="1" source="tileset.tsx"/>
+ <layer name="background" width="40" height="23">
+  <data encoding="base64" compression="zlib">
+   eJztwTEBAAAAwqD1T20IX6AAAADgNw5gAAE=
+  </data>
+ </layer>
+ <layer name="platforms" width="40" height="23">
+  <data encoding="base64" compression="zlib">
+   eJztl9sJgDAMRUNxEtHB1EmKk/hYRBzFRTRooaTRKn3Yjx64Hw1BD6FVKgBAJJ6WyXpTjxnl14MJV4sJvv/Jr46rY2Dz+5s7vzJAfPqlQvZzQ/db4PzedKSnYWozU6ssa1c/NT9JeiTws6V9tAfXRQC/4XquysTUxiMbqdE1/nvojH34+UKCOeOvZD+et2cnpB/uWdy7BZMpAT8fZD83sp8but/f9wzb/SPl7ImIRkA=
+  </data>
+ </layer>
+ <objectgroup name="objects">
+  <object id="4" name="P1" type="PlayerStart1" x="228" y="80" width="60" height="77"/>
+  <object id="5" name="P2" type="PlayerStart2" x="131.333" y="108.667" width="47" height="44"/>
+  <object id="14" name="block3" type="Block" x="-64" y="352" width="32" height="32"/>
+  <object id="16" name="exit" type="Exit" x="1149.33" y="579.333" width="64" height="90"/>
+  <object id="28" name="Tramp1" type="Trampoline" x="-128" y="480" width="48" height="48">
+   <properties>
+    <property name="static" type="bool" value="true"/>
+   </properties>
+  </object>
+  <object id="34" name="switch1" type="Switch" x="-128" y="256" width="48" height="48">
+   <properties>
+    <property name="startOn" type="bool" value="false"/>
+    <property name="toggle" type="bool" value="true"/>
+    <property name="visible" type="bool" value="true"/>
+   </properties>
+  </object>
+  <object id="35" name="fan1" type="Fan" x="1071" y="639" width="32" height="32">
+   <properties>
+    <property name="dir" type="int" value="0"/>
+    <property name="power" type="int" value="100"/>
+    <property name="startOn" type="bool" value="true"/>
+    <property name="switches" value="PW_Switch,failswitch"/>
+   </properties>
+  </object>
+  <object id="36" name="BackObject" type="BackObject" x="-192" y="32" width="82" height="64">
+   <properties>
+    <property name="frames" type="int" value="3"/>
+    <property name="speed" type="int" value="2"/>
+    <property name="sprite" value="screen"/>
+    <property name="style" type="int" value="2"/>
+   </properties>
+  </object>
+  <object id="40" name="BackObject" type="BackObject" x="-64" y="160" width="32" height="64">
+   <properties>
+    <property name="frames" type="int" value="1"/>
+    <property name="speed" type="int" value="10"/>
+    <property name="sprite" value="blood3"/>
+    <property name="style" type="int" value="2"/>
+   </properties>
+  </object>
+  <object id="42" name="Gate1" type="Gate" x="352" y="64" width="32" height="96">
+   <properties>
+    <property name="hazard" type="bool" value="true"/>
+    <property name="openDown" type="bool" value="false"/>
+    <property name="switches" value="PW_Switch"/>
+   </properties>
+  </object>
+  <object id="44" name="Gate1" type="Gate" x="-160" y="320" width="32" height="96">
+   <properties>
+    <property name="openDown" type="bool" value="false"/>
+    <property name="switches" value="gate1_switch"/>
+   </properties>
+  </object>
+  <object id="45" name="fan1" type="Fan" x="64" y="608" width="32" height="32">
+   <properties>
+    <property name="dir" type="int" value="1"/>
+    <property name="power" type="int" value="100"/>
+    <property name="startOn" type="bool" value="false"/>
+    <property name="switches" value="fdancer"/>
+   </properties>
+  </object>
+  <object id="46" name="fan2" type="Fan" x="416" y="608" width="32" height="32">
+   <properties>
+    <property name="dir" type="int" value="1"/>
+    <property name="power" type="int" value="100"/>
+    <property name="startOn" type="bool" value="false"/>
+    <property name="switches" value="PW_Switch"/>
+   </properties>
+  </object>
+  <object id="47" name="PW_Switch" type="Switch" x="192" y="640" width="32" height="32">
+   <properties>
+    <property name="startOn" type="bool" value="false"/>
+    <property name="toggle" type="bool" value="false"/>
+    <property name="visible" type="bool" value="true"/>
+   </properties>
+  </object>
+  <object id="48" name="fdancer" type="Switch" x="640" y="128" width="32" height="32">
+   <properties>
+    <property name="sensitive" type="bool" value="true"/>
+    <property name="startOn" type="bool" value="false"/>
+    <property name="toggle" type="bool" value="true"/>
+    <property name="visible" type="bool" value="true"/>
+   </properties>
+  </object>
+  <object id="49" name="dorrSwitch" type="Switch" x="704" y="128" width="32" height="32">
+   <properties>
+    <property name="sensitive" type="bool" value="true"/>
+    <property name="startOn" type="bool" value="false"/>
+    <property name="toggle" type="bool" value="true"/>
+    <property name="visible" type="bool" value="true"/>
+   </properties>
+  </object>
+  <object id="50" name="Gate1" type="Gate" x="672" y="370" width="32" height="128">
+   <properties>
+    <property name="hazard" type="bool" value="true"/>
+    <property name="instant" type="bool" value="true"/>
+    <property name="isOpen" type="bool" value="false"/>
+    <property name="openDown" type="bool" value="true"/>
+    <property name="switches" value="dorrSwitch,PW_Switch"/>
+   </properties>
+  </object>
+  <object id="51" name="fan1" type="Fan" x="1004" y="478" width="32" height="32">
+   <properties>
+    <property name="dir" type="int" value="0"/>
+    <property name="power" type="int" value="100"/>
+    <property name="startOn" type="bool" value="true"/>
+    <property name="switches" value="PW_Switch,failswitch"/>
+   </properties>
+  </object>
+  <object id="52" name="fan1" type="Fan" x="896" y="352" width="32" height="32">
+   <properties>
+    <property name="dir" type="int" value="0"/>
+    <property name="power" type="int" value="100"/>
+    <property name="startOn" type="bool" value="true"/>
+    <property name="switches" value="PW_Switch,failswitch"/>
+   </properties>
+  </object>
+  <object id="53" name="fan1" type="Fan" x="800" y="96" width="32" height="32">
+   <properties>
+    <property name="dir" type="int" value="3"/>
+    <property name="power" type="int" value="100"/>
+    <property name="startOn" type="bool" value="false"/>
+    <property name="switches" value="failswitch"/>
+   </properties>
+  </object>
+  <object id="54" name="failswitch" type="Switch" x="320" y="128" width="32" height="32">
+   <properties>
+    <property name="sensitive" type="bool" value="true"/>
+    <property name="startOn" type="bool" value="false"/>
+    <property name="toggle" type="bool" value="true"/>
+    <property name="visible" type="bool" value="true"/>
+   </properties>
+  </object>
+  <object id="55" name="fan2" type="Fan" x="672" y="608" width="32" height="32">
+   <properties>
+    <property name="dir" type="int" value="1"/>
+    <property name="power" type="int" value="100"/>
+    <property name="startOn" type="bool" value="false"/>
+    <property name="switches" value="PW_Switch"/>
+   </properties>
+  </object>
+  <object id="56" name="PlatformStop" type="PlatformStop" x="128" y="608" width="32" height="32"/>
+  <object id="60" name="PlatformStop" type="PlatformStop" x="128" y="704" width="32" height="32"/>
+  <object id="61" name="PlatformStop" type="PlatformStop" x="224" y="608" width="32" height="32"/>
+  <object id="62" name="PlatformStop" type="PlatformStop" x="224" y="704" width="32" height="32"/>
+  <object id="63" name="PlatformStop" type="PlatformStop" x="320" y="608" width="32" height="32"/>
+  <object id="64" name="PlatformStop" type="PlatformStop" x="320" y="704" width="32" height="32"/>
+  <object id="65" name="platform1" type="Platform" x="96" y="672" width="96" height="32">
+   <properties>
+    <property name="contactTrigger" type="bool" value="false"/>
+    <property name="moveHorizontal" type="bool" value="false"/>
+    <property name="startDir" type="int" value="-1"/>
+    <property name="startOn" type="bool" value="false"/>
+    <property name="switches" value="FanDancer"/>
+   </properties>
+  </object>
+  <object id="66" name="platform1" type="Platform" x="192" y="672" width="96" height="32">
+   <properties>
+    <property name="contactTrigger" type="bool" value="false"/>
+    <property name="moveHorizontal" type="bool" value="false"/>
+    <property name="startDir" type="int" value="-1"/>
+    <property name="startOn" type="bool" value="false"/>
+    <property name="switches" value="FanDancer"/>
+   </properties>
+  </object>
+  <object id="67" name="platform1" type="Platform" x="288" y="672" width="96" height="32">
+   <properties>
+    <property name="contactTrigger" type="bool" value="false"/>
+    <property name="moveHorizontal" type="bool" value="false"/>
+    <property name="startDir" type="int" value="-1"/>
+    <property name="startOn" type="bool" value="false"/>
+    <property name="switches" value="FanDancer"/>
+   </properties>
+  </object>
+  <object id="68" name="PlatformStop" type="PlatformStop" x="416" y="704" width="32" height="32"/>
+  <object id="69" name="platform1" type="Platform" x="384" y="672" width="96" height="32">
+   <properties>
+    <property name="contactTrigger" type="bool" value="false"/>
+    <property name="moveHorizontal" type="bool" value="false"/>
+    <property name="startDir" type="int" value="-1"/>
+    <property name="startOn" type="bool" value="false"/>
+    <property name="switches" value="FanDancer"/>
+   </properties>
+  </object>
+  <object id="70" name="PlatformStop" type="PlatformStop" x="416" y="608" width="32" height="32"/>
+  <object id="71" name="PlatformStop" type="PlatformStop" x="512" y="704" width="32" height="32"/>
+  <object id="72" name="platform1" type="Platform" x="480" y="672" width="96" height="32">
+   <properties>
+    <property name="contactTrigger" type="bool" value="false"/>
+    <property name="moveHorizontal" type="bool" value="false"/>
+    <property name="startDir" type="int" value="-1"/>
+    <property name="startOn" type="bool" value="false"/>
+    <property name="switches" value="FanDancer"/>
+   </properties>
+  </object>
+  <object id="73" name="PlatformStop" type="PlatformStop" x="512" y="608" width="32" height="32"/>
+  <object id="74" name="PlatformStop" type="PlatformStop" x="608" y="704" width="32" height="32"/>
+  <object id="75" name="platform1" type="Platform" x="576" y="672" width="96" height="32">
+   <properties>
+    <property name="contactTrigger" type="bool" value="false"/>
+    <property name="moveHorizontal" type="bool" value="false"/>
+    <property name="startDir" type="int" value="-1"/>
+    <property name="startOn" type="bool" value="false"/>
+    <property name="switches" value="FanDancer"/>
+   </properties>
+  </object>
+  <object id="76" name="PlatformStop" type="PlatformStop" x="608" y="608" width="32" height="32"/>
+  <object id="80" name="PlatformStop" type="PlatformStop" x="704" y="704" width="32" height="32"/>
+  <object id="81" name="platform1" type="Platform" x="672" y="672" width="96" height="32">
+   <properties>
+    <property name="contactTrigger" type="bool" value="false"/>
+    <property name="moveHorizontal" type="bool" value="false"/>
+    <property name="startDir" type="int" value="-1"/>
+    <property name="startOn" type="bool" value="false"/>
+    <property name="switches" value="FanDancer"/>
+   </properties>
+  </object>
+  <object id="82" name="PlatformStop" type="PlatformStop" x="704" y="608" width="32" height="32"/>
+  <object id="83" name="PlatformStop" type="PlatformStop" x="800" y="704" width="32" height="32"/>
+  <object id="84" name="platform1" type="Platform" x="768" y="672" width="96" height="32">
+   <properties>
+    <property name="contactTrigger" type="bool" value="false"/>
+    <property name="moveHorizontal" type="bool" value="false"/>
+    <property name="startDir" type="int" value="-1"/>
+    <property name="startOn" type="bool" value="false"/>
+    <property name="switches" value="FanDancer"/>
+   </properties>
+  </object>
+  <object id="85" name="PlatformStop" type="PlatformStop" x="800" y="608" width="32" height="32"/>
+  <object id="86" name="platform1" type="Platform" x="864" y="672" width="96" height="32">
+   <properties>
+    <property name="contactTrigger" type="bool" value="false"/>
+    <property name="moveHorizontal" type="bool" value="false"/>
+    <property name="startDir" type="int" value="-1"/>
+    <property name="startOn" type="bool" value="false"/>
+    <property name="switches" value="FanDancer"/>
+   </properties>
+  </object>
+  <object id="87" name="PlatformStop" type="PlatformStop" x="896" y="608" width="32" height="32"/>
+  <object id="88" name="PlatformStop" type="PlatformStop" x="896" y="704" width="32" height="32"/>
+  <object id="92" name="platform1" type="Platform" x="960" y="672" width="96" height="32">
+   <properties>
+    <property name="contactTrigger" type="bool" value="false"/>
+    <property name="moveHorizontal" type="bool" value="false"/>
+    <property name="startDir" type="int" value="-1"/>
+    <property name="startOn" type="bool" value="false"/>
+    <property name="switches" value="FanDancer"/>
+   </properties>
+  </object>
+  <object id="93" name="PlatformStop" type="PlatformStop" x="992" y="608" width="32" height="32"/>
+  <object id="94" name="PlatformStop" type="PlatformStop" x="992" y="704" width="32" height="32"/>
+ </objectgroup>
+</map>

@@ -38,6 +38,9 @@ public class Smasher extends GameMapObject implements SwitchHandler,Box2dCollisi
 	int m_state = 0;
 	int m_ticks = 0;
 	
+	float check_elapsed;
+	float stop_check_time;
+	
 
 	@Override
 	public void init(MapProperties mp, TextureAtlas textures) {
@@ -60,6 +63,9 @@ public class Smasher extends GameMapObject implements SwitchHandler,Box2dCollisi
 		
 		m_fallingAnimation = new AnimateSpriteFrame(textures, new String[] {"smasher_F2"}, 0.5f, 1);
 		m_restingAnimation = new AnimateSpriteFrame(textures, new String[] {"smasher_F1"}, 10f, -1);
+		
+		check_elapsed = 0;
+		stop_check_time = .5f;
 
 	}
 	
@@ -96,6 +102,7 @@ public class Smasher extends GameMapObject implements SwitchHandler,Box2dCollisi
 			}
 		}else if(current_state == FALLING) {
 			m_body.setLinearVelocity(0,m_body.getLinearVelocity().y-acceleration*deltaTime);
+			check_elapsed+=deltaTime;
 			
 		}else if (current_state == GROUNDED) {
 			
@@ -106,11 +113,13 @@ public class Smasher extends GameMapObject implements SwitchHandler,Box2dCollisi
 				grounded_elapsed = 0;
 				current_state = RISING;
 				this.runAnimation(m_restingAnimation);
+				
 
 			}
 			
 		}else if(current_state == RISING) {
 			m_body.setLinearVelocity(0,riseSpeed);
+			check_elapsed+=deltaTime;
 		}
 
 		setPositionToBody(m_offX, m_offY);
@@ -133,13 +142,15 @@ public class Smasher extends GameMapObject implements SwitchHandler,Box2dCollisi
 			
 			
 		}else { //hit something else need to stop(most likely the floor)
-			if(current_state == FALLING) {
+			if(current_state == FALLING&&check_elapsed>=stop_check_time) {
 				current_state = GROUNDED;
 				this.playSound("boom",1f);
+				check_elapsed = 0;
 				//this.stopSound("smasherLoop");
 			}
-			if(current_state == RISING) {
+			if(current_state == RISING&&check_elapsed>=stop_check_time) {
 				current_state = WAITING;
+				check_elapsed = 0;
 			}
 		}
 		
