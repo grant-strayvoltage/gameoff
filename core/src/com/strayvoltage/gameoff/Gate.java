@@ -56,7 +56,7 @@ public class Gate extends GameMapObject implements SwitchHandler,Box2dCollisionH
 		else
 			m_categoryBits = Box2dVars.OBJECT;
 		open_speed = 100;
-		m_filterMask = Box2dVars.PLAYER_NORMAL|Box2dVars.POWER|Box2dVars.OBJECT|Box2dVars.BLOCK;
+		m_filterMask = Box2dVars.PLAYER_NORMAL|Box2dVars.POWER|Box2dVars.OBJECT|Box2dVars.BLOCK|Box2dVars.PLAYER_FOOT;
 		m_btype = BodyType.KinematicBody;
 		setSize(mp.get("width", Float.class),mp.get("height",Float.class));
 		instant = getBool("instant", mp);

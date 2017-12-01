@@ -75,8 +75,8 @@ public class Exit extends GameMapObject implements Box2dCollisionHandler{
 				public void run() {
 					if(game_complete) {
 						//go to the main menu for now?
-						GameLayer titleLayer = new TitleScreenLayer();
-				        GameMain.getSingleton().replaceActiveLayer(titleLayer);
+//						GameLayer titleLayer = new TitleScreenLayer();
+//				        GameMain.getSingleton().replaceActiveLayer(titleLayer);
 				        //reset game vars
 				        GameMain.getSingleton().setGlobal("m_stage", "1");
 				        GameMain.getSingleton().setGlobal("m_next_level", "1");

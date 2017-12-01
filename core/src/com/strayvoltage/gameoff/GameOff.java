@@ -1,5 +1,6 @@
 package com.strayvoltage.gameoff;
 
+import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Gdx;
 //import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -13,7 +14,9 @@ public class GameOff extends GameMain {
 	
   public void setupGame()
   {
-	 
+	
+	if(!DEBUG)
+		Gdx.app.setLogLevel(Application.LOG_NONE); //NO LOGGING WHEN WE DEPLOY
 	m_camera = new OrthographicCamera(1280,720);
 	m_camera.update();
 

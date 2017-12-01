@@ -1,0 +1,336 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" tiledversion="2017.07.25" orientation="orthogonal" renderorder="right-down" width="40" height="23" tilewidth="32" tileheight="32" nextobjectid="296">
+ <properties>
+  <property name="Back" value="back5"/>
+  <property name="Title" value="Platform Riders Avoid Buttons"/>
+ </properties>
+ <tileset firstgid="1" source="tileset.tsx"/>
+ <layer name="background" width="40" height="23">
+  <data encoding="base64" compression="zlib">
+   eJztwTEBAAAAwqD1T20IX6AAAADgNw5gAAE=
+  </data>
+ </layer>
+ <layer name="platforms" width="40" height="23">
+  <data encoding="base64" compression="zlib">
+   eJxjYmBgYBrkOBGIkwYZTkZyXzMDcYBYddQAILtG3Uc+GHUfZWDUfZQBZPcdJEEPIQArS5eS6S5ku2gRftQK41H3UQZG3UcZGHUfZYAc9xFrLrXMGXUfZeYMFfctBGKWAcbo/Y/FSO4bzBgAcs01Mw==
+  </data>
+ </layer>
+ <objectgroup name="objects">
+  <properties>
+   <property name="horizontal" type="bool" value="true"/>
+   <property name="switches" value=""/>
+  </properties>
+  <object id="4" name="P1" type="PlayerStart1" x="112" y="110.667" width="60" height="77"/>
+  <object id="5" name="P2" type="PlayerStart2" x="228.666" y="142.667" width="47" height="44"/>
+  <object id="16" name="exit" type="Exit" x="1152" y="580" width="64" height="90"/>
+  <object id="241" name="platform1" type="Platform" x="77" y="191" width="96" height="32">
+   <properties>
+    <property name="contactTrigger" type="bool" value="false"/>
+    <property name="moveHorizontal" type="bool" value="false"/>
+    <property name="speed" type="float" value="0.5"/>
+    <property name="startDir" type="int" value="-1"/>
+    <property name="startOn" type="bool" value="true"/>
+    <property name="switches" value=""/>
+   </properties>
+  </object>
+  <object id="242" name="platform1" type="Platform" x="225" y="191" width="96" height="32">
+   <properties>
+    <property name="contactTrigger" type="bool" value="false"/>
+    <property name="moveHorizontal" type="bool" value="false"/>
+    <property name="speed" type="float" value="0.5"/>
+    <property name="startDir" type="int" value="-1"/>
+    <property name="startOn" type="bool" value="true"/>
+    <property name="switches" value=""/>
+   </properties>
+  </object>
+  <object id="243" name="Smasher1" type="Smasher" x="64" y="0" width="96" height="96">
+   <properties>
+    <property name="acceleration" type="float" value="5"/>
+    <property name="riseSpeed" type="float" value="3"/>
+    <property name="switches" value="switch21"/>
+   </properties>
+  </object>
+  <object id="244" name="Smasher1" type="Smasher" x="160" y="0" width="96" height="96">
+   <properties>
+    <property name="acceleration" type="float" value="5"/>
+    <property name="riseSpeed" type="float" value="3"/>
+    <property name="switches" value="switch21"/>
+   </properties>
+  </object>
+  <object id="245" name="Smasher1" type="Smasher" x="256" y="0" width="96" height="96">
+   <properties>
+    <property name="acceleration" type="float" value="5"/>
+    <property name="riseSpeed" type="float" value="3"/>
+    <property name="switches" value="switch21"/>
+   </properties>
+  </object>
+  <object id="248" name="Smasher1" type="Smasher" x="352" y="0" width="96" height="96">
+   <properties>
+    <property name="acceleration" type="float" value="5"/>
+    <property name="riseSpeed" type="float" value="3"/>
+    <property name="switches" value="switch21"/>
+   </properties>
+  </object>
+  <object id="250" name="Smasher1" type="Smasher" x="448" y="0" width="96" height="96">
+   <properties>
+    <property name="acceleration" type="float" value="5"/>
+    <property name="riseSpeed" type="float" value="3"/>
+    <property name="switches" value="switch21"/>
+   </properties>
+  </object>
+  <object id="251" name="Smasher1" type="Smasher" x="544" y="0" width="96" height="96">
+   <properties>
+    <property name="acceleration" type="float" value="5"/>
+    <property name="riseSpeed" type="float" value="3"/>
+    <property name="switches" value="switch21"/>
+   </properties>
+  </object>
+  <object id="252" name="Smasher1" type="Smasher" x="640" y="0" width="96" height="96">
+   <properties>
+    <property name="acceleration" type="float" value="5"/>
+    <property name="riseSpeed" type="float" value="3"/>
+    <property name="switches" value="switch21"/>
+   </properties>
+  </object>
+  <object id="253" name="Smasher1" type="Smasher" x="736" y="0" width="96" height="96">
+   <properties>
+    <property name="acceleration" type="float" value="5"/>
+    <property name="riseSpeed" type="float" value="3"/>
+    <property name="switches" value="switch21"/>
+   </properties>
+  </object>
+  <object id="254" name="Smasher1" type="Smasher" x="832" y="0" width="96" height="96">
+   <properties>
+    <property name="acceleration" type="float" value="5"/>
+    <property name="riseSpeed" type="float" value="3"/>
+    <property name="switches" value="switch21"/>
+   </properties>
+  </object>
+  <object id="255" name="Smasher1" type="Smasher" x="928" y="0" width="96" height="96">
+   <properties>
+    <property name="acceleration" type="float" value="5"/>
+    <property name="riseSpeed" type="float" value="3"/>
+    <property name="switches" value="switch21"/>
+   </properties>
+  </object>
+  <object id="256" name="Smasher1" type="Smasher" x="1024" y="0" width="96" height="96">
+   <properties>
+    <property name="acceleration" type="float" value="5"/>
+    <property name="riseSpeed" type="float" value="3"/>
+    <property name="switches" value="switch21"/>
+   </properties>
+  </object>
+  <object id="257" name="Smasher1" type="Smasher" x="1120" y="0" width="96" height="96">
+   <properties>
+    <property name="acceleration" type="float" value="5"/>
+    <property name="riseSpeed" type="float" value="3"/>
+    <property name="switches" value="switch21"/>
+   </properties>
+  </object>
+  <object id="258" name="platform2" type="Platform" x="224" y="640" width="96" height="32">
+   <properties>
+    <property name="contactTrigger" type="bool" value="false"/>
+    <property name="moveHorizontal" type="bool" value="true"/>
+    <property name="speed" type="float" value="0.8"/>
+    <property name="startDir" type="int" value="1"/>
+    <property name="startOn" type="bool" value="false"/>
+    <property name="switches" value="platform2switch"/>
+   </properties>
+  </object>
+  <object id="259" name="platform2" type="Platform" x="85.3333" y="640" width="96" height="32">
+   <properties>
+    <property name="contactTrigger" type="bool" value="false"/>
+    <property name="moveHorizontal" type="bool" value="true"/>
+    <property name="speed" type="float" value="0.8"/>
+    <property name="startDir" type="int" value="1"/>
+    <property name="startOn" type="bool" value="false"/>
+    <property name="switches" value="platform2switch"/>
+   </properties>
+  </object>
+  <object id="260" name="platform2switch" type="Switch" x="105.333" y="640" width="32" height="32">
+   <properties>
+    <property name="startOn" type="bool" value="false"/>
+    <property name="toggle" type="bool" value="false"/>
+    <property name="visible" type="bool" value="false"/>
+   </properties>
+  </object>
+  <object id="261" name="platform3" type="Platform" x="535.167" y="645.5" width="96" height="32">
+   <properties>
+    <property name="contactTrigger" type="bool" value="false"/>
+    <property name="moveHorizontal" type="bool" value="false"/>
+    <property name="speed" type="float" value="2"/>
+    <property name="startDir" type="int" value="1"/>
+    <property name="startOn" type="bool" value="false"/>
+    <property name="switches" value="platform3switch"/>
+   </properties>
+  </object>
+  <object id="262" name="platform3switch" type="Switch" x="588.25" y="637" width="32" height="32">
+   <properties>
+    <property name="startOn" type="bool" value="false"/>
+    <property name="toggle" type="bool" value="false"/>
+    <property name="visible" type="bool" value="false"/>
+   </properties>
+  </object>
+  <object id="263" name="platform3" type="Platform" x="391.5" y="646" width="96" height="32">
+   <properties>
+    <property name="contactTrigger" type="bool" value="false"/>
+    <property name="moveHorizontal" type="bool" value="false"/>
+    <property name="speed" type="float" value="2"/>
+    <property name="startDir" type="int" value="1"/>
+    <property name="startOn" type="bool" value="false"/>
+    <property name="switches" value="platform3switch"/>
+   </properties>
+  </object>
+  <object id="267" name="block3" type="Block" x="672" y="256" width="32" height="32"/>
+  <object id="268" name="platform3switch" type="Switch" x="576" y="200" width="32" height="32">
+   <properties>
+    <property name="startOn" type="bool" value="false"/>
+    <property name="toggle" type="bool" value="false"/>
+    <property name="visible" type="bool" value="false"/>
+   </properties>
+  </object>
+  <object id="271" name="switch21" type="Switch" x="183.333" y="198.667" width="32" height="32">
+   <properties>
+    <property name="sensitive" type="bool" value="true"/>
+    <property name="startOn" type="bool" value="false"/>
+    <property name="toggle" type="bool" value="true"/>
+    <property name="visible" type="bool" value="true"/>
+   </properties>
+  </object>
+  <object id="274" name="switch21" type="Switch" x="188" y="446.667" width="32" height="32">
+   <properties>
+    <property name="sensitive" type="bool" value="true"/>
+    <property name="startOn" type="bool" value="false"/>
+    <property name="toggle" type="bool" value="true"/>
+    <property name="visible" type="bool" value="true"/>
+   </properties>
+  </object>
+  <object id="276" name="switch21" type="Switch" x="228.667" y="368.667" width="32" height="32">
+   <properties>
+    <property name="sensitive" type="bool" value="true"/>
+    <property name="startOn" type="bool" value="false"/>
+    <property name="toggle" type="bool" value="true"/>
+    <property name="visible" type="bool" value="true"/>
+   </properties>
+  </object>
+  <object id="277" name="switch21" type="Switch" x="141.334" y="262.667" width="32" height="32">
+   <properties>
+    <property name="sensitive" type="bool" value="true"/>
+    <property name="startOn" type="bool" value="false"/>
+    <property name="toggle" type="bool" value="true"/>
+    <property name="visible" type="bool" value="true"/>
+   </properties>
+  </object>
+  <object id="278" name="switch21" type="Switch" x="291.333" y="256.667" width="32" height="32">
+   <properties>
+    <property name="sensitive" type="bool" value="true"/>
+    <property name="startOn" type="bool" value="false"/>
+    <property name="toggle" type="bool" value="true"/>
+    <property name="visible" type="bool" value="true"/>
+   </properties>
+  </object>
+  <object id="279" name="switch21" type="Switch" x="76.6667" y="414" width="32" height="32">
+   <properties>
+    <property name="sensitive" type="bool" value="true"/>
+    <property name="startOn" type="bool" value="false"/>
+    <property name="toggle" type="bool" value="true"/>
+    <property name="visible" type="bool" value="true"/>
+   </properties>
+  </object>
+  <object id="280" name="switch21" type="Switch" x="306.667" y="480" width="32" height="32">
+   <properties>
+    <property name="sensitive" type="bool" value="true"/>
+    <property name="startOn" type="bool" value="false"/>
+    <property name="toggle" type="bool" value="true"/>
+    <property name="visible" type="bool" value="true"/>
+   </properties>
+  </object>
+  <object id="281" name="switch21" type="Switch" x="612.5" y="625.584" width="32" height="32">
+   <properties>
+    <property name="sensitive" type="bool" value="true"/>
+    <property name="startOn" type="bool" value="false"/>
+    <property name="toggle" type="bool" value="true"/>
+    <property name="visible" type="bool" value="true"/>
+   </properties>
+  </object>
+  <object id="282" name="switch21" type="Switch" x="182" y="517.333" width="32" height="32">
+   <properties>
+    <property name="sensitive" type="bool" value="true"/>
+    <property name="startOn" type="bool" value="false"/>
+    <property name="toggle" type="bool" value="true"/>
+    <property name="visible" type="bool" value="true"/>
+   </properties>
+  </object>
+  <object id="283" name="switch21" type="Switch" x="468.084" y="543.667" width="32" height="32">
+   <properties>
+    <property name="sensitive" type="bool" value="true"/>
+    <property name="startOn" type="bool" value="false"/>
+    <property name="toggle" type="bool" value="true"/>
+    <property name="visible" type="bool" value="true"/>
+   </properties>
+  </object>
+  <object id="288" name="switch21" type="Switch" x="756.084" y="436.667" width="32" height="32">
+   <properties>
+    <property name="sensitive" type="bool" value="true"/>
+    <property name="startOn" type="bool" value="false"/>
+    <property name="toggle" type="bool" value="true"/>
+    <property name="visible" type="bool" value="true"/>
+   </properties>
+  </object>
+  <object id="289" name="switch21" type="Switch" x="867.084" y="242.667" width="32" height="32">
+   <properties>
+    <property name="sensitive" type="bool" value="true"/>
+    <property name="startOn" type="bool" value="false"/>
+    <property name="toggle" type="bool" value="true"/>
+    <property name="visible" type="bool" value="true"/>
+   </properties>
+  </object>
+  <object id="290" name="switch21" type="Switch" x="976.084" y="529.667" width="32" height="32">
+   <properties>
+    <property name="sensitive" type="bool" value="true"/>
+    <property name="startOn" type="bool" value="false"/>
+    <property name="toggle" type="bool" value="true"/>
+    <property name="visible" type="bool" value="true"/>
+   </properties>
+  </object>
+  <object id="291" name="switch21" type="Switch" x="903.084" y="388.667" width="32" height="32">
+   <properties>
+    <property name="sensitive" type="bool" value="true"/>
+    <property name="startOn" type="bool" value="false"/>
+    <property name="toggle" type="bool" value="true"/>
+    <property name="visible" type="bool" value="true"/>
+   </properties>
+  </object>
+  <object id="292" name="Gate1" type="Gate" x="352" y="544" width="32" height="128">
+   <properties>
+    <property name="hazard" type="bool" value="true"/>
+    <property name="openDown" type="bool" value="false"/>
+    <property name="switches" value="gate1_switch"/>
+   </properties>
+  </object>
+  <object id="293" name="gate1_switch" type="Switch" x="73" y="594.333" width="32" height="32">
+   <properties>
+    <property name="sensitive" type="bool" value="false"/>
+    <property name="startOn" type="bool" value="false"/>
+    <property name="toggle" type="bool" value="false"/>
+    <property name="visible" type="bool" value="true"/>
+   </properties>
+  </object>
+  <object id="294" name="switch21" type="Switch" x="492.084" y="433.667" width="32" height="32">
+   <properties>
+    <property name="sensitive" type="bool" value="true"/>
+    <property name="startOn" type="bool" value="false"/>
+    <property name="toggle" type="bool" value="true"/>
+    <property name="visible" type="bool" value="true"/>
+   </properties>
+  </object>
+  <object id="295" name="switch21" type="Switch" x="498.084" y="333.667" width="32" height="32">
+   <properties>
+    <property name="sensitive" type="bool" value="true"/>
+    <property name="startOn" type="bool" value="false"/>
+    <property name="toggle" type="bool" value="true"/>
+    <property name="visible" type="bool" value="true"/>
+   </properties>
+  </object>
+ </objectgroup>
+</map>

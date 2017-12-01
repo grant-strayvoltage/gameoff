@@ -34,13 +34,16 @@ public class Platform extends GameMapObject implements Box2dCollisionHandler,Swi
   float stop_duration = 3f;
   public boolean oneWay;
   
+  float check_num;
+  float check_interval;
+  
   Body sensor_bod;
 
   Array<String> switches;
 
   public void init(MapProperties mp, TextureAtlas textures)
   {
-	oneWay = true;
+	oneWay = false;
 	m_triggered = getBool("startOn", mp);
 	m_btype = BodyType.KinematicBody;
 	m_categoryBits = Box2dVars.PLATFORM;
@@ -92,6 +95,9 @@ public class Platform extends GameMapObject implements Box2dCollisionHandler,Swi
     if(mp.containsKey("speed")) {
     	speed = mp.get("speed", Float.class);
     }
+    
+    check_num = 0;
+    check_interval = .2f;
   }
   
   public void addToWorld(World world)
@@ -147,6 +153,8 @@ public class Platform extends GameMapObject implements Box2dCollisionHandler,Swi
     {
       if (m_state == 0)
       {
+    	check_num+=deltaTime;
+    	
         //moving
         if (m_moveVertical) 
         	m_body.setLinearVelocity(0,direction*speed);
@@ -180,10 +188,11 @@ public class Platform extends GameMapObject implements Box2dCollisionHandler,Swi
 	@Override
 	public void handleBegin(Box2dCollision collision) {
 	
-		if(collision.target_type == Box2dVars.PLATFORM_STOP) {
+		if(collision.target_type == Box2dVars.PLATFORM_STOP && check_num >= check_interval) {
 			direction=-direction;
 			m_state = 1;
 			m_body.setLinearVelocity(0, 0);
+			check_num = 0;
 		}else {
 			System.out.println("collision with :"+collision.target_type);
 		}

@@ -30,6 +30,20 @@ public class MainLayer extends GameLayer  {
 	
 	public static final int MAX_STAGES = 5; //CHANGE IF YOU ADD MORE STAGES
 	public static final int MAX_LEVELS_PER_STGE = 8; //CHANGE IF YOU ADD or REMOVE LEVELS --
+	public static int[] STAGE_OFFSETS = new int[MAX_STAGES]; //the level offsets of the stage. 
+															 //For example: MAX_LEVELS_PERS_STAGE is the baseline and if the offset is 2 then 
+															 //that stage contains MAX_LEVELSPER_STAGE+2 total levels. if the offset is -3
+															 //that stage contains MAX_LEVEL_PER_STAGE +-3 total levels
+	static {
+		//default 0 offset
+		
+		//--stage translate--
+		//0 = 1 
+		//4 = 5;
+		STAGE_OFFSETS[4] = -2; 
+		STAGE_OFFSETS[3] = -2;
+	}
+	
 
 boolean m_musicStarted = false;
 int m_gameState = 5;
@@ -182,6 +196,7 @@ public float getFloat(String key, MapObject mp)
 
   public void doVictory()
   {
+	  	GameMain.getSingleton().setGlobal("game_complete", "false");
         CutSceneImage scene1 = new CutSceneImage("vic1");
         CutSceneImage scene2 = new CutSceneImage("vic2");
         scene2.setVictory();
@@ -323,7 +338,7 @@ public float getFloat(String key, MapObject mp)
     GameMain.getSingleton().setGlobal("m_stage", ""+stage);
     GameMain.getSingleton().setGlobal("m_level", ""+lv);
     //NEXT LEVEL
-    if(lv+1 <= MAX_LEVELS_PER_STGE) //10 is an arbitrary number of levels per stage
+    if(lv+1 <= MAX_LEVELS_PER_STGE+STAGE_OFFSETS[stage-1]) //10 is an arbitrary number of levels per stage
     	GameMain.getSingleton().setGlobal("m_next_level", ""+(lv+1));
     else 
     	if(stage+1 <= MAX_STAGES) { //10 is an arbitrary number of stages
@@ -645,7 +660,7 @@ public float getFloat(String key, MapObject mp)
       m_fadeOutSprite.animate(deltaTime);
       if (stateTime > 0.5f)
       {
-        if ((m_stage == 5) && (m_level == 8))
+        if (Boolean.parseBoolean(GameMain.getSingleton().getGlobal("game_complete")))
         {
           doVictory();
         } else

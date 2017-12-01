@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" tiledversion="1.0.3" orientation="orthogonal" renderorder="right-down" width="40" height="23" tilewidth="32" tileheight="32" nextobjectid="47">
+<map version="1.0" tiledversion="2017.07.25" orientation="orthogonal" renderorder="right-down" width="40" height="23" tilewidth="32" tileheight="32" nextobjectid="47">
  <properties>
   <property name="Back" value="back2"/>
   <property name="Title" value="Cyborg Hair Cut"/>
@@ -21,14 +21,6 @@
   <object id="4" name="P1" type="PlayerStart1" x="354" y="462" width="60" height="77"/>
   <object id="5" name="P2" type="PlayerStart2" x="387" y="241" width="47" height="44"/>
   <object id="16" name="exit" type="Exit" x="863" y="358" width="64" height="90"/>
-  <object id="35" name="fan1" type="Fan" x="-256" y="96" width="32" height="32">
-   <properties>
-    <property name="dir" type="int" value="1"/>
-    <property name="power" type="int" value="500"/>
-    <property name="startOn" type="bool" value="false"/>
-    <property name="switches" value="switch1"/>
-   </properties>
-  </object>
   <object id="39" name="Tramp1" type="Trampoline" x="640" y="512" width="32" height="32">
    <properties>
     <property name="static" type="bool" value="true"/>
