@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.0" tiledversion="1.0.3" orientation="orthogonal" renderorder="right-down" width="40" height="23" tilewidth="32" tileheight="32" nextobjectid="42">
  <properties>
-  <property name="Back" value="back5"/>
-  <property name="Title" value="Two Cyborg Bodies...One Brain"/>
+  <property name="Back" value="back4"/>
+  <property name="Title" value="Cyborgs in the Stream"/>
   <property name="backOffX" type="int" value="0"/>
   <property name="backOffY" type="int" value="-100"/>
  </properties>
@@ -14,12 +14,12 @@
  </layer>
  <layer name="platforms" width="40" height="23">
   <data encoding="base64" compression="zlib">
-   eJxjYmBgYBrFo3gUk4wTgTiJyjiZiu5rZKA+WEhFt9LCfcigcdR9w8J9S4B4KQ3cd5ABM/9hswcZJBKpjhruIzb8liC5fzGReujpPnIBqKyhpIyhlvtU8MhREob43AdLZ8kE3AXCzXjMWEyB+0DhvwgHfoxG41LzGI8aStw2ikfxKB78GACdFTP7
+   eJxjYmBgYBrFo3gUk4wTgTiJyjiZiu5rZKA+WEhFt9LCfcigcdR9w8J9Sxgg6W0pld13kAEz/6HbgQ4SiVRHDfcRG36w8AHhxUTqoaf7yAWgsoaSMoZa7lPBI0dJGOJzHyydJRNwFwg34zFjMQXuA4X/Ihz4MRqNS81jPGoocdsoHsWjePBjAI8eNF0=
   </data>
  </layer>
  <objectgroup name="objects">
-  <object id="4" name="P1" type="PlayerStart1" x="301" y="435" width="60" height="77"/>
-  <object id="5" name="P2" type="PlayerStart2" x="394.667" y="466" width="47" height="44"/>
+  <object id="4" name="P1" type="PlayerStart1" x="291" y="435" width="60" height="77"/>
+  <object id="5" name="P2" type="PlayerStart2" x="365.667" y="466" width="47" height="44"/>
   <object id="16" name="exit" type="Exit" x="845.333" y="420" width="64" height="90"/>
   <object id="34" name="fan1" type="Fan" x="992" y="446.667" width="32" height="32">
    <properties>

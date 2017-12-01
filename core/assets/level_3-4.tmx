@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" tiledversion="2017.07.25" orientation="orthogonal" renderorder="right-down" width="40" height="23" tilewidth="32" tileheight="32" nextobjectid="63">
+<map version="1.0" tiledversion="1.0.3" orientation="orthogonal" renderorder="right-down" width="40" height="23" tilewidth="32" tileheight="32" nextobjectid="63">
  <properties>
   <property name="Back" value="back3"/>
-  <property name="Title" value="Stage_3-4"/>
+  <property name="Title" value="Raise the Gates!"/>
   <property name="backOffX" type="int" value="-30"/>
   <property name="backOffY" type="int" value="100"/>
  </properties>
@@ -20,7 +20,7 @@
  <objectgroup name="objects">
   <object id="4" name="P1" type="PlayerStart1" x="296" y="466" width="60" height="77"/>
   <object id="5" name="P2" type="PlayerStart2" x="608.5" y="338" width="47" height="44"/>
-  <object id="16" name="exit" type="Exit" x="927" y="132" width="64" height="90"/>
+  <object id="16" name="exit" type="Exit" x="927" y="134" width="64" height="90"/>
   <object id="46" name="PlatformStop" type="PlatformStop" x="512" y="576" width="32" height="32"/>
   <object id="47" name="PlatformStop" type="PlatformStop" x="512" y="160" width="32" height="32"/>
   <object id="48" name="platform1" type="Platform" x="480" y="256" width="96" height="32">

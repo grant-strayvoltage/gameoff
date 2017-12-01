@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" tiledversion="2017.07.25" orientation="orthogonal" renderorder="right-down" width="40" height="23" tilewidth="32" tileheight="32" nextobjectid="96">
+<map version="1.0" tiledversion="1.0.3" orientation="orthogonal" renderorder="right-down" width="40" height="23" tilewidth="32" tileheight="32" nextobjectid="96">
  <properties>
   <property name="Back" value="back1"/>
   <property name="Title" value="Smasher Parkour"/>
@@ -12,13 +12,13 @@
  </layer>
  <layer name="platforms" width="40" height="23">
   <data encoding="base64" compression="zlib">
-   eJztlWEKgCAMhUd0lQ5WnSQ6SWgH6WblD2mslDk1LXqwH75ofcjeagCgqbz6o4bKakR8M9Qnw/TzyfUFPg3nvLZwnWHrregdmzWrMSOftC89t8I+qfjwPaub70iE+TY5WjZx7o/ubZdv9+nTfCF+6h0QyuebMaMF3P8qnG9NzjF8HaNPLn1hP5cUl89klWYzxkvNN908j/G4zFw+k0ua19ReDF8pvYnPt1tLlUJ8NdcOGWxWHA==
+   eJztlVEKgCAMhod0lQ5WnUQ6SWj3LB+ksUzW1LTohz34h+tjbFMBgGo8hj3GxmJCfDO0J8f088n1BT4LR792cO5h763ojp81r6kgnzQvPXfCPLn4cJ1N4D8SYT4tRysmTv3w3g71GN2nT/Pd8XPvgLt8sR5zWuD6rcK1t+Scwtcz8pTSF/ZzTXH53KzS2UzxcvPpwPcUj8vM5XNzSec1t5fCV0tv4ovt1lphEF/LsQEAVFYf
   </data>
  </layer>
  <objectgroup name="objects">
-  <object id="4" name="P1" type="PlayerStart1" x="82" y="596" width="60" height="77"/>
-  <object id="5" name="P2" type="PlayerStart2" x="158" y="626" width="47" height="44"/>
-  <object id="16" name="exit" type="Exit" x="1152" y="580" width="64" height="90"/>
+  <object id="4" name="P1" type="PlayerStart1" x="83" y="594" width="60" height="77"/>
+  <object id="5" name="P2" type="PlayerStart2" x="164" y="627" width="47" height="44"/>
+  <object id="16" name="exit" type="Exit" x="1152" y="581" width="64" height="90"/>
   <object id="55" name="Smasher1" type="Smasher" x="320" y="448" width="96" height="96">
    <properties>
     <property name="acceleration" type="float" value="6"/>

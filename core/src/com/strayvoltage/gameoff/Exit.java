@@ -79,6 +79,7 @@ public class Exit extends GameMapObject implements Box2dCollisionHandler{
 //				        GameMain.getSingleton().replaceActiveLayer(titleLayer);
 				        //reset game vars
 				        GameMain.getSingleton().setGlobal("m_stage", "1");
+						GameMain.getSingleton().setGlobal("m_next_stage", "1");
 				        GameMain.getSingleton().setGlobal("m_next_level", "1");
 				        GameMain.getSingleton().setGlobal("Level", "1");
 				        
@@ -86,7 +87,7 @@ public class Exit extends GameMapObject implements Box2dCollisionHandler{
 				        GameMain.getSingleton().setGlobal("game_complete", "false");
 				        //TODO: add newgame+
 					}else {
-						int stage = Integer.parseInt(GameMain.getSingleton().getGlobal("m_stage"));
+						int stage = Integer.parseInt(GameMain.getSingleton().getGlobal("m_next_stage"));
 						int level = Integer.parseInt(GameMain.getSingleton().getGlobal("m_next_level"));
 						MainLayer ml = new MainLayer();
 				        ml.loadLevel(stage,level);

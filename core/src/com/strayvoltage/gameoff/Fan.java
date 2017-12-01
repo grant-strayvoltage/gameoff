@@ -205,10 +205,10 @@ public class Fan extends GameMapObject implements Box2dCollisionHandler,SwitchHa
 				} else {
 						if(direction == RIGHT) {
 							float dx = (o.getX() - m_fx)/Box2dVars.PIXELS_PER_METER;
-							o.m_body.applyForceToCenter(m_force / (dx*dx),0,true);
+							o.m_body.applyForceToCenter(m_force * 3f / (dx*dx),0,true);
 						}else if(direction == LEFT) {
 							float dx = (o.getX() - m_fx)/(Box2dVars.PIXELS_PER_METER*2);
-							o.m_body.applyForceToCenter(-m_force / (dx*dx),0,true);
+							o.m_body.applyForceToCenter(-m_force * 3f / (dx*dx),0,true);
 						}else if(direction == UP){
 							float dy = (o.getY() - m_fy)/Box2dVars.PIXELS_PER_METER;
 							o.m_body.applyForceToCenter(0,m_force / (dy*dy),true);

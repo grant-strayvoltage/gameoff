@@ -14,7 +14,7 @@
  </layer>
  <layer name="platforms" width="40" height="23">
   <data encoding="base64" compression="zlib">
-   eJztlUsOgCAMBRvCRZWTcBTkoujKhqRQQhDU12Q28Aqz4GOIyIDfsJ3sE3EVP099pe2Xch5+3f3wa8sdjBX98nH46XJukp9V5gLd5+4pv2tP/h+U/KTxkX7agl978XcuLuinqbf75fePYwWkOWmdErHiB75FAi3mObw=
+   eJxjYmBgYBrFIwYnAnESBfgwheqSCbivkYEyQKx+XOoaB4n7VAe5+/DpH3UfYaCCxF4CxIug+NAgcd9gzx+D3X0HGSBl3UC4j4VIdQsZIGluKR3dB7ITVhcsxaNuoOKXWDDqPtIBcjm3eBC6jxgw1N2HnP/QMQsODIq3pVjEcJmDDy8m4L5RPLwwAEd7PBM=
   </data>
  </layer>
  <objectgroup name="objects">
@@ -32,8 +32,7 @@
     <property name="static" type="bool" value="true"/>
    </properties>
   </object>
-  <object id="43" name="Block1" type="Block" x="896" y="576" width="32" height="32"/>
-  <object id="44" name="Block1" type="Block" x="896" y="544" width="32" height="32"/>
+  <object id="43" name="Block1" type="Block" x="896" y="558" width="48" height="48"/>
   <object id="45" name="Tramp1" type="Trampoline" x="716" y="366.667" width="48" height="48">
    <properties>
     <property name="static" type="bool" value="true"/>

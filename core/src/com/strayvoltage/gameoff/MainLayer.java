@@ -336,13 +336,15 @@ public float getFloat(String key, MapObject mp)
     
     //KEEP TRACK FOR EXIT PURPOSE-----------------------------
     GameMain.getSingleton().setGlobal("m_stage", ""+stage);
+    GameMain.getSingleton().setGlobal("m_next_stage", ""+stage);
+
     GameMain.getSingleton().setGlobal("m_level", ""+lv);
     //NEXT LEVEL
     if(lv+1 <= MAX_LEVELS_PER_STGE+STAGE_OFFSETS[stage-1]) //10 is an arbitrary number of levels per stage
     	GameMain.getSingleton().setGlobal("m_next_level", ""+(lv+1));
     else 
     	if(stage+1 <= MAX_STAGES) { //10 is an arbitrary number of stages
-    		GameMain.getSingleton().setGlobal("m_stage", ""+(stage+1));
+    		GameMain.getSingleton().setGlobal("m_next_stage", ""+(stage+1));
     		GameMain.getSingleton().setGlobal("m_next_level",""+1);
     	}else //if there is no more stages then the game is complete
     		GameMain.getSingleton().setGlobal("game_complete", "true");
@@ -678,11 +680,12 @@ public float getFloat(String key, MapObject mp)
     }
     
     //LOAD NEXT LEVEL
+    /*
     if(Gdx.input.isKeyJustPressed(Keys.Q)) {
     	Exit.loadNextLevel();
       stopAllLoops();
       //m_exit.m_state = 1;
-    }
+    } */
 
     if (!m_brain.isAlive() || !m_player1.isAlive()|| !m_player2.isAlive())
     {

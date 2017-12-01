@@ -2,7 +2,7 @@
 <map version="1.0" tiledversion="1.0.3" orientation="orthogonal" renderorder="right-down" width="40" height="23" tilewidth="32" tileheight="32" nextobjectid="81">
  <properties>
   <property name="Back" value="back4"/>
-  <property name="Title" value="Do a Lap"/>
+  <property name="Title" value="You Blew my Brain Away"/>
   <property name="backOffX" type="int" value="0"/>
   <property name="backOffY" type="int" value="25"/>
  </properties>

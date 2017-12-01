@@ -28,6 +28,7 @@ public class Block extends GameMapObject {
   public void update(float deltaTime)
   {
       this.setPositionToBody();
+      m_body.setAwake(true);
   }
 
 }

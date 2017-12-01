@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" tiledversion="1.0.3" orientation="orthogonal" renderorder="right-down" width="40" height="23" tilewidth="32" tileheight="32" nextobjectid="110">
+<map version="1.0" tiledversion="1.0.3" orientation="orthogonal" renderorder="right-down" width="40" height="23" tilewidth="32" tileheight="32" nextobjectid="125">
  <properties>
   <property name="Back" value="back4"/>
-  <property name="Title" value="Merry Brain Round"/>
+  <property name="Title" value="Bouncing Block"/>
   <property name="backOffX" type="int" value="0"/>
   <property name="backOffY" type="int" value="25"/>
  </properties>
@@ -14,21 +14,14 @@
  </layer>
  <layer name="platforms" width="40" height="23">
   <data encoding="base64" compression="zlib">
-   eJzt0M0NgCAMhuGGUWAydRLjJP4MKgcOjQJS20APfZPvQiB5ggMAp3xTnFe2BflW+N/MeFtrA/NxMh8vSR9luKtyT8rXWkh7npUy39tiPtnMx8t8tEJmpXr6cq4vn+/gq7lG/l+La4SP4qL49rhD2U7k07wbdNlDQQ==
+   eJztllsOQDAQRSf9YB9tLIyuRKzEa580PoyG6oMxwUnuB1E59JYKABDMU86RzKKRXw38aOD3S+H3SyPVb4Dtequs43HnenMuJ/LzQSaMpZpf8950xDjK/rWwdgD3wO7AU34xnPmZeakccT07hd/TUPspFB++6JfBslezu+r6blP7FRfd683rI6RHsYT6qYPcBfYz/5+OWXrkxzkTU0tCPw==
   </data>
  </layer>
  <objectgroup name="objects">
-  <object id="4" name="P1" type="PlayerStart1" x="150" y="595" width="60" height="77"/>
-  <object id="5" name="P2" type="PlayerStart2" x="88" y="628" width="47" height="44"/>
-  <object id="16" name="exit" type="Exit" x="1148" y="132" width="64" height="90"/>
-  <object id="49" name="switch1" type="Switch" x="261" y="206" width="48" height="48">
-   <properties>
-    <property name="startOn" type="bool" value="true"/>
-    <property name="toggle" type="bool" value="true"/>
-    <property name="visible" type="bool" value="true"/>
-   </properties>
-  </object>
-  <object id="50" name="BackObject" type="BackObject" x="512" y="288" width="128" height="48">
+  <object id="4" name="P1" type="PlayerStart1" x="85" y="595" width="60" height="77"/>
+  <object id="5" name="P2" type="PlayerStart2" x="169" y="627" width="47" height="44"/>
+  <object id="16" name="exit" type="Exit" x="1104" y="582" width="64" height="90"/>
+  <object id="50" name="BackObject" type="BackObject" x="928" y="256" width="128" height="48">
    <properties>
     <property name="frames" type="int" value="1"/>
     <property name="speed" type="int" value="10"/>
@@ -36,7 +29,7 @@
     <property name="style" type="int" value="2"/>
    </properties>
   </object>
-  <object id="51" name="BackObject" type="BackObject" x="544" y="128" width="82" height="64">
+  <object id="51" name="BackObject" type="BackObject" x="1056" y="128" width="82" height="64">
    <properties>
     <property name="frames" type="int" value="3"/>
     <property name="speed" type="int" value="2"/>
@@ -60,15 +53,7 @@
     <property name="switches" value="fanSwitch"/>
    </properties>
   </object>
-  <object id="101" name="BackObject" type="BackObject" x="864" y="704" width="128" height="128">
-   <properties>
-    <property name="frames" type="int" value="3"/>
-    <property name="speed" type="int" value="10"/>
-    <property name="sprite" value="vat"/>
-    <property name="style" type="int" value="2"/>
-   </properties>
-  </object>
-  <object id="102" name="BackObject" type="BackObject" x="526" y="398" width="164" height="96">
+  <object id="102" name="BackObject" type="BackObject" x="736" y="544" width="164" height="96">
    <properties>
     <property name="frames" type="int" value="3"/>
     <property name="speed" type="int" value="3"/>
@@ -76,16 +61,7 @@
     <property name="style" type="int" value="2"/>
    </properties>
   </object>
-  <object id="103" name="Gate1" type="Gate" x="1088" y="64" width="32" height="160">
-   <properties>
-    <property name="hazard" type="bool" value="false"/>
-    <property name="instant" type="bool" value="false"/>
-    <property name="isOpen" type="bool" value="false"/>
-    <property name="openDown" type="bool" value="false"/>
-    <property name="switches" value="exitswitch,exitSwitch2"/>
-   </properties>
-  </object>
-  <object id="104" name="exitswitch" type="Switch" x="287" y="623" width="48" height="48">
+  <object id="104" name="switch1" type="Switch" x="255" y="625" width="48" height="48">
    <properties>
     <property name="sensitive" type="bool" value="false"/>
     <property name="startOn" type="bool" value="false"/>
@@ -93,34 +69,75 @@
     <property name="visible" type="bool" value="true"/>
    </properties>
   </object>
-  <object id="106" name="fanSwitch" type="Switch" x="384" y="623" width="48" height="48">
-   <properties>
-    <property name="startOn" type="bool" value="false"/>
-    <property name="toggle" type="bool" value="true"/>
-    <property name="visible" type="bool" value="true"/>
-   </properties>
-  </object>
-  <object id="107" name="fan6" type="Fan" x="928" y="512" width="32" height="32">
+  <object id="107" name="fan6" type="Fan" x="1120" y="672" width="32" height="32">
    <properties>
     <property name="dir" type="int" value="0"/>
     <property name="power" type="int" value="100"/>
-    <property name="startOn" type="bool" value="false"/>
-    <property name="switches" value="fanSwitch,fanSwitch2"/>
+    <property name="startOn" type="bool" value="true"/>
+    <property name="switches" value="fanSwitch2"/>
    </properties>
   </object>
-  <object id="108" name="fanSwitch2" type="Switch" x="652" y="176" width="48" height="48">
+  <object id="110" name="Tramp1" type="Trampoline" x="518" y="640" width="32" height="32">
    <properties>
+    <property name="static" type="bool" value="true"/>
+   </properties>
+  </object>
+  <object id="111" name="fan6" type="Fan" x="448" y="448" width="32" height="32">
+   <properties>
+    <property name="dir" type="int" value="1"/>
+    <property name="power" type="int" value="150"/>
+    <property name="startOn" type="bool" value="true"/>
+    <property name="switches" value=""/>
+   </properties>
+  </object>
+  <object id="112" name="Block1" type="Block" x="448" y="576" width="32" height="32"/>
+  <object id="113" name="PlatformStop" type="PlatformStop" x="96" y="704" width="32" height="32"/>
+  <object id="114" name="platform1" type="Platform" x="64" y="672" width="96" height="32">
+   <properties>
+    <property name="contactTrigger" type="bool" value="false"/>
+    <property name="moveHorizontal" type="bool" value="false"/>
+    <property name="startDir" type="int" value="1"/>
+    <property name="startOn" type="bool" value="false"/>
+    <property name="switches" value="switch1"/>
+   </properties>
+  </object>
+  <object id="115" name="PlatformStop" type="PlatformStop" x="96" y="352" width="32" height="32"/>
+  <object id="116" name="Tramp1" type="Trampoline" x="552" y="640" width="32" height="32">
+   <properties>
+    <property name="static" type="bool" value="true"/>
+   </properties>
+  </object>
+  <object id="119" name="fanSwitch" type="Switch" x="838" y="176" width="48" height="48">
+   <properties>
+    <property name="sensitive" type="bool" value="false"/>
     <property name="startOn" type="bool" value="true"/>
     <property name="toggle" type="bool" value="true"/>
     <property name="visible" type="bool" value="true"/>
    </properties>
   </object>
-  <object id="109" name="exitSwitch2" type="Switch" x="755" y="175" width="48" height="48">
+  <object id="120" name="fanSwitch2" type="Switch" x="542" y="175" width="48" height="48">
    <properties>
     <property name="sensitive" type="bool" value="false"/>
-    <property name="startOn" type="bool" value="false"/>
+    <property name="startOn" type="bool" value="true"/>
     <property name="toggle" type="bool" value="true"/>
     <property name="visible" type="bool" value="true"/>
+   </properties>
+  </object>
+  <object id="121" name="Gate1" type="Gate" x="704" y="544" width="32" height="128">
+   <properties>
+    <property name="hazard" type="bool" value="true"/>
+    <property name="instant" type="bool" value="false"/>
+    <property name="isOpen" type="bool" value="false"/>
+    <property name="openDown" type="bool" value="true"/>
+    <property name="switches" value="fanSwitch"/>
+   </properties>
+  </object>
+  <object id="124" name="BackObject" type="BackObject" x="256" y="256" width="128" height="128">
+   <properties>
+    <property name="frames" type="int" value="3"/>
+    <property name="speed" type="int" value="10"/>
+    <property name="sprite" value="vat"/>
+    <property name="style" type="int" value="2"/>
    </properties>
   </object>
  </objectgroup>
