@@ -87,7 +87,7 @@ public class Fan extends GameMapObject implements Box2dCollisionHandler,SwitchHa
 	{
 		if (m_soundId < 0)
 		{
-			m_soundId = loopSound("fan",0.2f);
+			m_soundId = loopSound("fan",0.15f);
 		}
 	}
 

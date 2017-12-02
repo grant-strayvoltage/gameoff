@@ -331,6 +331,7 @@ public float getFloat(String key, MapObject mp)
 
   public void loadLevel(int stage, int lv)
   {
+    stopAllLoops();
     m_stage = stage;
     m_level = lv;
     
