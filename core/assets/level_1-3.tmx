@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" tiledversion="2017.07.25" orientation="orthogonal" renderorder="right-down" width="40" height="23" tilewidth="32" tileheight="32" nextobjectid="39">
+<map version="1.0" tiledversion="1.0.3" orientation="orthogonal" renderorder="right-down" width="40" height="23" tilewidth="32" tileheight="32" nextobjectid="39">
  <properties>
   <property name="Back" value="back5"/>
   <property name="Title" value="Brain Toss"/>
@@ -12,7 +12,7 @@
  </layer>
  <layer name="platforms" width="40" height="23">
   <data encoding="base64" compression="zlib">
-   eJxjYmBgYBrFo3gUU4wTgTiJTJxMB/c1MpAPmkfdN+q+Ee6+JCQ8GN2HD4y6D+K+JAb88TjQ7mMhEg+E+xZiCT9i8WI6uG8Uj+JRPLgwAG3cH28=
+   eJxjYmBgYBrFo3gUU4wTgTiJTJxMB/c1MpAPmkfdN+q+Ee6+JQyQvLp0kLoPHxh1HwPDQQbUMhdbPA6k+0Dhx0IkHgj3LWQgv35bTAf3jeJRPIoHFwYA8E4gdw==
   </data>
  </layer>
  <objectgroup name="objects">

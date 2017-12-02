@@ -1,1 +1,1 @@
-m_stage:1~deaths:2~GameSaveID:0~Level:1~m_next_stage:1~m_next_level:2~m_level:1~game_complete:false~time:2.750098~
+m_stage:1~deaths:0~GameSaveID:0~m_next_stage:1~m_next_level:2~m_level:1~game_complete:false~time:0~

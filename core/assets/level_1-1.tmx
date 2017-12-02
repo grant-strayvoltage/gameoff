@@ -58,7 +58,7 @@
     <property name="style" type="int" value="2"/>
    </properties>
   </object>
-  <object id="38" name="hint1" type="BackObject" x="512" y="512" width="128" height="128">
+  <object id="38" name="hint1" type="BackObject" x="513.294" y="540.145" width="128" height="128">
    <properties>
     <property name="frames" type="int" value="1"/>
     <property name="speed" type="int" value="10"/>

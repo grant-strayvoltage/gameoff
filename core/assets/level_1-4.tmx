@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" tiledversion="2017.07.25" orientation="orthogonal" renderorder="right-down" width="40" height="23" tilewidth="32" tileheight="32" nextobjectid="39">
+<map version="1.0" tiledversion="1.0.3" orientation="orthogonal" renderorder="right-down" width="40" height="23" tilewidth="32" tileheight="32" nextobjectid="39">
  <properties>
   <property name="Back" value="back5"/>
   <property name="Title" value="Brain Squeeze"/>
@@ -12,7 +12,7 @@
  </layer>
  <layer name="platforms" width="40" height="23">
   <data encoding="base64" compression="zlib">
-   eJxjYmBgYBpGOBGIF5GBk+nkvkYG/EAFh3jzIHFf86j7Rt1HQ3wQiJOgeOkgdN9gD79R91HffUuAWAmKDw1C9yED1UHuPlxgsMQvCOMqd0bDb9R99HSfMhIebO5TZhgc7mMhwm30dN9CBkT7hRS8mE7uozcGAEn8Mk4=
+   eJxjYmBgYBpGOBGIF+HBh3GIJ9PJfY0M+EEzHvFR9426b7i77yAQJ0Hx0kHovsEefqPuo777lgCxEhQfGoTuQwaqg9x9uMBgiV8QxlXujIbfqPvo6T5lJDzY3KfMMDjcx0KE2+jpvoUMiPYLKXgxndxHbwwAxvYyzg==
   </data>
  </layer>
  <objectgroup name="objects">

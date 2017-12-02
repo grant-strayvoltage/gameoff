@@ -1071,6 +1071,7 @@ public class GameInputManager2 implements InputManager, ControllerListener {
         return;
       }
 
+      m_isMac = false;
       if (System.getProperty("os.name").contains("Mac"))
         m_isMac = true;
         
@@ -1116,7 +1117,7 @@ public class GameInputManager2 implements InputManager, ControllerListener {
         controllerConnected = true;
         if (m_optionsDialog)
           controller.addListener(this);     
-      } else if (controllerL.getName().contains("Xbox One for Windows"))
+      } else if (controllerL.getName().contains("Xbox One For Windows"))
       {
         m_controllerStatus = "Controller Status: Connected XBOX One";
         controller = controllerL;
@@ -1124,6 +1125,7 @@ public class GameInputManager2 implements InputManager, ControllerListener {
         m_touchDevice = false;
         androidTV = false;
         xbox360 = true;
+        xboxMac = false;
         controllerConnected = true;
         if (m_optionsDialog)
           controller.addListener(this);
@@ -1135,8 +1137,8 @@ public class GameInputManager2 implements InputManager, ControllerListener {
         ouyaControllerConnected = true;
         m_touchDevice = false;
         androidTV = false;
-        xboxMac = true;
-        xbox360 = false;
+        xboxMac = m_isMac;
+        xbox360 = !xboxMac;
         controllerConnected = true;
         if (m_optionsDialog)
           controller.addListener(this);
