@@ -21,9 +21,9 @@
   <object id="4" name="P1" type="PlayerStart1" x="360.058" y="466.742" width="60" height="77"/>
   <object id="5" name="P2" type="PlayerStart2" x="420.724" y="499.675" width="47" height="44"/>
   <object id="16" name="exit" type="Exit" x="862" y="424" width="64" height="90"/>
-  <object id="46" name="PlatformStop" type="PlatformStop" x="512" y="481" width="32" height="32"/>
+  <object id="46" name="PlatformStop" type="PlatformStop" x="511" y="541" width="32" height="32"/>
   <object id="47" name="PlatformStop" type="PlatformStop" x="512" y="256" width="32" height="32"/>
-  <object id="48" name="platform1" type="Platform" x="480" y="446" width="96" height="32">
+  <object id="48" name="platform1" type="Platform" x="478" y="319" width="96" height="32">
    <properties>
     <property name="contactTrigger" type="bool" value="false"/>
     <property name="moveHorizontal" type="bool" value="false"/>
