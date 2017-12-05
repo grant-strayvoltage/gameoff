@@ -1,7 +1,6 @@
 package com.strayvoltage.gameoff;
 
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.graphics.g2d.*;
 import com.badlogic.gdx.maps.MapProperties;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
@@ -9,6 +8,7 @@ import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.math.*;
 
 public class Trampoline extends GameMapObject implements Box2dCollisionHandler{
 
@@ -16,7 +16,7 @@ public class Trampoline extends GameMapObject implements Box2dCollisionHandler{
 	public static final int UP = 0;
 	public static final int DOWN = 1;
 	
-	public static float Bounce_Interval = .2f;
+	public static float Bounce_Interval = .1f;
 	public static float Multiplier = 1.5f;
 	
 	boolean no_exceptions = true; //interacts with all objects that it collides with
@@ -66,6 +66,7 @@ public class Trampoline extends GameMapObject implements Box2dCollisionHandler{
 			setRegion(down);
 			Player p = (Player) collision.target;
 			p.trampoline_state = DOWN;
+			p.trampoline_count++;
 			if(players[0] == null)
 				players[0] = p;
 			else
@@ -74,6 +75,7 @@ public class Trampoline extends GameMapObject implements Box2dCollisionHandler{
 			current_state = DOWN;
 			brain = (PowerUnit) collision.target;
 			brain.trampoline_state = DOWN;
+			brain.trampoline_count++;
 			setRegion(down);
 		}else if(no_exceptions && !(collision.target_type == Box2dVars.PLAYER_NORMAL||
 				collision.target_type== Box2dVars.PLAYER_JUMPING) && collision.target!=null) {
@@ -90,6 +92,7 @@ public class Trampoline extends GameMapObject implements Box2dCollisionHandler{
 			setRegion(up);
 			Player p = (Player) collision.target;
 			p.trampoline_state = NONE;
+			p.trampoline_count--;
 			if(players[0] == p)
 				players[0] = null;
 			else
@@ -99,6 +102,7 @@ public class Trampoline extends GameMapObject implements Box2dCollisionHandler{
 			
 			PowerUnit brainLocal = (PowerUnit)collision.target;
 			brainLocal.trampoline_state = NONE;
+			brain.trampoline_count--;
 			brain = null;
 			if(players[0] == null && players[1] == null) {
 				current_state = UP;
@@ -129,18 +133,21 @@ public class Trampoline extends GameMapObject implements Box2dCollisionHandler{
 				for (int i = 0; i < players.length; i++) {
 					if(players[i]!=null) {
 						players[i].trampoline_state = NONE;
-						players[i].jump();
+						players[i].trampJump();
 						this.playSound("bounce",1f);
 					}
 				}
 				if (brain != null) 
 				{
-					brain.jump();
+					brain.trampoline_state = NONE;
+					brain.trampJump();
 					this.playSound("bounce",0.85f);
 				}
 			}
 				for(GameMapObject object: objects)
 				{
+					Vector2 cv = object.m_body.getLinearVelocity();
+				  if (cv.y < 0) object.m_body.setLinearVelocity(cv.x,0);
 					object.m_body.applyLinearImpulse(0, push_force, 0, 0, true);
 					this.playSound("bounce",0.85f);
 				}
@@ -183,7 +190,7 @@ public class Trampoline extends GameMapObject implements Box2dCollisionHandler{
 
 	    fixtureDef.density = m_density;
 	    fixtureDef.friction = 0.1f;
-	    fixtureDef.restitution = m_restitution;
+	    fixtureDef.restitution = 0;
 	    fixtureDef.isSensor = m_isSensor;
 	    fixtureDef.filter.categoryBits = m_categoryBits;
 	    fixtureDef.filter.maskBits = m_filterMask;

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" tiledversion="2017.07.25" orientation="orthogonal" renderorder="right-down" width="40" height="23" tilewidth="32" tileheight="32" nextobjectid="95">
+<map version="1.0" tiledversion="1.0.3" orientation="orthogonal" renderorder="right-down" width="40" height="23" tilewidth="32" tileheight="32" nextobjectid="95">
  <properties>
   <property name="Back" value="back1"/>
   <property name="Title" value="Switch Fan Fiction"/>
@@ -12,7 +12,7 @@
  </layer>
  <layer name="platforms" width="40" height="23">
   <data encoding="base64" compression="zlib">
-   eJztl9sJgDAMRUNxEtHB1EmKk/hYRBzFRTRooaTRKn3Yjx64Hw1BD6FVKgBAJJ6WyXpTjxnl14MJV4sJvv/Jr46rY2Dz+5s7vzJAfPqlQvZzQ/db4PzedKSnYWozU6ssa1c/NT9JeiTws6V9tAfXRQC/4XquysTUxiMbqdE1/nvojH34+UKCOeOvZD+et2cnpB/uWdy7BZMpAT8fZD83sp8but/f9wzb/SPl7ImIRkA=
+   eJztl1EKgzAMhoN4kuEO5naS4klc3UHGjrKLrIGJIf03HY21D/3gf2gI+hHaig0RNYWnD7moPEEtZ67Cb6AYVMsJv/+X3zmvTsSa39F885tCToa5G/uVQvVLQ/o9aLlzJD2oTaDWraxT/eb5OdXjCM9W9+keXrc7+I2f587xoHYLeamaXvO3R8/Yws8KR/GM/6X6YbaenT39eM/y3m1BfAF+FlS/NKpfGtKPz9uR/xooXviVnDdBFEfF
   </data>
  </layer>
  <objectgroup name="objects">
@@ -57,7 +57,7 @@
     <property name="visible" type="bool" value="true"/>
    </properties>
   </object>
-  <object id="48" name="fdancer" type="Switch" x="640" y="128" width="32" height="32">
+  <object id="48" name="fdancer" type="Switch" x="624" y="128" width="32" height="32">
    <properties>
     <property name="sensitive" type="bool" value="true"/>
     <property name="startOn" type="bool" value="false"/>
@@ -65,7 +65,7 @@
     <property name="visible" type="bool" value="true"/>
    </properties>
   </object>
-  <object id="49" name="dorrSwitch" type="Switch" x="704" y="128" width="32" height="32">
+  <object id="49" name="dorrSwitch" type="Switch" x="720" y="128" width="32" height="32">
    <properties>
     <property name="sensitive" type="bool" value="true"/>
     <property name="startOn" type="bool" value="false"/>

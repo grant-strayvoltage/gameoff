@@ -71,6 +71,7 @@ public class GameInputManager2 implements InputManager, ControllerListener {
   boolean m_desktop = false;
   boolean m_android = false;
   boolean m_allowKeyboard = false;
+  boolean m_keyBoardUsed = false;
 
   //left trigger lower is axis 7 and right trigger lower is axis 8
   //left.right button in middle is 109 and 108 (108 right, 109 left)
@@ -730,6 +731,8 @@ public class GameInputManager2 implements InputManager, ControllerListener {
 
     }
 
+    m_keyBoardUsed = false;
+
       if (m_allowKeyboard == false)
       {
         return;
@@ -743,6 +746,8 @@ public class GameInputManager2 implements InputManager, ControllerListener {
         m_xShootAxis = 0;
         m_yShootAxis = 0;
       }
+      
+      
 
       if (m_playerNumber == 0)
       {
@@ -792,15 +797,18 @@ public class GameInputManager2 implements InputManager, ControllerListener {
       if ((inp.isKeyPressed(Keys.ENTER)) || (inp.isKeyPressed(Keys.X)) || (inp.isKeyPressed(Keys.J)) || (inp.isKeyPressed(Keys.DPAD_CENTER)))
       {
         jumpPressed = true;
+        m_keyBoardUsed = true;
       }
 
       if ((inp.isKeyPressed(Keys.Q)) || (inp.isKeyPressed(Keys.ESCAPE)) || (inp.isKeyPressed(Keys.BACK))) 
       {
         speedPressed = true;
+        m_keyBoardUsed = true;
       }
 
       if ((inp.isKeyPressed(Keys.C)) || (inp.isKeyPressed(Keys.SPACE)) || (inp.isKeyPressed(Keys.K))) {
         firePressed = true;
+        m_keyBoardUsed = true;
       }
 
       if (inp.isKeyPressed(Keys.Z))
@@ -857,15 +865,19 @@ public class GameInputManager2 implements InputManager, ControllerListener {
       if (inp.isKeyPressed(Keys.I))
       {
         jumpPressed = true;
+        m_keyBoardUsed = true;
       }
 
       if (inp.isKeyPressed(Keys.O))
       {
-        speedPressed = true;
+        firePressed = true;
+        m_keyBoardUsed = true;
       }
 
-      if (inp.isKeyPressed(Keys.P)) {
-        firePressed = true;
+
+      if (inp.isKeyPressed(Keys.ESCAPE)) {
+        speedPressed = true;
+        m_keyBoardUsed = true;
       }
 
       if (inp.isKeyPressed(Keys.U))

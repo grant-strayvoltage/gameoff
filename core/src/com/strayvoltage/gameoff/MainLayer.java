@@ -50,7 +50,7 @@ int m_gameState = 5;
 Exit m_exit;
 int m_stage, m_level, gameState;
 AssetManager m_assets;
-GameInputManager2 inputManager;
+GameInputManager2 m_p1Controller, m_p2Controller;
 Matrix4 m_defaultMatrix;
 public GameTileMap tiledMap = null;
 float stateTime;
@@ -82,6 +82,9 @@ GameText m_titleText;
 GameSprite m_fadeOutSprite;
 GameText m_statsText;
 
+int m_p1ControllerCode = 0;
+int m_p2ControllerCode = 0;
+
 public MainLayer()
   {
     super();
@@ -94,8 +97,11 @@ public MainLayer()
     this.setCameraPosition(GameMain.getSingleton().m_viewport.getWorldWidth()*.5f,
     		GameMain.getSingleton().m_viewport.getWorldHeight()*.5f);
 
-    inputManager = MasterInputManager.getSharedInstance().getController(0);
-    inputManager.setViewport(GameMain.getSingleton().m_viewport);
+    m_p1Controller = MasterInputManager.getSharedInstance().getController(0);
+    m_p1Controller.setViewport(GameMain.getSingleton().m_viewport);
+
+    m_p1ControllerCode = MasterInputManager.getSharedInstance().m_p1Code;
+    m_p2ControllerCode = MasterInputManager.getSharedInstance().m_p2Code;
 
     m_assets.finishLoading();
 
@@ -378,11 +384,15 @@ public float getFloat(String key, MapObject mp)
     m_brain.setDeathParticles(this, m_sprites);
     m_brain.addToWorld(world);
 
-    m_player1 = new Player(m_sprites,1,inputManager);
-    //this.add(m_player1);
+    if ((m_p1ControllerCode == 2) || (m_p1ControllerCode == 4))
+      m_p1Controller = MasterInputManager.getSharedInstance().getController(1);
+    
+    m_p2Controller = MasterInputManager.getSharedInstance().getController(0);
+    if ((m_p2ControllerCode == 2) || (m_p2ControllerCode == 4))
+      m_p2Controller = MasterInputManager.getSharedInstance().getController(1);
 
-    m_player2 = new Player(m_sprites,2, inputManager);
-    //this.add(m_player2);
+    m_player1 = new Player(m_sprites,1,m_p1Controller);
+    m_player2 = new Player(m_sprites,2, m_p2Controller);
 
     m_brain.pickUp(m_player1,false);
 
@@ -576,7 +586,10 @@ public float getFloat(String key, MapObject mp)
 
     stateTime += deltaTime;
 
-    inputManager.handleInput();
+    m_p1Controller.handleInput();
+
+    if (m_p2Controller != m_p1Controller)
+      m_p2Controller.handleInput();
 
     if (m_gameState == 5)
     {
@@ -590,7 +603,7 @@ public float getFloat(String key, MapObject mp)
       }
 
       //title displaying, waiting to fade
-      if ((stateTime > 0.62f) && (inputManager.anythingPressed()))
+      if ((stateTime > 0.62f) && (m_p1Controller.anythingPressed()))
       {
         m_gameState = 10;
         m_titleBackSprite.runAnimation(new AnimateMoveTo(0.5f,m_titleBackSprite.getX(), m_titleBackSprite.getY(), m_titleBackSprite.getX(), m_titleBackSprite.getY() + 200f));
@@ -605,12 +618,6 @@ public float getFloat(String key, MapObject mp)
 
     if (gameState < 10)
       gameTime += deltaTime;
-
-    //if (inputManager.isJumpPressed())
-    //{
-     //   if (stateTime > 2)
-     //     System.exit(0);
-    //}
 
     float frameTime = Math.min(deltaTime, 0.25f);
     acumm+=frameTime;
@@ -674,7 +681,8 @@ public float getFloat(String key, MapObject mp)
     }
     
     //RELOAD CURRENT LEVEL
-    if((inputManager.isTestPressed()) || (inputManager.isSpeedPressed())) {
+    if ( m_p1Controller.isSpeedPressed() || m_p2Controller.isSpeedPressed() )
+    {
       GameMain.getSingleton().addDeath();
     	reset();
       stopAllLoops();

@@ -24,6 +24,8 @@ public class PowerUnit extends GameMapObject implements Box2dCollisionHandler {
   GameAnimateable m_warnAnimation = null;
   GameAnimateable m_deathAnimation = null;
 
+  int trampoline_count = 0;
+
   boolean m_onGround = false;
   GameInputManager2 m_controller = null;
   int m_readyToMoveTicks = 0;
@@ -37,8 +39,11 @@ public class PowerUnit extends GameMapObject implements Box2dCollisionHandler {
   float m_jumpDY = 0.3f;
   float m_jumpForce = 0.6f;
   int m_jumpTicks = 0;
+  int m_bounceTicks = 0;
   float m_yOff = 12;
   float m_xOff = 3;
+  float m_xOff2 = 0;
+  float m_yOff2 = 0;
   GameTileMap m_map;
   int m_fanRight = 0;
   int m_fanLeft = 0;
@@ -99,17 +104,47 @@ public class PowerUnit extends GameMapObject implements Box2dCollisionHandler {
     }
   }
 
+  public void trampJump()
+  {
+    if (m_bounceTicks > 0) return;
+
+    if (m_jumpTicks < 1)
+      m_body.applyLinearImpulse(0, m_jumpDY,0,0, true);
+    else
+      m_body.applyLinearImpulse(0, m_jumpDY/1.5f,0,0, true);
+
+    m_jumpTicks = 15;
+    m_onGround = false;
+    this.playSound("brainJump",1f);
+  }
+
   public void jump() {
+
+    if (m_bounceTicks > 0) return;
+
 	  if(trampoline_state != Trampoline.NONE) {
-		  m_body.applyLinearImpulse(0, m_jumpDY*2f, 0, 0, true);
+
+      Vector2 cv = this.m_body.getLinearVelocity();
+      this.m_body.setLinearVelocity(cv.x,1);
+      float f = 1.0f;
+
+      if (trampoline_count == 2) f = 1.65f;
+
+		  m_body.applyLinearImpulse(0, m_jumpDY*1.5f*f, 0, 0, true);
 		  m_jumpTicks = 15;
+      m_bounceTicks = 15;
       this.playSound("bounce",0.85f);
 	  }else {
+      Vector2 cv = this.m_body.getLinearVelocity();
+      if (Math.abs(cv.y) > 3)
+       this.m_body.setLinearVelocity(cv.x,0);
+
 		  m_body.applyLinearImpulse(0, m_jumpDY, 0, 0, true);
-	      m_jumpTicks = 15;
+	    m_jumpTicks = 15;
 	  }
-      this.playSound("brainJump",1f);
-      m_onGround = false;
+
+    this.playSound("brainJump",1f);
+    m_onGround = false;
   }
 
   public void addToWorld(World world)
@@ -194,12 +229,15 @@ public class PowerUnit extends GameMapObject implements Box2dCollisionHandler {
       trampoline_state = Trampoline.NONE;
       if (p.id == 1)
       {
-        m_yOff = 40;
+        m_yOff = 35;
         m_xOff = 3;
+        m_xOff2 = 0;
+        m_yOff2 = 0;
       } else
       {
         m_yOff = 15;
         m_xOff = 0;
+        m_yOff2 = 0;
       }
 
   }
@@ -308,6 +346,8 @@ public class PowerUnit extends GameMapObject implements Box2dCollisionHandler {
         setPositionToBody();
         return;
       }
+
+      if (m_bounceTicks > 0) m_bounceTicks--;
 
       if (m_pickedUp == false)
       {
@@ -462,7 +502,7 @@ public class PowerUnit extends GameMapObject implements Box2dCollisionHandler {
       {
         if (m_owner != null)
         {
-          this.setBodyPosition(m_owner.getX() + m_owner.getWidth()/2 - this.getWidth()/2 + m_xOff, m_owner.getY() + m_owner.getHeight() - m_yOff);
+          this.setBodyPosition(m_owner.getX() + m_owner.getWidth()/2 - this.getWidth()/2 + m_xOff + m_xOff2, m_owner.getY() + m_owner.getHeight() - m_yOff + m_yOff2);
         }
       }
 

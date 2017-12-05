@@ -18,6 +18,7 @@ public class MasterInputManager {
 
   private GameInputManager2[] m_controllers = new GameInputManager2[2];
   private static MasterInputManager m_instance = null;
+  public int m_p1Code, m_p2Code;
 
   public MasterInputManager()
   {
@@ -87,7 +88,12 @@ public class MasterInputManager {
       //two controllers- let player one use keyboard
       m_controllers[0].setAllowKeyboard(true);
     }
+  }
 
+  public void setControllerCodes(int p1, int p2)
+  {
+    m_p1Code = p1;
+    m_p2Code = p2;
   }
 
   public int getNumControllers()

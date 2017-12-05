@@ -50,11 +50,10 @@ public class Player extends GameSprite implements Box2dCollisionHandler{
   int m_vertTicks = 0;
   float m_yOff = 0;
   private boolean m_dead;
-  GameAnimateable m_standingAnimation;
-  GameAnimateable m_runningAnimation;
-  GameAnimateable m_jumpingAnimation;
-  GameAnimateable m_fallingAnimation;
-  GameAnimateable m_landingAnimation;
+  AnimateSpriteFrame m_standingAnimation;
+  AnimateSpriteFrame m_runningAnimation;
+  AnimateSpriteFrame m_jumpingAnimation;
+  AnimateSpriteFrame m_landingAnimation;
   GameAnimateable m_exitAnimation;
   float m_bhoff = 0;
   int m_ticks = 0;
@@ -76,14 +75,18 @@ public class Player extends GameSprite implements Box2dCollisionHandler{
   GameAnimateable m_deathAnimation;
 
   GameParticleSystem m_particleSystem1, m_particleSystem2;
+  int trampoline_count = 0;
   
   Array<Fan> fans;
+  int m_bounceTicks = 0;
 
   public Player(TextureAtlas textures, int p, GameInputManager2 controller)
   {
     super(textures.findRegion("player" + p + "_stand_F1"));
     m_controller = controller;
     trampoline_state = Trampoline.NONE;
+    trampoline_count = 0;
+
     m_dead = false;
 
     String pb = "player" + p + "_";
@@ -139,6 +142,7 @@ public class Player extends GameSprite implements Box2dCollisionHandler{
       m_hForce = 100;
       m_maxX = 4;
     }
+
   }
 
   public void setDeathParticles(MainLayer l, TextureAtlas textures)
@@ -253,6 +257,31 @@ public class Player extends GameSprite implements Box2dCollisionHandler{
 
   }
 
+  public void handleBrainFollow()
+  {
+      m_powerUnit.m_yOff2 = 0;
+      if (id == 1)
+      {
+        if (m_standingAnimation.isRunning())
+        {
+          int kf = m_standingAnimation.getKeyFrameIndex();
+          if (kf == 0)
+          {
+            m_powerUnit.m_yOff2 = -11;
+          } else
+          {
+            m_powerUnit.m_yOff2 = -9;
+          }
+        } else if (m_runningAnimation.isRunning())
+        {
+          m_powerUnit.m_yOff2 = -10;
+        } else if (m_landingAnimation.isRunning())
+        {
+          m_powerUnit.m_yOff2 = -14;
+        }
+      }
+  }
+
   public GameMapObject checkObjectCollisions(float xx, float yy)
   {
     float oldx = this.getX();
@@ -342,6 +371,8 @@ public class Player extends GameSprite implements Box2dCollisionHandler{
         m_particleSystem2.update(deltaTime);
         return;
     }
+
+    if (m_bounceTicks > 0) m_bounceTicks--;
 	
 	 //update for fixed jump
 	  if(fixed_jump) {
@@ -351,8 +382,15 @@ public class Player extends GameSprite implements Box2dCollisionHandler{
 			  fixed_jump = false;
 		  }
 	  }
+
     if (m_state == 2)
+    {
+      if (m_ownsPowerUnit)
+       handleBrainFollow();
+
       return;
+    }
+
 
     boolean isRightPressed = false;
     boolean isLeftPressed = false;
@@ -409,12 +447,16 @@ public class Player extends GameSprite implements Box2dCollisionHandler{
         {
           m_powerUnit.setFlip(false,false);
           this.setFlip(false,false);
+          m_powerUnit.m_xOff2 = 0;
         }
         else if (m_lastDx < 0)
         {
           m_powerUnit.setFlip(true,false);
           this.setFlip(true,false);
+          m_powerUnit.m_xOff2 = 0;
+          if (id == 1) m_powerUnit.m_xOff2 = -6;
         }
+        handleBrainFollow();
       }
     } else
     {
@@ -718,19 +760,59 @@ public class Player extends GameSprite implements Box2dCollisionHandler{
       }
     }
   }
+
+  public void trampJump()
+  {
+    if (m_bounceTicks > 0) return;
+
+    Gdx.app.log("Player","trampJump()");
+    float f = 2.5f;
+    if (id == 2) f = 2f;
+    if (m_jumpTicks < 1)
+      m_body.applyLinearImpulse(0, m_jumpDY,0,0, true);
+    else
+      m_body.applyLinearImpulse(0, m_jumpDY/f,0,0, true);
+
+    m_jumpTicks = 15;
+    m_onGround = false;
+    this.playSound(jumpSound,1f);
+  }
   
   public void jump() {
-	 if(fixed_jump)return; //if the fixed jump is on do not jump
+
+	  if(fixed_jump)return; //if the fixed jump is on do not jump
+
+    if (m_bounceTicks > 0) return;
+
+    Vector2 cv = m_body.getLinearVelocity();
 	  if(trampoline_state != Trampoline.NONE) {
-		  m_body.applyLinearImpulse(0, m_jumpDY*Trampoline.Multiplier, 0, 0, true);
+
+      float f = 1.0f;
+      if (trampoline_count  < 2)
+      {
+        m_body.setLinearVelocity(cv.x,1);
+        if (id == 2) f = 1.06f;
+      } else
+      {
+        m_body.setLinearVelocity(cv.x,1);
+        f = 1.1f;
+        if (id == 2) f= 1.25f;
+      }
+
+		  m_body.applyLinearImpulse(0, m_jumpDY*Trampoline.Multiplier*f, 0, 0, true);
 		  m_jumpTicks = 15;
+      m_bounceTicks = 15;
       this.playSound("bounce",1f);
 	  }else {
-		  m_body.applyLinearImpulse(0, m_jumpDY, 0, 0, true);
-	      m_jumpTicks = 15;
+      if (Math.abs(cv.y) > 3)
+       this.m_body.setLinearVelocity(cv.x,0);
+       
+      m_body.applyLinearImpulse(0, m_jumpDY, 0, 0, true);
+      m_jumpTicks = 15;
 	  }
-      m_onGround = false;
-      this.playSound(jumpSound,1f);
+
+    m_onGround = false;
+    this.playSound(jumpSound,1f);
   }
 
   public void setPositionToBody()

@@ -139,49 +139,32 @@ public class TitleScreenLayer extends GameLayer implements GameMenuListener {
       this.setGlobal("m_level", "1");
       this.loadGame(0);
 
-      
-      if(GameOff.DEBUG) {
-        MainLayer l = new MainLayer();
-        l.loadLevel(5,1);
-        this.replaceActiveLayer(l);
-        this.cleanUp();
-      }else
-      {
-        MainLayer l = new MainLayer();
-        l.loadLevel(1,1);
- 
-        CutSceneImage scene1 = new CutSceneImage("cut1");
-        CutSceneImage scene2 = new CutSceneImage("cut2");
-        CutSceneImage scene3 = new CutSceneImage("cut3");
-        CutSceneImage scene4 = new CutSceneImage("cut4");
-        CutSceneImage scene5 = new CutSceneImage("cut5");
-        CutSceneImage scene6 = new CutSceneImage("cut6");
-        CutSceneImage scene7 = new CutSceneImage("cut7");
+      PlayerJoinLayer l = new PlayerJoinLayer();
 
-        scene1.setNextScene(scene2);
-        scene2.setNextScene(scene3);
-        scene3.setNextScene(scene4);
-        scene4.setNextScene(scene5);
-        scene5.setNextScene(scene6);
-        scene6.setNextScene(scene7);
-        scene7.setNextScene(l);
-        this.replaceActiveLayer(scene1);
-        this.cleanUp();
-      }
-      
+      CutSceneImage scene1 = new CutSceneImage("cut1");
+      CutSceneImage scene2 = new CutSceneImage("cut2");
+      CutSceneImage scene3 = new CutSceneImage("cut3");
+      CutSceneImage scene4 = new CutSceneImage("cut4");
+      CutSceneImage scene5 = new CutSceneImage("cut5");
+      CutSceneImage scene6 = new CutSceneImage("cut6");
+      CutSceneImage scene7 = new CutSceneImage("cut7");
 
+      scene1.setNextScene(scene2);
+      scene2.setNextScene(scene3);
+      scene3.setNextScene(scene4);
+      scene4.setNextScene(scene5);
+      scene5.setNextScene(scene6);
+      scene6.setNextScene(scene7);
+      scene7.setNextScene(l);
+      this.replaceActiveLayer(scene1);
+      this.cleanUp();
 
     } else if (buttonNum == 2)
     {
       this.loadGameDefaults();
       this.loadGame(0);
 
-      int scene = Integer.parseInt(this.getGlobal("m_stage"));
-      int level = Integer.parseInt(this.getGlobal("m_level"));
-
-      MainLayer l = new MainLayer();
-      l.loadLevel(scene, level);
-      
+      PlayerJoinLayer l = new PlayerJoinLayer();
       this.replaceActiveLayer(l);
       this.cleanUp();
 
