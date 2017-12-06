@@ -128,9 +128,9 @@ public class PowerUnit extends GameMapObject implements Box2dCollisionHandler {
       this.m_body.setLinearVelocity(cv.x,1);
       float f = 1.0f;
 
-      if (trampoline_count == 2) f = 1.65f;
+      if (trampoline_count == 2) f = 1.62f;
 
-		  m_body.applyLinearImpulse(0, m_jumpDY*1.5f*f, 0, 0, true);
+		  m_body.applyLinearImpulse(0, m_jumpDY*1.6f*f, 0, 0, true);
 		  m_jumpTicks = 15;
       m_bounceTicks = 15;
       this.playSound("bounce",0.85f);

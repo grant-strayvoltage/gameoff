@@ -17,6 +17,7 @@ public class GameOff extends GameMain {
 	
 	if(!DEBUG)
 		Gdx.app.setLogLevel(Application.LOG_NONE); //NO LOGGING WHEN WE DEPLOY
+
 	m_camera = new OrthographicCamera(1280,720);
 	m_camera.update();
 

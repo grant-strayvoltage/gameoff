@@ -22,7 +22,7 @@
   <object id="5" name="P2" type="PlayerStart2" x="608.5" y="338" width="47" height="44"/>
   <object id="16" name="exit" type="Exit" x="927" y="134" width="64" height="90"/>
   <object id="46" name="PlatformStop" type="PlatformStop" x="512" y="576" width="32" height="32"/>
-  <object id="47" name="PlatformStop" type="PlatformStop" x="512" y="160" width="32" height="32"/>
+  <object id="47" name="PlatformStop" type="PlatformStop" x="512" y="158" width="32" height="32"/>
   <object id="48" name="platform1" type="Platform" x="480" y="256" width="96" height="32">
    <properties>
     <property name="contactTrigger" type="bool" value="false"/>

@@ -82,11 +82,13 @@ public class MasterInputManager {
     } else if (m_controllers[1] == null)
     {
       //one controller connected...allow player 2 to use the keyboard
+      m_controllers[0].setAllowKeyboard(true);
       m_controllers[1] = new GameInputManager2(1, true);
     } else
     {
       //two controllers- let player one use keyboard
       m_controllers[0].setAllowKeyboard(true);
+      m_controllers[1].setAllowKeyboard(true);
     }
   }
 
