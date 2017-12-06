@@ -57,7 +57,7 @@ public class MasterInputManager {
         {
           m_controllers[controllerNumber] = new GameInputManager2(controllerL,controllerNumber);
           controllerNumber++;       
-        } else if (controllerL.getName().contains("Xbox One"))
+        } else if (controllerL.getName().toLowerCase().contains("xbox one"))
         {
           m_controllers[controllerNumber] = new GameInputManager2(controllerL,controllerNumber);
           controllerNumber++; 

@@ -1,1 +1,1 @@
-m_stage:5~deaths:177~GameSaveID:0~m_next_stage:5~m_next_level:6~m_level:5~game_complete:false~time:3095.8823~
+m_stage:1~deaths:0~GameSaveID:0~m_next_stage:1~m_next_level:5~m_level:4~game_complete:false~time:31.567694~
