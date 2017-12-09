@@ -12,7 +12,7 @@
  </layer>
  <layer name="platforms" width="40" height="23">
   <data encoding="base64" compression="zlib">
-   eJztlVEKgCAMhod0lQ5WnUQ6SWj3LB+ksUzW1LTohz34h+tjbFMBgGo8hj3GxmJCfDO0J8f088n1BT4LR792cO5h763ojp81r6kgnzQvPXfCPLn4cJ1N4D8SYT4tRysmTv3w3g71GN2nT/Pd8XPvgLt8sR5zWuD6rcK1t+Scwtcz8pTSF/ZzTXH53KzS2UzxcvPpwPcUj8vM5XNzSec1t5fCV0tv4ovt1lphEF/LsQEAVFYf
+   eJztlVEKgDAIhmXsKHWw1Umik0R1z9rDSGyFc8ZW9IMP+0fyZWoGAEzl4fboKose8Y1QnzzTzyfXF/gWOPrVwrmHg7eiZxw5Nw/ySfPSsxXm0eLDdZ7JXSvMifkGOVq2wrutxOfUD+9t2mOxfaopDl+Kr70DUvnuesxrgut/Fa79AudvKeWT9raGvrCfS4rL52eVzmaOp803RO5zPC4zl8/PJZ1XbS+Hr5TexHe3W0vFjPhqjg2bHldw
   </data>
  </layer>
  <objectgroup name="objects">
@@ -49,16 +49,12 @@
   </object>
   <object id="59" name="SmasherStop" type="PlatformStop" x="353" y="408" width="32" height="32"/>
   <object id="60" name="SmasherStop" type="PlatformStop" x="513" y="408" width="32" height="32"/>
-  <object id="61" name="SmasherStop" type="PlatformStop" x="352" y="672" width="32" height="32"/>
-  <object id="62" name="SmasherStop" type="PlatformStop" x="353" y="677" width="32" height="32"/>
-  <object id="63" name="SmasherStop" type="PlatformStop" x="512" y="672" width="32" height="32"/>
-  <object id="64" name="SmasherStop" type="PlatformStop" x="511" y="677" width="32" height="32"/>
+  <object id="61" name="SmasherStop" type="PlatformStop" x="352" y="674" width="32" height="32"/>
+  <object id="63" name="SmasherStop" type="PlatformStop" x="512" y="674" width="32" height="32"/>
   <object id="65" name="SmasherStop" type="PlatformStop" x="673" y="408" width="32" height="32"/>
   <object id="66" name="SmasherStop" type="PlatformStop" x="833" y="408" width="32" height="32"/>
-  <object id="67" name="SmasherStop" type="PlatformStop" x="832" y="672" width="32" height="32"/>
-  <object id="68" name="SmasherStop" type="PlatformStop" x="832" y="675" width="32" height="32"/>
-  <object id="69" name="SmasherStop" type="PlatformStop" x="672" y="672" width="32" height="32"/>
-  <object id="70" name="SmasherStop" type="PlatformStop" x="672" y="677" width="32" height="32"/>
+  <object id="67" name="SmasherStop" type="PlatformStop" x="832" y="674" width="32" height="32"/>
+  <object id="69" name="SmasherStop" type="PlatformStop" x="672" y="674" width="32" height="32"/>
   <object id="71" name="smasherswitch" type="Switch" x="320" y="608" width="32" height="32">
    <properties>
     <property name="sensitive" type="bool" value="true"/>
@@ -121,7 +117,7 @@
     <property name="switches" value="switch1"/>
    </properties>
   </object>
-  <object id="85" name="fan1" type="Fan" x="864" y="320" width="32" height="32">
+  <object id="85" name="fan1" type="Fan" x="856" y="320" width="32" height="32">
    <properties>
     <property name="dir" type="int" value="3"/>
     <property name="power" type="int" value="100"/>

@@ -1,7 +1,6 @@
 package com.strayvoltage.gameoff.desktop;
 
-import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
-import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
+import com.badlogic.gdx.backends.lwjgl3.*;
 import com.badlogic.gdx.tools.texturepacker.TexturePacker;
 import com.badlogic.gdx.tools.texturepacker.TexturePacker.Settings;
 import com.strayvoltage.gameoff.GameOff;
@@ -43,7 +42,7 @@ public class DesktopLauncher {
 			
 		}
 		
-		
+		/* old - switched to Lwjgl3 back end to fix controller support issues
 		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
 
 		config.width=1280;
@@ -56,6 +55,19 @@ public class DesktopLauncher {
     	config.fullscreen = false;
     	// vSync
     	config.vSyncEnabled = true;
-		new LwjglApplication(new GameOff(), config);
+		new LwjglApplication(new GameOff(), config); */
+
+		  Lwjgl3ApplicationConfiguration config = new Lwjgl3ApplicationConfiguration();
+		  //config.width=1280;
+    	//config.height=720;
+
+    	// fullscreen
+    	//config.fullscreen = false;
+    	// vSync
+    	//config.vSyncEnabled = true;
+			config.setWindowedMode(1280,720);
+
+      new Lwjgl3Application(new GameOff(), config);
+
 	}
 }

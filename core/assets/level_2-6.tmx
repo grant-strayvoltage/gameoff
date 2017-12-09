@@ -12,12 +12,23 @@
    eJztwTEBAAAAwqD1T20IX6AAAADgNw5gAAE=
   </data>
  </layer>
- <layer name="platforms" width="40" height="23">
-  <data encoding="base64" compression="zlib">
-   eJztlm0KgCAMQIfURawOVp0kOklZB6kulpHBkEhDpvvh4IH5gS8bSwEAIkNOq5kDOFC7J/AbICwa1B4Y+uHIfv+jZuZXW894/cjAb4zsZ+/HzS/0/BprLKXfVct3h3tsv0UjNZ1GwXc+pD6/xwFHa9wvdoZ+1Pm3mXdfPdw45h92U475FP8P3/o3wX2HUh9zUtfn8qWvQsT2Kzycqf2e7/YHabD7FYFf5p0TcWo9ug==
-  </data>
- </layer>
  <objectgroup name="objects">
+  <object id="49" name="BackObject" type="BackObject" x="416" y="192" width="180" height="96">
+   <properties>
+    <property name="frames" type="int" value="3"/>
+    <property name="speed" type="int" value="5"/>
+    <property name="sprite" value="meter"/>
+    <property name="style" type="int" value="2"/>
+   </properties>
+  </object>
+  <object id="50" name="BackObject" type="BackObject" x="736" y="548" width="96" height="96">
+   <properties>
+    <property name="frames" type="int" value="1"/>
+    <property name="speed" type="int" value="10"/>
+    <property name="sprite" value="blood1"/>
+    <property name="style" type="int" value="2"/>
+   </properties>
+  </object>
   <object id="4" name="P1" type="PlayerStart1" x="354" y="561" width="60" height="77"/>
   <object id="5" name="P2" type="PlayerStart2" x="418.724" y="592.675" width="47" height="44"/>
   <object id="16" name="exit" type="Exit" x="864" y="480" width="64" height="96"/>
@@ -42,27 +53,15 @@
     <property name="static" type="bool" value="true"/>
    </properties>
   </object>
-  <object id="47" name="special_pickup?" type="Pickup" x="896" y="96" width="32" height="32"/>
   <object id="48" name="Tramp1" type="Trampoline" x="595" y="334" width="48" height="48">
    <properties>
     <property name="static" type="bool" value="true"/>
    </properties>
   </object>
-  <object id="49" name="BackObject" type="BackObject" x="416" y="192" width="180" height="96">
-   <properties>
-    <property name="frames" type="int" value="3"/>
-    <property name="speed" type="int" value="5"/>
-    <property name="sprite" value="meter"/>
-    <property name="style" type="int" value="2"/>
-   </properties>
-  </object>
-  <object id="50" name="BackObject" type="BackObject" x="736" y="548" width="96" height="96">
-   <properties>
-    <property name="frames" type="int" value="1"/>
-    <property name="speed" type="int" value="10"/>
-    <property name="sprite" value="blood1"/>
-    <property name="style" type="int" value="2"/>
-   </properties>
-  </object>
  </objectgroup>
+ <layer name="platforms" width="40" height="23">
+  <data encoding="base64" compression="zlib">
+   eJztlm0KgCAMQIfURawOVp0kOklZB6kulpHBkEhDpvvh4IH5gS8bSwEAIkNOq5kDOFC7J/AbICwa1B4Y+uHIfv+jZuZXW894/cjAb4zsZ+/HzS/0/BprLKXfVct3h3tsv0UjNZ1GwXc+pD6/xwFHa9wvdoZ+1Pm3mXdfPdw45h92U475FP8P3/o3wX2HUh9zUtfn8qWvQsT2Kzycqf2e7/YHabD7FYFf5p0TcWo9ug==
+  </data>
+ </layer>
 </map>

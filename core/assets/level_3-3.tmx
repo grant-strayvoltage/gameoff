@@ -33,7 +33,7 @@
    </properties>
   </object>
   <object id="49" name="Block1" type="Block" x="576" y="511" width="32" height="32"/>
-  <object id="50" name="switch1" type="Switch" x="704" y="511" width="32" height="32">
+  <object id="50" name="switch1" type="Switch" x="701" y="511" width="32" height="32">
    <properties>
     <property name="sensitive" type="bool" value="true"/>
     <property name="startOn" type="bool" value="false"/>
@@ -41,7 +41,7 @@
     <property name="visible" type="bool" value="true"/>
    </properties>
   </object>
-  <object id="51" name="Gate1" type="Gate" x="736" y="447" width="32" height="96">
+  <object id="51" name="Gate1" type="Gate" x="733" y="448" width="32" height="95">
    <properties>
     <property name="hazard" type="bool" value="true"/>
     <property name="instant" type="bool" value="false"/>

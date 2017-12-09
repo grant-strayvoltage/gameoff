@@ -68,6 +68,7 @@ public class TitleScreenLayer extends GameLayer implements GameMenuListener {
 
     m_inputManager = MasterInputManager.getSharedInstance().getController(0);
     m_inputManager.setViewport(GameMain.getSingleton().m_viewport);
+    m_inputManager.setAllowKeyboard(true);
 
     m_defaultMatrix = m_camera.combined.cpy();
     m_defaultMatrix.setToOrtho2D(0, 0, 1280, 720);

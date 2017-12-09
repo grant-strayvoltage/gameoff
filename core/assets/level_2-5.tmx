@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" tiledversion="2017.07.25" orientation="orthogonal" renderorder="right-down" width="40" height="23" tilewidth="32" tileheight="32" nextobjectid="47">
+<map version="1.0" tiledversion="1.0.3" orientation="orthogonal" renderorder="right-down" width="40" height="23" tilewidth="32" tileheight="32" nextobjectid="47">
  <properties>
   <property name="Back" value="back2"/>
   <property name="Title" value="Cyborg Hair Cut"/>
@@ -14,7 +14,7 @@
  </layer>
  <layer name="platforms" width="40" height="23">
   <data encoding="base64" compression="zlib">
-   eJxjYmBgYBrFo3gUD2ucCMRJVMLJNHBfIwP1QPMIdB/ITGLibhEDJP7o7T5Q+LFiwQuxuG/xALkPG8DmZkJgJKa/4e4+ZSQ8Et3XTKH7kAEt3AcqRxZRCS+mgftG8SgeiRgA1uIsVA==
+   eJxjYmBgYBrFo3gUD2ucCMRJVMLJNHBfIwP1QPMIdN9BBuxxdRiNv4gBEn/0dh8o/Fix4IVY3Ld4gNyHDWBzMyEwEtPfcHefMhIeie5rHuTuA5Uji6iEF9PAfaN4FI9EDADDry1c
   </data>
  </layer>
  <objectgroup name="objects">

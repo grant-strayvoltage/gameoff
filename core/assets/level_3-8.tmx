@@ -14,11 +14,11 @@
  </layer>
  <layer name="platforms" width="40" height="23">
   <data encoding="base64" compression="zlib">
-   eJztlwsOwiAMhpslu4h6sclJ5k4ypxfRo3gRaSIJ/imMR3HG2ORPIED78SqhI6LuyzVYHT3doa4l9BuLYzy+id5ttDo1EMfZe8K4vk2N+XBPWIvAsAXfILCEGDT5OG7/kqlk0+bDuHOAEX35+2yU+GZaPzsp/S5WD6+Ny1cFvlZ2EBhCtgUfxinl430J5cy1PjHdlPhiY2pMa/1S/ONZyh0v1bEtxCflfnf/sIw5IzZea39z3g+XB1PGl6yflO9z37fU+ZXwjUKby7s9KHQvcX5S3pb6lfJ9yv58dfYLfHyWz1T3r8jJgalaSO9/xXPcwTy1/D8Be6yo6w==
+   eJztlw0OgjAMhRsSLqJcDDkJchIUL6JH8SKuUZL60o39FDHGJi+B7Kfftu4RKiKqvlyt00HoBu9WwnlDeTrBN9B79E7HFcR59kKYV8awMh+eCeusMGzB1yosPgZLvsapfqkpZLPmw7wjPWtYqzEZ8pw7I76Rlmsnpt/kdBdt/Hwx4FsrGoXBF1vwYZ5cPj4Xn2cu9QnpasQXGlMSVvsXMz/WUup47R3bfHya98/3D5/RM0Ljrc435fsx+2DM+Jz90/w+9fsWu74cvl5p4z1hH61BvjuL69N8W+uXy/ep+POVxS/wcS2fqOy/IsUDfX6q3aXKSLzGHazTav4Ht8epdQ==
   </data>
  </layer>
  <objectgroup name="objects">
-  <object id="4" name="P1" type="PlayerStart1" x="897" y="141" width="60" height="77"/>
+  <object id="4" name="P1" type="PlayerStart1" x="897" y="145" width="60" height="77"/>
   <object id="5" name="P2" type="PlayerStart2" x="678.724" y="273.008" width="47" height="44"/>
   <object id="16" name="exit" type="Exit" x="898" y="581" width="64" height="90"/>
   <object id="49" name="Gate1" type="Gate" x="768" y="544" width="32" height="128">

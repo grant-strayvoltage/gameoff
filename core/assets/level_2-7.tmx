@@ -14,7 +14,7 @@
  </layer>
  <layer name="platforms" width="40" height="23">
   <data encoding="base64" compression="zlib">
-   eJxjYmBgYBrFIwYnAnESBfgwheqSCbivkYEyQKx+XOoaB4n7VAe5+/DpH3UfYaCCxF4CxIug+NAgcd9gzx+D3X0HGSBl3UC4j4VIdQsZIGluKR3dB7ITVhcsxaNuoOKXWDDqPtIBcjm3eBC6jxgw1N2HnP/QMQsODIq3pVjEcJmDDy8m4L5RPLwwAEd7PBM=
+   eJxjYmBgYBrFIwYnAnESBfgwheqSCbivkYEyQKx+XOoaB4n7VAe5+/DpH3UfYaCCxF4CxIug+NAgcd9gzx+D3X0HGSBl3UC4j4VIdQsZIGluKR3dB7ITVhcsxaNuoOKXWDDqPtIBcjm3eBC6jxgw1N2HnP+QMSgvsuDAS7DIL8FhDiG8mID7RvHwwgDkgzxW
   </data>
  </layer>
  <objectgroup name="objects">

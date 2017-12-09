@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" tiledversion="2017.07.25" orientation="orthogonal" renderorder="right-down" width="40" height="23" tilewidth="32" tileheight="32" nextobjectid="39">
+<map version="1.0" tiledversion="1.0.3" orientation="orthogonal" renderorder="right-down" width="40" height="23" tilewidth="32" tileheight="32" nextobjectid="39">
  <properties>
   <property name="Back" value="back5"/>
   <property name="Title" value="Solo Robot"/>
@@ -12,7 +12,7 @@
  </layer>
  <layer name="platforms" width="40" height="23">
   <data encoding="base64" compression="zlib">
-   eJztlFsKgCAQRQepjQQtLFtJuZJeG2llKSlYTOaHTkJz4cCAfhwfMwIABMMUTqeRiegz+A2QLor9XiML9As5UfuZfukjXLBz5fDzfSpNq5k0WyF+xmUBfF40FizKq91+qv9XPziZuHm53/bXhH5PWeG86xGu9+eS26+JRFpPaj8sobem8IudJ1/5uf6dLZVXY4TWlwx+DPNHDgeSMzs=
+   eJztlIsJgDAMBYPoIuJi1knUSfwNoqu4iA1EiFKroKmCeXAQaKFHShIBQKQoHye3mIcoBPxKeC61+p3GfNDP5xTaD+eluOCSBfIbmU9Mvo1lOPFz9V3Kb7a0BNaGSD2eNat7uj8J+Ln6kBw4YdZ9Oe3uJ/D+/GKfOksF2/6tkfbD99MLGPIM7eeK769D+PH5vRsJP9wlfH5jVrvwnXcCforyRxZgbTch
   </data>
  </layer>
  <objectgroup name="objects">

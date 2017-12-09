@@ -421,13 +421,13 @@ public class PowerUnit extends GameMapObject implements Box2dCollisionHandler {
 
           if (m_jumpTicks > 0) m_jumpTicks--;
 
-          if ((m_onGround && m_controller.isJumpPressed()) && (m_jumpTicks < 1))
+          if ((m_onGround && m_controller.isJumpOrFirePressed()) && (m_jumpTicks < 1))
           {
             this.jump();
             stopMoveSound();
           } else if (m_jumpTicks > 0)
           {
-            if (m_controller.isJumpPressed())
+            if (m_controller.isJumpOrFirePressed())
             {
               m_body.applyForceToCenter(0,m_jumpForce,true);
             } else

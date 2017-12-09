@@ -38,6 +38,7 @@ public class Fan extends GameMapObject implements Box2dCollisionHandler,SwitchHa
 	GameSprite m_fanSprite;
 	TextureAtlas m_textures;
 	GameParticleSystem m_particleSystem;
+	float m_fanVolume = 0.1f;
 
 	long m_soundId = -1;
 	
@@ -87,7 +88,7 @@ public class Fan extends GameMapObject implements Box2dCollisionHandler,SwitchHa
 	{
 		if (m_soundId < 0)
 		{
-			m_soundId = loopSound("fan",0.15f);
+			m_soundId = loopSound("fan",m_fanVolume);
 		}
 	}
 
@@ -100,7 +101,7 @@ public class Fan extends GameMapObject implements Box2dCollisionHandler,SwitchHa
 		}
 	}
 
-	public void addFanSprite(GameLayer l, float xx, float yy)
+	public void addFanSprite(GameLayer l, float xx, float yy, float fv)
 	{
 		l.add(m_fanSprite);
 		m_fanSprite.setPosition(xx,yy);
@@ -121,6 +122,9 @@ public class Fan extends GameMapObject implements Box2dCollisionHandler,SwitchHa
 		} else {
 			m_particleSystem.setLocation(xx - 28,yy - 2,88,1);
 		}
+
+		m_fanVolume = fv * 0.1f;
+		Gdx.app.log("addFanSrpite","fv = " + m_fanVolume);
 		
 	}
 

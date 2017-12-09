@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" tiledversion="2017.07.25" orientation="orthogonal" renderorder="right-down" width="40" height="23" tilewidth="32" tileheight="32" nextobjectid="260">
+<map version="1.0" tiledversion="1.0.3" orientation="orthogonal" renderorder="right-down" width="40" height="23" tilewidth="32" tileheight="32" nextobjectid="260">
  <properties>
   <property name="Back" value="back1"/>
   <property name="Title" value="Blown Together"/>
@@ -12,7 +12,7 @@
  </layer>
  <layer name="platforms" width="40" height="23">
   <data encoding="base64" compression="zlib">
-   eJxjYmBgYBrkOBGIkwYZTkZyXzPD4AMgN426j3yAz330So/JZLqvEYib6IDxhctgdF8jmtxQcd/BQe6+wR5+o+4bdd+o+4aP+1iBeBESTkLjo8uTKg7jLybTfQMFRt1HGcDlvoUMA9/fSEJzx2Ik9w1mDAAFFffV
+   eJxjYmBgYBrkOBGIkwYZTkZyXzPD4AMgN426j3yAz330So/JZLqvEYib6IDxhcuhQei+RjS5oeK+xkHuvsEefqPuG3XfqPuId5/qIHcfKxAvAeJFUJyExF6KRZ4UcWT+YjLdN1Bg1H2UAVzuW8gw8P0NEH6MxF6M5L7BjAE8vvfQ
   </data>
  </layer>
  <objectgroup name="objects">

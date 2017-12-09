@@ -429,6 +429,10 @@ public float getFloat(String key, MapObject mp)
 
     MapProperties mapProps = tiledMap.m_tiledMap.getProperties();
     String title = (String) mapProps.get("Title");
+    float fv = 1f;
+
+    if (mapProps.containsKey("fanVolume"))
+      fv = ((Float)mapProps.get("fanVolume")).floatValue();
 
 
     String backName = (String) mapProps.get("Back");
@@ -522,7 +526,7 @@ public float getFloat(String key, MapObject mp)
             this.add(gmo);
           if (o instanceof Fan)
           {
-            ((Fan)o).addFanSprite(this,px,py);
+            ((Fan)o).addFanSprite(this,px,py,fv);
           }
           gmo.addToWorld(world);
           m_gameMapObjects.add(gmo);

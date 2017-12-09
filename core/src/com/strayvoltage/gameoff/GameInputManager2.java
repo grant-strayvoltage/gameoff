@@ -460,7 +460,6 @@ public class GameInputManager2 implements InputManager, ControllerListener {
 
       } else if (razerDesktop)
       {
-        Gdx.app.debug("GameInputManager2", "razerDesktop checking");
         if (controller.getButton(xbox360ButtonA))
           jumpPressed = true;
 
@@ -699,45 +698,14 @@ public class GameInputManager2 implements InputManager, ControllerListener {
           }
         }
       }
-
-      //button jump
-      /*
-      if (m_dpad != null)
-      {
-        if (buttonTouchID >= 0)
-        {
-          jumpPressed = m_dpad.isButtonPressed(0, m_touches[buttonTouchID].currX, m_touches[buttonTouchID].currY);
-          firePressed = m_dpad.isButtonPressed(1, m_touches[buttonTouchID].currX, m_touches[buttonTouchID].currY);
-          speedPressed = m_dpad.isButtonPressed(2, m_touches[buttonTouchID].currX, m_touches[buttonTouchID].currY);
-
-        } else
-        {
-          for (int j=0; j < 4; j++)
-          {
-            if (moveTouchID != j)
-            {
-              if (m_touches[j].isDown)
-              {
-                if (m_touches[j].currX > 700)
-                {
-                  buttonTouchID = j;
-                  break;
-                }
-              }
-            }
-          }
-        }
-    } */
-
     }
 
-    m_keyBoardUsed = false;
+      m_keyBoardUsed = false;
 
       if (m_allowKeyboard == false)
       {
         return;
       }
-
 
       if (controller == null)
       {
@@ -746,8 +714,6 @@ public class GameInputManager2 implements InputManager, ControllerListener {
         m_xShootAxis = 0;
         m_yShootAxis = 0;
       }
-      
-      
 
       if (m_playerNumber == 0)
       {
@@ -794,13 +760,13 @@ public class GameInputManager2 implements InputManager, ControllerListener {
         m_xShootAxis = -1;
       }
 
-      if ((inp.isKeyPressed(Keys.ENTER)) || (inp.isKeyPressed(Keys.X)) || (inp.isKeyPressed(Keys.J)) || (inp.isKeyPressed(Keys.DPAD_CENTER)))
+      if ((inp.isKeyPressed(Keys.ENTER)) || (inp.isKeyPressed(Keys.X)) || (inp.isKeyPressed(Keys.J)))
       {
         jumpPressed = true;
         m_keyBoardUsed = true;
       }
 
-      if ((inp.isKeyPressed(Keys.Q)) || (inp.isKeyPressed(Keys.ESCAPE)) || (inp.isKeyPressed(Keys.BACK))) 
+      if ((inp.isKeyPressed(Keys.Q)) || (inp.isKeyPressed(Keys.ESCAPE))) 
       {
         speedPressed = true;
         m_keyBoardUsed = true;
@@ -969,6 +935,11 @@ public class GameInputManager2 implements InputManager, ControllerListener {
     return jumpPressed;
   }
 
+  public boolean isJumpOrFirePressed()
+  {
+    return jumpPressed || firePressed;
+  }
+
   public boolean nextPressed()
   {
     return (jumpPressed || firePressed || m_touches[0].tapped);
@@ -1010,6 +981,7 @@ public class GameInputManager2 implements InputManager, ControllerListener {
       @Override
     public boolean buttonDown(Controller controller, int buttonCode) {
       m_controllerStatus = "buttonDown " + buttonCode;
+      Gdx.app.log("GIM","buttonDown" + buttonCode);
       return false;
     }
 
@@ -1025,6 +997,7 @@ public class GameInputManager2 implements InputManager, ControllerListener {
         // For the Y translation, I use a negative because I like inverted analog stick
         // Like all normal people do! ;)
       m_controllerStatus = "axisMoved " + axisCode + " = " + value;
+      Gdx.app.log("GIM","axisMoved " + axisCode + " = " + value);
         return false;
     }
 
@@ -1033,6 +1006,7 @@ public class GameInputManager2 implements InputManager, ControllerListener {
         // This is the dpad
 
       m_controllerStatus = "Controller Status: " + povCode + " = " + value;
+      Gdx.app.log("GIM","povMoved: " + povCode + " = " + value);
         
         return false;
     }
@@ -1113,12 +1087,13 @@ public class GameInputManager2 implements InputManager, ControllerListener {
         //androidTV = true;
         androidTV = false;
         razer = false;
-        xbox360 = false;
-        razerDesktop = true;
+        xbox360 = true;
+        m_isMac = true;
+        //razerDesktop = true;
         controllerConnected = true;
         if (m_optionsDialog)
           controller.addListener(this);
-      } else if ((controllerL.getName().contains("XBOX 360")) || (controllerL.getName().contains("USB")))
+      } else if ((controllerL.getName().toLowerCase().contains("xbox 360")) || (controllerL.getName().toLowerCase().contains("usb")))
       {
         m_controllerStatus = "Controller Status: Connected XBOX 360";
         controller = controllerL;
@@ -1127,9 +1102,12 @@ public class GameInputManager2 implements InputManager, ControllerListener {
         androidTV = false;
         xbox360 = true;
         controllerConnected = true;
+        xboxMac = false;
+        if (controllerL.getName().toLowerCase().contains("usb")) m_isMac = true;
+
         if (m_optionsDialog)
           controller.addListener(this);     
-      } else if (controllerL.getName().toLowerCase().contains("xbox one"))
+      } else if (controllerL.getName().toLowerCase().contains("xbox one for windows"))
       {
         m_controllerStatus = "Controller Status: Connected XBOX One";
         controller = controllerL;
@@ -1142,7 +1120,7 @@ public class GameInputManager2 implements InputManager, ControllerListener {
         if (m_optionsDialog)
           controller.addListener(this);
 
-      } else if (controllerL.getName().contains("Xbox One"))
+      } else if (controllerL.getName().toLowerCase().contains("xbox one"))
       {
         m_controllerStatus = "Controller Status: Connected XBOX One MAC";
         controller = controllerL;
@@ -1154,6 +1132,21 @@ public class GameInputManager2 implements InputManager, ControllerListener {
         controllerConnected = true;
         if (m_optionsDialog)
           controller.addListener(this);
+
+      } else if (controllerL.getName().toLowerCase().contains("xbox"))
+      {
+        m_controllerStatus = "Controller Status: Connected Xbox Controller";
+        controller = controllerL;
+        ouyaControllerConnected = true;
+        m_touchDevice = false;
+        androidTV = false;
+        xbox360 = true;
+        controllerConnected = true;
+        xboxMac = false;
+        m_isMac = true;
+        if (m_optionsDialog)
+          controller.addListener(this);  
+
       } else if ((controllerL.getName().contains("NVIDIA")) || (controllerL.getName().contains("Nvidia")))
       {
         m_controllerStatus = "Controller Status: Connected Nvidia";

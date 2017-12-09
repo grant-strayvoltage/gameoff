@@ -48,6 +48,7 @@ public class PlayerJoinLayer extends GameLayer {
   int m_p1 = 0;
   int m_p2 = 0;
   TextureAtlas m_textures;
+  boolean m_notInitialized = true;
 
   public PlayerJoinLayer() {
 
@@ -60,11 +61,7 @@ public class PlayerJoinLayer extends GameLayer {
 
     m_delayTicks = 0;
 
-    m_inputManager1 = MasterInputManager.getSharedInstance().getController(0);
-    m_inputManager1.setViewport(GameMain.getSingleton().m_viewport);
-
-    m_inputManager2 = MasterInputManager.getSharedInstance().getController(1);
-    m_inputManager2.setViewport(GameMain.getSingleton().m_viewport);
+    m_textures = am.get("game_sprites.txt", TextureAtlas.class);
 
     m_defaultMatrix = m_camera.combined.cpy();
     m_defaultMatrix.setToOrtho2D(0, 0, 1280, 720);
@@ -74,7 +71,33 @@ public class PlayerJoinLayer extends GameLayer {
     this.add(m_img);
     m_img.setOpacity(0);
 
-    m_textures = am.get("game_sprites.txt", TextureAtlas.class);
+    BackObject bo = new BackObject();
+    bo.init(6, 3, "vat", 0, m_textures);
+    this.add(bo);
+    bo.setPosition(580,62);
+    GameAnimateable bn1 = new AnimateFadeIn(0.5f);
+    bo.runAnimation(bn1);
+
+    bo = new BackObject();
+    bo.init(2, 2, "screen", 0, m_textures);
+    this.add(bo);
+    bo.setPosition(600,460);
+    bn1 = new AnimateFadeIn(0.5f);
+    bo.runAnimation(bn1);
+
+    bo = new BackObject();
+    bo.init(2, 2, "screen", 0, m_textures);
+    this.add(bo);
+    bo.setPosition(95,290);
+    bn1 = new AnimateFadeIn(0.5f);
+    bo.runAnimation(bn1);
+
+    bo = new BackObject();
+    bo.init(2, 2, "screen", 0, m_textures);
+    this.add(bo);
+    bo.setPosition(1115,290);
+    bn1 = new AnimateFadeIn(0.5f);
+    bo.runAnimation(bn1);
 
     m_p1Controls = new GameSprite(m_textures.findRegion("press_to_join"));
     this.add(m_p1Controls);
@@ -93,7 +116,25 @@ public class PlayerJoinLayer extends GameLayer {
     GameAnimateable an3 = new AnimateFadeIn(0.5f);
     m_p2Controls.runAnimation(an3);
 
+
     this.setCameraPosition(1280/2,720/2);
+  }
+
+
+  public void initializeControllers(boolean full)
+  {
+    if (full)
+    {
+        MasterInputManager.getSharedInstance().reInitialize();
+        setPlayerController(1,0);
+        setPlayerController(2,0);
+    }
+
+    m_inputManager1 = MasterInputManager.getSharedInstance().getController(0);
+    m_inputManager1.setViewport(GameMain.getSingleton().m_viewport);
+
+    m_inputManager2 = MasterInputManager.getSharedInstance().getController(1);
+    m_inputManager2.setViewport(GameMain.getSingleton().m_viewport);
 
   }
 
@@ -126,10 +167,23 @@ public class PlayerJoinLayer extends GameLayer {
   @Override
   public void update (float deltaTime) {
 
+    if (m_notInitialized)
+    {
+        initializeControllers(true);
+        m_notInitialized = false;
+    }
+
     m_time += deltaTime;
 
     m_buttonDelay++;
     m_buttonDelay2++;
+
+    if ((m_buttonDelay % 10) == 0)
+    {
+        if (MasterInputManager.getSharedInstance().controllerConnectionChange())
+            initializeControllers(true);
+    }
+
     m_inputManager1.handleInput(); 
     m_inputManager2.handleInput(); 
 
@@ -235,6 +289,15 @@ public class PlayerJoinLayer extends GameLayer {
         m_p2Controls.stopAllAnimations();
         m_p1Controls.runAnimation(an2);
         m_p2Controls.runAnimation(an3);
+
+        for (GameDrawable g : getChildren())
+        {
+            if (g instanceof BackObject)
+            {
+                GameAnimateable an4 = new AnimateFadeOut(0.5f);
+                g.runAnimation(an4);
+            }
+        }
 
         m_state = 10;
         m_time = 0;

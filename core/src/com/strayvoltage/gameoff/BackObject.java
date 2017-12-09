@@ -7,16 +7,9 @@ import com.strayvoltage.gamelib.*;
 
 public class BackObject extends GameMapObject {
 
-  public void init(MapProperties mp, TextureAtlas textures)
+  public void init(int spd, int frames, String sn, int st, TextureAtlas textures)
   {
-      m_hasPhysics = false;
-
-    int spd = getInt("speed", mp);
-    int frames = getInt("frames", mp);
-    String sn = getString("sprite",mp);
-    int st = getInt("style",mp);
-
-
+    m_hasPhysics = false;
     TextureRegion texture = null;
     texture = textures.findRegion(sn + "_F1");
     this.setRegion(texture);
@@ -44,8 +37,14 @@ public class BackObject extends GameMapObject {
         animation = new AnimateSpriteFrame(textures, new String[] {sn + "_F1", sn + "_F2", sn + "_F3", sn + "F4"},tm,-1);
         this.runAnimation(animation);
     }
+  }
 
-
-
+  public void init(MapProperties mp, TextureAtlas textures)
+  {
+    int spd = getInt("speed", mp);
+    int frames = getInt("frames", mp);
+    String sn = getString("sprite",mp);
+    int st = getInt("style",mp);
+    init(spd,frames,sn,st,textures);
   }
 }

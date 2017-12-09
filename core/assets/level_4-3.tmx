@@ -20,7 +20,7 @@
  <objectgroup name="objects">
   <object id="4" name="P1" type="PlayerStart1" x="77.9207" y="561.876" width="60" height="77"/>
   <object id="5" name="P2" type="PlayerStart2" x="148.542" y="595.465" width="47" height="44"/>
-  <object id="16" name="exit" type="Exit" x="1133.17" y="131.978" width="64" height="90"/>
+  <object id="16" name="exit" type="Exit" x="1133.17" y="133.978" width="64" height="90"/>
   <object id="37" name="BackObject" type="BackObject" x="548.333" y="353.333" width="96" height="96">
    <properties>
     <property name="frames" type="int" value="1"/>

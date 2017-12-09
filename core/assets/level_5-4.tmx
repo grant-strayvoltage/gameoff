@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" tiledversion="2017.07.25" orientation="orthogonal" renderorder="right-down" width="40" height="23" tilewidth="32" tileheight="32" nextobjectid="241">
+<map version="1.0" tiledversion="1.0.3" orientation="orthogonal" renderorder="right-down" width="40" height="23" tilewidth="32" tileheight="32" nextobjectid="242">
  <properties>
   <property name="Back" value="back1"/>
   <property name="Title" value="Do the Wave"/>
@@ -12,7 +12,7 @@
  </layer>
  <layer name="platforms" width="40" height="23">
   <data encoding="base64" compression="zlib">
-   eJxjYmBgYBrkOBGIkwYZTkZyXzMDJsAmRk8Asn/UfeSDweg+5PRHjPuS6Oc0rPYPtvBDt58U99GqHCHGfQeJcB+9AXr4LULDiwfOaWBAKH4HGoy6jzIw6j7KwGBznwoanxT3Ubt9mIzFDnQ3kOK+hVR2H7aylRL30QMMZfdRO/6olQaYhgAGAH2iVjg=
+   eJztls0JgDAMRoOzuJg6iTiJf4Ooo7iIrRdDWtSakkbog+/QXPJoQmkBAIXyVCY1yeapSaZBfh24+GqS2P7Z7zsa/Sa49m+Fe7/FZJZTc9B4f7R/iB+++1i5mw/2a1/4SYP97K4NJGM6tZOn+aYm+/HIfjy0+ZXkHOLn+x9y/3YU6hDi10f2872tHD8J/uwXe35fspPziPw05wAzXVif
   </data>
  </layer>
  <objectgroup name="objects">
@@ -521,6 +521,14 @@
     <property name="power" type="int" value="100"/>
     <property name="startOn" type="bool" value="false"/>
     <property name="switches" value="fanswitch"/>
+   </properties>
+  </object>
+  <object id="241" name="BackObject" type="BackObject" x="704" y="128" width="128" height="128">
+   <properties>
+    <property name="frames" type="int" value="3"/>
+    <property name="speed" type="int" value="10"/>
+    <property name="sprite" value="vat"/>
+    <property name="style" type="int" value="2"/>
    </properties>
   </object>
  </objectgroup>

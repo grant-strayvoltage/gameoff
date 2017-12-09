@@ -5,6 +5,7 @@
   <property name="Title" value="You Blew my Brain Away"/>
   <property name="backOffX" type="int" value="0"/>
   <property name="backOffY" type="int" value="25"/>
+  <property name="fanVolume" type="float" value="0.15"/>
  </properties>
  <tileset firstgid="1" source="tileset.tsx"/>
  <layer name="background" width="40" height="23">

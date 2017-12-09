@@ -14,7 +14,7 @@
  </layer>
  <layer name="platforms" width="40" height="23">
   <data encoding="base64" compression="zlib">
-   eJztltkNgCAQRDdGO7ExtRJjJV6FWIuN6BiIF4IoR6JMMj9Ilic7mxARURT8C2ezG88uJHwl+VdF3+RL7aMteso3zO5v1O9ozVLOXBjiG1i9IwfObDXOOKrWYPSVPzCK/h3KaL1rU3zbmnf6LquD3iTMpviu9urMEWfbyiYfcjrSOWtYzwUWZdr2/am+qeSCD7PwNJMu+N4o8O2F2dDptYwPuYkVNvmWQj0+y3ytlfAFB7v2BCN5UE0=
+   eJztlu0NgjAURW+IboKDAZMYJkF0EFyFRewlbUCsLYV+JNqbnD+FPA7te4ECQJH5CyrBLTGNwe+K9Gnxm35leLUpe/0GwWND/TvmXqoljSe/QdZbe/CZvcMz1ukcHFP1Hx11785UmPf66clvWXPLuZvq8GzOEl/79+1elzlSbsuE9GOfjvjsNa7XGnQ9HXr/bNdsieHHWdjbkzH8jiT7vYez4XLWJr+L4GRBfb9GHP+XYj01y2qtN/hlMrF5AWxwUFM=
   </data>
  </layer>
  <objectgroup name="objects">
@@ -32,7 +32,7 @@
     <property name="static" type="bool" value="true"/>
    </properties>
   </object>
-  <object id="60" name="Tramp1" type="Trampoline" x="762.667" y="497.333" width="48" height="48">
+  <object id="60" name="Tramp1" type="Trampoline" x="768.667" y="497.333" width="48" height="48">
    <properties>
     <property name="static" type="bool" value="true"/>
    </properties>

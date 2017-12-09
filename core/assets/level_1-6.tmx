@@ -12,7 +12,7 @@
  </layer>
  <layer name="platforms" width="40" height="23">
   <data encoding="base64" compression="zlib">
-   eJztlW0KgCAMhkf0cY9uVp0kOkl60Rw0ENFmOLMfe+EhMNQn3agDgE4RZ3GsldkK/Haon0P9fuXn180f/Sgn5Nd/Cz8M9rdhsI4pMX8U8Hs6g4PxH5j3En64B93lWz8uEn5PKfWjNWr6zZDfy/7/qKYf7YNr0/1zjtQrYST96Nvt7eXfb45jLF/WX6qPWvlxyZlf4ofnYQL6yFgKqgfjPcP5tsBPURSAC4luRHU=
+   eJztlWsKwjAQhIfi4x6iB1NPUnoSEz2IXsWL2MUuDSHtBjeL+ZGBoTQlzcdOsukAdM3FfR59MfZVwdfDXkPjq4rvjnnf1MjHuiF///+Dj0Tn2wn2o/cL83dKvqdQg0Hg3wrftXz9tAZl+fiBT1IJvjVp+fgfVnyU/wH5Z5nvozALCz5e54U5f4mR+pJPjJfk497nJ64w3xzGlCzzPUXv3BNr4ZN0NOajerjIm8TYkt/41tMFz3i+V/A1NzcDHziuRgQ=
   </data>
  </layer>
  <objectgroup name="objects">

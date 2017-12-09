@@ -20,6 +20,30 @@
  <objectgroup name="objects">
   <object id="4" name="P1" type="PlayerStart1" x="452" y="61" width="60" height="77"/>
   <object id="5" name="P2" type="PlayerStart2" x="822" y="34" width="47" height="44"/>
+  <object id="55" name="BackObject" type="BackObject" x="752" y="640" width="160" height="64">
+   <properties>
+    <property name="frames" type="int" value="3"/>
+    <property name="speed" type="int" value="3"/>
+    <property name="sprite" value="station"/>
+    <property name="style" type="int" value="2"/>
+   </properties>
+  </object>
+  <object id="56" name="BackObject" type="BackObject" x="544" y="236" width="32" height="64">
+   <properties>
+    <property name="frames" type="int" value="1"/>
+    <property name="speed" type="int" value="10"/>
+    <property name="sprite" value="blood3"/>
+    <property name="style" type="int" value="2"/>
+   </properties>
+  </object>
+  <object id="57" name="BackObject" type="BackObject" x="907" y="437" width="32" height="64">
+   <properties>
+    <property name="frames" type="int" value="1"/>
+    <property name="speed" type="int" value="10"/>
+    <property name="sprite" value="blood3"/>
+    <property name="style" type="int" value="2"/>
+   </properties>
+  </object>
   <object id="16" name="exit" type="Exit" x="614" y="614" width="64" height="90"/>
   <object id="47" name="PlatformStop" type="PlatformStop" x="462.25" y="105.083" width="32" height="32"/>
   <object id="48" name="platform1" type="Platform" x="436.25" y="138.5" width="96" height="32">
@@ -32,7 +56,7 @@
     <property name="switches" value=""/>
    </properties>
   </object>
-  <object id="49" name="platform1" type="Platform" x="805.25" y="82.5" width="96" height="32">
+  <object id="49" name="platform1" type="Platform" x="799.25" y="82.5" width="96" height="32">
    <properties>
     <property name="contactTrigger" type="bool" value="false"/>
     <property name="moveHorizontal" type="bool" value="false"/>
@@ -75,30 +99,6 @@
     <property name="isOpen" type="bool" value="false"/>
     <property name="openDown" type="bool" value="false"/>
     <property name="switches" value="switch2"/>
-   </properties>
-  </object>
-  <object id="55" name="BackObject" type="BackObject" x="752" y="640" width="160" height="64">
-   <properties>
-    <property name="frames" type="int" value="3"/>
-    <property name="speed" type="int" value="3"/>
-    <property name="sprite" value="station"/>
-    <property name="style" type="int" value="2"/>
-   </properties>
-  </object>
-  <object id="56" name="BackObject" type="BackObject" x="544" y="236" width="32" height="64">
-   <properties>
-    <property name="frames" type="int" value="1"/>
-    <property name="speed" type="int" value="10"/>
-    <property name="sprite" value="blood3"/>
-    <property name="style" type="int" value="2"/>
-   </properties>
-  </object>
-  <object id="57" name="BackObject" type="BackObject" x="907" y="437" width="32" height="64">
-   <properties>
-    <property name="frames" type="int" value="1"/>
-    <property name="speed" type="int" value="10"/>
-    <property name="sprite" value="blood3"/>
-    <property name="style" type="int" value="2"/>
    </properties>
   </object>
  </objectgroup>
