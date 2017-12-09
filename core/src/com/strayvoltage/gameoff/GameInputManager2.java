@@ -1107,7 +1107,7 @@ public class GameInputManager2 implements InputManager, ControllerListener {
 
         if (m_optionsDialog)
           controller.addListener(this);     
-      } else if (controllerL.getName().toLowerCase().contains("xbox one for windows"))
+      } else if (controllerL.getName().toLowerCase().contains("xbox one") && controllerL.getName().toLowerCase().contains("windows"))
       {
         m_controllerStatus = "Controller Status: Connected XBOX One";
         controller = controllerL;
